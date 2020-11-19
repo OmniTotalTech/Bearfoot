@@ -16,67 +16,87 @@ import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
 import DeliveryStatusNum from "../../Components/DeliveryStatusNum";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-export default function DeliveryHome(props) {
-  const deliveryTypeIcon = [
-    {
-      icon: <QueryBuilderIcon className="text-2xl" />,
-      status: "Deliveries",
-      subtext: "Check your tasks related",
-    },
-  ];
-  const deliveryTypeNum = [
-    {
-      number: 5,
-      status: "Active",
-    },
-    {
-      number: 0,
-      status: "Special",
-    },
-  ];
+import { fetchById } from "../../redux/actions/byId";
+import { connect } from "react-redux";
 
-  const deliveryStatusNumMap = deliveryTypeNum.map((deliveryTypeNum, i) => {
+class DeliveryHome extends Component {
+  componentDidMount() {
+    this.props.fetchById("5fb5b25f13b7a05cf83e39cf");
+  }
+  render() {
+    const deliveryTypeIcon = [
+      {
+        icon: <QueryBuilderIcon className="text-2xl" />,
+        status: "Deliveries",
+        subtext: "Check your tasks related",
+      },
+    ];
+    const deliveryTypeNum = [
+      {
+        number: 5,
+        status: "Active",
+      },
+      {
+        number: 0,
+        status: "Special",
+      },
+    ];
+
+    const deliveryStatusNumMap = deliveryTypeNum.map((deliveryTypeNum, i) => {
+      return (
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate("DeliveryAssignedPage")}
+        >
+          <DeliveryStatusNum
+            key={i}
+            number={deliveryTypeNum.number}
+            status={deliveryTypeNum.status}
+          />
+        </TouchableOpacity>
+      );
+    });
     return (
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate("DeliveryAssignedPage")}
-      >
-        <DeliveryStatusNum
-          key={i}
-          number={deliveryTypeNum.number}
-          status={deliveryTypeNum.status}
-        />
-      </TouchableOpacity>
-    );
-  });
+      <View style={{ backgroundColor: " #718096" }}>
+        <div className="h-screen ">
+          <div className="w-100 h-100 "></div>
+          <div className="w-full h-100">
+            <div
+              className="container w-full shadow-xl  mx-auto px-2"
+              style={{
+                height: "70vh",
+                width: "90%",
+                shadow: "5px 5px 10px #000000",
+                borderBottomLeftRadius: "8%",
+                borderBottomRightRadius: "8%",
+                borderTopRightRadius: "8%",
+                borderTopLeftRadius: "8%",
 
-  return (
-    <View style={{ backgroundColor: " #718096" }}>
-      <div className="h-screen ">
-        <div className="w-100 h-100 "></div>
-        <div className="w-full h-100">
-          <div
-            className="container w-full shadow-xl  mx-auto px-2"
-            style={{
-              height: "70vh",
-              width: "90%",
-              shadow: "5px 5px 10px #000000",
-              borderBottomLeftRadius: "8%",
-              borderBottomRightRadius: "8%",
-              borderTopRightRadius: "8%",
-              borderTopLeftRadius: "8%",
-
-              paddingBottom: "20px",
-            }}
-          >
-            <div className="container my-4">
-              <div className="text-2xl text-white">Employee Activities</div>
-            </div>
-            <div className="grid grid-cols-2 mt-4 gap-2 h-24  ">
-              {deliveryStatusNumMap}
+                paddingBottom: "20px",
+              }}
+            >
+              <div className="container my-4">
+                <div className="text-2xl text-white">Employee Activities</div>
+              </div>
+              <div className="grid grid-cols-2 mt-4 gap-2 h-24  ">
+                {deliveryStatusNumMap}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </View>
-  );
+      </View>
+    );
+  }
 }
+const mapStateToProps = (state) => {
+  return {
+    byId: state.byId,
+  };
+};
+
+const mapDisptachToProps = (dispatch) => {
+  return {
+    fetchById: (id) => dispatch(fetchById(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDisptachToProps)(DeliveryHome);
