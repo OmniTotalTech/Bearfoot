@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var APIAddress = \"http://localhost:3000/\";","map":{"version":3,"sources":["/Users/Kawika 1/code/Bearfoot/bearfoot/config.js"],"names":["APIAddress"],"mappings":"AAAA,OAAO,IAAMA,UAAU,GAAG,wBAAnB","sourcesContent":["export const APIAddress = \"http://localhost:3000/\";\n"]},"metadata":{},"sourceType":"module"}
