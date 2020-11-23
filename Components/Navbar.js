@@ -1,6 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 
-export default function Navbar({ fixed }) {
+function Navbar(props) {
   const [menuOpen, setMenuOpen] = React.useState(false);
   return (
     <div
@@ -30,8 +31,8 @@ export default function Navbar({ fixed }) {
               />
             </div>
           </button>
-          <div className="text-white text-sm truncate">Employee Name</div>
-          <div className=" text-white text-xs">Title</div>
+          <div className="text-white text-sm truncate">{props.user.name}</div>
+          <div className=" text-white text-xs">{props.user.title}</div>
         </div>
 
         <div style={{ maxHeight: "10vh" }}>
@@ -46,3 +47,11 @@ export default function Navbar({ fixed }) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);

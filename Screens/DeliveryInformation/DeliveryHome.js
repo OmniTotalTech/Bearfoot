@@ -45,7 +45,7 @@ class DeliveryHome extends Component {
     const deliveryStatusNumMap = deliveryTypeNum.map((deliveryTypeNum, i) => {
       return (
         <TouchableOpacity
-          onPress={() => props.navigation.navigate("DeliveryAssignedPage")}
+          onPress={() => this.props.navigation.navigate("DeliveryAssignedPage")}
         >
           <DeliveryStatusNum
             key={i}
