@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 
 class DeliveryHome extends Component {
   componentDidMount() {
-    this.props.fetchById("5fb5b25f13b7a05cf83e39cf");
+    this.props.fetchById(this.props.user._id);
   }
   render() {
     const deliveryTypeIcon = [
@@ -90,6 +90,7 @@ class DeliveryHome extends Component {
 const mapStateToProps = (state) => {
   return {
     byId: state.byId,
+    user: state.auth.user,
   };
 };
 

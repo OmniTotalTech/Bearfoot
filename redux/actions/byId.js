@@ -1,5 +1,6 @@
 import axios from "axios";
 import { APIAddress } from "../../config";
+import api from "../../utils/api";
 
 import {
   FETCH_BY_ID_ERROR,
@@ -30,8 +31,8 @@ export const fetchByIdError = (error) => {
 export const fetchById = (id) => {
   return (dispatch) => {
     dispatch(fetchByIdRequest);
-    axios
-      .get(`${APIAddress}` + "OrderDetails/" + id)
+    api
+      .get("orderDetails/" + id)
       .then((response) => {
         const data = response.data;
         dispatch(fetchByIdSuccess(data));

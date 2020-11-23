@@ -12,7 +12,7 @@ const initialState = {
   loading: false,
   error: null,
   token: null,
-  user: null,
+  user: {},
 };
 
 export default (state = initialState, action) => {
@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
         isAuthenticated: false,
         loading: false,
         error: action.payload,
-        user: null,
+        user: {},
       };
     case LOGOUT:
       return {
@@ -53,7 +53,7 @@ export default (state = initialState, action) => {
         token: null,
         isAuthenticated: false,
         loading: false,
-        user: null,
+        user: {},
         error: null,
       };
     default:
