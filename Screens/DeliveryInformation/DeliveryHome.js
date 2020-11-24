@@ -18,11 +18,13 @@ import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { fetchById } from "../../redux/actions/byId";
 import { connect } from "react-redux";
+import byId from "../../redux/reducers/byId";
 
 class DeliveryHome extends Component {
   componentDidMount() {
     this.props.fetchById(this.props.user._id);
   }
+
   render() {
     const deliveryTypeIcon = [
       {
@@ -31,17 +33,48 @@ class DeliveryHome extends Component {
         subtext: "Check your tasks related",
       },
     ];
-    const deliveryTypeNum = [
+    let deliveryTypeNum;
+    deliveryTypeNum = [
       {
-        number: 5,
-        status: "Active",
+        number: 0,
+        status: "Primary",
       },
       {
         number: 0,
-        status: "Special",
+        status: "Secondary",
       },
     ];
 
+    const handleArray = (byId) => {
+      console.log(byId.primary);
+      if (byId.primary != undefined) {
+        deliveryTypeNum = [
+          {
+            number: byId.data,
+            status: "Primary",
+          },
+          {
+            number: 0,
+            status: "Secondary",
+          },
+        ];
+      }
+      deliveryTypeNum.map((deliveryTypeNum, i) => {
+        return (
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate("DeliveryAssignedPage")
+            }
+          >
+            <DeliveryStatusNum
+              key={i}
+              number={deliveryTypeNum.number}
+              status={deliveryTypeNum.status}
+            />
+          </TouchableOpacity>
+        );
+      });
+    };
     const deliveryStatusNumMap = deliveryTypeNum.map((deliveryTypeNum, i) => {
       return (
         <TouchableOpacity
@@ -78,6 +111,7 @@ class DeliveryHome extends Component {
                 <div className="text-2xl text-white">Employee Activities</div>
               </div>
               <div className="grid grid-cols-2 mt-4 gap-2 h-24  ">
+                {handleArray(this.props.byId.data)}
                 {deliveryStatusNumMap}
               </div>
             </div>

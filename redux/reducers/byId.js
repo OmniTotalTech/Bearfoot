@@ -5,7 +5,7 @@ import {
 } from "../types/byId";
 
 const initialState = {
-  data: null,
+  data: {},
   loading: false,
   error: null,
 };
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
     case FETCH_BY_ID_ERROR:
       return {
         loading: false,
-        byId: [],
+        data: [],
         error: action.payload,
       };
     default:
