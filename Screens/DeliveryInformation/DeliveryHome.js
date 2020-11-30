@@ -16,13 +16,14 @@ import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
 import DeliveryStatusNum from "../../Components/DeliveryStatusNum";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import { fetchById } from "../../redux/actions/byId";
+
 import { connect } from "react-redux";
-import byId from "../../redux/reducers/byId";
+import { fetchOrderDetail } from "../../redux/actions/orderDetail";
+import orderDetail from "../../redux/reducers/orderDetail";
 
 class DeliveryHome extends Component {
   componentDidMount() {
-    this.props.fetchById(this.props.user._id);
+    this.props.fetchOrderDetail(this.props.user._id);
   }
 
   render() {
@@ -45,12 +46,12 @@ class DeliveryHome extends Component {
       },
     ];
 
-    const handleArray = (byId) => {
-      console.log(byId.primary);
-      if (byId.primary != undefined) {
+    const handleArray = (orderDetail) => {
+      console.log(orderDetail.primary);
+      if (orderDetail.primary != undefined) {
         deliveryTypeNum = [
           {
-            number: byId.data,
+            number: 0,
             status: "Primary",
           },
           {
@@ -111,7 +112,7 @@ class DeliveryHome extends Component {
                 <div className="text-2xl text-white">Employee Activities</div>
               </div>
               <div className="grid grid-cols-2 mt-4 gap-2 h-24  ">
-                {handleArray(this.props.byId.data)}
+                {/* {handleArray(this.props.orderDetail.data)} */}
                 {deliveryStatusNumMap}
               </div>
             </div>
@@ -123,14 +124,14 @@ class DeliveryHome extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    byId: state.byId,
+    orderDetail: state.orderDetail,
     user: state.auth.user,
   };
 };
 
 const mapDisptachToProps = (dispatch) => {
   return {
-    fetchById: (id) => dispatch(fetchById(id)),
+    fetchOrderDetail: (id) => dispatch(fetchOrderDetail(id)),
   };
 };
 
