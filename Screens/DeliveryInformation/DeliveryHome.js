@@ -94,25 +94,12 @@ class DeliveryHome extends Component {
         <div className="h-screen ">
           <div className="w-100 h-100 "></div>
           <div className="w-full h-100">
-            <div
-              className="container w-full shadow-xl  mx-auto px-2"
-              style={{
-                height: "70vh",
-                width: "90%",
-                shadow: "5px 5px 10px #000000",
-                borderBottomLeftRadius: "8%",
-                borderBottomRightRadius: "8%",
-                borderTopRightRadius: "8%",
-                borderTopLeftRadius: "8%",
-
-                paddingBottom: "20px",
-              }}
-            >
-              <div className="container my-4">
-                <div className="text-2xl text-white">Employee Activities</div>
-              </div>
-              <div className="grid grid-cols-2 mt-4 gap-2 h-24  ">
-                {/* {handleArray(this.props.orderDetail.data)} */}
+            <div className="container mx-auto my-4">
+              <div className="text-2xl ">Employee Activities</div>
+            </div>
+            <div className="container w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
+              <div className="grid grid-cols-2 mt-4 gap-2 py-4 rounded-lg   ">
+                {handleArray(this.props.byId.data)}
                 {deliveryStatusNumMap}
               </div>
             </div>
