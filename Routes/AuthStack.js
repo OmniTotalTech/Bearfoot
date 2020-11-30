@@ -27,5 +27,7 @@ export const AuthStack = () => (
         />
       </Stack.Navigator>
     </NavigationContainer>
+
+    <Navbar />
   </>
 );
