@@ -30,7 +30,7 @@ export const fetchOrderDetail = (id) => {
   return (dispatch) => {
     dispatch(fetchOrderDetailRequest);
     api
-      .get("orderDetail/" + id)
+      .get("orderDetails/" + id)
       .then((response) => {
         const data = response.data;
         dispatch(fetchOrderDetailSuccess(data));

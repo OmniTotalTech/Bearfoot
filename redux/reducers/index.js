@@ -4,6 +4,6 @@ import auth from "./auth";
 import orderDetail from "./orderDetail";
 export default combineReducers({
   auth: auth,
-  byId: byId,
+  // byId: byId,
   orderDetail: orderDetail,
 });

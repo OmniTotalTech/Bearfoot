@@ -99,7 +99,7 @@ class DeliveryHome extends Component {
             </div>
             <div className="container w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
               <div className="grid grid-cols-2 mt-4 gap-2 py-4 rounded-lg   ">
-                {handleArray(this.props.byId.data)}
+                {/* {handleArray(this.props.byId.data)} */}
                 {deliveryStatusNumMap}
               </div>
             </div>
