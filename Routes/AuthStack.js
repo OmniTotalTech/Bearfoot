@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../Screens/Home";
 import DeliveryHome from "../Screens/DeliveryInformation/DeliveryHome";
 import DeliveryAssignedPage from "../Screens/DeliveryInformation/DeliveryAssignedPage";
+import DeliveryReview from "../Screens/DeliveryInformation/DeliveryReview";
 import Navbar from "../Components/Navbar";
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ export const AuthStack = () => (
           name="DeliveryAssignedPage"
           component={DeliveryAssignedPage}
         />
+        <Stack.Screen name="DeliveryReview" component={DeliveryReview} />
       </Stack.Navigator>
     </NavigationContainer>
 

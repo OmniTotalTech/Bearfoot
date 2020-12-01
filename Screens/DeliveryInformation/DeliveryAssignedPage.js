@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DeliveryItem from "../../Components/DeliveryItem";
-import { ScrollView } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native";
 import DeliveryListContainer from "../../Components/DeliveryListContainer";
 
 class DeliveryAssignedPage extends Component {
@@ -11,7 +11,11 @@ class DeliveryAssignedPage extends Component {
   render() {
     return (
       <ScrollView>
-        <DeliveryListContainer orderDetail={this.props.orderDetail.data} />
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("DeliveryReview")}
+        >
+          <DeliveryListContainer orderDetail={this.props.orderDetail.data} />
+        </TouchableOpacity>
       </ScrollView>
     );
   }
