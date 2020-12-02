@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { TouchableOpacity } from "react-native";
 import DeliveryItem from "./DeliveryItem";
 class DeliveryListContainer extends Component {
   componentDidMount() {
@@ -6,10 +7,16 @@ class DeliveryListContainer extends Component {
   }
   render() {
     const primaryMap = this.props.orderDetail.primary.map((item) => {
-      return <DeliveryItem item={item} />;
+      return <DeliveryItem item={item} navigation={this.props.navigation} />;
     });
     const secondaryMap = this.props.orderDetail.secondary.map((item) => {
-      return <DeliveryItem item={item} />;
+      return (
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate("DeliveryReview")}
+        >
+          <DeliveryItem item={item} />
+        </TouchableOpacity>
+      );
     });
     return (
       <div className="container mx-auto px-4 my-4">

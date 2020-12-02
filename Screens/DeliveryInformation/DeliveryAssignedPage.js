@@ -11,11 +11,10 @@ class DeliveryAssignedPage extends Component {
   render() {
     return (
       <ScrollView>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("DeliveryReview")}
-        >
-          <DeliveryListContainer orderDetail={this.props.orderDetail.data} />
-        </TouchableOpacity>
+        <DeliveryListContainer
+          navigation={this.props.navigation}
+          orderDetail={this.props.orderDetail.data}
+        />
       </ScrollView>
     );
   }
