@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { TouchableOpacity } from "react-native";
 import DeliveryItem from "./DeliveryItem";
-class DeliveryListContainer extends Component {
+
+export default class DeliveryListContainer extends Component {
   componentDidMount() {
     console.log("here", this.props.orderDetail);
   }
@@ -40,5 +41,3 @@ class DeliveryListContainer extends Component {
     );
   }
 }
-
-export default DeliveryListContainer;
