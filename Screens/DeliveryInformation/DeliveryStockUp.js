@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 
 class DeliveryStockUp extends Component {
   render() {
+    const { item } = this.props;
+
     return (
       <div
         style={{
@@ -13,7 +15,7 @@ class DeliveryStockUp extends Component {
           height: "100vh",
         }}
       >
-        <Stepper />
+        <Stepper item={item.data.foundOrderDetail} />
         <DeliveryChecklist />
         <TouchableOpacity>
           <div className="py-4 px-4">
@@ -31,6 +33,7 @@ const mapStateToProps = (state) => {
   return {
     orderDetail: state.orderDetail,
     user: state.auth.user,
+    item: state.updateStatus,
   };
 };
 

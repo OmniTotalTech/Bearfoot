@@ -26,6 +26,7 @@ export default (state = initialState, action) => {
       };
     case UPDATE_STATUS_ERROR:
       return {
+        ...state,
         loading: false,
         data: {},
         error: action.payload,
