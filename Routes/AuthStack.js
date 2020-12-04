@@ -8,6 +8,7 @@ import DeliveryHome from "../Screens/DeliveryInformation/DeliveryHome";
 import DeliveryAssignedPage from "../Screens/DeliveryInformation/DeliveryAssignedPage";
 import DeliveryReview from "../Screens/DeliveryInformation/DeliveryReview";
 import DeliveryStockUp from "../Screens/DeliveryInformation/DeliveryStockUp";
+import Delivering from "../Screens/DeliveryInformation/Delivering";
 import Navbar from "../Components/Navbar";
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ export const AuthStack = () => (
         />
         <Stack.Screen name="DeliveryReview" component={DeliveryReview} />
         <Stack.Screen name="DeliveryStockUp" component={DeliveryStockUp} />
+        <Stack.Screen name="Delivering" component={Delivering} />
       </Stack.Navigator>
     </NavigationContainer>
 

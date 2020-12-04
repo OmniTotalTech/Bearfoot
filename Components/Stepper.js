@@ -30,20 +30,21 @@ export default class Stepper extends Component {
   render() {
     return (
       <div
+        className="container mx-auto"
         style={{
           backgroundColor: "black",
         }}
       >
         <div className="flex flex-row justify-between justify-center px-6 py-4 ">
           <div>
-            {this.state.status > 0 ? (
+            {this.state.status <= 1 ? (
               <CheckCircleIcon
                 className="text-5xl"
                 style={{
                   color: "red",
                 }}
               />
-            ) : this.state.status === 0 ? (
+            ) : this.state.status > 1 ? (
               <WarningIcon
                 className="text-5xl"
                 style={{
@@ -51,25 +52,23 @@ export default class Stepper extends Component {
                 }}
               />
             ) : (
-              <div>
-                <RemoveCircleIcon
-                  className="text-5xl"
-                  style={{
-                    color: "gray",
-                  }}
-                />
-              </div>
+              <RemoveCircleIcon
+                className="text-5xl"
+                style={{
+                  color: "gray",
+                }}
+              />
             )}
           </div>
           <div>
-            {this.state.status > 1 ? (
+            {this.state.status > 2 ? (
               <CheckCircleIcon
                 className="text-5xl"
                 style={{
                   color: "red",
                 }}
               />
-            ) : this.state.status === 1 ? (
+            ) : this.state.status < 2 ? (
               <WarningIcon
                 className="text-5xl"
                 style={{
