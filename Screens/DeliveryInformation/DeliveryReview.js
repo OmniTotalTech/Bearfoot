@@ -18,13 +18,14 @@ class DeliveryReview extends Component {
     console.log(item);
   }
 
-  setUpdateStatus() {
-    const body = { status: 0 };
+    setUpdateStatus() {
+  
+    const body = { status: 1 };
     this.props.updateStatus(this.state.item._id, body);
   }
 
   componentDidUpdate() {
-    console.log(this.props.navigation.getParam("item"));
+   // console.log(this.props.navigation.getParam("item"));
   }
 
   render() {
@@ -58,10 +59,11 @@ class DeliveryReview extends Component {
                   />
                   View Delivery Items List
                 </div>
+                {this.state.item.status == 0 ? (
                 <TouchableOpacity
                   onPress={() => {
                     this.setUpdateStatus();
-                    this.props.navigation.navigate("DeliveryStockUp");
+                    this.props.navigation.navigate("DeliveryPage",{ item: this.state.item});
                   }}
                 >
                   <div className="py-4 px-4">
@@ -69,7 +71,18 @@ class DeliveryReview extends Component {
                       ACCEPT
                     </button>
                   </div>
+                </TouchableOpacity> ) :  (<TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("DeliveryPage",{ item: this.state.item});
+                  }}
+                >
+                  <div className="py-4 px-4">
+                    <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
+                      Continue?
+                    </button>
+                  </div>
                 </TouchableOpacity>
+                )}
               </div>
             </div>
           </div>

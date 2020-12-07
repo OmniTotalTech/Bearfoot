@@ -5,7 +5,7 @@ export default class DeliveryStatusIcon extends Component {
   render() {
     return (
       <div>
-        <div className=" rounded-r-lg max-w-xs rounded-l-lg w-full h-full p-4 bg-gradient-to-r from-red-500 via-red-600 to-red-700">
+        <div className=" rounded-r-lg max-w-xs rounded-l-lg w-48 h-48 p-4 bg-gradient-to-r from-red-500 via-red-600 to-red-700">
           <div>
             <div className="row-span-1  text-white py-4">
               {/* <QueryBuilderIcon className="text-6xl" /> */}

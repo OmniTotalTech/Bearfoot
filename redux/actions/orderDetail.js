@@ -4,6 +4,8 @@ import {
   FETCH_ORDER_DETAIL_ERROR,
   FETCH_ORDER_DETAIL_REQUEST,
   FETCH_ORDER_DETAIL_SUCCESS,
+  FETCH_INDIVIDUAL_ORDER_DETAIL_ERROR,
+  FETCH_INDIVIDUAL_ORDER_DETAIL_SUCCESS
 } from "../types/orderDetail";
 
 export const fetchOrderDetailRequest = () => {
@@ -26,6 +28,20 @@ export const fetchOrderDetailError = (error) => {
   };
 };
 
+export const fetchIndividualOrderDetailSuccess = (data) => {
+  return {
+    type: FETCH_INDIVIDUAL_ORDER_DETAIL_SUCCESS,
+    payload: data,
+  };
+};
+
+export const fetchIndividualOrderDetailError = (error) => {
+  return {
+    type: FETCH_INDIVIDUAL_ORDER_DETAIL_ERROR,
+    payload: error,
+  };
+};
+
 export const fetchOrderDetail = (id) => {
   return (dispatch) => {
     dispatch(fetchOrderDetailRequest);
@@ -41,3 +57,20 @@ export const fetchOrderDetail = (id) => {
       });
   };
 };
+
+export const fetchIndividualOrderDetail = (id) => {
+  return (dispatch) => {
+    dispatch(fetchOrderDetailRequest);
+    api
+      .get("orderDetails/individual/" + id)
+      .then((response) => {
+        const data = response.data;
+        dispatch(fetchIndividualOrderDetailSuccess(data));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(fetchIndividualOrderDetailError(errorMsg));
+      });
+  };
+};
+

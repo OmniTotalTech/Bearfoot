@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import NavbarContainer from "./NavbarContainer";
+import {TouchableOpacity} from 'react-native'
+import FooterContainer from "./FooterContainer";
 
 class Footer extends Component {
   render() {
     const { user } = this.props;
-    return <NavbarContainer user={user} />;
+    return <FooterContainer navigation={this.props.navigation} user={user} />;
   }
 }
 

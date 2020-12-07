@@ -1,4 +1,6 @@
 import {
+  FETCH_INDIVIDUAL_ORDER_DETAIL_ERROR,
+  FETCH_INDIVIDUAL_ORDER_DETAIL_SUCCESS,
   FETCH_ORDER_DETAIL_ERROR,
   FETCH_ORDER_DETAIL_REQUEST,
   FETCH_ORDER_DETAIL_SUCCESS,
@@ -8,6 +10,7 @@ const initialState = {
   data: {},
   loading: false,
   error: null,
+  individualOrderDetail: {}
 };
 
 export default (state = initialState, action) => {
@@ -26,10 +29,25 @@ export default (state = initialState, action) => {
       };
     case FETCH_ORDER_DETAIL_ERROR:
       return {
+        ...state,
         loading: false,
         data: [],
         error: action.payload,
       };
+    case FETCH_INDIVIDUAL_ORDER_DETAIL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        individualOrderDetail: action.payload,
+        error: null
+      }
+      case FETCH_INDIVIDUAL_ORDER_DETAIL_ERROR:
+        return {
+          ...state,
+          loading: false,
+          individualOrderDetail: {},
+          error: action.payload
+        }
     default:
       return state;
   }

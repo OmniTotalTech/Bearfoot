@@ -28,14 +28,14 @@ export const updateStatusError = (error) => {
 
 export const updateStatus = (id, body) => {
   console.log(body);
-  const data = body;
+  const data = {status: body}
   return (dispatch) => {
     dispatch(updateStatusRequest);
     api
       .request({
         method: "PATCH",
         url: "orderDetails/" + id,
-        data: body,
+        data: data,
       })
       .then((response) => {
         const data = response.data;

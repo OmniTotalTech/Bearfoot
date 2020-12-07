@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import DropOffChecklist from "../../Components/DropOffChecklist";
 import Stepper from "../../Components/Stepper";
 
-export default class Delivering extends Component {
+export default class  extends Component {
   render() {
     return (
       <div

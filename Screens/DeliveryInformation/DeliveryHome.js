@@ -18,7 +18,7 @@ import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 import { connect } from "react-redux";
-import { fetchOrderDetail } from "../../redux/actions/orderDetail";
+import { fetchOrderDetail, fetchIndividualOrderDetail } from "../../redux/actions/orderDetail";
 import orderDetail from "../../redux/reducers/orderDetail";
 
 class DeliveryHome extends Component {
