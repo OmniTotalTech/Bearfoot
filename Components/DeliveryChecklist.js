@@ -9,6 +9,7 @@ export default class DeliveryChecklist extends Component {
         <div className="px-4 py-2">
           <div className="bg-white px-5 pt-4">
             <div className="divide-y divide-gray-400 mb-4">
+              <div>{this.props.status}</div>
               <div className="text-center py-2">Delivery Checklist</div>
               <div className="flex flex-row w-full items-center">
                 <div>

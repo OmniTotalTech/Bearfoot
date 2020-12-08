@@ -17,9 +17,11 @@ class DeliveryInProgress extends Component {
     };
     console.log(item);
   }
+
   updateDeliveryOrder = (item, deliveryStatus) => {
     this.setState({ item: this.props.item });
   };
+
   render() {
     console.log(this.props.orderDetail.individualOrderDetail.foundOrder);
     return (
@@ -43,7 +45,19 @@ class DeliveryInProgress extends Component {
           ) : (
             <div></div>
           )}
-          <DeliveryChecklist />
+
+          {this.props.orderDetail.individualOrderDetail.foundOrder != null &&
+          this.props.orderDetail.individualOrderDetail.foundOrder !=
+            undefined ? (
+            <DeliveryChecklist
+              status={
+                this.props.orderDetail.individualOrderDetail.foundOrder.status
+              }
+            />
+          ) : (
+            <div></div>
+          )}
+
           <TouchableOpacity
             onPress={() => {
               const body = {
