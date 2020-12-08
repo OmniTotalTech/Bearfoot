@@ -52,7 +52,7 @@ class DeliveryInProgress extends Component {
               };
               this.props.updateStatus(
                 this.state.item._id,
-                this.props.orderDetail.individualOrderDetail.foundOrder.status++
+                this.props.orderDetail.individualOrderDetail.foundOrder.status
               );
             }}
           >
