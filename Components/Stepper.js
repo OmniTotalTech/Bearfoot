@@ -12,8 +12,7 @@ export default class Stepper extends Component {
     };
   }
   componentDidUpdate() {
-    console.log(this.props)
-
+    console.log(this.props);
   }
   render() {
     return (
@@ -26,14 +25,41 @@ export default class Stepper extends Component {
         <div className="flex flex-row justify-between justify-center px-6 py-4 ">
           <div>
             {this.props.status != null && this.props.status != undefined ? (
-            this.props.status > 1 ? (
+              this.props.status > 0 ? (
+                <CheckCircleIcon
+                  className="text-5xl"
+                  style={{
+                    color: "red",
+                  }}
+                />
+              ) : this.props.status == 0 ? (
+                <WarningIcon
+                  className="text-5xl"
+                  style={{
+                    color: "yellow",
+                  }}
+                />
+              ) : (
+                <RemoveCircleIcon
+                  className="text-5xl"
+                  style={{
+                    color: "gray",
+                  }}
+                />
+              )
+            ) : (
+              <div></div>
+            )}
+          </div>
+          <div>
+            {this.props.status > 1 ? (
               <CheckCircleIcon
                 className="text-5xl"
                 style={{
                   color: "red",
                 }}
               />
-            ) : this.props.status ==  1 ? (
+            ) : this.props.status == 1 ? (
               <WarningIcon
                 className="text-5xl"
                 style={{
@@ -47,10 +73,8 @@ export default class Stepper extends Component {
                   color: "gray",
                 }}
               />
-            )
-          
-            ): (<div></div>)}
-            </div>
+            )}
+          </div>
           <div>
             {this.props.status > 2 ? (
               <CheckCircleIcon
@@ -84,30 +108,6 @@ export default class Stepper extends Component {
                 }}
               />
             ) : this.props.status == 3 ? (
-              <WarningIcon
-                className="text-5xl"
-                style={{
-                  color: "yellow",
-                }}
-              />
-            ) : (
-              <RemoveCircleIcon
-                className="text-5xl"
-                style={{
-                  color: "gray",
-                }}
-              />
-            )}
-          </div>
-          <div>
-          {this.props.status > 4 ? (
-              <CheckCircleIcon
-                className="text-5xl"
-                style={{
-                  color: "red",
-                }}
-              />
-            ) : this.props.status == 4 ? (
               <WarningIcon
                 className="text-5xl"
                 style={{

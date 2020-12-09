@@ -18,8 +18,8 @@ class DeliveryInProgress extends Component {
     console.log(item);
   }
 
-  updateDeliveryOrder = (item, deliveryStatus) => {
-    this.setState({ item: this.props.item });
+  loadOrder = () => {
+    this.props.fetchIndividualOrder(props.route.params.item._id);
   };
 
   render() {
@@ -58,24 +58,38 @@ class DeliveryInProgress extends Component {
             <div></div>
           )}
 
-          <TouchableOpacity
-            onPress={() => {
-              const body = {
-                status: this.props.orderDetail.individualOrderDetail.foundOrder
-                  .status++,
-              };
-              this.props.updateStatus(
-                this.state.item._id,
-                this.props.orderDetail.individualOrderDetail.foundOrder.status
-              );
-            }}
-          >
-            <div className="py-4 px-4">
-              <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
-                CONTINUE
-              </button>
-            </div>
-          </TouchableOpacity>
+          <div className="py-4 px-4">
+            {this.props.orderDetail.individualOrderDetail.foundOrder != null &&
+            this.props.orderDetail.individualOrderDetail.foundOrder !=
+              undefined ? (
+              this.props.orderDetail.individualOrderDetail.foundOrder.status ==
+              4 ? (
+                <div></div>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log(
+                      this.props.orderDetail.individualOrderDetail.foundOrder
+                        .status
+                    );
+                    const body = {
+                      status: this.props.orderDetail.individualOrderDetail
+                        .foundOrder.status++,
+                    };
+                    this.props.updateStatus(this.state.item._id, body);
+                  }}
+                >
+                  <div>
+                    <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
+                      CONTINUE
+                    </button>
+                  </div>
+                </TouchableOpacity>
+              )
+            ) : (
+              <div>*error</div>
+            )}
+          </div>
         </div>
       </ScrollView>
     );

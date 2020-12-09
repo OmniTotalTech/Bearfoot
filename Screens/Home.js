@@ -29,11 +29,16 @@ const deliveryTypeIcon = [
 const user = [
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Deliveries",
+    subtext: "Check pools assinged to you",
+    location: "DeliveryHome",
+  },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Pools",
     subtext: "Check pools assinged to you",
-    location: "extras",
+    location: "pools",
   },
-  
 ];
 const admin = [
   {
@@ -48,7 +53,6 @@ const admin = [
     subtext: "Check your tasks related",
     location: "users",
   },
- 
 ];
 
 function Home(props) {
@@ -56,73 +60,78 @@ function Home(props) {
     <ScrollView>
       <View style={{ backgroundColor: " #718096" }}>
         <div className="h-screen ">
-                  {/* Employee Area */}
-                  <div className="mt-8">
-
-              <div className="container mx-auto mt-4">
-            <div className="text-xl mx-4 "><span className="bg-white p-4 m-0">Employee</span></div>
-          </div>
-        <div
-            className="container w-full bg-white  rounded-lg shadow-lg mx-auto px-2"
-            style={{
-              width: "90%",
-            }}
-          >
-            <FlatList
-              horizontal
-              data={user}
-              renderItem={({ item: deliveryTypeIcon }) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate("DeliveryHome")}
-                    style={{ margin: "10px" }}
-                  >
-                    <DeliveryStatusIcon
-                      icon={deliveryTypeIcon.icon}
-                      status={deliveryTypeIcon.status}
-                      subtext={deliveryTypeIcon.subtext}
-                    />
-                  </TouchableOpacity>
-                );
+          {/* Employee Area */}
+          <div className="mt-8">
+            <div className="container mx-auto mt-4">
+              <div className="text-xl mx-4 ">
+                <span className="bg-white p-4 m-0">Employee</span>
+              </div>
+            </div>
+            <div
+              className="container w-full bg-white  rounded-lg shadow-lg mx-auto px-2"
+              style={{
+                width: "90%",
               }}
-              keyExtractor={(item, index) => index}
-            />
-          </div>          
+            >
+              <FlatList
+                horizontal
+                data={user}
+                renderItem={({ item: deliveryTypeIcon }) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        props.navigation.navigate(deliveryTypeIcon.location)
+                      }
+                      style={{ margin: "10px" }}
+                    >
+                      <DeliveryStatusIcon
+                        icon={deliveryTypeIcon.icon}
+                        status={deliveryTypeIcon.status}
+                        subtext={deliveryTypeIcon.subtext}
+                      />
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item, index) => index}
+              />
+            </div>
           </div>
           {/* // Admin area */}
           <div className="mt-8">
-          <div className="container mx-auto mt-4">
-            <div className="text-xl mx-4 "><span className="bg-white p-4 m-0">Admin</span></div>
-          </div>
-          <div
-            className="container w-full bg-white  rounded-lg shadow-lg mx-auto px-2"
-            style={{
-              width: "90%",
-            }}
-          >
-            <FlatList
-              horizontal
-              data={admin}
-              renderItem={({ item: deliveryTypeIcon }) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate(deliveryTypeIcon.location)}
-                    style={{ margin: "10px" }}
-                  >
-                    <DeliveryStatusIcon
-                      icon={deliveryTypeIcon.icon}
-                      status={deliveryTypeIcon.status}
-                      subtext={deliveryTypeIcon.subtext}
-                    />
-                  </TouchableOpacity>
-                );
+            <div className="container mx-auto mt-4">
+              <div className="text-xl mx-4 ">
+                <span className="bg-white p-4 m-0">Admin</span>
+              </div>
+            </div>
+            <div
+              className="container w-full bg-white  rounded-lg shadow-lg mx-auto px-2"
+              style={{
+                width: "90%",
               }}
-              keyExtractor={(item, index) => index}
-            />
+            >
+              <FlatList
+                horizontal
+                data={admin}
+                renderItem={({ item: deliveryTypeIcon }) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        props.navigation.navigate(deliveryTypeIcon.location)
+                      }
+                      style={{ margin: "10px" }}
+                    >
+                      <DeliveryStatusIcon
+                        icon={deliveryTypeIcon.icon}
+                        status={deliveryTypeIcon.status}
+                        subtext={deliveryTypeIcon.subtext}
+                      />
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item, index) => index}
+              />
+            </div>
           </div>
-          </div>
-
-          
         </div>
       </View>
     </ScrollView>
