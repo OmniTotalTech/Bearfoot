@@ -58,11 +58,11 @@ class DeliveryReview extends Component {
                   />
                   View Delivery Items List
                 </div>
-                {this.state.item.status == 0 ? (
+                {this.state.item.status == 1 ? (
                   <TouchableOpacity
                     onPress={() => {
                       this.setUpdateStatus();
-                      this.props.navigation.navigate("DeliveryPage", {
+                      this.props.navigation.navigate("DeliveryInProgress", {
                         item: this.state.item,
                       });
                     }}
@@ -76,7 +76,7 @@ class DeliveryReview extends Component {
                 ) : (
                   <TouchableOpacity
                     onPress={() => {
-                      this.props.navigation.navigate("DeliveryPage", {
+                      this.props.navigation.navigate("DeliveryInProgress", {
                         item: this.state.item,
                       });
                     }}

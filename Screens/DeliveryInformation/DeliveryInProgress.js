@@ -70,11 +70,14 @@ class DeliveryInProgress extends Component {
                   onPress={() => {
                     console.log(
                       this.props.orderDetail.individualOrderDetail.foundOrder
-                        .status
+                        .status++
                     );
+                    // console.log(
+                    //   this.props.updateStatus(this.state.item._id, body)
+                    // );
                     const body = {
                       status: this.props.orderDetail.individualOrderDetail
-                        .foundOrder.status++,
+                        .foundOrder.status,
                     };
                     this.props.updateStatus(this.state.item._id, body);
                   }}

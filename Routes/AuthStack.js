@@ -10,8 +10,8 @@ import DeliveryReview from "../Screens/DeliveryInformation/DeliveryReview";
 import DeliveryInProgress from "../Screens/DeliveryInformation/DeliveryInProgress";
 import Delivering from "../Screens/DeliveryInformation/Delivering";
 import Navbar from "../Components/Navbar";
-import Footer from '../Components/Footer';
-import {navigationRef} from './RootNavigation';
+import Footer from "../Components/Footer";
+import { navigationRef } from "./RootNavigation";
 import adminDeliveriesHome from "../Screens/DeliveryManagement/adminDeliveriesHome";
 
 const Stack = createStackNavigator();
@@ -33,11 +33,17 @@ export const AuthStack = () => (
           component={DeliveryAssignedPage}
         />
         <Stack.Screen name="DeliveryReview" component={DeliveryReview} />
-        <Stack.Screen name="DeliveryPage" component={DeliveryInProgress} />
-        <Stack.Screen name="AdminDeliveriesHome" component={adminDeliveriesHome} />
+        <Stack.Screen
+          name="DeliveryInProgress"
+          component={DeliveryInProgress}
+        />
+        <Stack.Screen
+          name="AdminDeliveriesHome"
+          component={adminDeliveriesHome}
+        />
       </Stack.Navigator>
     </NavigationContainer>
 
-    <Footer/>
+    <Footer />
   </>
 );
