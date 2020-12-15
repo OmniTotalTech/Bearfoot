@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { fetchAdminOrderDetail } from "../../redux/actions/adminOrderDetail";
 
 import Pagination from "../../Components/Pagination";
-import adminOrderDetail from "../../redux/actions/adminOrderDetail";
 import OrderTableList from "../../Components/OrderTableList";
 
 class adminDeliveriesHome extends Component {

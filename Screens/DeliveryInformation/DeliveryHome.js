@@ -8,18 +8,16 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import tailwind from "tailwind-rn";
-import HomeMenuItem from "../../Components/HomeMenuItem";
-import PlusImage from "../../assets/images/plus-1.jpg";
 
-import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
 import DeliveryStatusNum from "../../Components/DeliveryStatusNum";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 import { connect } from "react-redux";
-import { fetchOrderDetail, fetchIndividualOrderDetail } from "../../redux/actions/orderDetail";
-import orderDetail from "../../redux/reducers/orderDetail";
+import {
+  fetchOrderDetail,
+  fetchIndividualOrderDetail,
+} from "../../redux/actions/orderDetail";
 
 class DeliveryHome extends Component {
   componentDidMount() {

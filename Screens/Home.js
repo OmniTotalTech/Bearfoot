@@ -53,6 +53,18 @@ const admin = [
     subtext: "Check your tasks related",
     location: "users",
   },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Area Management",
+    subtext: "Check your tasks related",
+    location: "AdminPoolsHome",
+  },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Pool Management",
+    subtext: "Check your tasks related",
+    location: "AdminPoolsHome",
+  },
 ];
 
 function Home(props) {

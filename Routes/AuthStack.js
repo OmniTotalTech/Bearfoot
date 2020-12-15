@@ -13,6 +13,7 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { navigationRef } from "./RootNavigation";
 import adminDeliveriesHome from "../Screens/DeliveryManagement/adminDeliveriesHome";
+import AdminPoolsHome from "../Screens/AdminPool/AdminPoolsHome";
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,7 @@ export const AuthStack = () => (
           name="AdminDeliveriesHome"
           component={adminDeliveriesHome}
         />
+        <Stack.Screen name="AdminPoolsHome" component={AdminPoolsHome} />
       </Stack.Navigator>
     </NavigationContainer>
 
