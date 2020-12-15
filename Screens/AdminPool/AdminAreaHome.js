@@ -15,9 +15,9 @@ import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
 import AreaTable from "../../Components/Admin/AreaTable";
 import { connect } from "react-redux";
-import { fetchPool } from "../../redux/actions/pool";
+import { fetchArea } from "../../redux/actions/area";
 
-class AdminPoolsHome extends Component {
+class AdminAreaHome extends Component {
   render() {
     const admin = [
       {
@@ -82,14 +82,14 @@ class AdminPoolsHome extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    pool: state.pool,
+    area: state.area,
   };
 };
 
 const mapDisptachToProps = (dispatch) => {
   return {
-    fetchPool: (id) => dispatch(fetchPool(id)),
+    fetchArea: (id) => dispatch(fetchArea(id)),
   };
 };
 
-export default connect(mapStateToProps, mapDisptachToProps)(AdminPoolsHome);
+export default connect(mapStateToProps, mapDisptachToProps)(AdminAreaHome);
