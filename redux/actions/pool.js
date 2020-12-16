@@ -26,11 +26,11 @@ export const fetchPoolError = (error) => {
   };
 };
 
-export const fetchPool = (id) => {
+export const fetchPool = () => {
   return (dispatch) => {
     dispatch(fetchPoolRequest);
     api
-      .get("pool" + id)
+      .get("pool/")
       .then((response) => {
         const data = response.data;
         dispatch(fetchPoolSuccess(data));

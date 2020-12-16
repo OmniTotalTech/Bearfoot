@@ -26,11 +26,11 @@ export const fetchAreaError = (error) => {
   };
 };
 
-export const fetchArea = (id) => {
+export const fetchArea = () => {
   return (dispatch) => {
     dispatch(fetchAreaRequest);
     api
-      .get("area" + id)
+      .get("area/")
       .then((response) => {
         const data = response.data;
         dispatch(fetchAreaSuccess(data));

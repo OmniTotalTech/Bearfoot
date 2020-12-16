@@ -13,11 +13,15 @@ import {
 
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
-import AreaTable from "../../Components/Admin/AreaTable";
+import PoolTable from "../../Components/Admin/PoolTable";
 import { connect } from "react-redux";
 import { fetchPool } from "../../redux/actions/pool";
 
 class AdminPoolsHome extends Component {
+  componentDidMount() {
+    this.props.fetchPool();
+  }
+
   render() {
     const admin = [
       {
@@ -71,7 +75,9 @@ class AdminPoolsHome extends Component {
         /> */}
           <div className="container">
             <div className="w-full mx-auto">
-              <AreaTable />
+              <PoolTable
+              pool={this.props.pool}
+              />
             </div>
           </div>
         </div>

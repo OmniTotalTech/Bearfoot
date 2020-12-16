@@ -2,37 +2,12 @@ import React, { Component } from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-class AreaTable extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     area: [],
-  //   };
-  //   console.log(this.props);
-  // }
-
-  componentDidMount() {
-    // const url = "https://jsonplaceholder.typicode.com/posts";
-    // fetch(url, {
-    //   method: "GET",
-    // })
-    //   .then((response) => response.json())
-    //   .then((posts) => {
-    //     this.setState({ posts: posts });
-    //   });
-  }
-
-  // deletePoste(id) {
-  //   const index = this.state.posts.findIndex((post) => {
-  //     return post.id === id;
-  //   });
-  //   this.state.posts.splice(index, 1);
-  //   this.setState({ posts: this.state.posts });
-  // }
+class PoolTable extends Component {
+ 
 
   render() {
     console.log(data);
-    const data = this.props.area.data.foundArea;
+    const data = this.props.pool.data.foundPool;
     const columns = [
       {
         Header: "ID",
@@ -44,15 +19,18 @@ class AreaTable extends Component {
       },
       {
         Header: "Name",
-        accessor: "area_name",
+        accessor: "pool_name",
         style: {
           textAlign: "right",
         },
         // width: 100,
       },
       {
-        Header: "Time Zone",
-        accessor: "area_time_zone",
+        Header: "Address",
+        accessor: "pool_address",
+        style: {
+            textAlign: "right",
+          },
       },
       // {
       //   Header: "Status",
@@ -107,4 +85,4 @@ class AreaTable extends Component {
   }
 }
 
-export default AreaTable;
+export default PoolTable;
