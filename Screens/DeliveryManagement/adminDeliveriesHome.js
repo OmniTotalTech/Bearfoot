@@ -50,7 +50,7 @@ class adminDeliveriesHome extends Component {
             </label>
           </div>
           <div>
-            <OrderTableList adminOrderDetail={adminOrderDetail} />
+            <OrderTableList />
           </div>
           <Pagination
           // ordersPerPage={this.props.ordersPerPage}

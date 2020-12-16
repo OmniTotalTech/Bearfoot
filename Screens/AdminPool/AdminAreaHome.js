@@ -13,42 +13,47 @@ import {
 
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
-import PoolTable from "../../Components/Admin/PoolTable";
+import AreaTable from "../../Components/Admin/AreaTable";
 import { connect } from "react-redux";
-import { fetchPool } from "../../redux/actions/pool";
+import { fetchArea } from "../../redux/actions/area";
 
-class AdminPoolsHome extends Component {
+class AdminAreaHome extends Component {
   componentDidMount() {
-    this.props.fetchPool();
+    this.props.fetchArea();
   }
 
   render() {
-    const admin = [
-      {
-        icon: <QueryBuilderIcon className="text-2xl" />,
-        status: "Delivery Management",
-        subtext: "Manage Delivieries for Your Area",
-        location: "AdminDeliveriesHome",
-      },
-      {
-        icon: <QueryBuilderIcon className="text-2xl" />,
-        status: "Employee Management",
-        subtext: "Check your tasks related",
-        location: "users",
-      },
-      {
-        icon: <QueryBuilderIcon className="text-2xl" />,
-        status: "Pool Management",
-        subtext: "Check your tasks related",
-        location: "AdminPoolsHome",
-      },
-      {
-        icon: <QueryBuilderIcon className="text-2xl" />,
-        status: "Inventory Management",
-        subtext: "Check your tasks related",
-        location: "AdminPoolsHome",
-      },
-    ];
+    console.log(this.props.area.data.foundAdminOrderDetails);
+    // const { area } = this.props.area.data.foundAdminOrderDetails;
+
+   
+
+    // const admin = [
+    //   {
+    //     icon: <QueryBuilderIcon className="text-2xl" />,
+    //     status: "Delivery Management",
+    //     subtext: "Manage Delivieries for Your Area",
+    //     location: "AdminDeliveriesHome",
+    //   },
+    //   {
+    //     icon: <QueryBuilderIcon className="text-2xl" />,
+    //     status: "Employee Management",
+    //     subtext: "Check your tasks related",
+    //     location: "users",
+    //   },
+    //   {
+    //     icon: <QueryBuilderIcon className="text-2xl" />,
+    //     status: "Pool Management",
+    //     subtext: "Check your tasks related",
+    //     location: "AdminPoolsHome",
+    //   },
+    //   {
+    //     icon: <QueryBuilderIcon className="text-2xl" />,
+    //     status: "Inventory Management",
+    //     subtext: "Check your tasks related",
+    //     location: "AdminPoolsHome",
+    //   },
+    // ];
     return (
       <ScrollView>
         <div className="container mx-auto">
@@ -75,9 +80,8 @@ class AdminPoolsHome extends Component {
         /> */}
           <div className="container">
             <div className="w-full mx-auto">
-              <PoolTable
-              pool={this.props.pool}
-              />
+            
+              <AreaTable area={this.props.area} />
             </div>
           </div>
         </div>
@@ -88,14 +92,14 @@ class AdminPoolsHome extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    pool: state.pool,
+    area: state.area,
   };
 };
 
 const mapDisptachToProps = (dispatch) => {
   return {
-    fetchPool: (id) => dispatch(fetchPool(id)),
+    fetchArea: () => dispatch(fetchArea()),
   };
 };
 
-export default connect(mapStateToProps, mapDisptachToProps)(AdminPoolsHome);
+export default connect(mapStateToProps, mapDisptachToProps)(AdminAreaHome);

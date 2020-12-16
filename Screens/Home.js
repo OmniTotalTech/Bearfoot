@@ -57,7 +57,7 @@ const admin = [
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Area Management",
     subtext: "Check your tasks related",
-    location: "AdminPoolsHome",
+    location: "AdminAreaHome",
   },
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
