@@ -3,8 +3,6 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 
 class PoolTable extends Component {
- 
-
   render() {
     console.log(data);
     const data = this.props.pool.data.foundPool;
@@ -18,7 +16,7 @@ class PoolTable extends Component {
         // width: 100,
       },
       {
-        Header: "Name",
+        Header: "Pool Name",
         accessor: "pool_name",
         style: {
           textAlign: "right",
@@ -29,8 +27,29 @@ class PoolTable extends Component {
         Header: "Address",
         accessor: "pool_address",
         style: {
-            textAlign: "right",
-          },
+          textAlign: "right",
+        },
+      },
+      {
+        Header: "State",
+        accessor: "pool_state",
+        style: {
+          textAlign: "right",
+        },
+      },
+      {
+        Header: "Area Id",
+        accessor: "area_id",
+        style: {
+          textAlign: "right",
+        },
+      },
+      {
+        Header: "Area Name",
+        accessor: "area_name",
+        style: {
+          textAlign: "right",
+        },
       },
       // {
       //   Header: "Status",
