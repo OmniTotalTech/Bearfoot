@@ -65,6 +65,12 @@ const admin = [
     subtext: "Check your tasks related",
     location: "AdminPoolsHome",
   },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Inventory Management",
+    subtext: "Check your tasks related",
+    location: "AdminPoolsHome",
+  },
 ];
 
 function Home(props) {

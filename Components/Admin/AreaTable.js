@@ -31,54 +31,44 @@ class AreaTable extends Component {
   // }
 
   render() {
-    console.log(data);
+    console.log(this.props);
     const data = this.props.area.data.foundArea;
     const columns = [
       {
-        Header: "ID",
-        accessor: "_id",
-        style: {
-          textAlign: "right",
-        },
-        // width: 100,
-      },
-      {
         Header: "Name",
-        accessor: "area_name",
+        accessor: "areaName",
         style: {
-          textAlign: "right",
+          //textAlign: "right",
         },
         // width: 100,
       },
       {
         Header: "Time Zone",
-        accessor: "area_time_zone",
+        accessor: "areaTimeZone",
       },
-      // {
-      //   Header: "Status",
-      //   accessor: "body",
-      // },
-      // {
-      //   Header: "Actions",
-      //   filterable: false,
-      //   sortable: false,
-      //   resizable: false,
-      //   Cell: (porps) => {
-      //     return (
-      //       <button
-      //         style={{ background: "red", color: "#fefefe" }}
-      //         onClick={(e) => {
-      //           this.deletePoste(porps.original.id);
-      //         }}
-      //       >
-      //         Delete
-      //       </button>
-      //     );
-      //   },
-      //   width: 100,
-      //   maxWidth: 100,
-      //   minWidth: 100,
-      // },
+      {
+        Header: "Actions",
+        filterable: false,
+        sortable: false,
+        resizable: false,
+        Cell: (porps) => {
+          return (
+            <div>
+              <button
+                className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
+                onClick={(e) => {
+                  this.deletePoste(porps.original.id);
+                }}
+              >
+                View
+              </button>
+            </div>
+          );
+        },
+        width: 100,
+        maxWidth: 100,
+        minWidth: 100,
+      },
     ];
 
     return (
@@ -94,12 +84,7 @@ class AreaTable extends Component {
             this.reactTable = state.pageRows.map((modem) => {
               return modem._original;
             });
-            return (
-              <div>
-                {makeTable()}
-                {/* <ExportToExcel posts={this.reactTable} /> */}
-              </div>
-            );
+            return <div>{makeTable()}</div>;
           }}
         </ReactTable>
       </div>

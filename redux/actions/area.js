@@ -41,3 +41,19 @@ export const fetchArea = () => {
       });
   };
 };
+
+export const fetchMyAdminAreas = () => {
+  return (dispatch) => {
+    dispatch(fetchAreaRequest);
+    api
+      .get("area/myAreas")
+      .then((response) => {
+        const data = response.data;
+        dispatch(fetchAreaSuccess(data));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(fetchAreaError(errorMsg));
+      });
+  };
+};

@@ -15,7 +15,7 @@ import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
 import AreaTable from "../../Components/Admin/AreaTable";
 import { connect } from "react-redux";
-import { fetchArea } from "../../redux/actions/area";
+import { fetchMyAdminAreas } from "../../redux/actions/area";
 
 class AdminAreaHome extends Component {
   componentDidMount() {
@@ -23,10 +23,8 @@ class AdminAreaHome extends Component {
   }
 
   render() {
-    console.log(this.props.area.data.foundAdminOrderDetails);
+    console.log(this.props.area.data);
     // const { area } = this.props.area.data.foundAdminOrderDetails;
-
-   
 
     // const admin = [
     //   {
@@ -80,7 +78,6 @@ class AdminAreaHome extends Component {
         /> */}
           <div className="container">
             <div className="w-full mx-auto">
-            
               <AreaTable area={this.props.area} />
             </div>
           </div>
@@ -98,7 +95,7 @@ const mapStateToProps = (state) => {
 
 const mapDisptachToProps = (dispatch) => {
   return {
-    fetchArea: () => dispatch(fetchArea()),
+    fetchArea: () => dispatch(fetchMyAdminAreas()),
   };
 };
 
