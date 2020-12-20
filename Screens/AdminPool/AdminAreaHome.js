@@ -78,7 +78,10 @@ class AdminAreaHome extends Component {
         /> */}
           <div className="container">
             <div className="w-full mx-auto">
-              <AreaTable area={this.props.area} />
+              <AreaTable
+                navigation={this.props.navigation}
+                area={this.props.area}
+              />
             </div>
           </div>
         </div>

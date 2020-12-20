@@ -7,6 +7,7 @@ import { fetchAdminOrderDetail } from "../../redux/actions/adminOrderDetail";
 
 import Pagination from "../../Components/Pagination";
 import OrderTableList from "../../Components/OrderTableList";
+import DeliveryTable from "../../Components/Admin/DeliveryTable";
 
 class adminDeliveriesHome extends Component {
   state = {
@@ -40,15 +41,7 @@ class adminDeliveriesHome extends Component {
             <p className="text-sm">Delivery Date:</p>
             <DatePicker onChange={eventHandler} />
           </div>
-          <div>
-            <label className="block mt-4">
-              <span className="text-gray-700">Sort By:</span>
-              <select className="form-select mt-1 block w-full">
-                <option>Area</option>
-                <option>Pool</option>
-              </select>
-            </label>
-          </div>
+          <div></div>
           <div>
             <OrderTableList />
           </div>
@@ -56,12 +49,14 @@ class adminDeliveriesHome extends Component {
           // ordersPerPage={this.props.ordersPerPage}
           // totalOrders={adminOrderDetail.length}
           />
-          <button
+          <br />
+          {/* <button
             type="button"
             className="border border-black-500 bg-red-500 text-white   rounded-md px-4 py-2 my-4 transition duration-500 ease select-none hover:text-white hover:bg-red-600 "
           >
             Submit
-          </button>
+          </button> */}
+          <DeliveryTable data={this.props.adminOrderDetail} />
         </div>
       </ScrollView>
     );

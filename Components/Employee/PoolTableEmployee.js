@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-class PoolTable extends Component {
+class PoolTableEmployee extends Component {
   render() {
     console.log(data);
     const data = this.props.data;
@@ -66,20 +66,7 @@ class PoolTable extends Component {
       //   filterable: false,
       //   sortable: false,
       //   resizable: false,
-      //   Cell: (porps) => {
-      //     return (
-      //       <div>
-      //         <button
-      //           className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
-      //           onClick={(e) => {
-      //             navToInventory(porps.original._id);
-      //           }}
-      //         >
-      //           Inventory
-      //         </button>
-      //       </div>
-      //     );
-      //   },
+
       //   width: 100,
       //   maxWidth: 100,
       //   minWidth: 100,
@@ -137,4 +124,4 @@ class PoolTable extends Component {
   }
 }
 
-export default PoolTable;
+export default PoolTableEmployee;

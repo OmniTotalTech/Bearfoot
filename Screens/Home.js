@@ -37,7 +37,7 @@ const user = [
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Pools",
     subtext: "Check pools assinged to you",
-    location: "pools",
+    location: "PoolEmployee",
   },
 ];
 const admin = [
@@ -51,7 +51,7 @@ const admin = [
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Employee Management",
     subtext: "Check your tasks related",
-    location: "users",
+    location: "AdminEmployeeManagement",
   },
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
@@ -59,18 +59,18 @@ const admin = [
     subtext: "Check your tasks related",
     location: "AdminAreaHome",
   },
-  {
-    icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Pool Management",
-    subtext: "Check your tasks related",
-    location: "AdminPoolsHome",
-  },
-  {
-    icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Inventory Management",
-    subtext: "Check your tasks related",
-    location: "AdminPoolsHome",
-  },
+  // {
+  //   icon: <QueryBuilderIcon className="text-2xl" />,
+  //   status: "Pool Management",
+  //   subtext: "Check your tasks related",
+  //   location: "AdminPoolsHome",
+  // },
+  // {
+  //   icon: <QueryBuilderIcon className="text-2xl" />,
+  //   status: "Inventory Management",
+  //   subtext: "Check your tasks related",
+  //   location: "AdminPoolsHome",
+  // },
 ];
 
 function Home(props) {

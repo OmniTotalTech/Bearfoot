@@ -15,7 +15,10 @@ import { navigationRef } from "./RootNavigation";
 import adminDeliveriesHome from "../Screens/DeliveryManagement/adminDeliveriesHome";
 import AdminPoolsHome from "../Screens/AdminPool/AdminPoolsHome";
 import AdminAreaHome from "../Screens/AdminPool/AdminAreaHome";
-
+import AdminEmployeeManagement from "../Screens/AdminUser/AdminEmployeeManagement";
+import AdminAreaDetail from "../Screens/AdminPool/AdminAreaDetail";
+import PoolEmployee from "../Screens/Pools/PoolEmployee";
+import PoolDetail from "../Screens/Pools/PoolDetail";
 const Stack = createStackNavigator();
 
 export const AuthStack = () => (
@@ -45,6 +48,13 @@ export const AuthStack = () => (
         />
         <Stack.Screen name="AdminPoolsHome" component={AdminPoolsHome} />
         <Stack.Screen name="AdminAreaHome" component={AdminAreaHome} />
+        <Stack.Screen
+          name="AdminEmployeeManagement"
+          component={AdminEmployeeManagement}
+        />
+        <Stack.Screen name="AdminAreaDetail" component={AdminAreaDetail} />
+        <Stack.Screen name="PoolEmployee" component={PoolEmployee} />
+        <Stack.Screen name="PoolDetail" component={PoolDetail} />
       </Stack.Navigator>
     </NavigationContainer>
 

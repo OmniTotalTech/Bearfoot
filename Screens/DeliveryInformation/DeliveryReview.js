@@ -58,7 +58,7 @@ class DeliveryReview extends Component {
                   />
                   View Delivery Items List
                 </div>
-                {this.state.item.status == 1 ? (
+                {this.state.item.status == 0 ? (
                   <TouchableOpacity
                     onPress={() => {
                       this.setUpdateStatus();

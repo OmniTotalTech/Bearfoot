@@ -1,56 +1,33 @@
 import React, { Component } from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import StatusButton from "../General/StatusButton";
 
-class AreaTable extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     area: [],
-  //   };
-  //   console.log(this.props);
-  // }
-
-  componentDidMount() {
-    // const url = "https://jsonplaceholder.typicode.com/posts";
-    // fetch(url, {
-    //   method: "GET",
-    // })
-    //   .then((response) => response.json())
-    //   .then((posts) => {
-    //     this.setState({ posts: posts });
-    //   });
-  }
-
-  // deletePoste(id) {
-  //   const index = this.state.posts.findIndex((post) => {
-  //     return post.id === id;
-  //   });
-  //   this.state.posts.splice(index, 1);
-  //   this.setState({ posts: this.state.posts });
-  // }
-
-  navToArea = (props) => {
-    console.log(props.original._id);
-    const id = props.original._id;
-    this.props.navigation.navigate("AdminAreaDetail", id);
+class DeliveryTable extends Component {
+  navToArea = () => {
+    this.props.navigation.navigate("AdminAreaDetail");
   };
 
   render() {
     console.log(this.props);
-    const data = this.props.area.data.foundArea;
+    const data = this.props.data.data;
     const columns = [
       {
-        Header: "Name",
-        accessor: "areaName",
+        Header: "Day",
+        accessor: "day_of_week",
         style: {
           //textAlign: "right",
         },
         // width: 100,
       },
       {
-        Header: "Time Zone",
-        accessor: "areaTimeZone",
+        Header: "Status",
+        accessor: "status",
+        style: {
+          //textAlign: "right",
+        },
+
+        // width: 100,
       },
       {
         Header: "Actions",
@@ -62,8 +39,9 @@ class AreaTable extends Component {
             <div>
               <button
                 className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
+                disabled
                 onClick={(e) => {
-                  this.navToArea(porps);
+                  this.navToArea(porps.original.id);
                 }}
               >
                 View
@@ -98,4 +76,4 @@ class AreaTable extends Component {
   }
 }
 
-export default AreaTable;
+export default DeliveryTable;

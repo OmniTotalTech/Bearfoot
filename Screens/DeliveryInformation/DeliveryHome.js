@@ -7,11 +7,13 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 
 import DeliveryStatusNum from "../../Components/DeliveryStatusNum";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
 
 import { connect } from "react-redux";
 import {
@@ -25,81 +27,49 @@ class DeliveryHome extends Component {
   }
 
   render() {
-    const deliveryTypeIcon = [
+    const user = [
       {
         icon: <QueryBuilderIcon className="text-2xl" />,
         status: "Deliveries",
-        subtext: "Check your tasks related",
-      },
-    ];
-    let deliveryTypeNum;
-    deliveryTypeNum = [
-      {
-        number: 0,
-        status: "Primary",
+        subtext: "Check pools assinged to you",
+        location: "DeliveryHome",
       },
       {
-        number: 0,
-        status: "Secondary",
+        icon: <QueryBuilderIcon className="text-2xl" />,
+        status: "Pools",
+        subtext: "Check pools assinged to you",
+        location: "pools",
       },
     ];
 
-    const handleArray = (orderDetail) => {
-      console.log(orderDetail.primary);
-      if (orderDetail.primary != undefined) {
-        deliveryTypeNum = [
-          {
-            number: 0,
-            status: "Primary",
-          },
-          {
-            number: 0,
-            status: "Secondary",
-          },
-        ];
-      }
-      deliveryTypeNum.map((deliveryTypeNum, i) => {
-        return (
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate("DeliveryAssignedPage")
-            }
-          >
-            <DeliveryStatusNum
-              key={i}
-              number={deliveryTypeNum.number}
-              status={deliveryTypeNum.status}
-            />
-          </TouchableOpacity>
-        );
-      });
-    };
-    const deliveryStatusNumMap = deliveryTypeNum.map((deliveryTypeNum, i) => {
-      return (
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("DeliveryAssignedPage")}
-        >
-          <DeliveryStatusNum
-            key={i}
-            number={deliveryTypeNum.number}
-            status={deliveryTypeNum.status}
-          />
-        </TouchableOpacity>
-      );
-    });
     return (
       <View style={{ backgroundColor: " #718096" }}>
-        <div className="h-screen ">
-          <div className="w-100 h-100 "></div>
-          <div className="w-full h-100">
-            <div className="container mx-auto my-4">
-              <div className="text-2xl ">Employee Activities</div>
-            </div>
-            <div className="container w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
-              <div className="grid grid-cols-2 mt-4 gap-2 py-4 rounded-lg   ">
-                {/* {handleArray(this.props.byId.data)} */}
-                {deliveryStatusNumMap}
+        <div className="container mx-auto">
+          {/* Employee Area */}
+          <div className="mt-8">
+            <div className="container mx-auto mt-4">
+              <div className="text-xl mx-4 ">
+                <span className="bg-white p-4 m-0">Your Deliveries</span>
               </div>
+            </div>
+            <div
+              className="container w-full bg-white  rounded-lg shadow-lg mx-auto px-2 py-4"
+              style={{
+                width: "90%",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate("DeliveryAssignedPage")
+                }
+                style={{ margin: "10px" }}
+              >
+                <DeliveryStatusNum
+                  icon={this.props.orderDetail.data.primary.length}
+                  status={"Assigned To You Today"}
+                  subtext={"Check Status for each inside"}
+                />
+              </TouchableOpacity>
             </div>
           </div>
         </div>

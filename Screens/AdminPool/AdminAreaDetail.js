@@ -15,70 +15,25 @@ import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
 import AreaTable from "../../Components/Admin/AreaTable";
 import { connect } from "react-redux";
-import { fetchMyAdminAreas } from "../../redux/actions/area";
+import { fetchAreaPools } from "../../redux/actions/area";
+import PoolTable from "../../Components/Admin/PoolTable";
 
 class AdminAreaDetail extends Component {
   componentDidMount() {
-    this.props.fetchArea();
+    this.props.fetchAreaPools(this.props.route.params);
   }
-
   render() {
-    console.log(this.props.area.data);
-    // const { area } = this.props.area.data.foundAdminOrderDetails;
+    console.log(this.props.route.params);
 
-    // const admin = [
-    //   {
-    //     icon: <QueryBuilderIcon className="text-2xl" />,
-    //     status: "Delivery Management",
-    //     subtext: "Manage Delivieries for Your Area",
-    //     location: "AdminDeliveriesHome",
-    //   },
-    //   {
-    //     icon: <QueryBuilderIcon className="text-2xl" />,
-    //     status: "Employee Management",
-    //     subtext: "Check your tasks related",
-    //     location: "users",
-    //   },
-    //   {
-    //     icon: <QueryBuilderIcon className="text-2xl" />,
-    //     status: "Pool Management",
-    //     subtext: "Check your tasks related",
-    //     location: "AdminPoolsHome",
-    //   },
-    //   {
-    //     icon: <QueryBuilderIcon className="text-2xl" />,
-    //     status: "Inventory Management",
-    //     subtext: "Check your tasks related",
-    //     location: "AdminPoolsHome",
-    //   },
-    // ];
     return (
       <ScrollView>
         <div className="container mx-auto">
-          {/* <FlatList
-          horizontal
-          data={admin}
-          renderItem={({ item: deliveryTypeIcon }) => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate(deliveryTypeIcon.location)
-                }
-                style={{ margin: "10px" }}
-              >
-                <DeliveryStatusIcon
-                  icon={deliveryTypeIcon.icon}
-                  status={deliveryTypeIcon.status}
-                  subtext={deliveryTypeIcon.subtext}
-                />
-              </TouchableOpacity>
-            );
-          }}
-          keyExtractor={(item, index) => index}
-        /> */}
           <div className="container">
             <div className="w-full mx-auto">
-              <AreaTable area={this.props.area} />
+              <PoolTable
+                navigation={this.props.navigation}
+                data={this.props.area.pools}
+              />
             </div>
           </div>
         </div>
@@ -95,7 +50,7 @@ const mapStateToProps = (state) => {
 
 const mapDisptachToProps = (dispatch) => {
   return {
-    fetchArea: () => dispatch(fetchMyAdminAreas()),
+    fetchAreaPools: (id) => dispatch(fetchAreaPools(id)),
   };
 };
 

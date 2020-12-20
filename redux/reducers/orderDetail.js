@@ -7,10 +7,13 @@ import {
 } from "../types/orderDetail";
 
 const initialState = {
-  data: {},
+  data: {
+    primary: [],
+    secondary: [],
+  },
   loading: false,
   error: null,
-  individualOrderDetail: {}
+  individualOrderDetail: {},
 };
 
 export default (state = initialState, action) => {
@@ -39,15 +42,15 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         individualOrderDetail: action.payload,
-        error: null
-      }
-      case FETCH_INDIVIDUAL_ORDER_DETAIL_ERROR:
-        return {
-          ...state,
-          loading: false,
-          individualOrderDetail: {},
-          error: action.payload
-        }
+        error: null,
+      };
+    case FETCH_INDIVIDUAL_ORDER_DETAIL_ERROR:
+      return {
+        ...state,
+        loading: false,
+        individualOrderDetail: {},
+        error: action.payload,
+      };
     default:
       return state;
   }

@@ -1,5 +1,4 @@
 import React from "react";
-import countries from "./countries";
 import { connect } from "react-redux";
 import { login } from "../../redux/actions/auth";
 function LoginForm(props) {

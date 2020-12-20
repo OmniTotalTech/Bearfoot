@@ -5,7 +5,7 @@ import {
 } from "../types/adminOrderDetail";
 
 const initialState = {
-  data: {},
+  data: [],
   loading: false,
   error: null,
 };

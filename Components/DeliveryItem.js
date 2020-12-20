@@ -20,7 +20,17 @@ export default function DeliveryItem(props) {
             </div>
             <div className="w-1/2 text-right text-sm">
               <button className="bg-red-200 hover:bg-red-300 rounded border-solid border-2 border-red-700 text-red-700 px-1 text-sm">
-                {props.item.status == 0 ? (<div>Not Accepted</div>): (props.item.status == 1 ? <div>Accepted, Inventory Stage</div>: (props.item.status == 2 ? <div>Accepted, En Route to Pool </div>: <div>Complete</div>))}
+                {props.item.status == 0 ? (
+                  <div>Not Accepted</div>
+                ) : props.item.status == 1 ? (
+                  <div>Accepted, Inventory Stage</div>
+                ) : props.item.status == 2 ? (
+                  <div>Accepted, En Route to Pool </div>
+                ) : props.item.status == 3 ? (
+                  <div>Dropped off, not complete</div>
+                ) : (
+                  <div>Complete</div>
+                )}
               </button>
             </div>
           </div>
