@@ -5,7 +5,8 @@ export default class InvitedUser extends Component {
     return (
       <div>
         <div>
-          <div className="bg-gray-100 p-4 border-t-2 bg-opacity-5 border-red-400 rounded-t">
+          {/* border-red-400 */}
+          <div className="bg-gray-100 p-4 border-t-2 bg-opacity-5  rounded-t -my-4">
             <div className="max-w-sm mx-auto md:w-full md:mx-0">
               <div className="inline-flex items-center space-x-4">
                 <img

@@ -8,7 +8,7 @@ class PoolEmployee extends Component {
   }
   render() {
     return (
-      <div className="container mx-auto">
+      <div className="container mx-auto max-w-4xl">
         <PoolTableEmployee
           navigation={this.props.navigation}
           data={this.props.pool.data.foundPool}

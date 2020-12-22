@@ -12,7 +12,7 @@ export default class DeliveryListContainer extends Component {
     });
 
     return (
-      <div className="container mx-auto px-4 my-4">
+      <div className="container max-w-2xl mx-auto px-4 my-4">
         <div className="my-4">
           <div className="text-lg">Assigned Deliveries</div>
           <div className="text-md">
