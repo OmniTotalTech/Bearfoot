@@ -17,6 +17,8 @@ import AreaTable from "../../Components/Admin/AreaTable";
 import { connect } from "react-redux";
 import { fetchMyAdminAreas } from "../../redux/actions/area";
 import HeadAndDescription from "../../Components/General/HeadAndDescription";
+import InvitedUser from "../../Components/InvitedUser";
+import VerifiedUser from "../../Components/VerifiedUser";
 
 class AdminAreaHome extends Component {
   componentDidMount() {
@@ -27,6 +29,54 @@ class AdminAreaHome extends Component {
     const headText = "Create a new user Section";
     const bodyText =
       "This is where an admin will be able to create a new user. Permissions apply here, and restrictions will be included based on user level and group association";
+
+    const userInfoInvited = [
+      {
+        pic: "pic",
+        name: "John",
+        email: "john123@gmail.com",
+      },
+      {
+        pic: "pic",
+        name: "Jane",
+        email: "jane@gmail.com",
+      },
+    ];
+
+    const userInfoInvitedMap = userInfoInvited.map((userInfoInvited, i) => {
+      return (
+        <InvitedUser
+          key={i}
+          pic={userInfoInvited.pic}
+          name={userInfoInvited.name}
+          email={userInfoInvited.email}
+        />
+      );
+    });
+
+    const userInfoVerified = [
+      {
+        pic: "pic",
+        name: "David",
+        email: "david123@gmail.com",
+      },
+      {
+        pic: "pic",
+        name: "Diana",
+        email: "diana@gmail.com",
+      },
+    ];
+
+    const userInfoVerifiedMap = userInfoVerified.map((userInfoVerified, i) => {
+      return (
+        <VerifiedUser
+          key={i}
+          pic={userInfoVerified.pic}
+          name={userInfoVerified.name}
+          email={userInfoVerified.email}
+        />
+      );
+    });
 
     return (
       <ScrollView>
@@ -116,6 +166,11 @@ class AdminAreaHome extends Component {
               </div>
             </div>
           </div>
+          <div className="bg-gray-100">Invited User</div>
+
+          {userInfoInvitedMap}
+          <div className="bg-gray-100">Verified User</div>
+          {userInfoVerifiedMap}
         </section>
       </ScrollView>
     );
