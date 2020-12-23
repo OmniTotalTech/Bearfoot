@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { TouchableOpacity } from "react-native";
 class NavbarContainer extends Component {
   render() {
     return (
@@ -31,13 +31,16 @@ class NavbarContainer extends Component {
             </div>
           </div>
 
-          <div>
+          <div className="float-right text-right">
             <a
-              className="text-sm float-right font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white"
+              className="text-sm  font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white"
               href="#pablo"
             >
               BearFoot Pools
             </a>
+            <TouchableOpacity>
+              <p className="text text-white text-lg mr-4">Logout</p>
+            </TouchableOpacity>
           </div>
         </div>
       </div>

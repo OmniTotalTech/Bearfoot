@@ -80,7 +80,7 @@ function Home(props) {
         <div className="h-screen ">
           {/* Employee Area */}
           <div className="mt-8">
-            <div className="container max-w-2xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
+            <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
               <div className="text-3xl mx-4 ">
                 <span className="bg-white mb-4 m-0">Employee</span>
               </div>
@@ -109,38 +109,33 @@ function Home(props) {
           </div>
           {/* // Admin area */}
           <div className="mt-8">
-            <div className="container mx-auto mt-4">
-              <div className="text-xl mx-4 ">
-                <span className="bg-white p-4 m-0">Admin</span>
+            <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
+              <div className="text-3xl mx-4 ">
+                <span className="bg-white mb-4 m-0">Admin</span>
               </div>
-            </div>
-            <div
-              className="container w-full bg-white  rounded-lg shadow-lg mx-auto px-2"
-              style={{
-                width: "90%",
-              }}
-            >
-              <FlatList
-                horizontal
-                data={admin}
-                renderItem={({ item: deliveryTypeIcon }) => {
-                  return (
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.navigation.navigate(deliveryTypeIcon.location)
-                      }
-                      style={{ margin: "10px" }}
-                    >
-                      <DeliveryStatusIcon
-                        icon={deliveryTypeIcon.icon}
-                        status={deliveryTypeIcon.status}
-                        subtext={deliveryTypeIcon.subtext}
-                      />
-                    </TouchableOpacity>
-                  );
-                }}
-                keyExtractor={(item, index) => index}
-              />
+              <div className="container  max-w-4xl w-full bg-white  rounded-lg  px-2">
+                <FlatList
+                  horizontal
+                  data={admin}
+                  renderItem={({ item: deliveryTypeIcon }) => {
+                    return (
+                      <TouchableOpacity
+                        onPress={() =>
+                          props.navigation.navigate(deliveryTypeIcon.location)
+                        }
+                        style={{ margin: "10px" }}
+                      >
+                        <DeliveryStatusIcon
+                          icon={deliveryTypeIcon.icon}
+                          status={deliveryTypeIcon.status}
+                          subtext={deliveryTypeIcon.subtext}
+                        />
+                      </TouchableOpacity>
+                    );
+                  }}
+                  keyExtractor={(item, index) => index}
+                />
+              </div>
             </div>
           </div>
         </div>

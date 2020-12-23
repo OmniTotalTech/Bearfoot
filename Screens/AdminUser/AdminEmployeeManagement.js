@@ -147,16 +147,20 @@ class AdminAreaHome extends Component {
         <section className="py-16  bg-opacity-50 h-screen">
           <NewEmployeeModalBody />
 
-          <div className="container mx-auto max-w-2xl m-4">
+          {/* <div className="container mx-auto max-w-4xl m-4 grid grid-cols-2"> */}
+          <div className="container mx-auto max-w-4xl m-4 ">
             <div className="text text-3xl my-2">Invited Users</div>
             <View style={{ overflow: "scroll", maxHeight: "600px" }}>
               {userInfoInvitedMap}
             </View>
-            <div className="text text-3xl my-2">Manageable Employees:</div>
-            <View style={{ overflow: "scroll", maxHeight: "600px" }}>
-              {userInfoInvitedMap}
-            </View>
           </div>
+          {/* <div>
+              <div className="text text-3xl my-2">Manageable Employees:</div>
+              <View style={{ overflow: "scroll", maxHeight: "600px" }}>
+                {userInfoInvitedMap}
+              </View>
+            </div> */}
+          {/* </div> */}
         </section>
       </ScrollView>
     );
