@@ -16,6 +16,7 @@ import PlusImage from "../assets/images/plus-1.jpg";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import DeliveryStatusIcon from "../Components/DeliveryStatusIcon";
+import UpdateEmployeeInfoForm from "../Components/Employee/UpdateEmployeeInfoForm";
 import { connect } from "react-redux";
 
 import Navbar from "../Components/Navbar";
@@ -149,7 +150,10 @@ class Home extends Component {
           </View>
         ) : (
           <div className="container mx-auto">
-            they have not signed in before
+            <UpdateEmployeeInfoForm
+              email={this.props.user.email}
+              name={this.props.user.name}
+            />
           </div>
         )}
       </ScrollView>

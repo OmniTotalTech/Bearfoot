@@ -42,6 +42,7 @@ class NewEmployeeModalBody extends Component {
                   type="email"
                   className="w-11/12 focus:outline-none focus:text-gray-600 p-2"
                   placeholder="email@example.com"
+                  name="email"
                 />
               </div>
             </div>
@@ -73,6 +74,7 @@ class NewEmployeeModalBody extends Component {
                     type="text"
                     className="w-11/12 focus:outline-none focus:text-gray-600 p-2"
                     placeholder="Employee Name"
+                    name="name"
                   />
                 </div>
               </div>
@@ -81,7 +83,10 @@ class NewEmployeeModalBody extends Component {
 
           <hr />
           <div className="w-full p-4 text-right text-gray-500">
-            <button className="inline-flex text bg-red-700 p-2 rounded text-white">
+            <button
+              className="inline-flex text bg-red-700 p-2 rounded text-white"
+              type="submit"
+            >
               Submit
             </button>
           </div>
