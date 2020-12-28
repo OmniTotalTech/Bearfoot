@@ -1,9 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 export default class UpdateEmployeeInfoForm extends Component {
+  state = {
+    phone: "",
+  };
   render() {
     const updateForm = () => {
-      console.log("hello");
+      console.log(this.state);
     };
     return (
       <div>
@@ -53,11 +58,12 @@ export default class UpdateEmployeeInfoForm extends Component {
               <h2 className="md:w-1/3 max-w-sm mx-auto">Phone Number</h2>
               <div className="md:w-2/3 max-w-sm mx-auto">
                 <div className="w-full inline-flex border">
-                  <input
+                  {/* <input
                     type="text"
                     className="w-full focus:outline-none focus:text-gray-600 p-2"
                     placeholder="(123) 456 - 7890"
-                  />
+                  /> */}
+                  <Example />
                 </div>
               </div>
             </div>
@@ -98,4 +104,17 @@ export default class UpdateEmployeeInfoForm extends Component {
       </div>
     );
   }
+}
+
+function Example() {
+  // `value` will be the parsed phone number in E.164 format.
+  // Example: "+12133734253".
+  const [value, setValue] = useState();
+  return (
+    <PhoneInput
+      placeholder="Enter phone number"
+      value={value}
+      onChange={setValue}
+    />
+  );
 }
