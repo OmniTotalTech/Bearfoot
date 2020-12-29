@@ -20,7 +20,9 @@ export default class UpdateEmployeeInfoForm extends Component {
 
   render() {
     const updateForm = () => {
-      console.log(this.state);
+      if (this.state.password == this.state.retypedPassword) {
+        console.log("HEY THIS IS WHERE IT NEEDS TO PATCH");
+      }
     };
     return (
       <div>

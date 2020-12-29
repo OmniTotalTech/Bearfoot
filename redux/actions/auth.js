@@ -1,5 +1,4 @@
 import axios from "axios";
-import User from "../../../BearfootAPI/server/models/User";
 import { APIAddress } from "../../config";
 import api from "../../utils/api";
 
