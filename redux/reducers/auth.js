@@ -5,6 +5,9 @@ import {
   LOGIN_ERROR,
   LOGIN_SUCCESS,
   LOGOUT,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from "../types/auth";
 
 const initialState = {
@@ -55,6 +58,27 @@ export default (state = initialState, action) => {
         loading: false,
         user: {},
         error: null,
+      };
+
+    // update user
+    case UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        user: action.payload,
+        loading: false,
+      };
+    case UPDATE_USER_ERROR:
+      return {
+        ...state,
+        loading: false,
+        user: {},
+        error: action.payload,
       };
     default:
       return state;

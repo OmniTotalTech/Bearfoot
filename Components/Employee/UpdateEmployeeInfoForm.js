@@ -5,7 +5,19 @@ import "react-phone-number-input/style.css";
 export default class UpdateEmployeeInfoForm extends Component {
   state = {
     phone: "",
+    password: "",
+    retypedPassword: "",
   };
+
+  setPassword(e) {
+    console.log(e.target.value);
+    this.setState({ password: e.target.value });
+  }
+
+  setRetypedPassword(e) {
+    this.setState({ retypedPassword: e.target.value });
+  }
+
   render() {
     const updateForm = () => {
       console.log(this.state);
@@ -76,6 +88,7 @@ export default class UpdateEmployeeInfoForm extends Component {
                     type="text"
                     className="w-full focus:outline-none focus:text-gray-600 p-2"
                     placeholder="Enter new password"
+                    onChange={(e) => this.setPassword(e)}
                   />
                 </div>
                 <div className="w-full inline-flex border">
@@ -83,6 +96,7 @@ export default class UpdateEmployeeInfoForm extends Component {
                     type="text"
                     className="w-full focus:outline-none focus:text-gray-600 p-2"
                     placeholder="Retype password"
+                    onChange={(e) => this.setRetypedPassword(e)}
                   />
                 </div>
               </div>

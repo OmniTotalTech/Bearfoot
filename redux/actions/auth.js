@@ -1,4 +1,5 @@
 import axios from "axios";
+import User from "../../../BearfootAPI/server/models/User";
 import { APIAddress } from "../../config";
 import api from "../../utils/api";
 
@@ -9,6 +10,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_ERROR,
   LOGOUT,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from "../types/auth";
 
 export const loginRequest = () => {
@@ -72,4 +76,46 @@ export const loadUser = () => async (dispatch) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+// Patch user
+export const updateUserRequest = () => {
+  return {
+    type: UPDATE_USER_REQUEST,
+  };
+};
+
+export const updateUserSuccess = (user) => {
+  return {
+    type: UPDATE_USER_SUCCESS,
+    payload: user,
+  };
+};
+
+export const updateUserError = (error) => {
+  return {
+    type: UPDATE_USER_ERROR,
+    payload: error,
+  };
+};
+
+export const updateUser = (body) => {
+  console.log(body);
+  return (dispatch) => {
+    dispatch(updateUserRequest);
+    api
+      .request({
+        method: "PATCH",
+        url: "users/",
+        user: body,
+      })
+      .then((response) => {
+        const user = response.user;
+        dispatch(updateUserSuccess(user));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(updateUserError(errorMsg));
+      });
+  };
 };
