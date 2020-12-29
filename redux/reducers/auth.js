@@ -8,6 +8,12 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  VERIFY_PHONE_ERROR,
+  VERIFY_PHONE_REQUEST,
+  VERIFY_PHONE_SUCCESS,
+  VERIFY_CODE_REQUEST,
+  VERIFY_CODE_SUCCESS,
+  VERIFY_CODE_ERROR,
 } from "../types/auth";
 
 const initialState = {
@@ -16,6 +22,13 @@ const initialState = {
   error: null,
   token: null,
   user: {},
+  verification: {
+    data: {
+      success: null,
+      data: {},
+    },
+  },
+  codeVerified: null,
 };
 
 export default (state = initialState, action) => {
@@ -79,6 +92,33 @@ export default (state = initialState, action) => {
         loading: false,
         user: {},
         error: action.payload,
+      };
+    case VERIFY_PHONE_SUCCESS:
+      return {
+        ...state,
+        verification: action.payload,
+      };
+    case VERIFY_PHONE_ERROR:
+      return {
+        ...state,
+        verification: action.payload,
+      };
+    case VERIFY_PHONE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case VERIFY_CODE_SUCCESS:
+      return {
+        ...state,
+        codeVerified: true,
+        verification: action.payload,
+      };
+    case VERIFY_PHONE_ERROR:
+      return {
+        ...state,
+        codeVerified: false,
+        verification: action.payload,
       };
     default:
       return state;

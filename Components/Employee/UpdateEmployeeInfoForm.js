@@ -1,12 +1,23 @@
 import React, { Component, useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { isValidPhoneNumber } from "react-phone-number-input";
+import {
+  verifyUserPhone,
+  verifyCode,
+  loadUser,
+} from "../../redux/actions/auth";
+import { connect } from "react-redux";
 
-export default class UpdateEmployeeInfoForm extends Component {
+class UpdateEmployeeInfoForm extends Component {
   state = {
     phone: "",
     password: "",
     retypedPassword: "",
+    isSamePassword: null,
+    isCodeSent: false,
+    isCodeValid: null,
+    code: null,
   };
 
   setPassword(e) {
@@ -18,10 +29,32 @@ export default class UpdateEmployeeInfoForm extends Component {
     this.setState({ retypedPassword: e.target.value });
   }
 
+  setPhone(e) {
+    console.log("ere", e);
+    this.setState({ phone: e });
+  }
+  setCode(e) {
+    this.setState({ code: e.target.value });
+  }
+
+  verificationCodeProcess = async () => {
+    await this.props.verifyUserPhone(this.state.phone),
+      this.setState({ isCodeSent: true });
+  };
+
+  verifyCode = async () => {
+    console.log(this.state.code);
+    await this.props.verifyCode(this.state.code, this.state.phone);
+    await this.props.loadUser();
+  };
   render() {
     const updateForm = () => {
       if (this.state.password == this.state.retypedPassword) {
+        console.log(this.state);
+        this.setState({ isSamePassword: true });
         console.log("HEY THIS IS WHERE IT NEEDS TO PATCH");
+      } else {
+        this.setState({ isSamePassword: false });
       }
     };
     return (
@@ -72,12 +105,41 @@ export default class UpdateEmployeeInfoForm extends Component {
               <h2 className="md:w-1/3 max-w-sm mx-auto">Phone Number</h2>
               <div className="md:w-2/3 max-w-sm mx-auto">
                 <div className="w-full inline-flex border">
-                  {/* <input
-                    type="text"
-                    className="w-full focus:outline-none focus:text-gray-600 p-2"
-                    placeholder="(123) 456 - 7890"
-                  /> */}
-                  <Example />
+                  {this.props.auth.user.isPhoneVerified ? (
+                    <div>
+                      Your phone is verified as: {this.props.auth.user.phone}
+                    </div>
+                  ) : (
+                    <Example setPhone={(e) => this.setPhone(e)} />
+                  )}
+                  {isValidPhoneNumber(this.state.phone) ? (
+                    <div>
+                      {this.state.isCodeSent ? (
+                        <div>
+                          <input onChange={(e) => this.setCode(e)} />
+                          <button
+                            onClick={() => this.verifyCode()}
+                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            Verify Code
+                          </button>
+                        </div>
+                      ) : (
+                        <div>
+                          ((
+                          <button
+                            onClick={() => this.verificationCodeProcess()}
+                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            Send Verification Code
+                          </button>
+                          )
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
               </div>
             </div>
@@ -101,6 +163,15 @@ export default class UpdateEmployeeInfoForm extends Component {
                     onChange={(e) => this.setRetypedPassword(e)}
                   />
                 </div>
+                {this.state.isSamePassword != false ? (
+                  //is the same password
+                  <div></div>
+                ) : (
+                  // is not the same password
+                  <div className="text-red-500">
+                    Sorry, passwords do not match.
+                  </div>
+                )}
               </div>
             </div>
             <hr />
@@ -122,15 +193,35 @@ export default class UpdateEmployeeInfoForm extends Component {
   }
 }
 
-function Example() {
+function Example(props) {
   // `value` will be the parsed phone number in E.164 format.
   // Example: "+12133734253".
   const [value, setValue] = useState();
   return (
     <PhoneInput
+      defaultCountry="US"
       placeholder="Enter phone number"
       value={value}
-      onChange={setValue}
+      onChange={(e) => props.setPhone(e)}
     />
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDisptachToProps = (dispatch) => {
+  return {
+    verifyUserPhone: (phone) => dispatch(verifyUserPhone(phone)),
+    verifyCode: (code, phone) => dispatch(verifyCode(code, phone)),
+    loadUser: () => dispatch(loadUser()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDisptachToProps
+)(UpdateEmployeeInfoForm);
