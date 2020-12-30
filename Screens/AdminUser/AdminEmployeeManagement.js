@@ -26,6 +26,11 @@ class AdminAreaHome extends Component {
     this.props.fetchArea();
   }
 
+  showAddEmployee() {
+    {
+      userInfoInvitedMap;
+    }
+  }
   render() {
     const headText = "Create a new user Section";
     const bodyText =
@@ -144,7 +149,21 @@ class AdminAreaHome extends Component {
     return (
       <ScrollView>
         {/* bg-gray-100 */}
-        <section className="py-16  bg-opacity-50 h-screen">
+        <section className="py-4 bg-opacity-50 h-screen">
+          <div>
+            <div className="flex justify-center mb-4">
+              <button
+                class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
+                onClick
+              >
+                Manage Employee
+              </button>
+              <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2">
+                Add Employee
+              </button>
+            </div>
+          </div>
+
           <NewEmployeeModalBody />
 
           {/* <div className="container mx-auto max-w-4xl m-4 grid grid-cols-2"> */}
