@@ -18,20 +18,20 @@ class PoolDetail extends Component {
             />
           </div>
           <div className="sm:w-2/3 ">
-            <h3 className="text-orange text-xl font-semibold md:text-white">
+            <h3 className="text-orange text-xl font-semibold ">
               {this.props.pool.individualPool.pool_name}
             </h3>
-            <h4 className="text-orange text-lg font-semibold md:text-white">
+            <h4 className="text-orange text-lg font-semibold ">
               {this.props.pool.individualPool.pool_address}
             </h4>
-            <h4 className="text-orange text-lg font-semibold md:text-white">
+            <h4 className="text-orange text-lg font-semibold ">
               {this.props.pool.individualPool.pool_zip}
             </h4>
-            <h4 className="text-orange text-lg font-semibold md:text-white">
+            <h4 className="text-orange text-lg font-semibold">
               {this.props.pool.individualPool.pool_state}
             </h4>
 
-            <p className="text-grey-dark font-thin text-sm leading-normal md:text-white">
+            <p className="text-grey-dark font-thin text-sm leading-normal ">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               Voluptatibus quia, nulla! Maiores et perferendis eaque,
               exercitationem praesentium nihil.
