@@ -10,7 +10,10 @@ const initialState = {
   data: {},
   loading: false,
   error: null,
-  individualPool: {},
+  individualPool: {
+    pool_employees: [],
+    pool_managers: [],
+  },
 };
 
 export default (state = initialState, action) => {
