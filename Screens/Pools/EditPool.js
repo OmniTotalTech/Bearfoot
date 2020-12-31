@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import BasicInformation from "../../Components/BasicInformation";
 import EmployeeAssignment from "../../Components/EmployeeAssignment";
 import Inventory from "../../Components/Inventory";
-
+import { FloatingAction } from "react-native-floating-action";
 export default class EditPool extends Component {
   state = {
     basicInfoView: true,
@@ -35,10 +35,27 @@ export default class EditPool extends Component {
   }
 
   render() {
+    const actions = [
+      {
+        text: "Basic Information",
+        name: "bt_accessibility",
+        position: 2,
+      },
+      {
+        text: "Inventory",
+        name: "bt_language",
+        position: 1,
+      },
+      {
+        text: "Employee Assignment",
+        name: "bt_language",
+        position: 1,
+      },
+    ];
     return (
       <div className="container mx-auto">
         <div className="flex justify-center pt-2">
-          <button
+          {/* <button
             className="bg-red-500 hover:bg-red-400 text-white text-sm font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2 ml-2"
             onClick={() => this.setBasicInfoView()}
           >
@@ -55,7 +72,15 @@ export default class EditPool extends Component {
             onClick={() => this.setEmpAssignmentView()}
           >
             Employee assignment
-          </button>
+          </button> */}
+          <FloatingAction
+            color={"#FF0000"}
+            actions={actions}
+            position="right"
+            onPressItem={(name) => {
+              this.props.navigation.navigate("EditPool");
+            }}
+          />
         </div>
         {this.state.basicInfoView != false ? (
           <div>
