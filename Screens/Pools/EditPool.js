@@ -3,6 +3,8 @@ import BasicInformation from "../../Components/BasicInformation";
 import EmployeeAssignment from "../../Components/EmployeeAssignment";
 import Inventory from "../../Components/Inventory";
 import { FloatingAction } from "react-native-floating-action";
+import PoolInventoryList from "../../Components/PoolInventoryList";
+
 export default class EditPool extends Component {
   state = {
     basicInfoView: true,
@@ -93,6 +95,7 @@ export default class EditPool extends Component {
         ) : (
           <div>
             <Inventory />
+            <PoolInventoryList />
           </div>
         )}
       </div>
