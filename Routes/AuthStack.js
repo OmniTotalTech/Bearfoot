@@ -19,6 +19,7 @@ import AdminEmployeeManagement from "../Screens/AdminUser/AdminEmployeeManagemen
 import AdminAreaDetail from "../Screens/AdminPool/AdminAreaDetail";
 import PoolEmployee from "../Screens/Pools/PoolEmployee";
 import PoolDetail from "../Screens/Pools/PoolDetail";
+import EditPool from "../Screens/Pools/EditPool";
 const Stack = createStackNavigator();
 
 export const AuthStack = () => (
@@ -55,6 +56,7 @@ export const AuthStack = () => (
         <Stack.Screen name="AdminAreaDetail" component={AdminAreaDetail} />
         <Stack.Screen name="PoolEmployee" component={PoolEmployee} />
         <Stack.Screen name="PoolDetail" component={PoolDetail} />
+        <Stack.Screen name="EditPool" component={EditPool} />
       </Stack.Navigator>
     </NavigationContainer>
 

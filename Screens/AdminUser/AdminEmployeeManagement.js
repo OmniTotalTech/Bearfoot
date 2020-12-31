@@ -26,11 +26,19 @@ class AdminAreaHome extends Component {
     this.props.fetchArea();
   }
 
-  showAddEmployee() {
-    {
-      userInfoInvitedMap;
-    }
+  state = {
+    manageView: true,
+    addView: false,
+  };
+
+  setAddEmployee() {
+    this.setState({ addView: true, manageView: false });
   }
+
+  setManageEmployee() {
+    this.setState({ addView: false, manageView: true });
+  }
+
   render() {
     const headText = "Create a new user Section";
     const bodyText =
@@ -153,33 +161,40 @@ class AdminAreaHome extends Component {
           <div>
             <div className="flex justify-center mb-4">
               <button
-                class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
-                onClick
+                className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
+                onClick={() => this.setManageEmployee()}
               >
                 Manage Employee
               </button>
-              <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2">
+              <button
+                className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
+                onClick={() => this.setAddEmployee()}
+              >
                 Add Employee
               </button>
             </div>
           </div>
+          {this.state.manageView != false ? (
+            <div>
+              <div className="container mx-auto max-w-4xl m-4 ">
+                <div className="text text-3xl my-2">Invited Users</div>
+                <View style={{ overflow: "scroll", maxHeight: "600px" }}>
+                  {userInfoInvitedMap}
+                </View>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <NewEmployeeModalBody />
 
-          <NewEmployeeModalBody />
-
-          {/* <div className="container mx-auto max-w-4xl m-4 grid grid-cols-2"> */}
-          <div className="container mx-auto max-w-4xl m-4 ">
-            <div className="text text-3xl my-2">Invited Users</div>
-            <View style={{ overflow: "scroll", maxHeight: "600px" }}>
-              {userInfoInvitedMap}
-            </View>
-          </div>
-          {/* <div>
-              <div className="text text-3xl my-2">Manageable Employees:</div>
-              <View style={{ overflow: "scroll", maxHeight: "600px" }}>
-                {userInfoInvitedMap}
-              </View>
-            </div> */}
-          {/* </div> */}
+              <div className="container mx-auto max-w-4xl m-4 ">
+                <div className="text text-3xl my-2">Invited Users</div>
+                <View style={{ overflow: "scroll", maxHeight: "600px" }}>
+                  {userInfoInvitedMap}
+                </View>
+              </div>
+            </div>
+          )}
         </section>
       </ScrollView>
     );
