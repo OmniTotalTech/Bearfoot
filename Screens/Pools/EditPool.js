@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import BasicInformation from "../../Components/BasicInformation";
 import EmployeeAssignment from "../../Components/EmployeeAssignment";
 import Inventory from "../../Components/Inventory";
+import PoolInventoryList from "../../Components/PoolInventoryList";
 
 export default class EditPool extends Component {
   state = {
@@ -68,6 +69,7 @@ export default class EditPool extends Component {
         ) : (
           <div>
             <Inventory />
+            <PoolInventoryList />
           </div>
         )}
       </div>
