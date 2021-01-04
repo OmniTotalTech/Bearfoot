@@ -51,7 +51,7 @@ export default class Inventory extends Component {
 
     return (
       <>
-        <div className="mx-auto w-full text-center m-8">
+        <div className="mx-auto w-full text-center mb-8">
           <button
             className=" text bg-red-700  p-2 rounded text-white "
             onClick={() => toggleShowAdd()}

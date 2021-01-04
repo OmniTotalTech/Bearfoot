@@ -7,6 +7,7 @@ import PoolInventoryList from "../../Components/PoolInventoryList";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { fetchInventory } from "../../redux/actions/inventory";
+import EditPoolDropDown from "./EditPoolDropDown";
 class EditPool extends Component {
   componentDidMount() {
     console.log(this.props.route.params.id);
@@ -72,14 +73,33 @@ class EditPool extends Component {
     ];
     return (
       <ScrollView>
-        <div className="container mx-auto">
+        <div className="container mx-auto text-center">
+          <EditPoolDropDown
+            handleClick={(title) => {
+              console.log(title);
+              switch (title) {
+                case "BasicInfo":
+                  this.setBasicInfoView();
+                  break;
+                case "Inventory":
+                  this.setInventoryView();
+                  break;
+                case "EmpAssignment":
+                  this.setEmpAssignmentView();
+                  break;
+              }
+            }}
+          />
+
           <div className="flex justify-center pt-2">
             <div className="w-full">
               {this.state.basicInfoView != false ? (
-                <BasicInformation />
+                <>
+                  <BasicInformation />
+                </>
               ) : this.state.inventoryView != true ? (
                 <div>
-                  <Inventory />
+                  {/* <Inventory /> */}
                   <EmployeeAssignment />
                 </div>
               ) : (
@@ -91,7 +111,7 @@ class EditPool extends Component {
                   />
                 </div>
               )}
-              <FloatingAction
+              {/* <FloatingAction
                 color={"#FF0000"}
                 actions={actions}
                 position="right"
@@ -109,7 +129,7 @@ class EditPool extends Component {
                       break;
                   }
                 }}
-              />
+              /> */}
             </div>
           </div>
         </div>

@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 import HomeMenuItem from "../Components/HomeMenuItem";
-import PlusImage from "../assets/images/plus-1.jpg";
+// import PlusImage from "../assets/images/plus-1.jpg";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import DeliveryStatusIcon from "../Components/DeliveryStatusIcon";

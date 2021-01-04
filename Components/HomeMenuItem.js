@@ -9,7 +9,6 @@ import {
   Image,
 } from "react-native";
 
-
 export default class SimpleCircleButton extends React.Component {
   render() {
     let localStyles = styles(this.props); //need to load styles with props because the styles rely on prop values
@@ -20,7 +19,7 @@ export default class SimpleCircleButton extends React.Component {
           <div className="border border-gray-600 shadow-lg w-100 h-24 w-24 mx-auto bg-red-500 flex items-center justify-center my-2 text-center">
             <Image
               style={styles.tinyLogo}
-              source={require("../assets/images/Red_Black_Glow_Paw.svg")}
+              // source={require("../assets/images/Red_Black_Glow_Paw.svg")}
             />
             <br />
             <div className="w-full text-center text-lg">
