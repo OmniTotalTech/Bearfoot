@@ -11,16 +11,34 @@ export default class PoolInventoryList extends Component {
     // const data = this.props.data.data;
     const columns = [
       {
-        Header: "Day",
-        accessor: "day_of_week",
+        Header: "Name",
+        accessor: "name",
         style: {
           //textAlign: "right",
         },
         // width: 100,
       },
       {
-        Header: "Status",
-        accessor: "status",
+        Header: "Description",
+        accessor: "desc",
+        style: {
+          //textAlign: "right",
+        },
+
+        // width: 100,
+      },
+      {
+        Header: "Low Amount",
+        accessor: "low_amount",
+        style: {
+          //textAlign: "right",
+        },
+
+        // width: 100,
+      },
+      {
+        Header: "Unit Type",
+        accessor: "unitType",
         style: {
           //textAlign: "right",
         },
@@ -54,10 +72,10 @@ export default class PoolInventoryList extends Component {
     ];
 
     return (
-      <div>
+      <div className="max-w-3xl mx-auto m-4">
         <ReactTable
           className="-striped -highlight"
-          //   data={data}
+          data={this.props.inventory}
           filterable
           columns={columns}
           defaultPageSize={10}

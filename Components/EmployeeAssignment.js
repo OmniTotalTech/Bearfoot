@@ -4,7 +4,7 @@ export default class EmployeeAssignment extends Component {
   render() {
     return (
       <div>
-        <div>emp assignemnt</div>
+        <div></div>
       </div>
     );
   }

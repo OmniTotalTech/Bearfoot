@@ -6,7 +6,8 @@ import updateStatus from "./updateStatus";
 import adminOrderDetail from "./adminOrderDetail";
 import pool from "./pool";
 import area from "./area";
-
+import adminEmployeeManagement from "./adminEmployeeManagement";
+import inventory from "./inventory";
 export default combineReducers({
   auth: auth,
   // byId: byId,
@@ -15,4 +16,6 @@ export default combineReducers({
   adminOrderDetail: adminOrderDetail,
   pool: pool,
   area: area,
+  adminEmployeeManagement: adminEmployeeManagement,
+  inventory: inventory,
 });
