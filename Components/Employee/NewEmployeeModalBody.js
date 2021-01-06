@@ -1,6 +1,11 @@
 import React, { Component } from "react";
+import { Picker } from "@react-native-picker/picker";
 
 class NewEmployeeModalBody extends Component {
+  state = {
+    email: "",
+    name: "",
+  };
   render() {
     return (
       <div className="mx-auto container max-w-2xl md:w-3/4 shadow-md mx-4">
@@ -80,7 +85,43 @@ class NewEmployeeModalBody extends Component {
               </div>
             </div>
           </div>
-
+          <div className="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
+            <h2 className="md:w-1/3 mx-auto max-w-sm">Personal info</h2>
+            <div className="md:w-2/3 mx-auto max-w-sm space-y-5">
+              <div>
+                <label className="text-sm text-gray-400">Full name</label>
+                <div className="w-full inline-flex border">
+                  <div className="w-1/12 pt-2 bg-gray-100">
+                    <svg
+                      fill="none"
+                      className="w-6 text-gray-400 mx-auto"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
+                  <Picker
+                    selectedValue={this.state.selectedValue}
+                    style={{ height: 50, width: "100%" }}
+                    onValueChange={(v) => this.setSelectedValue(v)}
+                  >
+                    {this.props.user.organizations.map((item, i) => (
+                      <Picker.Item
+                        label={this.props.user.organizations[i].orgName}
+                        value={this.props.user.organizations[i].orgName}
+                      />
+                    ))}
+                  </Picker>
+                </div>
+              </div>
+            </div>
+          </div>
           <hr />
           <div className="w-full p-4 text-right text-gray-500">
             <button

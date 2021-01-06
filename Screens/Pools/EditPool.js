@@ -91,7 +91,7 @@ class EditPool extends Component {
             }}
           />
 
-          <div className="flex justify-center pt-2">
+          <div className="flex pt-2">
             <div className="w-full">
               {this.state.basicInfoView != false ? (
                 <>

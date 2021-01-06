@@ -25,6 +25,7 @@ import { connect } from "react-redux";
 
 import { loadUser } from "./redux/actions/auth";
 import ViewController from "./Components/General/ViewController";
+import { LOGOUT } from "./redux/types/auth";
 const App = () => {
   useEffect(() => {
     // check for token in LS

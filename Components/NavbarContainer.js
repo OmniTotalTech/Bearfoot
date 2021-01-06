@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { TouchableOpacity } from "react-native";
+import store from "../store";
+import { LOGOUT } from "../redux/types/auth";
 class NavbarContainer extends Component {
   render() {
     return (
@@ -38,9 +40,12 @@ class NavbarContainer extends Component {
             >
               BearFoot Pools
             </a>
-            <TouchableOpacity>
-              <p className="text text-white text-lg mr-4">Logout</p>
-            </TouchableOpacity>
+            <p
+              onClick={() => store.dispatch({ type: LOGOUT })}
+              className="text text-white text-lg mr-4"
+            >
+              Logout
+            </p>
           </div>
         </div>
       </div>
