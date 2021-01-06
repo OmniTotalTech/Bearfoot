@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import PhoneInput from "react-phone-number-input";
-// import "react-phone-number-input/style.css";
+import "react-phone-number-input/style.css";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import {
   verifyUserPhone,
