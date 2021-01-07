@@ -5,6 +5,8 @@ export default class EmployeeAssignment extends Component {
     // test
     return (
       <div>
+        <p className="text-2xl">Employees</p>
+
         <div className="container mx-auto">
           <div className="bg-gray-100 p-4 border-t-2 bg-opacity-5 rounded-t">
             <div className="max-w-sm mx-auto md:w-full md:mx-0">
@@ -15,7 +17,7 @@ export default class EmployeeAssignment extends Component {
                   src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
                 />
                 <h1 className="text-gray-600">
-                  {this.props.pool.individualPool.pool_employees}
+                  UserId: {this.props.pool.individualPool.pool_employees}
                 </h1>
               </div>
             </div>
@@ -30,6 +32,7 @@ export default class EmployeeAssignment extends Component {
             </div>
           </div>
         </div>
+        <p className="text-2xl">Managers</p>
       </div>
     );
   }
