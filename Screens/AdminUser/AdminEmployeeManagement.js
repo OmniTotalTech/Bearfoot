@@ -78,44 +78,44 @@ class AdminAreaHome extends Component {
       </div>
     );
 
-    const userInfoInvitedMap = <div></div>;
+    // const userInfoInvitedMap = <div></div>;
 
-    const userInfoVerified = [
-      {
-        pic: "pic",
-        name: "David",
-        email: "david123@gmail.com",
-      },
-      {
-        pic: "pic",
-        name: "Diana",
-        email: "diana@gmail.com",
-      },
-    ];
+    // const userInfoVerified = [
+    //   {
+    //     pic: "pic",
+    //     name: "David",
+    //     email: "gmail.com",
+    //   },
+    //   {
+    //     pic: "pic",
+    //     name: "Diana",
+    //     email: "diana@gmail.com",
+    //   },
+    // ];
 
-    const userInfoVerifiedMap = (
-      <FlatList
-        horizontal
-        data={userInfoVerified}
-        renderItem={({ item: deliveryTypeIcon }) => {
-          return (
-            <TouchableOpacity
-              onPress={() =>
-                props.navigation.navigate(deliveryTypeIcon.location)
-              }
-              style={{ margin: "10px" }}
-            >
-              <VerifiedUser
-                pic={userInfoVerified.pic}
-                name={userInfoVerified.name}
-                email={userInfoVerified.email}
-              />
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={(item, index) => index}
-      />
-    );
+    // const userInfoVerifiedMap = (
+    //   <FlatList
+    //     horizontal
+    //     data={userInfoVerified}
+    //     renderItem={({ item: deliveryTypeIcon }) => {
+    //       return (
+    //         <TouchableOpacity
+    //           onPress={() =>
+    //             props.navigation.navigate(deliveryTypeIcon.location)
+    //           }
+    //           style={{ margin: "10px" }}
+    //         >
+    //           <VerifiedUser
+    //             pic={userInfoVerified.pic}
+    //             name={userInfoVerified.name}
+    //             email={userInfoVerified.email}
+    //           />
+    //         </TouchableOpacity>
+    //       );
+    //     }}
+    //     keyExtractor={(item, index) => index}
+    //   />
+    // );
 
     return (
       <ScrollView>

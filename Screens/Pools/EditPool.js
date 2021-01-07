@@ -100,7 +100,7 @@ class EditPool extends Component {
               ) : this.state.inventoryView != true ? (
                 <div>
                   {/* <Inventory /> */}
-                  <EmployeeAssignment />
+                  <EmployeeAssignment pool={this.props.pool} />
                 </div>
               ) : (
                 <div>
@@ -141,6 +141,7 @@ class EditPool extends Component {
 const mapStateToProps = (state) => {
   return {
     inventory: state.inventory,
+    pool: state.pool,
   };
 };
 
