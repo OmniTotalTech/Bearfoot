@@ -85,7 +85,7 @@ class AdminAreaHome extends Component {
       {
         pic: "pic",
         name: "David",
-        email: "david123@gmail.com",
+        email: "gmail.com",
       },
       {
         pic: "pic",
