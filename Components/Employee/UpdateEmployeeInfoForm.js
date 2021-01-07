@@ -6,6 +6,7 @@ import {
   verifyUserPhone,
   verifyCode,
   loadUser,
+  updateUser,
 } from "../../redux/actions/auth";
 import { connect } from "react-redux";
 
@@ -41,20 +42,25 @@ class UpdateEmployeeInfoForm extends Component {
     await this.props.verifyUserPhone(this.state.phone),
       this.setState({ isCodeSent: true });
   };
-  load = async () => {
-    await this.props.loadUser();
+  load = () => {
+    this.verifyCode(() => {
+      this.props.loadUser();
+    });
   };
   verifyCode = async () => {
-    console.log(this.state.code);
     await this.props.verifyCode(this.state.code, this.state.phone);
-    this.load();
   };
+
   render() {
     const updateForm = () => {
       if (this.state.password == this.state.retypedPassword) {
         console.log(this.state);
         this.setState({ isSamePassword: true });
         console.log("HEY THIS IS WHERE IT NEEDS TO PATCH");
+        const body = {
+          password: this.state.password,
+        };
+        this.props.updateUser(body);
       } else {
         this.setState({ isSamePassword: false });
       }
@@ -107,43 +113,47 @@ class UpdateEmployeeInfoForm extends Component {
               <h2 className="md:w-1/3 max-w-sm mx-auto">Phone Number</h2>
               <div className="md:w-2/3 max-w-sm mx-auto">
                 <div className="w-full inline-flex border">
-                  {this.props.auth.user.isPhoneVerified ? (
+                  {this.props.auth.user.isPhoneVerified ||
+                  this.props.auth.verification.statusText == "Accepted" ? (
                     <div>
                       Your phone is verified as: {this.props.auth.user.phone}
                     </div>
                   ) : (
                     <Example setPhone={(e) => this.setPhone(e)} />
                   )}
-                  {isValidPhoneNumber(this.state.phone) ? (
-                    <div>
-                      {this.state.isCodeSent ? (
-                        <div>
-                          <input
-                            className="border"
-                            onChange={(e) => this.setCode(e)}
-                          />
-                          <button
-                            onClick={() => this.verifyCode()}
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                          >
-                            Verify Code
-                          </button>
-                        </div>
-                      ) : (
-                        <div>
-                          <button
-                            onClick={() => this.verificationCodeProcess()}
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                          >
-                            Send Verification Code
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div></div>
-                  )}
                 </div>
+                {this.props.auth.user.isPhoneVerified ||
+                this.props.auth.verification.statusText == "Accepted" ? (
+                  <div></div>
+                ) : isValidPhoneNumber(this.state.phone) ? (
+                  <div>
+                    {this.state.isCodeSent ? (
+                      <div>
+                        <input
+                          className="border"
+                          onChange={(e) => this.setCode(e)}
+                        />
+                        <button
+                          onClick={() => this.verifyCode()}
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Verify Code
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <button
+                          onClick={() => this.verificationCodeProcess()}
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Send Verification Code
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
             <hr />
@@ -152,7 +162,7 @@ class UpdateEmployeeInfoForm extends Component {
               <div className="md:w-2/3 max-w-sm mx-auto">
                 <div className="w-full inline-flex border mb-4">
                   <input
-                    type="text"
+                    type="password"
                     className="w-full focus:outline-none focus:text-gray-600 p-2"
                     placeholder="Enter new password"
                     onChange={(e) => this.setPassword(e)}
@@ -160,7 +170,7 @@ class UpdateEmployeeInfoForm extends Component {
                 </div>
                 <div className="w-full inline-flex border">
                   <input
-                    type="text"
+                    type="password"
                     className="w-full focus:outline-none focus:text-gray-600 p-2"
                     placeholder="Retype password"
                     onChange={(e) => this.setRetypedPassword(e)}
@@ -221,6 +231,7 @@ const mapDisptachToProps = (dispatch) => {
     verifyUserPhone: (phone) => dispatch(verifyUserPhone(phone)),
     verifyCode: (code, phone) => dispatch(verifyCode(code, phone)),
     loadUser: () => dispatch(loadUser()),
+    updateUser: (body) => dispatch(updateUser(body)),
   };
 };
 

@@ -24,7 +24,9 @@ const initialState = {
   loading: false,
   error: null,
   token: null,
-  user: {},
+  user: {
+    name: " ",
+  },
   verification: {
     data: {
       success: null,
@@ -94,7 +96,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        user: {},
+        user: {
+          name: " ",
+        },
         error: action.payload,
       };
     case VERIFY_PHONE_SUCCESS:

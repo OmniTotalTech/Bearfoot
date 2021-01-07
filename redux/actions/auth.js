@@ -180,11 +180,13 @@ export const updateUser = (body) => {
       .request({
         method: "PATCH",
         url: "users/",
-        user: body,
+        data: body,
       })
       .then((response) => {
         const user = response.user;
-        dispatch(updateUserSuccess(user));
+        dispatch(updateUserSuccess(user)).then((res) => {
+          dispatch(loadUser());
+        });
       })
       .catch((error) => {
         const errorMsg = error.message;
