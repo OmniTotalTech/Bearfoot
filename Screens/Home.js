@@ -114,38 +114,42 @@ class Home extends Component {
                 </div>
               </div>
               {/* // Admin area */}
-              <div className="mt-8">
-                <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
-                  <div className="text-3xl mx-4 ">
-                    <span className="bg-white mb-4 m-0">Admin</span>
-                  </div>
-                  <div className="container  max-w-4xl w-full bg-white  rounded-lg  px-2">
-                    <FlatList
-                      horizontal
-                      data={admin}
-                      renderItem={({ item: deliveryTypeIcon }) => {
-                        return (
-                          <TouchableOpacity
-                            onPress={() =>
-                              this.props.navigation.navigate(
-                                deliveryTypeIcon.location
-                              )
-                            }
-                            style={{ margin: "10px" }}
-                          >
-                            <DeliveryStatusIcon
-                              icon={deliveryTypeIcon.icon}
-                              status={deliveryTypeIcon.status}
-                              subtext={deliveryTypeIcon.subtext}
-                            />
-                          </TouchableOpacity>
-                        );
-                      }}
-                      keyExtractor={(item, index) => index}
-                    />
+              {this.props.user.role >= 3 ? (
+                <div className="mt-8">
+                  <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
+                    <div className="text-3xl mx-4 ">
+                      <span className="bg-white mb-4 m-0">Admin</span>
+                    </div>
+                    <div className="container  max-w-4xl w-full bg-white  rounded-lg  px-2">
+                      <FlatList
+                        horizontal
+                        data={admin}
+                        renderItem={({ item: deliveryTypeIcon }) => {
+                          return (
+                            <TouchableOpacity
+                              onPress={() =>
+                                this.props.navigation.navigate(
+                                  deliveryTypeIcon.location
+                                )
+                              }
+                              style={{ margin: "10px" }}
+                            >
+                              <DeliveryStatusIcon
+                                icon={deliveryTypeIcon.icon}
+                                status={deliveryTypeIcon.status}
+                                subtext={deliveryTypeIcon.subtext}
+                              />
+                            </TouchableOpacity>
+                          );
+                        }}
+                        keyExtractor={(item, index) => index}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div></div>
+              )}
             </div>
           </View>
         ) : (
