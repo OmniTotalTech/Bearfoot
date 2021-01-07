@@ -21,6 +21,7 @@ import InvitedUser from "../../Components/InvitedUser";
 import VerifiedUser from "../../Components/VerifiedUser";
 import NewEmployeeModalBody from "../../Components/Employee/NewEmployeeModalBody";
 import { fetchEmployeesByOrg } from "../../redux/actions/adminEmployeeManagement";
+import { newUser } from "../../redux/actions/auth";
 
 class AdminAreaHome extends Component {
   componentDidMount() {
@@ -165,22 +166,12 @@ class AdminAreaHome extends Component {
             </div>
           ) : (
             <div>
-              <NewEmployeeModalBody user={this.props.user} />
-              <div className="container mx-auto max-w-2xl">
-                <div className="text text-lg">Organization:</div>
-                <Picker
-                  selectedValue={this.state.selectedValue}
-                  style={{ height: 50, width: 150 }}
-                  onValueChange={(v) => this.setSelectedValue(v)}
-                >
-                  {this.props.user.organizations.map((item, i) => (
-                    <Picker.Item
-                      label={this.props.user.organizations[i].orgName}
-                      value={this.props.user.organizations[i].orgName}
-                    />
-                  ))}
-                </Picker>
-              </div>
+              <NewEmployeeModalBody
+                user={this.props.user}
+                selectedValue={this.state.selectedValue}
+                newUser={this.props.newUser}
+                auth={this.props.auth}
+              />
               {/* <div className="container mx-auto max-w-4xl m-4 ">
                 <div className="text text-3xl my-2">Invited Users</div>
                 <View style={{ overflow: "scroll", maxHeight: "600px" }}>
@@ -199,6 +190,7 @@ const mapStateToProps = (state) => {
   return {
     area: state.area,
     user: state.auth.user,
+    auth: state.auth,
     adminEmployeeManagement: state.adminEmployeeManagement,
   };
 };
@@ -207,6 +199,7 @@ const mapDisptachToProps = (dispatch) => {
   return {
     fetchArea: () => dispatch(fetchMyAdminAreas()),
     fetchEmployeesByOrg: (orgName) => dispatch(fetchEmployeesByOrg(orgName)),
+    newUser: (body) => dispatch(newUser(body)),
   };
 };
 

@@ -14,6 +14,9 @@ import {
   VERIFY_CODE_REQUEST,
   VERIFY_CODE_SUCCESS,
   VERIFY_CODE_ERROR,
+  NEW_USER_ERROR,
+  NEW_USER_REQUEST,
+  NEW_USER_SUCCESS,
 } from "../types/auth";
 
 const initialState = {
@@ -29,6 +32,7 @@ const initialState = {
     },
   },
   codeVerified: null,
+  otherMessage: null,
 };
 
 export default (state = initialState, action) => {
@@ -119,6 +123,21 @@ export default (state = initialState, action) => {
         ...state,
         codeVerified: false,
         verification: action.payload,
+      };
+    case NEW_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case NEW_USER_SUCCESS:
+      return {
+        ...state,
+        otherMessage: action.payload.message,
+      };
+    case NEW_USER_ERROR:
+      return {
+        ...state,
+        otherMessage: action.payload.message,
       };
     default:
       return state;

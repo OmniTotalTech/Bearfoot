@@ -41,11 +41,13 @@ class UpdateEmployeeInfoForm extends Component {
     await this.props.verifyUserPhone(this.state.phone),
       this.setState({ isCodeSent: true });
   };
-
+  load = async () => {
+    await this.props.loadUser();
+  };
   verifyCode = async () => {
     console.log(this.state.code);
     await this.props.verifyCode(this.state.code, this.state.phone);
-    await this.props.loadUser();
+    this.load();
   };
   render() {
     const updateForm = () => {

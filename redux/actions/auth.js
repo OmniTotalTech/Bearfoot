@@ -18,6 +18,9 @@ import {
   VERIFY_CODE_ERROR,
   VERIFY_CODE_REQUEST,
   VERIFY_CODE_SUCCESS,
+  NEW_USER_ERROR,
+  NEW_USER_SUCCESS,
+  NEW_USER_REQUEST,
 } from "../types/auth";
 
 export const loginRequest = () => {
@@ -146,6 +149,29 @@ export const verifyCodeError = (error) => {
     payload: error,
   };
 };
+
+//
+// Verify Code
+export const newUserRequest = () => {
+  return {
+    type: NEW_USER_REQUEST,
+  };
+};
+
+export const newUserSuccess = (data) => {
+  return {
+    type: NEW_USER_SUCCESS,
+    payload: data,
+  };
+};
+
+export const newUserError = (error) => {
+  return {
+    type: NEW_USER_ERROR,
+    payload: error,
+  };
+};
+
 export const updateUser = (body) => {
   console.log(body);
   return (dispatch) => {
@@ -201,6 +227,24 @@ export const verifyCode = (code, phone) => {
       })
       .catch((error) => {
         dispatch(verifyCodeError(error));
+      });
+  };
+};
+
+export const newUser = (body) => {
+  return (dispatch) => {
+    dispatch(newUserRequest);
+    api
+      .request({
+        method: "POST",
+        url: "auth/register",
+        data: body,
+      })
+      .then((res) => {
+        dispatch(newUserSuccess(res));
+      })
+      .catch((error) => {
+        dispatch(newUserError(error));
       });
   };
 };
