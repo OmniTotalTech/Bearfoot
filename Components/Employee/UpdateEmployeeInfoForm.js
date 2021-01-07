@@ -118,7 +118,10 @@ class UpdateEmployeeInfoForm extends Component {
                     <div>
                       {this.state.isCodeSent ? (
                         <div>
-                          <input onChange={(e) => this.setCode(e)} />
+                          <input
+                            className="border"
+                            onChange={(e) => this.setCode(e)}
+                          />
                           <button
                             onClick={() => this.verifyCode()}
                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -128,14 +131,12 @@ class UpdateEmployeeInfoForm extends Component {
                         </div>
                       ) : (
                         <div>
-                          ((
                           <button
                             onClick={() => this.verificationCodeProcess()}
                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                           >
                             Send Verification Code
                           </button>
-                          )
                         </div>
                       )}
                     </div>

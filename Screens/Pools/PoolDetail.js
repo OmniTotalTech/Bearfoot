@@ -24,18 +24,22 @@ class PoolDetail extends Component {
     return (
       <ScrollView>
         <div className="container mx-auto">
-          <div className="flex justify-center pt-4">
-            <button
-              className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-400 rounded shadow"
-              onClick={() =>
-                this.props.navigation.navigate("EditPool", {
-                  id: this.props.pool.individualPool._id,
-                })
-              }
-            >
-              Edit pool
-            </button>
-          </div>
+          {this.props.user.role >= 3 ? (
+            <div className="flex justify-center pt-4">
+              <button
+                className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-400 rounded shadow"
+                onClick={() =>
+                  this.props.navigation.navigate("EditPool", {
+                    id: this.props.pool.individualPool._id,
+                  })
+                }
+              >
+                Edit pool
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
           {/* inner div start */}
           <PoolPublicContainer userId={userId} pool={this.props.pool} />
           {/* inner div end */}
@@ -80,6 +84,7 @@ const mapStateToProps = (state) => {
   return {
     pool: state.pool,
     auth: state.auth,
+    user: state.auth.user,
   };
 };
 
