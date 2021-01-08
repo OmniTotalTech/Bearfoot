@@ -6,7 +6,10 @@ import { FloatingAction } from "react-native-floating-action";
 import PoolInventoryList from "../../Components/PoolInventoryList";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { fetchInventory } from "../../redux/actions/inventory";
+import {
+  fetchInventory,
+  addInventoryItem,
+} from "../../redux/actions/inventory";
 import EditPoolDropDown from "./EditPoolDropDown";
 class EditPool extends Component {
   componentDidMount() {
@@ -44,9 +47,10 @@ class EditPool extends Component {
   }
 
   render() {
-    function addInventoryItem(itemid) {
+    function addItem() {
+      console.log("clicked");
       // this.props.addItem(listId, itemid);
-      console.log(this.props.state);
+      // console.log(this.props.state);
     }
     function setItem(key) {
       console.log(key);
@@ -104,7 +108,7 @@ class EditPool extends Component {
                 </div>
               ) : (
                 <div>
-                  <InventoryForm addInventoryItem={addInventoryItem} />
+                  <InventoryForm addItem={addItem} />
                   <PoolInventoryList
                     inventory={this.props.inventory.data.inventoryList}
                     setItem={(key) => setItem(key)}
@@ -148,6 +152,7 @@ const mapStateToProps = (state) => {
 const mapDisptachToProps = (dispatch) => {
   return {
     fetchInventory: (id) => dispatch(fetchInventory(id)),
+    addInventoryItem: (id1) => dispatch(addInventoryItem(id1)),
   };
 };
 

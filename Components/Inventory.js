@@ -5,6 +5,7 @@ export default class Inventory extends Component {
   state = { showAdd: false, name: "", desc: "", unitType: "", lowPointAmt: 0 };
 
   render() {
+    console.log(this.props);
     const toggleShowAdd = () => {
       this.setState({ showAdd: !this.state.showAdd });
     };
@@ -69,7 +70,7 @@ export default class Inventory extends Component {
                   <button
                     className="inline-flex text bg-red-700 p-2 rounded text-white"
                     type="submit"
-                    onClick={() => this.props.addInventoryItem()}
+                    onClick={() => this.props.addItem()}
                   >
                     Submit
                   </button>
