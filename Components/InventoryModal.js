@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TitleAndInput from "./TitleAndInput";
 
-export default class Inventory extends Component {
+export default class InventoryModal extends Component {
   state = { showAdd: false, name: "", desc: "", unitType: "", lowPointAmt: 0 };
 
   render() {

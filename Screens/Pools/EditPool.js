@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BasicInformation from "../../Components/BasicInformation";
 import EmployeeAssignment from "../../Components/EmployeeAssignment";
-import InventoryForm from "../../Components/Inventory";
+import InventoryModal from "../../Components/InventoryModal";
 import { FloatingAction } from "react-native-floating-action";
 import PoolInventoryList from "../../Components/PoolInventoryList";
 import { ScrollView } from "react-native-gesture-handler";
@@ -11,6 +11,8 @@ import {
   addInventoryItem,
 } from "../../redux/actions/inventory";
 import EditPoolDropDown from "./EditPoolDropDown";
+import AddInventoryModal from "../../Components/AddInventoryModal";
+
 class EditPool extends Component {
   componentDidMount() {
     console.log(this.props.route.params.id);
@@ -103,12 +105,12 @@ class EditPool extends Component {
                 </>
               ) : this.state.inventoryView != true ? (
                 <div>
-                  {/* <Inventory /> */}
                   <EmployeeAssignment pool={this.props.pool} />
                 </div>
               ) : (
                 <div>
-                  <InventoryForm addItem={addItem} />
+                  {/* <InventoryModal addItem={addItem} /> */}
+                  <AddInventoryModal />
                   <PoolInventoryList
                     inventory={this.props.inventory.data.inventoryList}
                     setItem={(key) => setItem(key)}
