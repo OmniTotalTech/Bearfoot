@@ -105,7 +105,10 @@ class EditPool extends Component {
                 </>
               ) : this.state.inventoryView != true ? (
                 <div>
-                  <EmployeeAssignment pool={this.props.pool} />
+                  <EmployeeAssignment
+                    employees={this.props.pool.individualPool.pool_employees}
+                    managers={this.props.pool.individualPool.pool_managers}
+                  />
                 </div>
               ) : (
                 <div>
@@ -117,25 +120,6 @@ class EditPool extends Component {
                   />
                 </div>
               )}
-              {/* <FloatingAction
-                color={"#FF0000"}
-                actions={actions}
-                position="right"
-                onPressItem={(title) => {
-                  console.log(title);
-                  switch (title) {
-                    case "BasicInfo":
-                      this.setBasicInfoView();
-                      break;
-                    case "Inventory":
-                      this.setInventoryView();
-                      break;
-                    case "EmpAssignment":
-                      this.setEmpAssignmentView();
-                      break;
-                  }
-                }}
-              /> */}
             </div>
           </div>
         </div>
