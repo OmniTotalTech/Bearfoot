@@ -57,7 +57,7 @@ export default class PoolInventoryList extends Component {
                 className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
                 disabled
                 onClick={(e) => {
-                  this.navToArea(porps.original.id);
+                  console.log(e.target.value);
                 }}
               >
                 View
