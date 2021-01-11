@@ -7,15 +7,15 @@ function EmployeeList(props) {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
-      items: 5,
+      items: 6,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
+      items: 5,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 3,
+      items: 4,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
@@ -42,7 +42,7 @@ function EmployeeList(props) {
       itemClass="carousel-item-padding-40-px"
     >
       {props.employees.map((employee) => (
-        <div className="container mx-auto max-w-2xl">
+        <div className="container mx-auto max-w-3xl">
           <div className="bg-gray-100 p-4 border-t-2 bg-opacity-5 rounded-t">
             <div className="max-w-sm mx-auto md:w-full md:mx-0">
               <div className="pace-x-4">
@@ -57,7 +57,7 @@ function EmployeeList(props) {
           </div>
 
           <div className="bg-white space-y-6 text-left">
-            <div className="space-y-4 md:space-y-0 w-full p-4 text-gray-500">
+            <div className="space-y-4 md:space-y-0 w-full  text-gray-500">
               <label className="text-md text-gray-700">
                 Email: {employee.email}
               </label>

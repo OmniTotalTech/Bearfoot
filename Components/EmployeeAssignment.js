@@ -6,7 +6,7 @@ export default class EmployeeAssignment extends Component {
   render() {
     // test
     return (
-      <div className="container max-w-2xl mx-auto">
+      <div className="container mx-auto">
         <p className="text-3xl text-left bold">Employees</p>
 
         <EmployeeList employees={this.props.employees} />
