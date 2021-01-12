@@ -8,6 +8,7 @@ import { fetchAdminOrderDetail } from "../../redux/actions/adminOrderDetail";
 import Pagination from "../../Components/Pagination";
 import OrderTableList from "../../Components/OrderTableList";
 import DeliveryTable from "../../Components/Admin/DeliveryTable";
+import ReportTypeOneStepper from "../../Components/ReportTypeOneStepper";
 
 class adminDeliveriesHome extends Component {
   state = {
@@ -57,6 +58,7 @@ class adminDeliveriesHome extends Component {
             Submit
           </button> */}
           <DeliveryTable data={this.props.adminOrderDetail} />
+          <ReportTypeOneStepper />
         </div>
       </ScrollView>
     );
