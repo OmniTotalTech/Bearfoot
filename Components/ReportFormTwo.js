@@ -15,7 +15,7 @@ export default class ReportFormTwo extends Component {
       {
         placeholder: "Input 2",
         title: "Input 2",
-        value: "inputTwo",
+        value: "inputFieldTwo",
       },
     ];
     const onChange = (e, value) => {
