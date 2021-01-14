@@ -6,8 +6,12 @@ import {
   FETCH_AREA_SUCCESS,
   FETCH_AREA_POOLS_SUCCESS,
   FETCH_AREA_POOLS_ERROR,
+  ADD_AREA_REQUEST,
+  ADD_AREA_SUCCESS,
+  ADD_AREA_ERROR,
 } from "../types/area";
 
+// FETCH AREA //
 export const fetchAreaRequest = () => {
   return {
     type: FETCH_AREA_REQUEST,
@@ -27,6 +31,27 @@ export const fetchAreaError = (error) => {
     payload: error,
   };
 };
+
+// ADD AREA //
+export const addAreaRequest = () => {
+  return {
+    type: ADD_AREA_REQUEST,
+  };
+};
+export const addAreaSuccess = (data) => {
+  return {
+    type: ADD_AREA_SUCCESS,
+    payload: data,
+  };
+};
+export const addAreaError = (error) => {
+  return {
+    type: ADD_AREA_ERROR,
+    paylaod: error,
+  };
+};
+
+// FETCH AREA POOL //
 export const fetchAreaPoolsSuccess = (data) => {
   return {
     type: FETCH_AREA_POOLS_SUCCESS,
@@ -85,6 +110,23 @@ export const fetchAreaPools = (id) => {
       .catch((error) => {
         const errorMsg = error.message.foundPools;
         dispatch(fetchAreaPoolsError(errorMsg));
+      });
+  };
+};
+
+export const addArea = () => {
+  return (dispatch) => {
+    dispatch(addAreaRequest);
+    api
+      .post("area/")
+      .then((response) => {
+        console.log(response);
+        const data = response.data;
+        dispatch(addAreaSuccess(data));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(addAreaError(errorMsg));
       });
   };
 };

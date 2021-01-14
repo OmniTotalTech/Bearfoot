@@ -12,7 +12,7 @@ import {
   UPDATE_INVENTORY_ITEM_ERROR,
 } from "../types/inventory";
 
-// get inventory //
+// GET INVENTORY //
 export const fetchInventoryRequest = () => {
   return {
     type: FETCH_INVENTORY_REQUEST,
@@ -33,7 +33,7 @@ export const fetchInventoryError = (error) => {
   };
 };
 
-// update inventory item //
+// UPDATE INVENTORY ITEM //
 export const updateInventoryItemRequest = () => {
   return {
     type: UPDATE_INVENTORY_ITEM_REQUEST,
@@ -52,7 +52,7 @@ export const updateInventoryItemError = (error) => {
   };
 };
 
-// add inventory item //
+// ADD INVENTORY ITEM //
 export const addInventoryItemRequest = () => {
   return {
     type: ADD_INVENTORY_ITEM_REQUEST,
@@ -73,7 +73,7 @@ export const addInventoryItemError = (error) => {
   };
 };
 
-// get inventory //
+// GET INVENTORY //
 export const fetchInventory = (id) => {
   return (dispatch) => {
     dispatch(fetchInventoryRequest);
@@ -91,7 +91,7 @@ export const fetchInventory = (id) => {
   };
 };
 
-// update inventory item //
+// UPDATE INVENTORY ITEM //
 
 export const updateInventoryItem = (id1, id2) => {
   console.log(id1);
@@ -111,7 +111,7 @@ export const updateInventoryItem = (id1, id2) => {
   };
 };
 
-// add inventory item //
+// ADD INVENTORY ITEM //
 export const addInventoryItem = (id1) => {
   return (dispatch) => {
     dispatch(addInventoryItemRequest);

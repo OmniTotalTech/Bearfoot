@@ -4,6 +4,9 @@ import {
   FETCH_AREA_SUCCESS,
   FETCH_AREA_POOLS_ERROR,
   FETCH_AREA_POOLS_SUCCESS,
+  ADD_AREA_REQUEST,
+  ADD_AREA_SUCCESS,
+  ADD_AREA_ERROR,
 } from "../types/area";
 
 const initialState = {
@@ -28,6 +31,25 @@ export default (state = initialState, action) => {
         error: null,
       };
     case FETCH_AREA_ERROR:
+      return {
+        ...state,
+        loading: false,
+        data: [],
+        error: action.payload,
+      };
+    case ADD_AREA_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_AREA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+        error: null,
+      };
+    case ADD_AREA_ERROR:
       return {
         ...state,
         loading: false,

@@ -26,6 +26,7 @@ class AdminAreaHome extends Component {
 
   state = {
     isModalOpen: false,
+    // selectedTimeZone: "",
   };
 
   openModal() {
@@ -35,8 +36,16 @@ class AdminAreaHome extends Component {
     this.setState({ isModalOpen: false });
   }
 
+  // handleChnage(e) {
+  //   const newSelectedTimeZone = e.target.value;
+  //   this.setState({ selectedTimeZone: newSelectedTimeZone });
+  // }
+
   render() {
     console.log(this.props.area.data);
+    // const { selectedTimeZone } = this.state;
+    // const values = { selectedTimeZone };
+    // console.log(this.state.selectedTimeZone);
 
     const inputs = [
       {
@@ -95,7 +104,10 @@ class AdminAreaHome extends Component {
                         <div className="md:w-2/3 max-w-sm mx-auto">
                           <label>
                             Time Zone:
-                            <TimeZone />
+                            <TimeZone
+                            // value={values}
+                            // handleChange={this.handleChnage}
+                            />
                           </label>
                         </div>
 
