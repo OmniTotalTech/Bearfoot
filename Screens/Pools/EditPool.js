@@ -113,7 +113,9 @@ class EditPool extends Component {
               ) : (
                 <div>
                   {/* <InventoryModal addItem={addItem} /> */}
-                  <AddInventoryModal />
+                  <AddInventoryModal
+                    addItem={() => this.props.addInventoryItem}
+                  />
                   <PoolInventoryList
                     inventory={this.props.inventory.data.inventoryList}
                     setItem={(key) => setItem(key)}
@@ -138,7 +140,7 @@ const mapStateToProps = (state) => {
 const mapDisptachToProps = (dispatch) => {
   return {
     fetchInventory: (id) => dispatch(fetchInventory(id)),
-    addInventoryItem: (id1) => dispatch(addInventoryItem(id1)),
+    addInventoryItem: (id1, body) => dispatch(addInventoryItem(id1, body)),
   };
 };
 

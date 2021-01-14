@@ -26,7 +26,7 @@ class AdminAreaHome extends Component {
 
   state = {
     isModalOpen: false,
-    // selectedTimeZone: "",
+    selectedTimeZone: "eastern",
   };
 
   openModal() {
@@ -36,16 +36,14 @@ class AdminAreaHome extends Component {
     this.setState({ isModalOpen: false });
   }
 
-  // handleChnage(e) {
-  //   const newSelectedTimeZone = e.target.value;
-  //   this.setState({ selectedTimeZone: newSelectedTimeZone });
-  // }
+  handleChange(value) {
+    const newSelectedTimeZone = value;
+    this.setState({ selectedTimeZone: newSelectedTimeZone });
+    console.log(value);
+  }
 
   render() {
     console.log(this.props.area.data);
-    // const { selectedTimeZone } = this.state;
-    // const values = { selectedTimeZone };
-    // console.log(this.state.selectedTimeZone);
 
     const inputs = [
       {
@@ -104,22 +102,23 @@ class AdminAreaHome extends Component {
                         <div className="md:w-2/3 max-w-sm mx-auto">
                           <label>
                             Time Zone:
-                            <TimeZone
-                            // value={values}
-                            // handleChange={this.handleChnage}
-                            />
+                            <TimeZone handleChange={() => this.handleChange} />
                           </label>
                         </div>
-
-                        <div className="w-full p-4 text-right text-gray-500">
-                          <button
-                            className="inline-flex text bg-red-700 p-2 rounded text-white"
-                            type="submit"
-                            // onClick={() => this.props.addItem()}
-                          >
-                            Submit
-                          </button>
-                        </div>
+                        <form>
+                          <div className="w-full p-4 text-right text-gray-500">
+                            <button
+                              className="inline-flex text bg-red-700 p-2 rounded text-white"
+                              type="submit"
+                              onClick={
+                                ((e) => e.preventDefault(),
+                                console.log(this.state))
+                              }
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </form>
                       </div>
                     </div>
                   </div>

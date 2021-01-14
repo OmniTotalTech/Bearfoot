@@ -64,14 +64,14 @@ export default class AddInventoryModal extends Component {
       <div>
         <div>
           <button
-            className="text bg-red-700  p-2 rounded text-white"
+            className="text bg-red-700 p-2 rounded text-white"
             onClick={() => {
               this.openModal();
             }}
           >
             Add Inventory Item
           </button>
-          <Modal isOpen={this.state.isModalOpen}>
+          <Modal isOpen={this.state.isModalOpen} style={{ width: "100%" }}>
             <button
               className="text bg-gray-600 p-2 rounded text-white"
               onClick={() => {
@@ -91,7 +91,9 @@ export default class AddInventoryModal extends Component {
                       <button
                         className="inline-flex text bg-red-700 p-2 rounded text-white"
                         type="submit"
-                        // onClick={() => this.props.addItem()}
+                        onClick={
+                          ((e) => e.preventDefault(), this.props.addItem())
+                        }
                       >
                         Submit
                       </button>
