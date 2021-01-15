@@ -12,7 +12,7 @@ export default class TimeZone extends Component {
             width: "150px",
           }}
         >
-          <select onChange={(e) => handleChange(e.target.value)}>
+          <select onClick={(e) => handleChange(e.target.value)}>
             <option value="eastern">Eastern (ET)</option>
             <option value="central">Central (CT)</option>
             <option value="mountain">Mountain (MT)</option>

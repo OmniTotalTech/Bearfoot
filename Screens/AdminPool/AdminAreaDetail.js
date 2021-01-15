@@ -65,7 +65,8 @@ class AdminAreaDetail extends Component {
       },
     ];
     const onChange = (e, value) => {
-      this.setState({ name: e });
+      // this.setState({ name: e });
+      console.log(value, e);
     };
 
     const inputsMap = (array) => {
@@ -119,7 +120,9 @@ class AdminAreaDetail extends Component {
                         <div className="w-full p-4 text-right text-gray-500">
                           <button
                             className="inline-flex text bg-red-700 p-2 rounded text-white"
-                            type="submit"
+                            type="button"
+                            onClick={() => console.log("clicked")}
+
                             // onClick={() => this.props.addItem()}
                           >
                             Submit
