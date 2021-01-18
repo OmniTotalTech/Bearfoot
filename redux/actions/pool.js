@@ -6,6 +6,9 @@ import {
   FETCH_POOL_SUCCESS,
   FETCH_POOL_BY_ID_SUCCESS,
   FETCH_POOL_BY_ID_ERROR,
+  ADD_POOL_REQUEST,
+  ADD_POOL_SUCCESS,
+  ADD_POOL_ERROR,
 } from "../types/pool";
 
 export const fetchPoolRequest = () => {
@@ -42,6 +45,25 @@ export const fetchPoolByIdError = (error) => {
   };
 };
 
+// ADD POOL //
+export const addPoolRequest = () => {
+  return {
+    type: ADD_POOL_REQUEST,
+  };
+};
+export const addPoolSuccess = (data) => {
+  return {
+    type: ADD_POOL_SUCCESS,
+    payload: data,
+  };
+};
+export const addPoolError = (error) => {
+  return {
+    type: ADD_POOL_ERROR,
+    payload: error,
+  };
+};
+
 export const fetchPool = () => {
   return (dispatch) => {
     dispatch(fetchPoolRequest);
@@ -70,6 +92,22 @@ export const fetchPoolById = (id) => {
       .catch((error) => {
         const errorMsg = error.message;
         dispatch(fetchPoolByIdError(errorMsg));
+      });
+  };
+};
+
+export const addPool = () => {
+  return (dispatch) => {
+    dispatch(addPoolRequest);
+    api
+      .post("pool/")
+      .then((response) => {
+        const data = response.data;
+        dispatch(addPoolSuccess(data));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(addPoolError(errorMsg));
       });
   };
 };
