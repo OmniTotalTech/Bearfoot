@@ -33,61 +33,67 @@ class DeliveryReview extends Component {
         <div
           style={{
             backgroundColor: "black",
-            height: "full",
+            height: "100vh",
           }}
         >
-          <DeliveryAddress />
-          <DeliveryChecklist />
-          {/* <DeliveryAccept /> */}
-          <div className="px-4 ">
-            <div className="rounded-t-lg bg-white pt-4 pb-24 my-2 text-center">
-              <div className="mb-8">
-                <div className="font-bold">0.5 mi</div>
-                <div>Requested By Savannah</div>
-                <div></div>
-              </div>
-              <div>
-                <div className="mb-3">
-                  <ListIcon
-                    className="text-4xl mr-2"
-                    style={{
-                      color: "white",
-                      backgroundColor: "black",
-                      borderRadius: "50%",
-                    }}
-                  />
-                  View Delivery Items List
+          <div className="max-w-2xl mx-auto">
+            <DeliveryAddress />
+            <DeliveryChecklist />
+            {/* <DeliveryAccept /> */}
+            <div className="px-4 ">
+              <div className="rounded-t-lg bg-white pt-4 pb-24 my-2 text-center">
+                <div className="mb-8">
+                  <div className="font-bold">0.5 mi</div>
+                  <div>Requested By Savannah</div>
+                  <div></div>
                 </div>
-                {this.state.item.status == 0 ? (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setUpdateStatus();
-                      this.props.navigation.navigate("DeliveryInProgress", {
-                        item: this.state.item,
-                      });
-                    }}
-                  >
-                    <div className="py-4 px-4">
-                      <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
-                        ACCEPT
-                      </button>
+                <div>
+                  {/* <div className="mb-3">
+                    <ListIcon
+                      className="text-4xl mr-2"
+                      style={{
+                        color: "white",
+                        backgroundColor: "black",
+                        borderRadius: "50%",
+                      }}
+                    />
+                    View Delivery Items List
+                  </div> */}
+                  {this.state.item.status == 0 ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setUpdateStatus();
+                        this.props.navigation.navigate("DeliveryInProgress", {
+                          item: this.state.item,
+                        });
+                      }}
+                    >
+                      <div className="py-4 px-4">
+                        <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
+                          ACCEPT
+                        </button>
+                      </div>
+                    </TouchableOpacity>
+                  ) : (
+                    // <TouchableOpacity
+                    //   onPress={() => {
+                    //     this.props.navigation.navigate("DeliveryInProgress", {
+                    //       item: this.state.item,
+                    //     });
+                    //   }}
+                    // >
+                    //   <div className="py-4 px-4">
+                    //     <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
+                    //       Continue?
+                    //     </button>
+                    //   </div>
+                    // </TouchableOpacity>
+                    <div className="text-md">
+                      Hello, {this.props.user.name}. You have already completed
+                      this delivery.
                     </div>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.navigation.navigate("DeliveryInProgress", {
-                        item: this.state.item,
-                      });
-                    }}
-                  >
-                    <div className="py-4 px-4">
-                      <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
-                        Continue?
-                      </button>
-                    </div>
-                  </TouchableOpacity>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { TouchableOpacity } from "react-native";
 import store from "../store";
+import * as RootNavigation from "../Routes/RootNavigation";
+
 import { LOGOUT } from "../redux/types/auth";
 class NavbarContainer extends Component {
   render() {
@@ -19,9 +21,12 @@ class NavbarContainer extends Component {
               className="text-white cursor-pointer text-xl leading-none float-left   border  border-transparent rounded block  text-center outline-none focus:outline-none align-center"
               type="button"
             >
-              <div className="justify-center pr-2 ">
+              <div
+                onPress={() => RootNavigation.navigate("EditSelf")}
+                className="justify-center pr-2 "
+              >
                 <img
-                  src="https://demos.creative-tim.com/tailwindcss-starter-project/_next/static/images/team-1-800x800-fa5a7ac2c81a43925586ea85f2fea332.jpg"
+                  src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
                   alt="..."
                   style={{ height: "50px", width: "50px" }}
                   className="shadow rounded-full float-left align-middle border-none object-contain"

@@ -71,7 +71,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        data: action.payload,
         loading: false,
       };
     case ADD_INVENTORY_ITEM_ERROR:

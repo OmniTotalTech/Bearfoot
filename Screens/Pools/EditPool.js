@@ -10,6 +10,8 @@ import {
   fetchInventory,
   addInventoryItem,
 } from "../../redux/actions/inventory";
+import { fetchPool, fetchPoolById } from "../../redux/actions/pool";
+
 import EditPoolDropDown from "./EditPoolDropDown";
 import AddInventoryModal from "../../Components/AddInventoryModal";
 
@@ -49,34 +51,6 @@ class EditPool extends Component {
   }
 
   render() {
-    function addItem() {
-      console.log("clicked");
-      // this.props.addItem(listId, itemid);
-      // console.log(this.props.state);
-    }
-    function setItem(key) {
-      console.log(key);
-    }
-    const actions = [
-      {
-        text: "Basic Information",
-        name: "BasicInfo",
-        position: 2,
-        title: "BasicInfo",
-      },
-      {
-        text: "Inventory",
-        name: "Inventory",
-        position: 1,
-        title: "Inventory",
-      },
-      {
-        text: "Employee Assignment",
-        name: "EmpAssignment",
-        position: 1,
-        title: "EmpAssignment",
-      },
-    ];
     return (
       <ScrollView>
         <div className="container mx-auto text-center">
@@ -101,11 +75,20 @@ class EditPool extends Component {
             <div className="w-full">
               {this.state.basicInfoView != false ? (
                 <>
-                  <BasicInformation />
+                  <BasicInformation pool={this.props.pool.individualPool} />
                 </>
               ) : this.state.inventoryView != true ? (
                 <div>
                   <EmployeeAssignment
+                    pool_primary_driver={
+                      this.props.pool.individualPool.pool_primary_driver
+                    }
+                    pool_secondary_drivers={
+                      this.props.pool.individualPool.pool_secondary_drivers
+                    }
+                    fetchPoolById={this.props.fetchPoolById}
+                    orgName={this.props.pool.individualPool.orgName}
+                    poolId={this.props.pool.individualPool._id}
                     employees={this.props.pool.individualPool.pool_employees}
                     managers={this.props.pool.individualPool.pool_managers}
                   />
@@ -114,7 +97,8 @@ class EditPool extends Component {
                 <div>
                   {/* <InventoryModal addItem={addItem} /> */}
                   <AddInventoryModal
-                    addItem={() => this.props.addInventoryItem}
+                    addItem={this.props.addInventoryItem}
+                    inventory={this.props.inventory}
                   />
                   <PoolInventoryList
                     inventory={this.props.inventory.data.inventoryList}
@@ -141,6 +125,7 @@ const mapDisptachToProps = (dispatch) => {
   return {
     fetchInventory: (id) => dispatch(fetchInventory(id)),
     addInventoryItem: (id1, body) => dispatch(addInventoryItem(id1, body)),
+    fetchPoolById: (id) => dispatch(fetchPoolById(id)),
   };
 };
 

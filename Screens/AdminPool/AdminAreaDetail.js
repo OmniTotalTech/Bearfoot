@@ -20,18 +20,45 @@ import { fetchAreaPools } from "../../redux/actions/area";
 import PoolTable from "../../Components/Admin/PoolTable";
 
 class AdminAreaDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false,
+      name: "",
+      address: "",
+      state: "",
+      zip: 0,
+    };
+  }
   componentDidMount() {
     this.props.fetchAreaPools(this.props.route.params);
   }
-
-  state = {
-    isModalOpen: false,
-  };
 
   openModal() {
     this.setState({ isModalOpen: true });
   }
   closeModal() {
+    this.setState({ isModalOpen: false });
+  }
+
+  handleSubmit(event, props) {
+    event.preventDefault();
+    console.log(props);
+    const { name, address, state, zip } = this.state;
+
+    const body = {
+      pool_name: name,
+      pool_address: address,
+      pool_state: state,
+      pool_zip: zip,
+      area_id: "",
+      area_name: "",
+      pool_employees: [],
+      pool_managers: [],
+      pool_supervisors: [],
+      pool_organization: "",
+    };
+    props.addItem(props.inventory.data._id, body);
     this.setState({ isModalOpen: false });
   }
 
@@ -58,14 +85,10 @@ class AdminAreaDetail extends Component {
         title: "Zip code",
         value: "zip code",
       },
-      {
-        placeholder: "Organization",
-        title: "Organization",
-        value: "organization",
-      },
     ];
     const onChange = (e, value) => {
-      this.setState({ name: e });
+      this.setState({ [value]: e });
+      console.log(this.state);
     };
 
     const inputsMap = (array) => {
@@ -83,63 +106,61 @@ class AdminAreaDetail extends Component {
     };
 
     return (
-      <ScrollView>
-        <div className="container mx-auto">
-          <div className="container">
-            <div className="flex justify-center p-4">
-              <button
-                className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-400 rounded shadow"
-                onClick={
-                  () => {
-                    this.openModal();
-                  }
-                  // this.props.navigation.navigate("EditPool", {
-                  //   id: this.props.pool.individualPool._id,
-                  // })
+      <div className="container mx-auto">
+        <div className="container">
+          <div className="flex justify-center p-4">
+            <button
+              className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-400 rounded shadow"
+              onClick={
+                () => {
+                  this.openModal();
                 }
+                // this.props.navigation.navigate("EditPool", {
+                //   id: this.props.pool.individualPool._id,
+                // })
+              }
+            >
+              Add New Pool
+            </button>
+            <Modal isOpen={this.state.isModalOpen}>
+              <button
+                className="text bg-gray-600 p-2 rounded text-white"
+                onClick={() => {
+                  this.closeModal();
+                }}
               >
-                Add New Pool
+                close
               </button>
-              <Modal isOpen={this.state.isModalOpen}>
-                <button
-                  className="text bg-gray-600 p-2 rounded text-white"
-                  onClick={() => {
-                    this.closeModal();
-                  }}
-                >
-                  close
-                </button>
 
-                <form>
-                  <div className="mx-auto container max-w-2xl shadow-md mx-4">
-                    <div className="bg-white space-y-6 mt-4">
-                      <div className=" space-y-4 md:space-y-0 w-full p-4 text-black items-center">
-                        <h2 className=" max-w-sm mx-auto">Pool</h2>
-                        {inputsMap(inputs)}
-                        <div className="w-full p-4 text-right text-gray-500">
-                          <button
-                            className="inline-flex text bg-red-700 p-2 rounded text-white"
-                            type="submit"
-                            // onClick={() => this.props.addItem()}
-                          >
-                            Submit
-                          </button>
-                        </div>
+              <form onSubmit={() => this.handleSubmit(event, this.props)}>
+                <div className="mx-auto container max-w-2xl shadow-md mx-4">
+                  <div className="bg-white space-y-6 mt-4">
+                    <div className=" space-y-4 md:space-y-0 w-full p-4 text-black items-center">
+                      <h2 className=" max-w-sm mx-auto">Pool</h2>
+                      {inputsMap(inputs)}
+                      <div className="w-full p-4 text-right text-gray-500">
+                        <button
+                          className="inline-flex text bg-red-700 p-2 rounded text-white"
+                          type="submit"
+                          // onClick={() => this.props.addItem()}
+                        >
+                          Submit
+                        </button>
                       </div>
                     </div>
                   </div>
-                </form>
-              </Modal>
-            </div>
-            <div className="w-full mx-auto">
-              <PoolTable
-                navigation={this.props.navigation}
-                data={this.props.area.pools}
-              />
-            </div>
+                </div>
+              </form>
+            </Modal>
+          </div>
+          <div className="w-full mx-auto">
+            <PoolTable
+              navigation={this.props.navigation}
+              data={this.props.area.pools}
+            />
           </div>
         </div>
-      </ScrollView>
+      </div>
     );
   }
 }

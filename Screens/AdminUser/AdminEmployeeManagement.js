@@ -61,12 +61,14 @@ class AdminAreaHome extends Component {
     ];
 
     const renderItem = ({ item }) => (
-      <TouchableOpacity
-        onPress={() => this.props.navigation.navigate(userInfoInvited)}
+      <div
+        onClick={() =>
+          this.props.navigation.navigate("EditUser", { id: item._id })
+        }
         style={{ margin: "10px" }}
       >
         <InvitedUser pic={item.pic} name={item.name} email={item.email} />
-      </TouchableOpacity>
+      </div>
     );
 
     const userInfoEmployeeMap = (
@@ -101,9 +103,7 @@ class AdminAreaHome extends Component {
         renderItem={({ item: deliveryTypeIcon }) => {
           return (
             <TouchableOpacity
-              onPress={() =>
-                props.navigation.navigate(deliveryTypeIcon.location)
-              }
+              onPress={() => props.navigation.navigate("EditUser")}
               style={{ margin: "10px" }}
             >
               <VerifiedUser

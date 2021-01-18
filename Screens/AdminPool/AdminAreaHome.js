@@ -115,7 +115,7 @@ class AdminAreaHome extends Component {
                                 console.log(this.state))
                               }
                             >
-                              Submit
+                              Create a New Area
                             </button>
                           </div>
                         </form>

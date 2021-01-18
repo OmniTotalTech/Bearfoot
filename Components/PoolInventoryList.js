@@ -39,9 +39,11 @@ export default class PoolInventoryList extends Component {
         value: "unitType",
       },
       {
-        placeholder: "lowPointAmt",
+        placeholder:
+          "Amount that is set up to be the minimum acceptable units for operation",
         title: "lowPointAmt",
-        value: "lowPointAmt",
+        value: "lowAmt",
+        isNumber: true,
       },
     ];
 
@@ -50,7 +52,6 @@ export default class PoolInventoryList extends Component {
     };
 
     const inputsMap = (array) => {
-      console.log(array);
       return array.map((item, i) => (
         <>
           <TitleAndInput
@@ -83,7 +84,16 @@ export default class PoolInventoryList extends Component {
       },
       {
         Header: "Low Amount",
-        accessor: "low_amount",
+        accessor: "lowAmt",
+        style: {
+          //textAlign: "right",
+        },
+
+        // width: 100,
+      },
+      {
+        Header: "In Stock Count",
+        accessor: "inStockAmt",
         style: {
           //textAlign: "right",
         },

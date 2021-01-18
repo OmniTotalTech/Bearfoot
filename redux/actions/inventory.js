@@ -112,11 +112,11 @@ export const updateInventoryItem = (id1, id2) => {
 };
 
 // ADD INVENTORY ITEM //
-export const addInventoryItem = (poolId, inventoryItemId) => {
+export const addInventoryItem = (poolId, body) => {
   return (dispatch) => {
     dispatch(addInventoryItemRequest);
     api
-      .post("inventory/" + poolId + "/" + inventoryItemId)
+      .patch("inventory/" + poolId, body)
       .then((response) => {
         console.log(response);
         const data = response.data;

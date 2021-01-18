@@ -12,11 +12,30 @@ class TitleAndInput extends Component {
       <div className="md:w-2/3 max-w-sm mx-auto">
         <label className="text-sm text-gray-700">{item.title}</label>
         <div className="w-full inline-flex border">
-          <input
-            className="w-11/12 focus:outline-none focus:text-gray-700 p-2"
-            placeholder={item.placeholder}
-            onChange={(e) => updateState(e)}
-          />
+          {item.isNumber ? (
+            <input
+              className="w-11/12 focus:outline-none focus:text-gray-700 p-2"
+              placeholder={item.placeholder}
+              type="number"
+              pattern="[0-9]*"
+              defaultValue={item.defaultValue}
+              onChange={(e) => updateState(e)}
+            />
+          ) : item.isZip ? (
+            <input
+              className="w-11/12 focus:outline-none focus:text-gray-700 p-2"
+              placeholder={item.placeholder}
+              defaultValue={item.defaultValue}
+              onChange={(e) => updateState(e)}
+            />
+          ) : (
+            <input
+              className="w-11/12 focus:outline-none focus:text-gray-700 p-2"
+              placeholder={item.placeholder}
+              defaultValue={item.defaultValue}
+              onChange={(e) => updateState(e)}
+            />
+          )}
         </div>
       </div>
     );

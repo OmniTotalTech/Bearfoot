@@ -1,23 +1,44 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
 import TitleAndInput from "./TitleAndInput";
-
 export default class AddInventoryModal extends Component {
-  state = {
-    isModalOpen: false,
-    name: "",
-    desc: "",
-    unitType: "",
-    lowPointAmt: 0,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false,
+      name: "",
+      desc: "",
+      unitType: "",
+      lowAmt: 0,
+      inStockAmt: 0,
+    };
+  }
 
   openModal() {
     this.setState({ isModalOpen: true });
+
+    console.log(this.state);
+    console.log(this.props);
   }
   closeModal() {
     this.setState({ isModalOpen: false });
+    console.log(this.props);
   }
+  handleSubmit(event, props) {
+    event.preventDefault();
+    console.log(props);
+    const { name, desc, unitType, lowAmt, inStockAmt } = this.state;
 
+    const body = {
+      name: name,
+      desc: desc,
+      unitType: unitType,
+      lowAmt: lowAmt,
+      inStockAmt: inStockAmt,
+    };
+    props.addItem(props.inventory.data._id, body);
+    this.setState({ isModalOpen: false });
+  }
   render() {
     const inputs = [
       {
@@ -28,22 +49,31 @@ export default class AddInventoryModal extends Component {
       {
         placeholder: "description",
         title: "Description",
-        value: "description",
+        value: "desc",
       },
       {
         placeholder: "unitType",
         title: "unitType",
         value: "unitType",
       },
+
       {
-        placeholder: "lowPointAmt",
+        placeholder:
+          "Amount that is set up to be the minimum acceptable units for operation",
         title: "lowPointAmt",
-        value: "lowPointAmt",
+        value: "lowAmt",
+        isNumber: true,
+      },
+      {
+        placeholder: "Current count of available units",
+        title: "In Stock Amount",
+        value: "inStockAmt",
+        isNumber: true,
       },
     ];
 
     const onChange = (e, value) => {
-      this.setState({ name: e });
+      this.setState({ [value]: e });
     };
 
     const inputsMap = (array) => {
@@ -71,7 +101,11 @@ export default class AddInventoryModal extends Component {
           >
             Add Inventory Item
           </button>
-          <Modal isOpen={this.state.isModalOpen} style={{ width: "100%" }}>
+          <Modal
+            {...this.props}
+            isOpen={this.state.isModalOpen}
+            style={{ width: "100%" }}
+          >
             <button
               className="text bg-gray-600 p-2 rounded text-white"
               onClick={() => {
@@ -81,7 +115,7 @@ export default class AddInventoryModal extends Component {
               close
             </button>
 
-            <form>
+            <form onSubmit={() => this.handleSubmit(event, this.props)}>
               <div className="mx-auto container max-w-2xl shadow-md mx-4">
                 <div className="bg-white space-y-6 mt-4">
                   <div className=" space-y-4 md:space-y-0 w-full p-4 text-black items-center">
@@ -91,11 +125,8 @@ export default class AddInventoryModal extends Component {
                       <button
                         className="inline-flex text bg-red-700 p-2 rounded text-white"
                         type="submit"
-                        onClick={
-                          ((e) => e.preventDefault(), this.props.addItem())
-                        }
                       >
-                        Submit
+                        Submit a New Item
                       </button>
                     </div>
                   </div>
