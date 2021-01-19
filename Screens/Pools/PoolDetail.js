@@ -6,6 +6,7 @@ import { ScrollView } from "react-native";
 import PoolPublicContainer from "../../Components/General/PoolPublicContainer";
 import PoolManagerContainer from "../../Components/PoolManagerContainer";
 import PoolSupervisorContainer from "../../Components/PoolSupervisorContainer";
+import ShiftInventoryCount from "../../Components/ShiftInventoryCount";
 
 class PoolDetail extends Component {
   state = { isEmployee: false, isManager: false, didLoad: false };
@@ -58,6 +59,7 @@ class PoolDetail extends Component {
             <div></div>
           )}
         </div>
+        <ShiftInventoryCount navigation={this.props.navigation} />
       </ScrollView>
     );
   }
