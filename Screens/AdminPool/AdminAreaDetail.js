@@ -17,6 +17,7 @@ import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
 import AreaTable from "../../Components/Admin/AreaTable";
 import { connect } from "react-redux";
 import { fetchAreaPools } from "../../redux/actions/area";
+import { addPool } from "../../redux/actions/pool";
 import PoolTable from "../../Components/Admin/PoolTable";
 
 class AdminAreaDetail extends Component {
@@ -51,14 +52,14 @@ class AdminAreaDetail extends Component {
       pool_address: address,
       pool_state: state,
       pool_zip: zip,
-      area_id: "",
-      area_name: "",
+      area_id: this.props.route.params.id,
+      area_name: this.props.route.params.areaName,
       pool_employees: [],
       pool_managers: [],
       pool_supervisors: [],
-      pool_organization: "",
+      pool_organization: this.props.route.params.organization,
     };
-    props.addItem(props.inventory.data._id, body);
+    props.addPool(body);
     this.setState({ isModalOpen: false });
   }
 
@@ -174,6 +175,7 @@ const mapStateToProps = (state) => {
 const mapDisptachToProps = (dispatch) => {
   return {
     fetchAreaPools: (id) => dispatch(fetchAreaPools(id)),
+    addPool: (body) => dispatch(addPool(body)),
   };
 };
 

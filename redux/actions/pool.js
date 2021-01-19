@@ -96,11 +96,11 @@ export const fetchPoolById = (id) => {
   };
 };
 
-export const addPool = () => {
+export const addPool = (body) => {
   return (dispatch) => {
     dispatch(addPoolRequest);
     api
-      .post("pool/")
+      .post("pool/", body)
       .then((response) => {
         const data = response.data;
         dispatch(addPoolSuccess(data));

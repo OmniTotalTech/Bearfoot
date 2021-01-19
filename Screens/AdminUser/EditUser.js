@@ -1,12 +1,79 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import api from "../../utils/api";
+
 class EditUser extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { user: { name: "" }, value: 1 };
+    this.onChange = this.onChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  componentDidMount() {
+    this.loadUser();
+  }
+
+  async loadUser() {
+    await api
+      .get("/users/" + this.props.route.params.id)
+      .then((response) => {
+        console.log(response.data.data);
+        this.setState({
+          user: response.data.data,
+          value: response.data.data.role,
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  onChange(val) {
+    console.log(val);
+    this.setState({ value: val });
+  }
+  submit = () => {
+    console.log(this.state.value);
+  };
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+  roles = [
+    {
+      name: "Employee",
+      value: 1,
+    },
+    {
+      name: "Manager",
+      value: 3,
+    },
+    {
+      name: "Area Manager",
+      value: 4,
+    },
+  ];
   render() {
-    console.log(this.props.route.params);
+    console.log(this.props.route.params.id);
     return (
       <>
         <div className="container p-4">
-          <p className="">You are now managing </p>
+          <p className="text-md">You are now managing {this.state.user.name}</p>
+          <p className="text-md pt-4 -pb-1">Assign Role:</p>
+          <br />
+          <select
+            onChange={this.handleChange}
+            value={this.state.value}
+            className=" text-sm"
+          >
+            {this.roles.map((item) => (
+              <option value={item.value}>{item.name}</option>
+            ))}
+          </select>
+          <br />
+          <button
+            onClick={this.submit}
+            className="bg-red-500 p-2 m-2 text-white rounded"
+          >
+            Update
+          </button>
         </div>
       </>
     );

@@ -1,12 +1,32 @@
 import React, { Component } from "react";
 import PoolInventoryCheckList from "../../Components/PoolInventoryCheckList";
-
-export default class InventoryCheck extends Component {
+import { connect } from "react-redux";
+import { fetchInventory } from "../../redux/actions/inventory";
+class InventoryCheck extends Component {
+  componentDidMount() {
+    this.props.fetchInventory(this.props.route.params.id);
+  }
   render() {
     return (
-      <div>
-        <PoolInventoryCheckList />
+      <div className="h-full">
+        <PoolInventoryCheckList
+          data={this.props.inventory}
+          type={this.props.route.params.type}
+        />
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    inventory: state.inventory.data,
+  };
+};
+
+const mapDisptachToProps = (dispatch) => {
+  return {
+    fetchInventory: (id) => dispatch(fetchInventory(id)),
+  };
+};
+export default connect(mapStateToProps, mapDisptachToProps)(InventoryCheck);

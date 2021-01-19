@@ -48,7 +48,7 @@ class PageContainer extends React.Component {
   render() {
     return (
       <div className="editorContainer">
-        <button
+        {/* <button
           className="button bg-red-500 p-4 rounded m-4"
           onClick={this.onUnderlineClick}
         >
@@ -65,15 +65,15 @@ class PageContainer extends React.Component {
           onClick={this.onItalicClick}
         >
           <em>Italic</em>
-        </button>{" "}
-        <div className="editors bg-white m-4 p-4">
+        </button>{" "} */}
+        {/* <div className="editors bg-white m-4 p-4">
           <Editor
             className="bg-white m-4 p-4"
             editorState={this.state.editorState}
             handleKeyCommand={this.handleKeyCommand}
             onChange={this.onChange}
           />
-        </div>
+        </div> */}
         <pre>{this.state.editorContentHtml}</pre>
       </div>
     );

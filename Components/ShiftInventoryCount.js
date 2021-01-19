@@ -34,7 +34,10 @@ export default class ShiftInventoryCount extends Component {
                 return (
                   <TouchableOpacity
                     onPress={() =>
-                      this.props.navigation.navigate(deliveryTypeIcon.location)
+                      this.props.navigation.navigate(
+                        deliveryTypeIcon.location,
+                        { type: deliveryTypeIcon.status, id: this.props.id }
+                      )
                     }
                     style={{ margin: "10px" }}
                   >

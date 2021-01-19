@@ -59,7 +59,10 @@ class PoolDetail extends Component {
             <div></div>
           )}
         </div>
-        <ShiftInventoryCount navigation={this.props.navigation} />
+        <ShiftInventoryCount
+          id={this.props.pool.individualPool._id}
+          navigation={this.props.navigation}
+        />
       </ScrollView>
     );
   }

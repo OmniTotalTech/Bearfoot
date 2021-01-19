@@ -19,9 +19,7 @@ class PoolPublicContainer extends Component {
         </h4>
 
         <p className="text-grey-dark font-thin text-sm leading-normal ">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
-          quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
-          nihil.
+          {this.props.pool.individualPool.pool_desc}
         </p>
       </div>
     );
