@@ -4,7 +4,7 @@ export default class PoolInventoryCheckList extends Component {
   render() {
     const handleChange = (e, value) => {
       console.log(e.target.value);
-      this.setState({ [value]: e.target.value });
+      this.setState({ [value]: parseInt(e.target.value) });
       console.log(this.state);
     };
     return (
@@ -33,7 +33,7 @@ export default class PoolInventoryCheckList extends Component {
                 <p className="text-md px-2 m-2"></p>
                 <div className="w-full">
                   <input
-                    onChange={(e, value) => handleChange(e, item.name)}
+                    onChange={(e, value) => handleChange(e, item._id)}
                     className="text-right mx-2 p-2"
                     type="number"
                   />
