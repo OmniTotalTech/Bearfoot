@@ -55,7 +55,7 @@ class EditUser extends Component {
     console.log(this.props.route.params.id);
     return (
       <>
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 rounded">
           <p className="text-md">
             You are now managing
             <span className="text-red-500 mx-2">{this.state.user.name}</span>
