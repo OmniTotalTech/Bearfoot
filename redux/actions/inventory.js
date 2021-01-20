@@ -10,6 +10,9 @@ import {
   UPDATE_INVENTORY_ITEM_REQUEST,
   UPDATE_INVENTORY_ITEM_SUCCESS,
   UPDATE_INVENTORY_ITEM_ERROR,
+  UPDATE_INVENTORY_COUNT_REQUEST,
+  UPDATE_INVENTORY_COUNT_SUCCESS,
+  UPDATE_INVENTORY_COUNT_ERROR,
 } from "../types/inventory";
 
 // GET INVENTORY //
@@ -73,6 +76,25 @@ export const addInventoryItemError = (error) => {
   };
 };
 
+// UPDATE INVENTORY COUNT //
+export const updateInventoryCountRequest = () => {
+  return {
+    type: UPDATE_INVENTORY_COUNT_REQUEST,
+  };
+};
+export const updateInventoryCountSuccess = (data) => {
+  return {
+    type: UPDATE_INVENTORY_COUNT_SUCCESS,
+    payload: data,
+  };
+};
+export const updateInventoryCountError = (error) => {
+  return {
+    type: UPDATE_INVENTORY_COUNT_ERROR,
+    payload: error,
+  };
+};
+
 // GET INVENTORY //
 export const fetchInventory = (id) => {
   return (dispatch) => {
@@ -92,7 +114,6 @@ export const fetchInventory = (id) => {
 };
 
 // UPDATE INVENTORY ITEM //
-
 export const updateInventoryItem = (id1, id2) => {
   console.log(id1);
   return (dispatch) => {
@@ -125,6 +146,24 @@ export const addInventoryItem = (poolId, body) => {
       .catch((error) => {
         const errorMsg = error.message;
         dispatch(addInventoryItemError(errorMsg));
+      });
+  };
+};
+
+// UPDATE INVENTORY COUNT //
+export const updateInventoryCount = (id, body) => {
+  return (dispatch) => {
+    dispatch(updateInventoryCountRequest);
+    api
+      .patch("inventory/" + id, body)
+      .then((response) => {
+        console.log(response);
+        const data = response.data;
+        dispatch(updateInventoryCountSuccess(data));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(updateInventoryCountError(errorMsg));
       });
   };
 };

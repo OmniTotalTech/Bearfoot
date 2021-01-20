@@ -5,6 +5,9 @@ import {
   FETCH_INVENTORY_ERROR,
   FETCH_INVENTORY_REQUEST,
   FETCH_INVENTORY_SUCCESS,
+  UPDATE_INVENTORY_COUNT_ERROR,
+  UPDATE_INVENTORY_COUNT_REQUEST,
+  UPDATE_INVENTORY_COUNT_SUCCESS,
   UPDATE_INVENTORY_ITEM_ERROR,
   UPDATE_INVENTORY_ITEM_REQUEST,
   UPDATE_INVENTORY_ITEM_SUCCESS,
@@ -73,6 +76,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: null,
+        data: action.payload,
         loading: false,
       };
     case ADD_INVENTORY_ITEM_ERROR:
@@ -84,5 +88,26 @@ export default (state = initialState, action) => {
       };
     default:
       return state;
+
+    // update inventory count //
+    case UPDATE_INVENTORY_COUNT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_INVENTORY_COUNT_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        data: action.payload,
+        loading: false,
+      };
+    case UPDATE_INVENTORY_COUNT_ERROR:
+      return {
+        ...state,
+        loading: false,
+        data: {},
+        error: action.payload,
+      };
   }
 };
