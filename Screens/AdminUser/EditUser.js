@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
 import api from "../../utils/api";
 
 class EditUser extends Component {
@@ -55,7 +56,24 @@ class EditUser extends Component {
     return (
       <>
         <div className="container p-4">
-          <p className="text-md">You are now managing {this.state.user.name}</p>
+          <p className="text-md">
+            You are now managing
+            {this.state.user.name}
+          </p>
+          <div className="container mx-auto text-center">
+            <div className="bg-white mt-4">
+              <div>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
+                  alt="..."
+                  style={{ height: "250px", width: "250px" }}
+                  className="shadow rounded-full w-full"
+                />
+              </div>
+              <div className="text-lg  p-2">{this.state.user.name}</div>
+              <div className="text-lg  p-2">{this.state.user.email}</div>
+            </div>
+          </div>
           <p className="text-md pt-4 -pb-1">Assign Role:</p>
           <br />
           <select
