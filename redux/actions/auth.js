@@ -184,9 +184,8 @@ export const updateUser = (body) => {
       })
       .then((response) => {
         const user = response.user;
-        dispatch(updateUserSuccess(user)).then((res) => {
-          dispatch(loadUser());
-        });
+        dispatch(updateUserSuccess(user));
+        dispatch(loadUser());
       })
       .catch((error) => {
         const errorMsg = error.message;
@@ -226,6 +225,7 @@ export const verifyCode = (code, phone) => {
       })
       .then((response) => {
         dispatch(verifyCodeSuccess(response));
+        dispatch(loadUser());
       })
       .catch((error) => {
         dispatch(verifyCodeError(error));

@@ -11,7 +11,7 @@ class PoolEmployee extends Component {
       <div className="container mx-auto max-w-4xl">
         <PoolTableEmployee
           navigation={this.props.navigation}
-          data={this.props.pool.data.foundPool}
+          data={this.props.pool.data}
         />
       </div>
     );

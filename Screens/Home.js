@@ -79,74 +79,75 @@ class Home extends Component {
   render() {
     return (
       <ScrollView>
-        {this.props.user.hasSignedInBefore ? (
-          <View style={{ backgroundColor: " #718096" }}>
-            <div className="h-screen ">
-              {/* Employee Area */}
-              <div className="mt-8">
-                <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
-                  <div className="text-3xl mx-4 ">
-                    <span className="bg-white mb-4 m-0">Employee</span>
-                  </div>
-                  <FlatList
-                    horizontal
-                    data={user}
-                    renderItem={({ item: deliveryTypeIcon }) => {
-                      return (
-                        <TouchableOpacity
-                          onPress={() =>
-                            this.props.navigation.navigate(
-                              deliveryTypeIcon.location
-                            )
-                          }
-                          style={{ margin: "10px" }}
-                        >
-                          <DeliveryStatusIcon
-                            icon={deliveryTypeIcon.icon}
-                            status={deliveryTypeIcon.status}
-                            subtext={deliveryTypeIcon.subtext}
-                          />
-                        </TouchableOpacity>
-                      );
-                    }}
-                    keyExtractor={(item, index) => index}
-                  />
-                </div>
-              </div>
-              {/* // Admin area */}
-              {this.props.user.role >= 3 ? (
+        {this.props.user ? (
+          this.props.user.hasSignedInBefore ? (
+            <View style={{ backgroundColor: " #718096" }}>
+              <div className="h-screen ">
+                {/* Employee Area */}
                 <div className="mt-8">
                   <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
                     <div className="text-3xl mx-4 ">
-                      <span className="bg-white mb-4 m-0">Admin</span>
+                      <span className="bg-white mb-4 m-0">Employee</span>
                     </div>
-                    <div className="container  max-w-4xl w-full bg-white  rounded-lg  px-2">
-                      <FlatList
-                        horizontal
-                        data={admin}
-                        renderItem={({ item: deliveryTypeIcon }) => {
-                          return (
-                            <TouchableOpacity
-                              onPress={() =>
-                                this.props.navigation.navigate(
-                                  deliveryTypeIcon.location
-                                )
-                              }
-                              style={{ margin: "10px" }}
-                            >
-                              <DeliveryStatusIcon
-                                icon={deliveryTypeIcon.icon}
-                                status={deliveryTypeIcon.status}
-                                subtext={deliveryTypeIcon.subtext}
-                              />
-                            </TouchableOpacity>
-                          );
-                        }}
-                        keyExtractor={(item, index) => index}
-                      />
-                    </div>
-                    {/* // temp button //  */}
-                    {/* <button
+                    <FlatList
+                      horizontal
+                      data={user}
+                      renderItem={({ item: deliveryTypeIcon }) => {
+                        return (
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.props.navigation.navigate(
+                                deliveryTypeIcon.location
+                              )
+                            }
+                            style={{ margin: "10px" }}
+                          >
+                            <DeliveryStatusIcon
+                              icon={deliveryTypeIcon.icon}
+                              status={deliveryTypeIcon.status}
+                              subtext={deliveryTypeIcon.subtext}
+                            />
+                          </TouchableOpacity>
+                        );
+                      }}
+                      keyExtractor={(item, index) => index}
+                    />
+                  </div>
+                </div>
+                {/* // Admin area */}
+                {this.props.user.role >= 3 ? (
+                  <div className="mt-8">
+                    <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
+                      <div className="text-3xl mx-4 ">
+                        <span className="bg-white mb-4 m-0">Admin</span>
+                      </div>
+                      <div className="container  max-w-4xl w-full bg-white  rounded-lg  px-2">
+                        <FlatList
+                          horizontal
+                          data={admin}
+                          renderItem={({ item: deliveryTypeIcon }) => {
+                            return (
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.props.navigation.navigate(
+                                    deliveryTypeIcon.location
+                                  )
+                                }
+                                style={{ margin: "10px" }}
+                              >
+                                <DeliveryStatusIcon
+                                  icon={deliveryTypeIcon.icon}
+                                  status={deliveryTypeIcon.status}
+                                  subtext={deliveryTypeIcon.subtext}
+                                />
+                              </TouchableOpacity>
+                            );
+                          }}
+                          keyExtractor={(item, index) => index}
+                        />
+                      </div>
+                      {/* // temp button //  */}
+                      {/* <button
                       className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                       onClick={() =>
                         this.props.navigation.navigate("DailyOperations")
@@ -154,21 +155,24 @@ class Home extends Component {
                     >
                       go to daily operations page
                     </button> */}
-                    {/* // temp button // */}
+                      {/* // temp button // */}
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div></div>
-              )}
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            </View>
+          ) : (
+            <div className="container mx-auto">
+              <UpdateEmployeeInfoForm
+                email={this.props.user.email}
+                name={this.props.user.name}
+              />
             </div>
-          </View>
+          )
         ) : (
-          <div className="container mx-auto">
-            <UpdateEmployeeInfoForm
-              email={this.props.user.email}
-              name={this.props.user.name}
-            />
-          </div>
+          <div></div>
         )}
       </ScrollView>
     );

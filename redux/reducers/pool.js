@@ -10,7 +10,7 @@ import {
 } from "../types/pool";
 
 const initialState = {
-  data: {},
+  data: [],
   loading: false,
   error: null,
   individualPool: {

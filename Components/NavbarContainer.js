@@ -34,7 +34,11 @@ class NavbarContainer extends Component {
               </div>
             </button>
             <div className="text-white text-sm truncate">
-              {this.props.user.name}
+              {this.props.user ? (
+                <div>{this.props.user.name}</div>
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
 

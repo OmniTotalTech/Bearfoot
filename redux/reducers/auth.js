@@ -25,7 +25,7 @@ const initialState = {
   error: null,
   token: null,
   user: {
-    name: " ",
+    name: "",
   },
   verification: {
     data: {
