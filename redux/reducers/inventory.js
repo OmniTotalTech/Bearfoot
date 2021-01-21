@@ -16,6 +16,7 @@ import { UPDATE_STATUS_ERROR } from "../types/updateStatus";
 
 const initialState = {
   data: {
+    _id: "",
     inventoryList: [],
   },
   loading: false,

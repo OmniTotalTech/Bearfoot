@@ -4,8 +4,9 @@ import "react-table/react-table.css";
 
 class PoolTableEmployee extends Component {
   render() {
-    console.log(data);
     const data = this.props.data;
+    console.log(data);
+
     const navToPool = (id) => {
       console.log(id);
       this.props.navigation.navigate("PoolDetail", id);
@@ -61,41 +62,6 @@ class PoolTableEmployee extends Component {
           textAlign: "right",
         },
       },
-      // {
-      //   Header: "Actions",
-      //   filterable: false,
-      //   sortable: false,
-      //   resizable: false,
-
-      //   width: 100,
-      //   maxWidth: 100,
-      //   minWidth: 100,
-      // },
-      // {
-      //   Header: "Status",
-      //   accessor: "body",
-      // },
-      // {
-      //   Header: "Actions",
-      //   filterable: false,
-      //   sortable: false,
-      //   resizable: false,
-      //   Cell: (porps) => {
-      //     return (
-      //       <button
-      //         style={{ background: "red", color: "#fefefe" }}
-      //         onClick={(e) => {
-      //           this.deletePoste(porps.original.id);
-      //         }}
-      //       >
-      //         Delete
-      //       </button>
-      //     );
-      //   },
-      //   width: 100,
-      //   maxWidth: 100,
-      //   minWidth: 100,
-      // },
     ];
 
     return (
