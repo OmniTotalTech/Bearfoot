@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ReactTable from "react-table";
 import Modal from "react-modal";
 import TitleAndInput from "./TitleAndInput";
-
+import api from "../utils/api";
 export default class PoolInventoryList extends Component {
   //   navToArea = () => {
   //     this.props.navigation.navigate("AdminAreaDetail");
@@ -17,6 +17,24 @@ export default class PoolInventoryList extends Component {
   }
   closeModal() {
     this.setState({ isModalOpen: false });
+  }
+  async deleteItem(id) {
+    let url = "inventory/" + this.props.poolId + "/" + id;
+    console.log(url);
+    await api
+      .request({
+        method: "DELETE",
+        url: url,
+      })
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        console.log(errorMsg);
+      });
+    await this.props.fetchPoolById();
   }
 
   render() {
@@ -121,42 +139,13 @@ export default class PoolInventoryList extends Component {
                 className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
                 // disabled
                 onClick={(e) => {
-                  console.log(e.target.value);
-                  this.openModal();
+                  console.log(props.original);
+                  this.deleteItem(props.original._id);
                   // this.navToArea(porps.original.id);
                 }}
               >
-                Edit
+                Delete
               </button>
-              <Modal isOpen={this.state.isModalOpen}>
-                <button
-                  className="text bg-gray-600 p-2 rounded text-white"
-                  onClick={() => {
-                    this.closeModal();
-                  }}
-                >
-                  close
-                </button>
-                <form>
-                  <div className="mx-auto container max-w-2xl shadow-md mx-4">
-                    <div className="bg-white space-y-6 mt-4">
-                      <div className=" space-y-4 md:space-y-0 w-full p-4 text-black items-center">
-                        <h2 className=" max-w-sm mx-auto">Item</h2>
-                        {inputsMap(inputs)}
-                        <div className="w-full p-4 text-right text-gray-500">
-                          <button
-                            className="inline-flex text bg-red-700 p-2 rounded text-white"
-                            type="submit"
-                            // onClick={() => this.props.addItem()}
-                          >
-                            Submit
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </Modal>
             </div>
           );
         },

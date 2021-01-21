@@ -55,13 +55,13 @@ class EditUser extends Component {
     console.log(this.props.route.params.id);
     return (
       <>
-        <div className="container mx-auto p-4 rounded">
+        <div className="container mx-auto p-4 rounded-br-lg">
           <p className="text-md">
             You are now managing
             <span className="text-red-500 mx-2">{this.state.user.name}</span>
           </p>
-          <div className="container mx-auto text-center">
-            <div className="bg-white mt-4">
+          <div className="container mx-auto text-center rounded-br-lg">
+            <div className="bg-white mt-4 rounded-br-lg rounded-bl-lg rounded-tr-lg ">
               <div>
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
@@ -71,6 +71,7 @@ class EditUser extends Component {
                 />
               </div>
               <div className="text-lg  p-2">{this.state.user.name}</div>
+              <div className="text-lg  p-2">{this.state.user.phone}</div>
               <div className="text-lg  p-2">{this.state.user.email}</div>
             </div>
           </div>

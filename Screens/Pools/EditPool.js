@@ -101,8 +101,20 @@ class EditPool extends Component {
                     inventory={this.props.inventory}
                   />
                   <PoolInventoryList
-                    inventory={this.props.inventory.data.inventoryList}
+                    poolId={
+                      this.props.inventory.data
+                        ? this.props.inventory.data._id
+                        : ""
+                    }
+                    inventory={
+                      this.props.inventory.data
+                        ? this.props.inventory.data.inventoryList
+                        : []
+                    }
                     setItem={(key) => setItem(key)}
+                    fetchPoolById={() =>
+                      this.props.fetchInventory(this.props.route.params.id)
+                    }
                   />
                 </div>
               )}
