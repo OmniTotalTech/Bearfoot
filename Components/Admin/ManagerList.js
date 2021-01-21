@@ -3,15 +3,54 @@ import api from "../../utils/api";
 
 function ManagerList(props) {
   async function handleClick(group, id, poolId) {
-    await api
-      .patch("/pool/" + poolId + "/deliveries/" + group + "/assign/" + id)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        const errorMsg = error.message;
-      });
-    props.closeModal();
+    console.log(props);
+    if (props.assignGroup == "managers") {
+      await api
+        .patch(
+          "/pool/" +
+            poolId +
+            "/deliveries/" +
+            group +
+            "/assign/" +
+            id +
+            "/assign"
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+      props.closeModal();
+    } else if (props.assignGroup == "employees") {
+      await api
+        .patch(
+          "/pool/" +
+            poolId +
+            "/deliveries/" +
+            group +
+            "/assign/" +
+            id +
+            "/assign"
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+      props.closeModal();
+    } else {
+      await api
+        .patch("/pool/" + poolId + "/deliveries/" + group + "/assign/" + id)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+      props.closeModal();
+    }
   }
   return props.employees ? (
     props.employees.map((employee) => (

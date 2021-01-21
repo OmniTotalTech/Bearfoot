@@ -107,7 +107,7 @@ export const addPool = (body) => {
       })
       .then((response) => {
         console.log(response);
-        const data = response.data;
+        const data = response;
         dispatch(addPoolSuccess(data));
       })
       .catch((error) => {

@@ -4,9 +4,6 @@ import "react-table/react-table.css";
 
 class PoolTableEmployee extends Component {
   render() {
-    const data = this.props.data;
-    console.log(data);
-
     const navToPool = (id) => {
       console.log(id);
       this.props.navigation.navigate("PoolDetail", id);
@@ -68,7 +65,7 @@ class PoolTableEmployee extends Component {
       <div>
         <ReactTable
           className="-striped -highlight"
-          data={data}
+          data={this.props.data.data}
           filterable
           columns={columns}
           defaultPageSize={10}

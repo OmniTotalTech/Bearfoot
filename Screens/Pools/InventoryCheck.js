@@ -10,7 +10,7 @@ class InventoryCheck extends Component {
     return (
       <div className="h-full">
         <PoolInventoryCheckList
-          data={this.props.inventory}
+          data={this.props.inventory.data}
           type={this.props.route.params.type}
         />
       </div>
@@ -20,7 +20,7 @@ class InventoryCheck extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    inventory: state.inventory.data,
+    inventory: state.inventory,
   };
 };
 

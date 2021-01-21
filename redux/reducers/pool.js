@@ -63,7 +63,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        data: action.payload,
+        new: action.payload,
         error: null,
       };
     case ADD_POOL_ERROR:

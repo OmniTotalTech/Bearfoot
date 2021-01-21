@@ -1,4 +1,5 @@
 import api from "../../utils/api";
+import pool from "../reducers/pool";
 
 import {
   FETCH_INVENTORY_REQUEST,
@@ -134,6 +135,7 @@ export const updateInventoryItem = (id1, id2) => {
 
 // ADD INVENTORY ITEM //
 export const addInventoryItem = (poolId, body) => {
+  console.log(poolId, body);
   return (dispatch) => {
     dispatch(addInventoryItemRequest);
     api

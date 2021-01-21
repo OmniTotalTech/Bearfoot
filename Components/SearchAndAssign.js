@@ -27,17 +27,39 @@ class SearchAndAssign extends Component {
   }
   async handleSubmit(e, props) {
     e.preventDefault();
-    console.log(this.state);
-    await api
-      .get(
-        "users/orgEmployees/" + this.props.orgName + "/" + this.state.searchTerm
-      )
-      .then((response) => {
-        this.setState({ employeeList: response.data.data });
-      })
-      .catch((error) => {
-        const errorMsg = error.message;
-      });
+
+    if (this.props.title == "managers") {
+      await api
+        .get(
+          "users/orgEmployees/" +
+            this.props.orgName +
+            "/" +
+            this.state.searchTerm
+        )
+        .then((response) => {
+          console.log(response);
+          this.setState({ employeeList: response.data.data });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+    } else {
+      console.log(this.state);
+      await api
+        .get(
+          "users/orgEmployees/" +
+            this.props.orgName +
+            "/" +
+            this.state.searchTerm
+        )
+        .then((response) => {
+          console.log(response);
+          this.setState({ employeeList: response.data.data });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+    }
   }
   render() {
     console.log(this.props);

@@ -15,7 +15,7 @@ export default class PoolInventoryCheckList extends Component {
           </p>
           <p className="text-2xl px-4">Last submitted report:</p>
           <p></p>
-          {this.props.data.inventoryList ? (
+          {this.props.data ? (
             this.props.data.inventoryList.map((item, i) => (
               <>
                 <div key={i} className="px-6 w-3/4 text-md">

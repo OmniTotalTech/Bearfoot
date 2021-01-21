@@ -91,8 +91,12 @@ class EditPool extends Component {
                     pool_secondary_drivers={
                       this.props.pool.individualPool.pool_secondary_drivers
                     }
+                    pool_managers={this.props.pool.individualPool.pool_managers}
+                    pool_employees={
+                      this.props.pool.individualPool.pool_employees
+                    }
                     fetchPoolById={this.props.fetchPoolById}
-                    orgName={this.props.pool.individualPool.orgName}
+                    orgName={this.props.pool.individualPool.pool_organization}
                     poolId={this.props.pool.individualPool._id}
                     employees={this.props.pool.individualPool.pool_employees}
                     managers={this.props.pool.individualPool.pool_managers}

@@ -34,7 +34,7 @@ export default class PoolInventoryList extends Component {
         const errorMsg = error.message;
         console.log(errorMsg);
       });
-    await this.props.fetchPoolById();
+    await this.props.fetchPoolById(this.props.poolId);
   }
 
   render() {

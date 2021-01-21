@@ -16,20 +16,16 @@ export default class AddInventoryModal extends Component {
 
   openModal() {
     this.setState({ isModalOpen: true });
-
-    console.log(this.state);
     console.log(this.props);
   }
   async closeModal() {
     this.setState({ isModalOpen: false });
-    console.log(this.props);
   }
 
   handleSubmit(event, props) {
     event.preventDefault();
-    console.log(props);
     const { name, desc, unitType, lowAmt, inStockAmt } = this.state;
-
+    console.log(props);
     const body = {
       name: name,
       desc: desc,
@@ -80,7 +76,6 @@ export default class AddInventoryModal extends Component {
     };
 
     const inputsMap = (array) => {
-      console.log(array);
       return array.map((item, i) => (
         <>
           <TitleAndInput
@@ -106,6 +101,7 @@ export default class AddInventoryModal extends Component {
           </button>
           <Modal
             {...this.props}
+            ariaHideApp={false}
             isOpen={this.state.isModalOpen}
             style={{ width: "100%" }}
           >
