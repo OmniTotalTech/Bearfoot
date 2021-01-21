@@ -32,7 +32,8 @@ class AdminAreaDetail extends Component {
     };
   }
   componentDidMount() {
-    this.props.fetchAreaPools(this.props.route.params);
+    console.log(this.props.route.params);
+    this.props.fetchAreaPools(this.props.route.params.id);
   }
 
   openModal() {
@@ -61,6 +62,7 @@ class AdminAreaDetail extends Component {
     };
     props.addPool(body);
     this.setState({ isModalOpen: false });
+    this.props.fetchAreaPools(this.props.route.params.id);
   }
 
   render() {

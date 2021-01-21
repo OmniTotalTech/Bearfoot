@@ -100,8 +100,13 @@ export const addPool = (body) => {
   return (dispatch) => {
     dispatch(addPoolRequest);
     api
-      .post("pool/", body)
+      .request({
+        method: "POST",
+        url: "pool/",
+        data: body,
+      })
       .then((response) => {
+        console.log(response);
         const data = response.data;
         dispatch(addPoolSuccess(data));
       })

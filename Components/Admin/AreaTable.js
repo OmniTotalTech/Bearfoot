@@ -31,12 +31,12 @@ class AreaTable extends Component {
   // }
 
   navToArea = (props) => {
-    console.log(props.original._id);
+    console.log(props.original);
     const id = props.original._id;
     this.props.navigation.navigate("AdminAreaDetail", {
       id: id,
       areaName: props.original.areaName,
-      organization: props.original.organization,
+      organization: props.original.areaOrganization,
     });
   };
 

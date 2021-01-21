@@ -20,10 +20,11 @@ export default class AddInventoryModal extends Component {
     console.log(this.state);
     console.log(this.props);
   }
-  closeModal() {
+  async closeModal() {
     this.setState({ isModalOpen: false });
     console.log(this.props);
   }
+
   handleSubmit(event, props) {
     event.preventDefault();
     console.log(props);
@@ -37,7 +38,9 @@ export default class AddInventoryModal extends Component {
       inStockAmt: inStockAmt,
     };
     props.addItem(props.inventory.data._id, body);
+
     this.setState({ isModalOpen: false });
+    this.props.fetchPoolById();
   }
   render() {
     const inputs = [

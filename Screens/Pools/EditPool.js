@@ -50,6 +50,11 @@ class EditPool extends Component {
     });
   }
 
+  async updateInventory(id, body) {
+    await this.props.addInventoryItem(id, body);
+    await this.props.fetchInventory(this.props.route.params.id);
+  }
+
   render() {
     return (
       <ScrollView>
@@ -97,8 +102,11 @@ class EditPool extends Component {
                 <div>
                   {/* <InventoryModal addItem={addItem} /> */}
                   <AddInventoryModal
-                    addItem={this.props.addInventoryItem}
+                    addItem={(id, body) => this.updateInventory(id, body)}
                     inventory={this.props.inventory}
+                    fetchPoolById={() =>
+                      this.props.fetchInventory(this.props.route.params.id)
+                    }
                   />
                   <PoolInventoryList
                     poolId={

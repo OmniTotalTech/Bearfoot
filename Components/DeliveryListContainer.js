@@ -16,8 +16,7 @@ export default class DeliveryListContainer extends Component {
         <div className="my-4">
           <div className="text-lg">Assigned Deliveries</div>
           <div className="text-md">
-            This is where you will see any deliveries that are available to you,
-            but you are not the primary driver.
+            This is where you will see any deliveries that are available to you.
           </div>
           {primaryMap}
         </div>

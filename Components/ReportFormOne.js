@@ -34,7 +34,7 @@ export default class ReportFormOne extends Component {
 
     return (
       <div>
-        <form>
+        {/* <form>
           <div className="mx-auto container max-w-2xl shadow-md mx-4">
             <div className="bg-white space-y-6 mt-4">
               <div className=" space-y-4 md:space-y-0 w-full p-4 text-black items-center">
@@ -51,7 +51,7 @@ export default class ReportFormOne extends Component {
               </div>
             </div>
           </div>
-        </form>
+        </form> */}
       </div>
     );
   }
