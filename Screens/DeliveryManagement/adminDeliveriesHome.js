@@ -12,14 +12,14 @@ import ReportTypeOneStepper from "../../Components/ReportTypeOneStepper";
 
 class adminDeliveriesHome extends Component {
   state = {
-    date: moment(),
+    date: moment().format("YYYY-MM-DD"),
     orders: [],
     currentPage: 1,
     ordersPerPage: 3,
   };
 
   componentDidMount() {
-    this.props.fetchAdminOrderDetail();
+    this.props.fetchAdminOrderDetail(moment().format("YYYY-MM-DD"));
   }
 
   render() {
@@ -32,7 +32,7 @@ class adminDeliveriesHome extends Component {
     );
 
     console.log(fetchAdminOrderDetail);
-    const eventHandler = (date) => this.setState({ date: date });
+    const eventHandler = (date) => this.props.fetchAdminOrderDetail(date);
     console.log(this.props.adminOrderDetail.data);
 
     return (
@@ -51,12 +51,7 @@ class adminDeliveriesHome extends Component {
           // totalOrders={adminOrderDetail.length}
           />
           <br />
-          {/* <button
-            type="button"
-            className="border border-black-500 bg-red-500 text-white   rounded-md px-4 py-2 my-4 transition duration-500 ease select-none hover:text-white hover:bg-red-600 "
-          >
-            Submit
-          </button> */}
+
           <DeliveryTable data={this.props.adminOrderDetail} />
           <ReportTypeOneStepper />
         </div>
@@ -73,7 +68,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAdminOrderDetail: () => dispatch(fetchAdminOrderDetail()),
+    fetchAdminOrderDetail: (date) => dispatch(fetchAdminOrderDetail(date)),
   };
 };
 

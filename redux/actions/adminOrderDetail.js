@@ -26,11 +26,11 @@ export const fetchAdminOrderDetailError = (error) => {
   };
 };
 
-export const fetchAdminOrderDetail = () => {
+export const fetchAdminOrderDetail = (date) => {
   return (dispatch) => {
     dispatch(fetchAdminOrderDetailRequest);
     api
-      .get("adminOrderDetails/")
+      .get("adminOrderDetails/" + date)
       .then((response) => {
         const data = response.data;
         console.log(data);

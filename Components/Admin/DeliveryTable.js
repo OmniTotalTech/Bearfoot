@@ -13,8 +13,8 @@ class DeliveryTable extends Component {
     const data = this.props.data.data;
     const columns = [
       {
-        Header: "Day",
-        accessor: "day_of_week",
+        Header: "Accepted By?",
+        accessor: "accepted_by.name",
         style: {
           //textAlign: "right",
         },
