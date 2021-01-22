@@ -52,7 +52,10 @@ class adminDeliveriesHome extends Component {
           />
           <br />
 
-          <DeliveryTable data={this.props.adminOrderDetail} />
+          <DeliveryTable
+            navigation={this.props.navigation}
+            data={this.props.adminOrderDetail}
+          />
           <ReportTypeOneStepper />
         </div>
       </ScrollView>

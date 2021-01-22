@@ -25,6 +25,7 @@ import EditUser from "../Screens/AdminUser/EditUser";
 import InventoryCheck from "../Screens/Pools/InventoryCheck";
 
 import DailyOperations from "../Screens/DailyOperations";
+import DeliveryDetail from "../Screens/DeliveryInformation/DeliveryDetail";
 const Stack = createStackNavigator();
 
 export const AuthStack = () => (
@@ -65,6 +66,7 @@ export const AuthStack = () => (
         <Stack.Screen name="EditSelf" component={EditSelf} />
         <Stack.Screen name="EditUser" component={EditUser} />
         <Stack.Screen name="InventoryCheck" component={InventoryCheck} />
+        <Stack.Screen name="DeliveryDetails" component={DeliveryDetail} />
 
         <Stack.Screen name="DailyOperations" component={DailyOperations} />
       </Stack.Navigator>

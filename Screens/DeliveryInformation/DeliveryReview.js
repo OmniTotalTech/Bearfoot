@@ -28,18 +28,7 @@ class DeliveryReview extends Component {
   }
 
   render() {
-    const deliveryListMap = this.props.orderDetail.primary.starting_list.map(
-      (listItem) => {
-        return (
-          <DeliveryChecklist
-            name={listItem.name}
-            lowAmt={listItem.lowAmt}
-            inStockAmt={listItem.inStockAmt}
-          />
-        );
-      }
-    );
-
+    console.log(this.state.item);
     return (
       <ScrollView>
         <div
@@ -50,7 +39,7 @@ class DeliveryReview extends Component {
         >
           <div className="max-w-2xl mx-auto">
             <DeliveryAddress pool={this.props.pool} />
-            <DeliveryChecklist />
+            <DeliveryChecklist pool={this.state.item} />
             {/* <DeliveryAccept /> */}
             <div className="px-4 ">
               <div className="rounded-t-lg bg-white pt-4 pb-24 my-2 text-center">
@@ -58,7 +47,7 @@ class DeliveryReview extends Component {
                   {/* <div className="font-bold">0.5 mi</div> */}
                   <div>
                     Requested By
-                    <span className="font-bold">
+                    <span className="font-bold px-2">
                       {this.props.pool.pool_name}
                     </span>
                   </div>

@@ -4,8 +4,9 @@ import "react-table/react-table.css";
 import StatusButton from "../General/StatusButton";
 
 class DeliveryTable extends Component {
-  navToArea = () => {
-    this.props.navigation.navigate("AdminAreaDetail");
+  navToDelivery = (id) => {
+    console.log(id);
+    this.props.navigation.navigate("DeliveryDetails", { item: id });
   };
 
   render() {
@@ -39,9 +40,8 @@ class DeliveryTable extends Component {
             <div>
               <button
                 className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
-                disabled
                 onClick={(e) => {
-                  this.navToArea(porps.original.id);
+                  this.navToDelivery(porps.original);
                 }}
               >
                 View

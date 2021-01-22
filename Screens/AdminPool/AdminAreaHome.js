@@ -54,7 +54,7 @@ class AdminAreaHome extends Component {
     ];
     const onChange = (e, value) => {
       console.log(value, e);
-      // this.setState({ name: e });
+      this.setState({ [value]: e });
     };
 
     const inputsMap = (array) => {

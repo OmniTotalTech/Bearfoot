@@ -54,6 +54,7 @@ class DeliveryInProgress extends Component {
           this.props.orderDetail.individualOrderDetail.foundOrder !=
             undefined ? (
             <DeliveryChecklist
+              pool={this.props.orderDetail.individualOrderDetail.foundOrder}
               status={
                 this.props.orderDetail.individualOrderDetail.foundOrder.status
               }
@@ -72,7 +73,13 @@ class DeliveryInProgress extends Component {
               ) : this.props.orderDetail.individualOrderDetail.foundOrder
                   .status == 4 ? (
                 <div>
-                  <input onChange={(e) => this.handleChange(e)} />
+                  <span className="text-lg text-white">Final Comments:</span>
+                  <br />
+                  <textarea
+                    class="resize border rounded-md w-full"
+                    onChange={(e) => this.handleChange(e)}
+                  ></textarea>
+
                   <TouchableOpacity
                     onPress={() => {
                       console.log(
