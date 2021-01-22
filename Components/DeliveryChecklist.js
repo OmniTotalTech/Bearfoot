@@ -4,6 +4,7 @@ import { ScrollView } from "react-native";
 
 export default class DeliveryChecklist extends Component {
   render() {
+    console.log(this.props);
     const switchStatus = (status) => {
       switch (status) {
         case 1:
@@ -73,13 +74,13 @@ export default class DeliveryChecklist extends Component {
                 </div>
               </div>
               <div className="flex flex-row w-full items-center">
-                <div className="p-2 w-5/6 mr-1">{props.name}</div>
+                <div className="p-2 w-5/6 mr-1">{this.props.name}</div>
                 <div className="grid grid-cols-2 divide-x divide-gray-400 w-1/3 ">
                   <div className="text-center px-1 text-sm text-red-500">
-                    {props.lowAmt}
+                    {this.props.lowAmt}
                   </div>
                   <div className="text-center px-1 text-sm">
-                    {props.inStockAmt}
+                    {this.props.inStockAmt}
                   </div>
                 </div>
               </div>
