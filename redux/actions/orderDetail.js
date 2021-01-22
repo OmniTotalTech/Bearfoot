@@ -5,7 +5,7 @@ import {
   FETCH_ORDER_DETAIL_REQUEST,
   FETCH_ORDER_DETAIL_SUCCESS,
   FETCH_INDIVIDUAL_ORDER_DETAIL_ERROR,
-  FETCH_INDIVIDUAL_ORDER_DETAIL_SUCCESS
+  FETCH_INDIVIDUAL_ORDER_DETAIL_SUCCESS,
 } from "../types/orderDetail";
 
 export const fetchOrderDetailRequest = () => {
@@ -42,11 +42,11 @@ export const fetchIndividualOrderDetailError = (error) => {
   };
 };
 
-export const fetchOrderDetail = (id) => {
+export const fetchOrderDetail = () => {
   return (dispatch) => {
     dispatch(fetchOrderDetailRequest);
     api
-      .get("orderDetails/" + id)
+      .get("orderDetails/")
       .then((response) => {
         const data = response.data;
         dispatch(fetchOrderDetailSuccess(data));
@@ -73,4 +73,3 @@ export const fetchIndividualOrderDetail = (id) => {
       });
   };
 };
-

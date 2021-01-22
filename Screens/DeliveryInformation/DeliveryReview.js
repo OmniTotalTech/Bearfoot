@@ -75,23 +75,23 @@ class DeliveryReview extends Component {
                       </div>
                     </TouchableOpacity>
                   ) : (
-                    // <TouchableOpacity
-                    //   onPress={() => {
-                    //     this.props.navigation.navigate("DeliveryInProgress", {
-                    //       item: this.state.item,
-                    //     });
-                    //   }}
-                    // >
-                    //   <div className="py-4 px-4">
-                    //     <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
-                    //       Continue?
-                    //     </button>
-                    //   </div>
-                    // </TouchableOpacity>
-                    <div className="text-md">
-                      Hello, {this.props.user.name}. You have already completed
-                      this delivery.
-                    </div>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.navigation.navigate("DeliveryInProgress", {
+                          item: this.state.item,
+                        });
+                      }}
+                    >
+                      <div className="py-4 px-4">
+                        <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
+                          Continue?
+                        </button>
+                      </div>
+                    </TouchableOpacity>
+                    // <div className="text-md">
+                    //   Hello, {this.props.user.name}. You have already completed
+                    //   this delivery.
+                    // </div>
                   )}
                 </div>
               </div>

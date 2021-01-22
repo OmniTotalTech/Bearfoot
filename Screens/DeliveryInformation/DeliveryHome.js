@@ -23,7 +23,7 @@ import {
 
 class DeliveryHome extends Component {
   componentDidMount() {
-    this.props.fetchOrderDetail(this.props.user._id);
+    this.props.fetchOrderDetail();
   }
 
   render() {
@@ -65,7 +65,11 @@ class DeliveryHome extends Component {
                 style={{ margin: "10px" }}
               >
                 <DeliveryStatusNum
-                  icon={this.props.orderDetail.data.primary.length}
+                  icon={
+                    this.props.orderDetail.data.primary
+                      ? this.props.orderDetail.data.primary.length
+                      : 0
+                  }
                   status={"Assigned To You Today"}
                   subtext={"Check Status for each inside"}
                 />

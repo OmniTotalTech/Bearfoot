@@ -11,6 +11,9 @@ export default class DeliveryListContainer extends Component {
       return <DeliveryItem item={item} navigation={this.props.navigation} />;
     });
 
+    const secondaryMap = this.props.orderDetail.secondary.map((item) => {
+      return <DeliveryItem item={item} navigation={this.props.navigation} />;
+    });
     return (
       <div className="container max-w-2xl mx-auto px-4 my-4">
         <div className="my-4">
@@ -19,6 +22,8 @@ export default class DeliveryListContainer extends Component {
             This is where you will see any deliveries that are available to you.
           </div>
           {primaryMap}
+          Secondary:
+          {secondaryMap}
         </div>
       </div>
     );
