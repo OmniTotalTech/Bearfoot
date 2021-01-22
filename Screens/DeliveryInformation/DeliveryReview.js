@@ -28,6 +28,18 @@ class DeliveryReview extends Component {
   }
 
   render() {
+    const deliveryListMap = this.props.orderDetail.primary.starting_list.map(
+      (listItem) => {
+        return (
+          <DeliveryChecklist
+            name={listItem.name}
+            lowAmt={listItem.lowAmt}
+            inStockAmt={listItem.inStockAmt}
+          />
+        );
+      }
+    );
+
     return (
       <ScrollView>
         <div
