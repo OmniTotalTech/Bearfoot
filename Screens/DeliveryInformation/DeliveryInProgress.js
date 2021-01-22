@@ -18,6 +18,10 @@ class DeliveryInProgress extends Component {
     console.log(item);
   }
 
+  handleChange = (e) => {
+    this.setState({ comment: e.target.value });
+  };
+
   loadOrder = () => {
     this.props.fetchIndividualOrder(props.route.params.item._id);
   };
@@ -63,8 +67,36 @@ class DeliveryInProgress extends Component {
             this.props.orderDetail.individualOrderDetail.foundOrder !=
               undefined ? (
               this.props.orderDetail.individualOrderDetail.foundOrder.status ==
-              4 ? (
+              5 ? (
                 <div></div>
+              ) : this.props.orderDetail.individualOrderDetail.foundOrder
+                  .status == 4 ? (
+                <div>
+                  <input onChange={(e) => this.handleChange(e)} />
+                  <TouchableOpacity
+                    onPress={() => {
+                      console.log(
+                        this.props.orderDetail.individualOrderDetail.foundOrder
+                          .status++
+                      );
+                      // console.log(
+                      //   this.props.updateStatus(this.state.item._id, body)
+                      // );
+                      const body = {
+                        status: this.props.orderDetail.individualOrderDetail
+                          .foundOrder.status,
+                        final_commments: this.state.comment,
+                      };
+                      this.props.updateStatus(this.state.item._id, body);
+                    }}
+                  >
+                    <div>
+                      <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
+                        ADD TEXT
+                      </button>
+                    </div>
+                  </TouchableOpacity>
+                </div>
               ) : (
                 <TouchableOpacity
                   onPress={() => {

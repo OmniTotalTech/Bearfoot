@@ -5,7 +5,7 @@ import DeliveryAddress from "../../Components/DeliveryAddress";
 import DeliveryChecklist from "../../Components/DeliveryChecklist";
 import { connect } from "react-redux";
 import { updateStatus } from "../../redux/actions/updateStatus";
-
+import { fetchPoolById } from "../../redux/actions/pool";
 import ListIcon from "@material-ui/icons/List";
 
 class DeliveryReview extends Component {
@@ -15,7 +15,7 @@ class DeliveryReview extends Component {
     this.state = {
       item: props.route.params.item,
     };
-    console.log(item);
+    this.props.fetchPoolById(props.route.params.item.pool_id);
   }
 
   setUpdateStatus() {
@@ -37,28 +37,22 @@ class DeliveryReview extends Component {
           }}
         >
           <div className="max-w-2xl mx-auto">
-            <DeliveryAddress />
+            <DeliveryAddress pool={this.props.pool} />
             <DeliveryChecklist />
             {/* <DeliveryAccept /> */}
             <div className="px-4 ">
               <div className="rounded-t-lg bg-white pt-4 pb-24 my-2 text-center">
                 <div className="mb-8">
-                  <div className="font-bold">0.5 mi</div>
-                  <div>Requested By Savannah</div>
+                  {/* <div className="font-bold">0.5 mi</div> */}
+                  <div>
+                    Requested By
+                    <span className="font-bold">
+                      {this.props.pool.pool_name}
+                    </span>
+                  </div>
                   <div></div>
                 </div>
                 <div>
-                  {/* <div className="mb-3">
-                    <ListIcon
-                      className="text-4xl mr-2"
-                      style={{
-                        color: "white",
-                        backgroundColor: "black",
-                        borderRadius: "50%",
-                      }}
-                    />
-                    View Delivery Items List
-                  </div> */}
                   {this.state.item.status == 0 ? (
                     <TouchableOpacity
                       onPress={() => {
@@ -88,10 +82,6 @@ class DeliveryReview extends Component {
                         </button>
                       </div>
                     </TouchableOpacity>
-                    // <div className="text-md">
-                    //   Hello, {this.props.user.name}. You have already completed
-                    //   this delivery.
-                    // </div>
                   )}
                 </div>
               </div>
@@ -107,12 +97,14 @@ const mapStateToProps = (state) => {
   return {
     orderDetail: state.orderDetail,
     user: state.auth.user,
+    pool: state.pool.individualPool,
   };
 };
 
 const mapDisptachToProps = (dispatch) => {
   return {
     updateStatus: (id, body) => dispatch(updateStatus(id, body)),
+    fetchPoolById: (id) => dispatch(fetchPoolById(id)),
   };
 };
 
