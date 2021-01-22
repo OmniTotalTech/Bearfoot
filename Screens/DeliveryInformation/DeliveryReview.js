@@ -28,6 +28,18 @@ class DeliveryReview extends Component {
   }
 
   render() {
+    const deliveryListMap = this.props.orderDetail.primary.starting_list.map(
+      (listItem) => {
+        return (
+          <DeliveryChecklist
+            name={listItem.name}
+            lowAmt={listItem.lowAmt}
+            inStockAmt={listItem.inStockAmt}
+          />
+        );
+      }
+    );
+
     return (
       <ScrollView>
         <div
@@ -38,7 +50,7 @@ class DeliveryReview extends Component {
         >
           <div className="max-w-2xl mx-auto">
             <DeliveryAddress />
-            <DeliveryChecklist />
+            {deliveryListMap}
             {/* <DeliveryAccept /> */}
             <div className="px-4 ">
               <div className="rounded-t-lg bg-white pt-4 pb-24 my-2 text-center">
