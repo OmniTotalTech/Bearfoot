@@ -20,8 +20,11 @@ class datePicker extends Component {
       if (this.props.onChange) {
         this.props.onChange(this.state);
       }
+      // this.props.updateState(this.state.date);
     });
   };
+
+  handleSubmit = () => {};
   render() {
     return (
       <DatePicker

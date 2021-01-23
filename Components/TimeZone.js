@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 
 export default class TimeZone extends Component {
+  handleChange = (event) => {
+    console.log(event.target.value);
+    this.props.handleChange(event);
+  };
   render() {
-    const { values, handleChange } = this.props;
-
     return (
       <div>
         <div
@@ -12,7 +14,10 @@ export default class TimeZone extends Component {
             width: "150px",
           }}
         >
-          <select onClick={(e) => handleChange(e.target.value)}>
+          <select
+            value={this.props.option}
+            onChange={(e) => this.handleChange(e)}
+          >
             <option value="eastern">Eastern (ET)</option>
             <option value="central">Central (CT)</option>
             <option value="mountain">Mountain (MT)</option>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { updateUser } from "../../redux/actions/auth";
 import api from "../../utils/api";
 
 class EditUser extends Component {
@@ -31,8 +31,17 @@ class EditUser extends Component {
     console.log(val);
     this.setState({ value: val });
   }
-  submit = () => {
+  submit = async () => {
     console.log(this.state.value);
+    const body = {
+      role: this.state.value,
+    };
+    await api
+      .patch("/users/" + this.props.route.params.id, body)
+      .then((response) => {
+        console.log(response.data.data);
+      })
+      .catch((err) => console.log(err));
   };
   handleChange(event) {
     this.setState({ value: event.target.value });

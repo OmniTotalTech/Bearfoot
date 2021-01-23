@@ -32,8 +32,14 @@ class adminDeliveriesHome extends Component {
     );
 
     console.log(fetchAdminOrderDetail);
-    const eventHandler = (date) => this.props.fetchAdminOrderDetail(date);
-    console.log(this.props.adminOrderDetail.data);
+    const eventHandler = (date) => {
+      // this.props.fetchAdminOrderDetail(date);
+      this.setState({ date: date.date });
+      console.log(date);
+      this.props.fetchAdminOrderDetail(date.date);
+    };
+
+    const search = () => {};
 
     return (
       <ScrollView>

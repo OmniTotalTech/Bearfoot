@@ -18,7 +18,8 @@ import AreaTable from "../../Components/Admin/AreaTable";
 import { connect } from "react-redux";
 import { fetchMyAdminAreas } from "../../redux/actions/area";
 import TimeZone from "../../Components/TimeZone";
-
+import { Picker } from "@react-native-picker/picker";
+import api from "../../utils/api";
 class AdminAreaHome extends Component {
   componentDidMount() {
     this.props.fetchArea();
@@ -27,6 +28,8 @@ class AdminAreaHome extends Component {
   state = {
     isModalOpen: false,
     selectedTimeZone: "eastern",
+    areaOrganization: this.props.user.organizations[0].orgName,
+    option: null,
   };
 
   openModal() {
@@ -37,14 +40,36 @@ class AdminAreaHome extends Component {
   }
 
   handleChange(value) {
-    const newSelectedTimeZone = value;
+    console.log(value);
+
+    const newSelectedTimeZone = value.target.value;
     this.setState({ selectedTimeZone: newSelectedTimeZone });
     console.log(value);
   }
-
+  setSelectedValue(value) {
+    this.setState({ areaOrganization: value });
+  }
   render() {
     console.log(this.props.area.data);
 
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      console.log(this.state);
+
+      const body = {
+        areaName: this.state.option,
+        areaOrganization: this.state.areaOrganization,
+        areaTimeZone: this.state.selectedTimeZone,
+      };
+      await api
+        .post("/area/", body)
+        .then((response) => {
+          console.log(response);
+          this.props.fetchArea();
+          this.closeModal();
+        })
+        .catch((err) => console.log(err));
+    };
     const inputs = [
       {
         placeholder: "Name",
@@ -54,7 +79,7 @@ class AdminAreaHome extends Component {
     ];
     const onChange = (e, value) => {
       console.log(value, e);
-      this.setState({ [value]: e });
+      this.setState({ option: e });
     };
 
     const inputsMap = (array) => {
@@ -94,7 +119,7 @@ class AdminAreaHome extends Component {
                   close
                 </button>
 
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="mx-auto container max-w-2xl shadow-md mx-4">
                     <div className="bg-white space-y-6 mt-4">
                       <div className=" space-y-4 md:space-y-0 w-full p-4 text-black items-center">
@@ -103,23 +128,34 @@ class AdminAreaHome extends Component {
                         <div className="md:w-2/3 max-w-sm mx-auto">
                           <label>
                             Time Zone:
-                            <TimeZone handleChange={() => this.handleChange} />
+                            <TimeZone
+                              option={this.state.selectedTimeZone}
+                              handleChange={(e) => this.handleChange(e)}
+                            />
                           </label>
+                          <div className="text text-md mt-2">Organization:</div>
+                          <Picker
+                            selectedValue={this.state.selectedValue}
+                            style={{ height: 50, width: 150 }}
+                            onValueChange={(v) => this.setSelectedValue(v)}
+                          >
+                            {this.props.user.organizations.map((item, i) => (
+                              <Picker.Item
+                                label={this.props.user.organizations[i].orgName}
+                                value={this.props.user.organizations[i].orgName}
+                              />
+                            ))}
+                          </Picker>
                         </div>
-                        <form>
-                          <div className="w-full p-4 text-right text-gray-500">
-                            <button
-                              className="inline-flex text bg-red-700 p-2 rounded text-white"
-                              type="button"
-                              onClick={
-                                ((e) => e.preventDefault(),
-                                console.log(this.state))
-                              }
-                            >
-                              Create a New Area
-                            </button>
-                          </div>
-                        </form>
+
+                        <div className="w-full p-4 text-right text-gray-500">
+                          <button
+                            className="inline-flex text bg-red-700 p-2 rounded text-white"
+                            type="submit"
+                          >
+                            Create a New Area
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -142,6 +178,7 @@ class AdminAreaHome extends Component {
 const mapStateToProps = (state) => {
   return {
     area: state.area,
+    user: state.auth.user,
   };
 };
 

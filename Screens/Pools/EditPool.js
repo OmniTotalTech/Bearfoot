@@ -106,6 +106,7 @@ class EditPool extends Component {
                 <div>
                   {/* <InventoryModal addItem={addItem} /> */}
                   <AddInventoryModal
+                    pool={this.props.pool.individualPool}
                     addItem={(id, body) => this.updateInventory(id, body)}
                     inventory={this.props.inventory}
                     fetchPoolById={() =>
