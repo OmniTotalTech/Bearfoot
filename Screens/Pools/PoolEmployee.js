@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PoolTableEmployee from "../../Components/Employee/PoolTableEmployee";
 import { connect } from "react-redux";
 import { fetchPool } from "../../redux/actions/pool";
+
+import { ScrollView } from "react-native";
+
 class PoolEmployee extends Component {
   componentDidMount() {
     this.props.fetchPool();
@@ -9,12 +12,14 @@ class PoolEmployee extends Component {
 
   render() {
     return (
-      <div className="container mx-auto max-w-4xl">
-        <PoolTableEmployee
-          navigation={this.props.navigation}
-          data={this.props.pool}
-        />
-      </div>
+      <ScrollView>
+        <div className="container mx-auto max-w-4xl">
+          <PoolTableEmployee
+            navigation={this.props.navigation}
+            data={this.props.pool}
+          />
+        </div>
+      </ScrollView>
     );
   }
 }
