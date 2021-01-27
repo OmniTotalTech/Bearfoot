@@ -16,6 +16,30 @@ const shift = [
     subtext: "Inventory count",
     location: "InventoryCheck",
   },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Opening checklist",
+    subtext: "",
+    location: "OpeningChecklist",
+  },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Closing checklist",
+    subtext: "",
+    location: "ClosingChecklist",
+  },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Daily operations",
+    subtext: "",
+    location: "DailyOperations",
+  },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Chemical logs",
+    subtext: "",
+    location: "ChemicalLog",
+  },
 ];
 
 export default class ShiftInventoryCount extends Component {

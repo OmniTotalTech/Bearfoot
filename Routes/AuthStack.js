@@ -23,6 +23,9 @@ import EditPool from "../Screens/Pools/EditPool";
 import EditSelf from "../Screens/EditSelf";
 import EditUser from "../Screens/AdminUser/EditUser";
 import InventoryCheck from "../Screens/Pools/InventoryCheck";
+import OpeningChecklist from "../Screens/Pools/OpeningChecklist";
+import ClosingChecklist from "../Screens/Pools/ClosingChecklist";
+import ChemicalLog from "../Screens/Pools/ChemicalLog";
 
 import DailyOperations from "../Screens/DailyOperations";
 import DeliveryDetail from "../Screens/DeliveryInformation/DeliveryDetail";
@@ -67,7 +70,9 @@ export const AuthStack = () => (
         <Stack.Screen name="EditUser" component={EditUser} />
         <Stack.Screen name="InventoryCheck" component={InventoryCheck} />
         <Stack.Screen name="DeliveryDetails" component={DeliveryDetail} />
-
+        <Stack.Screen name="OpeningChecklist" component={OpeningChecklist} />
+        <Stack.Screen name="ClosingChecklist" component={ClosingChecklist} />
+        <Stack.Screen name="ChemicalLog" component={ChemicalLog} />
         <Stack.Screen name="DailyOperations" component={DailyOperations} />
       </Stack.Navigator>
     </NavigationContainer>
