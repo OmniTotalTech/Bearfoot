@@ -8,6 +8,8 @@ import pool from "./pool";
 import area from "./area";
 import adminEmployeeManagement from "./adminEmployeeManagement";
 import inventory from "./inventory";
+import dailyChecklist from "./dailyChecklist";
+
 export default combineReducers({
   auth: auth,
   // byId: byId,
@@ -18,4 +20,5 @@ export default combineReducers({
   area: area,
   adminEmployeeManagement: adminEmployeeManagement,
   inventory: inventory,
+  dailyChecklist: dailyChecklist,
 });
