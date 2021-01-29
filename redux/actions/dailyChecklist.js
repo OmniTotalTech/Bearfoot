@@ -26,11 +26,11 @@ export const fetchDailyChecklistError = (error) => {
   };
 };
 
-export const dailyChecklist = () => {
+export const fetchDailyChecklist = (id) => {
   return (dispatch) => {
     dispatch(fetchDailyChecklistRequest);
     api
-      .get("dailyChecklist/")
+      .get("dailyChecklist/" + id)
       .then((response) => {
         const data = response.data;
         dispatch(fetchDailyChecklistSuccess(data));
