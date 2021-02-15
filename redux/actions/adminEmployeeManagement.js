@@ -26,11 +26,11 @@ export const fetchAdminEmployeeByOrgError = (error) => {
   };
 };
 
-export const fetchEmployeesByOrg = (orgName) => {
+export const fetchEmployeesByOrg = (orgName, string) => {
   return (dispatch) => {
     dispatch(fetchAdminEmployeeByOrgRequest);
     api
-      .get("users/orgEmployees/" + orgName)
+      .get("users/orgEmployees/" + orgName + "/" + string)
       .then((response) => {
         const data = response.data;
         dispatch(fetchAdminEmployeeByOrgSuccess(data));

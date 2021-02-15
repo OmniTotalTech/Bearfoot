@@ -5,7 +5,7 @@ import {
 } from "../types/dailyChecklist";
 
 const initialState = {
-  data: [],
+  data: { data: [] },
   loading: false,
   error: null,
 };

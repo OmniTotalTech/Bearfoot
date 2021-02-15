@@ -11,6 +11,7 @@ import {
   addInventoryItem,
 } from "../../redux/actions/inventory";
 import { fetchPool, fetchPoolById } from "../../redux/actions/pool";
+import { fetchDailyChecklist } from "../../redux/actions/dailyChecklist";
 
 import EditPoolDropDown from "./EditPoolDropDown";
 import AddInventoryModal from "../../Components/AddInventoryModal";
@@ -19,6 +20,7 @@ class EditPool extends Component {
   componentDidMount() {
     console.log(this.props.route.params.id);
     this.props.fetchInventory(this.props.route.params.id);
+    this.props.fetchDailyChecklist(this.props.route.params.id);
   }
   state = {
     basicInfoView: false,
@@ -80,7 +82,10 @@ class EditPool extends Component {
             <div className="w-full">
               {this.state.basicInfoView != false ? (
                 <>
-                  <BasicInformation pool={this.props.pool.individualPool} />
+                  <BasicInformation
+                    pool={this.props.pool.individualPool}
+                    dailyChecklist={this.props.dailyChecklist}
+                  />
                 </>
               ) : this.state.inventoryView != true ? (
                 <div>
@@ -143,6 +148,7 @@ const mapStateToProps = (state) => {
   return {
     inventory: state.inventory,
     pool: state.pool,
+    dailyChecklist: state.dailyChecklist,
   };
 };
 
@@ -151,6 +157,7 @@ const mapDisptachToProps = (dispatch) => {
     fetchInventory: (id) => dispatch(fetchInventory(id)),
     addInventoryItem: (id1, body) => dispatch(addInventoryItem(id1, body)),
     fetchPoolById: (id) => dispatch(fetchPoolById(id)),
+    fetchDailyChecklist: (id) => dispatch(fetchDailyChecklist(id)),
   };
 };
 

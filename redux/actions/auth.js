@@ -234,6 +234,7 @@ export const verifyCode = (code, phone) => {
 };
 
 export const newUser = (body) => {
+  console.log(body);
   return (dispatch) => {
     dispatch(newUserRequest);
     api

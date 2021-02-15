@@ -10,10 +10,12 @@ class NewEmployeeModalBody extends Component {
       isError: false,
       error: null,
       successMessage: false,
+      isHOA: false,
     };
     this.setName = this.setName.bind(this);
     this.setEmail = this.setEmail.bind(this);
     this.setSelectedValue = this.setSelectedValue.bind(this);
+    this.setHOA = this.setHOA.bind(this);
   }
 
   setSelectedValue(value) {
@@ -27,6 +29,10 @@ class NewEmployeeModalBody extends Component {
     this.setState({ name: e.target.value });
   }
 
+  setHOA(e) {
+    this.setState({ isHOA: e.target.checked });
+    console.log(e.target.checked);
+  }
   resetState() {
     this.setState({
       email: "",
@@ -45,7 +51,9 @@ class NewEmployeeModalBody extends Component {
       email: this.state.email,
       title: "employee",
       organizations: [],
+      isHOA: this.state.isHOA,
     };
+    console.log(this.state.isHOA);
 
     if (this.state.organization == undefined) {
       await this.setState({
@@ -63,10 +71,6 @@ class NewEmployeeModalBody extends Component {
   render() {
     return (
       <div className="mx-auto container max-w-2xl md:w-3/4 shadow-md mx-4">
-        {this.state.successMessage ? "User has been submitted" : ""}
-        {this.props.auth.otherMessage === "Request failed with status code 500"
-          ? "something went wrong. check to make sure user doesn't already exist, and that your information is entered correctly"
-          : ""}
         <form>
           <div className="bg-gray-100 p-4 border-t-2 bg-opacity-5 rounded-t">
             <div className="max-w-sm mx-auto md:w-full md:mx-0">
@@ -113,7 +117,6 @@ class NewEmployeeModalBody extends Component {
                 </div>
               </div>
             </div>
-
             <hr />
             <div className="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
               <h2 className="md:w-1/3 mx-auto max-w-sm">Personal info</h2>
@@ -183,9 +186,25 @@ class NewEmployeeModalBody extends Component {
                     </Picker>
                   </div>
                 </div>
+              </div>{" "}
+              <div className="md:w-2/3 mx-auto max-w-sm space-y-5">
+                <div>
+                  <label className="text-sm text-gray-400">
+                    Will this account be an HOA Account?
+                  </label>
+                </div>
+                <input
+                  className="text-red-500 "
+                  type="checkbox"
+                  onChange={this.setHOA}
+                />
               </div>
             </div>
-            <hr />
+            <hr /> {this.state.successMessage ? "User has been submitted" : ""}
+            {this.props.auth.otherMessage ===
+            "Request failed with status code 500"
+              ? "something went wrong. check to make sure user doesn't already exist, and that your information is entered correctly"
+              : ""}
             <div className="w-full p-4 text-right text-gray-500">
               <button
                 className="inline-flex text bg-red-700 p-2 rounded text-white"

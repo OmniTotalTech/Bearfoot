@@ -26,7 +26,10 @@ import { newUser } from "../../redux/actions/auth";
 class AdminAreaHome extends Component {
   componentDidMount() {
     this.props.fetchArea();
-    this.props.fetchEmployeesByOrg(this.props.user.organizations[0].orgName);
+    this.props.fetchEmployeesByOrg(
+      this.props.user.organizations[0].orgName,
+      ""
+    );
   }
 
   state = {
@@ -44,6 +47,14 @@ class AdminAreaHome extends Component {
   }
 
   setManageEmployee() {
+    this.setState({ addView: false, manageView: true });
+  }
+
+  runHOAFunc() {
+    this.props.fetchEmployeesByOrg(
+      this.props.user.organizations[0].orgName,
+      "HOA"
+    );
     this.setState({ addView: false, manageView: true });
   }
 
@@ -81,43 +92,6 @@ class AdminAreaHome extends Component {
       </div>
     );
 
-    const userInfoInvitedMap = <div></div>;
-
-    const userInfoVerified = [
-      {
-        pic: "pic",
-        name: "David",
-        email: "gmail.com",
-      },
-      {
-        pic: "pic",
-        name: "Diana",
-        email: "diana@gmail.com",
-      },
-    ];
-
-    const userInfoVerifiedMap = (
-      <FlatList
-        horizontal
-        data={userInfoVerified}
-        renderItem={({ item: deliveryTypeIcon }) => {
-          return (
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate("EditUser")}
-              style={{ margin: "10px" }}
-            >
-              <VerifiedUser
-                pic={userInfoVerified.pic}
-                name={userInfoVerified.name}
-                email={userInfoVerified.email}
-              />
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={(item, index) => index}
-      />
-    );
-
     return (
       <ScrollView>
         {/* bg-gray-100 */}
@@ -126,7 +100,13 @@ class AdminAreaHome extends Component {
             <div className="flex justify-center mb-4">
               <button
                 className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
-                onClick={() => this.setManageEmployee()}
+                onClick={() =>
+                  this.props.fetchEmployeesByOrg(
+                    this.props.user.organizations[0].orgName,
+                    "",
+                    this.setManageEmployee()
+                  )
+                }
               >
                 Manage Employee
               </button>
@@ -135,6 +115,12 @@ class AdminAreaHome extends Component {
                 onClick={() => this.setAddEmployee()}
               >
                 Add Employee
+              </button>{" "}
+              <button
+                className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
+                onClick={() => this.runHOAFunc()}
+              >
+                Manage HOA Accounts
               </button>
             </div>
           </div>
@@ -198,7 +184,8 @@ const mapStateToProps = (state) => {
 const mapDisptachToProps = (dispatch) => {
   return {
     fetchArea: () => dispatch(fetchMyAdminAreas()),
-    fetchEmployeesByOrg: (orgName) => dispatch(fetchEmployeesByOrg(orgName)),
+    fetchEmployeesByOrg: (orgName, string) =>
+      dispatch(fetchEmployeesByOrg(orgName, string)),
     newUser: (body) => dispatch(newUser(body)),
   };
 };

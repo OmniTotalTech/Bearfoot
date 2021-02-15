@@ -80,7 +80,9 @@ class Home extends Component {
     return (
       <ScrollView>
         {this.props.user ? (
-          this.props.user.hasSignedInBefore ? (
+          this.props.user.isHOA ? (
+            <div>HOA</div>
+          ) : this.props.user.hasSignedInBefore ? (
             <View style={{ backgroundColor: " #718096" }}>
               <div className="h-screen ">
                 {/* Employee Area */}

@@ -15,7 +15,7 @@ export const fetchDailyChecklistRequest = () => {
 export const fetchDailyChecklistSuccess = (data) => {
   return {
     type: FETCH_DAILY_CHECKLIST_SUCCESS,
-    paylaod: data,
+    payload: data,
   };
 };
 
@@ -26,11 +26,11 @@ export const fetchDailyChecklistError = (error) => {
   };
 };
 
-export const fetchDailyChecklist = (id) => {
+export const fetchDailyChecklist = (id, type) => {
   return (dispatch) => {
     dispatch(fetchDailyChecklistRequest);
     api
-      .get("dailyChecklist/" + id)
+      .get("dailyChecklist/" + id + "/" + type)
       .then((response) => {
         const data = response.data;
         dispatch(fetchDailyChecklistSuccess(data));

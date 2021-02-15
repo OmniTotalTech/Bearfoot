@@ -5,14 +5,21 @@ import { fetchDailyChecklist } from "../../redux/actions/dailyChecklist";
 
 class OpeningChecklist extends Component {
   componentDidMount() {
-    this.props.fetchDailyChecklist(this.props.route.params.id);
+    console.log("id", this.props.route.params.id);
+    this.props.fetchDailyChecklist(this.props.route.params.id, "opening");
   }
 
   render() {
+    const handleChange = (evt) => {
+      console.log(evt.target.checked);
+    };
     return (
       <div className="container mx-auto">
         <div className="text-3xl">Opening Checklist : </div>
-        <DailyChecklist />
+        <DailyChecklist
+          data={this.props.dailyChecklist.data}
+          handleChange={handleChange}
+        />
       </div>
     );
   }
@@ -26,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const mapDisptachToProps = (dispatch) => {
   return {
-    fetchDailyChecklist: (id) => dispatch(fetchDailyChecklist(id)),
+    fetchDailyChecklist: (id, type) => dispatch(fetchDailyChecklist(id, type)),
   };
 };
 
