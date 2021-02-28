@@ -4,7 +4,7 @@ import React, { Component } from "react";
 class PoolPublicContainer extends Component {
   render() {
     return (
-      <div className="bg-white max-w-2xl mx-auto shadow-lg rounded m-8 p-8 md:bg-orange">
+      <div className="bg-white max-w-2xl mx-auto shadow-lg rounded mt-4 p-8 md:bg-orange">
         <h3 className="text-orange text-xl font-semibold ">
           {this.props.pool.individualPool.pool_name}
         </h3>

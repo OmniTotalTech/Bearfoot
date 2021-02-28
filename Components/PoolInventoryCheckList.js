@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export default class PoolInventoryCheckList extends Component {
   render() {
     return (
-      <div className="container mx-auto soverflow-scroll mt-4 max-w-2xl bg-gray-100">
+      <div className="container mx-auto overflow-scroll mt-4 max-w-2xl bg-gray-100">
         <div className="w-full shadow-lg border-b-2 py-4">
           <p className="text-3xl text-center my-4">
             Currently performing a {this.props.type} Checklist count.
@@ -29,7 +29,7 @@ export default class PoolInventoryCheckList extends Component {
                 <div className="w-full">
                   <input
                     onChange={(e, value) =>
-                      this.props.handleChange(e, item._id)
+                      this.props.handleChange(e, item._id, item.name, item.desc)
                     }
                     className="text-right mx-6 mb-4 px-4 py-2 border-solid border-2 "
                     type="number"

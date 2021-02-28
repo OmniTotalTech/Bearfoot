@@ -18,19 +18,35 @@ class NavbarContainer extends Component {
         <div className="grid grid-cols-2 gap-1">
           <div className="mx-2 ">
             <button
-              className="text-white cursor-pointer text-xl leading-none float-left   border  border-transparent rounded block  text-center outline-none focus:outline-none align-center"
+              className="text-white cursor-pointer text-xl leading-none float-left   border  border-transparent block  text-center outline-none focus:outline-none align-center"
               type="button"
             >
               <div
-                onPress={() => RootNavigation.navigate("EditSelf")}
+                onClick={() => RootNavigation.navigate("EditSelf")}
                 className="justify-center pr-2 "
               >
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
-                  alt="..."
-                  style={{ height: "50px", width: "50px" }}
-                  className="shadow rounded-full float-left align-middle border-none object-contain"
-                />
+                {this.props.user.profileImage != "" ? (
+                  <div>
+                    <img
+                      src={
+                        "https://bearfoot-app-images.s3.us-east-2.amazonaws.com/profile-images/" +
+                        this.props.user.profileImage
+                      }
+                      alt="..."
+                      style={{ height: "50px", width: "50px" }}
+                      className="shadow rounded-full float-left align-middle border-none object-contain"
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
+                      alt="..."
+                      style={{ height: "50px", width: "50px" }}
+                      className="shadow rounded-full float-left align-middle border-none object-contain"
+                    />
+                  </div>
+                )}
               </div>
             </button>
             <div className="text-white text-sm truncate">
@@ -43,10 +59,7 @@ class NavbarContainer extends Component {
           </div>
 
           <div className="float-right text-right">
-            <a
-              className="text-sm  font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white"
-              href="#pablo"
-            >
+            <a className="text-sm  font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white">
               BearFoot Pools
             </a>
             <p

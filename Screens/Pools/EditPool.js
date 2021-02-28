@@ -20,7 +20,6 @@ class EditPool extends Component {
   componentDidMount() {
     console.log(this.props.route.params.id);
     this.props.fetchInventory(this.props.route.params.id);
-    this.props.fetchDailyChecklist(this.props.route.params.id);
   }
   state = {
     basicInfoView: false,
@@ -83,8 +82,10 @@ class EditPool extends Component {
               {this.state.basicInfoView != false ? (
                 <>
                   <BasicInformation
+                    id={this.props.route.params.id}
                     pool={this.props.pool.individualPool}
                     dailyChecklist={this.props.dailyChecklist}
+                    fetchDailyChecklist={this.props.fetchDailyChecklist}
                   />
                 </>
               ) : this.state.inventoryView != true ? (
@@ -157,7 +158,7 @@ const mapDisptachToProps = (dispatch) => {
     fetchInventory: (id) => dispatch(fetchInventory(id)),
     addInventoryItem: (id1, body) => dispatch(addInventoryItem(id1, body)),
     fetchPoolById: (id) => dispatch(fetchPoolById(id)),
-    fetchDailyChecklist: (id) => dispatch(fetchDailyChecklist(id)),
+    fetchDailyChecklist: (id, text) => dispatch(fetchDailyChecklist(id, text)),
   };
 };
 

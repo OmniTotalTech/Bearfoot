@@ -30,7 +30,7 @@ export const fetchDailyChecklist = (id, type) => {
   return (dispatch) => {
     dispatch(fetchDailyChecklistRequest);
     api
-      .get("dailyChecklist/" + id + "/" + type)
+      .get("/dailyChecklist/" + id + "/" + type)
       .then((response) => {
         const data = response.data;
         dispatch(fetchDailyChecklistSuccess(data));

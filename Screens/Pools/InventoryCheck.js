@@ -13,9 +13,9 @@ class InventoryCheck extends Component {
   state = { showAlert: false };
 
   render() {
-    const handleChange = (e, value) => {
+    const handleChange = (e, value, name, desc) => {
       console.log(e.target.value);
-      this.setState({ [value]: parseInt(e.target.value) });
+      this.setState({ [name]: parseInt(e.target.value) });
       console.log(this.state);
     };
 
@@ -29,6 +29,7 @@ class InventoryCheck extends Component {
       for (var item in this.state) {
         var count = 0;
         var finalObjectArray = [];
+        console.log(this.state);
         for (const [key, value] of Object.entries(this.state)) {
           if (isNumeric(value)) {
             console.log(`${key}: ${value}`);
@@ -48,14 +49,10 @@ class InventoryCheck extends Component {
     };
 
     const submitInventory = async (body) => {
-      let url = "records/";
+      let url = "/records/inventory";
       console.log(url);
       await api
-        .request({
-          method: "POST",
-          url: url,
-          data: body,
-        })
+        .post(url, body)
         .then((response) => {
           const data = response.data;
           console.log(data);
@@ -69,7 +66,7 @@ class InventoryCheck extends Component {
     };
 
     return (
-      <div className="h-full">
+      <div className="h-full overflow-scroll">
         <PoolInventoryCheckList
           handleChange={handleChange}
           data={this.props.inventory.data}

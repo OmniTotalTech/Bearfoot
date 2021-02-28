@@ -30,12 +30,14 @@ class AdminAreaHome extends Component {
       this.props.user.organizations[0].orgName,
       ""
     );
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
   state = {
     manageView: true,
     addView: false,
     selectedValue: undefined,
+    searchTerm: null,
   };
   setSelectedValue(value) {
     this.setState({ selectedValue: value });
@@ -58,19 +60,12 @@ class AdminAreaHome extends Component {
     this.setState({ addView: false, manageView: true });
   }
 
+  handleSearchChange(event) {
+    console.log(event.target.value);
+    this.setState({ searchTerm: event.target.value });
+  }
+
   render() {
-    const headText = "Create a new user Section";
-    const bodyText =
-      "This is where an admin will be able to create a new user. Permissions apply here, and restrictions will be included based on user level and group association";
-
-    const userInfoInvited = [
-      {
-        pic: "pic",
-        name: "John",
-        email: "john123@gmail.com",
-      },
-    ];
-
     const renderItem = ({ item }) => (
       <div
         onClick={() =>
@@ -78,7 +73,11 @@ class AdminAreaHome extends Component {
         }
         style={{ margin: "10px" }}
       >
-        <InvitedUser pic={item.pic} name={item.name} email={item.email} />
+        <InvitedUser
+          pic={item.profileImage}
+          name={item.name}
+          email={item.email}
+        />
       </div>
     );
 
@@ -130,6 +129,7 @@ class AdminAreaHome extends Component {
                 <div className="text text-3xl my-2">
                   Employees You Can Manage:
                 </div>
+                <input onChange={this.handleSearchChange} />
                 <div className="ml-2 mb-8">
                   <div className="text text-lg">Organization:</div>
                   <Picker
@@ -158,12 +158,6 @@ class AdminAreaHome extends Component {
                 newUser={this.props.newUser}
                 auth={this.props.auth}
               />
-              {/* <div className="container mx-auto max-w-4xl m-4 ">
-                <div className="text text-3xl my-2">Invited Users</div>
-                <View style={{ overflow: "scroll", maxHeight: "600px" }}>
-                  {userInfoInvitedMap}
-                </View>
-              </div> */}
             </div>
           )}
         </section>
