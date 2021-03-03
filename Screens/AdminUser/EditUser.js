@@ -42,6 +42,7 @@ class EditUser extends Component {
         console.log(response.data.data);
       })
       .catch((err) => console.log(err));
+    this.props.navigation.navigate("SuccessScreen");
   };
   handleChange(event) {
     this.setState({ value: event.target.value });

@@ -20,7 +20,7 @@ import {
   fetchOrderDetail,
   fetchIndividualOrderDetail,
 } from "../../redux/actions/orderDetail";
-
+import BackButton from "../../Components/BackButton";
 class DeliveryHome extends Component {
   componentDidMount() {
     this.props.fetchOrderDetail();
@@ -44,6 +44,8 @@ class DeliveryHome extends Component {
 
     return (
       <View style={{ backgroundColor: " #718096" }}>
+        <BackButton navigation={this.props.navigation} />
+
         <div className="container mx-auto">
           {/* Employee Area */}
           <div className="mt-8">

@@ -157,18 +157,26 @@ export default class BasicInformation extends Component {
         .post("/chemTimes/" + this.props.id, body)
         .then((response) => {
           console.log(response.data);
+          this.setState({
+            recMsg: "",
+          });
         })
         .catch((error) => {
           const errorMsg = error.message;
           console.log(errorMsg);
+          this.setState({ recMsg: "There was an error. Try again." });
         });
       await api
         .get("/chemTimes/" + this.props.id)
         .then((response) => {
-          this.setState({ timeArray: response.data.data.chemTimeData });
+          this.setState({
+            timeArray: response.data.data.chemTimeData,
+            recMsg: "Saved. Thank you.",
+          });
         })
         .catch((error) => {
           const errorMsg = error.message;
+          this.setState({ recMsg: "There was an error. Try again." });
         });
     };
     const inputs = [
@@ -238,6 +246,8 @@ export default class BasicInformation extends Component {
         checklistType: type,
         text: this.state.taskText,
       };
+      this.setState({ taskText: "" });
+
       await api
         .post("/dailyChecklist/", body)
         .then((response) => {
@@ -247,6 +257,7 @@ export default class BasicInformation extends Component {
         .catch((error) => {
           const errorMsg = error.message;
         });
+      this.setState({ taskText: "" });
     };
 
     const handleChecklistInput = (e) => {
@@ -349,6 +360,8 @@ export default class BasicInformation extends Component {
                     <div className="bg-white space-y-6 mt-4 w-full">
                       <input
                         className="shadow-md w-full"
+                        value={this.state.taskText}
+                        onSubmit={() => this.setState({ taskText: "" })}
                         onChange={(e) => handleChecklistInput(e)}
                       />
                       <button
@@ -465,7 +478,7 @@ export default class BasicInformation extends Component {
               <AccordionItemPanel>
                 <div className="bg-white p-2 m-2">
                   <h2 className="text-xl p-2">
-                    Please Choose the Hours to check the chemical logs
+                    Please Choose the Hours to Check the chemical logs
                   </h2>
                   <div className="text-center grid grid-cols-3">
                     {/* {checkboxMap(this.state.timeArray)} */}
@@ -491,6 +504,11 @@ export default class BasicInformation extends Component {
                     >
                       Save
                     </button>
+                    {this.state.recMsg ? (
+                      <div>{this.state.recMsg}</div>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                 </div>
               </AccordionItemPanel>

@@ -54,10 +54,16 @@ export const login = (body) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response;
+    const res = await api.post("/auth/login", body);
+
+    const errors = res.data;
 
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      dispatch({
+        type: LOGIN_ERROR,
+        payload: "Login failed, please try again",
+      });
+      dispatch(loadUser());
     }
 
     dispatch({

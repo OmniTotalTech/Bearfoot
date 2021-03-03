@@ -189,15 +189,19 @@ class UpdateEmployeeInfoForm extends Component {
             </div>
             <hr />
             <div className="w-full p-4 text-right text-gray-500">
-              <button
-                onClick={() => {
-                  updateForm();
-                }}
-                className="inline-flex text bg-red-700 p-2 rounded text-white"
-                type="submit"
-              >
-                Submit
-              </button>
+              {this.props.auth.user.isPhoneVerified ? (
+                <button
+                  onClick={() => {
+                    updateForm();
+                  }}
+                  className="inline-flex text bg-red-700 p-2 rounded text-white"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
         </div>

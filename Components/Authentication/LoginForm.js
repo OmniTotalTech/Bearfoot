@@ -4,7 +4,7 @@ import { login } from "../../redux/actions/auth";
 import PlusImage from "../../assets/images/Red_Black_Glow_Paw.svg";
 import Modal from "react-modal";
 import api from "../../utils/api";
-
+import BackButton2 from "../BackButton2";
 function LoginForm(props) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -18,6 +18,7 @@ function LoginForm(props) {
   const [fmessage, fsetMessage] = React.useState("");
 
   const [resetPassword, setResetPassword] = React.useState("");
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -29,6 +30,9 @@ function LoginForm(props) {
     props.login(body);
   };
 
+  const handleClick2 = () => {
+    setViewSet(0);
+  };
   const sendVerificationCode = async (event) => {
     event.preventDefault();
     console.log(resetEmail);
@@ -164,7 +168,7 @@ function LoginForm(props) {
                         />
                         <div className="w-full text-gray-500">
                           <button
-                            className="inline-flex text bg-red-700 p-2 rounded text-white"
+                            className="inline-flex text bg-red-700 p-2 rounded text-white my-2"
                             type="submit"
                             onClick={sendVerificationCode}
                           >
@@ -172,7 +176,7 @@ function LoginForm(props) {
                           </button>
                         </div>
                         <button
-                          className="inline-flex text bg-red-700 p-2 rounded text-white"
+                          className="inline-flex text bg-red-700 p-2 rounded text-white my-2"
                           onClick={() => showEnterCodeScreen(1)}
                         >
                           I have my code already
@@ -184,34 +188,40 @@ function LoginForm(props) {
               </form>
             </div>
           ) : viewSet == 1 ? (
-            <form onSubmit={verifyCode}>
-              <div className="my-2">
-                <label>Code:</label>
-                <input
-                  type="text"
-                  placeholder="Enter Your Code Here..."
-                  name="resetCode"
-                  type="text"
-                  value={resetCode}
-                  onChange={(e) => setResetCode(e.target.value)}
-                  className="border w-full"
-                />
+            <>
+              <BackButton2 handleClick={handleClick2} />
+              <button className="text-white bg-red-500" onClick={handleClick2}>
+                "I dont have a code..."
+              </button>
+              <form onSubmit={verifyCode}>
+                <div className="my-2">
+                  <label>Code:</label>
+                  <input
+                    type="text"
+                    placeholder="Enter Your Code Here..."
+                    name="resetCode"
+                    type="text"
+                    value={resetCode}
+                    onChange={(e) => setResetCode(e.target.value)}
+                    className="border w-full"
+                  />
 
-                <label>New Password:</label>
-                <input
-                  placeholder="Enter Your Password Here..."
-                  name="resetPassword"
-                  type="password"
-                  value={resetPassword}
-                  onChange={(e) => setResetPassword(e.target.value)}
-                  className="border w-full"
-                />
-                {fmessage ? <div>{fmessage}</div> : <div></div>}
-                <button className="bg-red-500 text-white p-2" type="submit">
-                  Update Password
-                </button>
-              </div>
-            </form>
+                  <label>New Password:</label>
+                  <input
+                    placeholder="Enter Your Password Here..."
+                    name="resetPassword"
+                    type="password"
+                    value={resetPassword}
+                    onChange={(e) => setResetPassword(e.target.value)}
+                    className="border w-full"
+                  />
+                  {fmessage ? <div>{fmessage}</div> : <div></div>}
+                  <button className="bg-red-500 text-white p-2" type="submit">
+                    Update Password
+                  </button>
+                </div>
+              </form>
+            </>
           ) : (
             <div></div>
           )}

@@ -28,7 +28,7 @@ class AdminAreaDetail extends Component {
       name: "",
       address: "",
       state: "",
-      zip: 0,
+      zip: "",
     };
   }
   componentDidMount() {
@@ -86,7 +86,7 @@ class AdminAreaDetail extends Component {
       {
         placeholder: "Zip code",
         title: "Zip code",
-        value: "zip code",
+        value: "zip",
       },
     ];
     const onChange = (e, value) => {

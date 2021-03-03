@@ -6,11 +6,18 @@ const SuccessScreen = (props) => {
     props.navigation.pop(2);
   };
   return (
-    <div className="container p-4 mx-auto">
+    <div
+      onClick={() => {
+        handleClick();
+      }}
+      className="container p-4 mx-auto h-screen bg-white"
+    >
       <AlertPopUp
         open={true}
         handleClick={handleClick}
-        alertText={"Your action has been completed. Close to navigate away"}
+        alertText={
+          "Your action has been completed. Click anywhere to go pack to the pool screen."
+        }
       />
     </div>
   );

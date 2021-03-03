@@ -18,7 +18,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import DeliveryStatusIcon from "../Components/DeliveryStatusIcon";
 import UpdateEmployeeInfoForm from "../Components/Employee/UpdateEmployeeInfoForm";
 import { connect } from "react-redux";
-
+import BackButton from "../Components/BackButton";
 import Navbar from "../Components/Navbar";
 
 const deliveryTypeIcon = [
@@ -34,12 +34,14 @@ const user = [
     status: "Deliveries",
     subtext: "Check pools assinged to you",
     location: "DeliveryHome",
+    level: 1,
   },
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Pools",
     subtext: "Check pools assinged to you",
     location: "PoolEmployee",
+    level: 1,
   },
 ];
 const admin = [
@@ -48,18 +50,21 @@ const admin = [
     status: "Delivery Management",
     subtext: "Manage Delivieries for Your Area",
     location: "AdminDeliveriesHome",
+    level: 3,
   },
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Employee Management",
     subtext: "Check your tasks related",
     location: "AdminEmployeeManagement",
+    level: 3,
   },
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Area Management",
     subtext: "Check your tasks related",
     location: "AdminAreaHome",
+    level: 4,
   },
   // {
   //   icon: <QueryBuilderIcon className="text-2xl" />,
@@ -105,9 +110,11 @@ class Home extends Component {
                             style={{ margin: "10px" }}
                           >
                             <DeliveryStatusIcon
+                              level={this.props.user.role}
                               icon={deliveryTypeIcon.icon}
                               status={deliveryTypeIcon.status}
                               subtext={deliveryTypeIcon.subtext}
+                              compareLevel={deliveryTypeIcon.level}
                             />
                           </TouchableOpacity>
                         );
@@ -121,7 +128,7 @@ class Home extends Component {
                   <div className="mt-8">
                     <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
                       <div className="text-3xl mx-4 ">
-                        <span className="bg-white mb-4 m-0">Admin</span>
+                        <span className="bg-white mb-4 m-0">Management</span>
                       </div>
                       <div className="container  max-w-4xl w-full bg-white  rounded-lg  px-2">
                         <FlatList
@@ -138,9 +145,11 @@ class Home extends Component {
                                 style={{ margin: "10px" }}
                               >
                                 <DeliveryStatusIcon
+                                  level={this.props.user.role}
                                   icon={deliveryTypeIcon.icon}
                                   status={deliveryTypeIcon.status}
                                   subtext={deliveryTypeIcon.subtext}
+                                  compareLevel={deliveryTypeIcon.level}
                                 />
                               </TouchableOpacity>
                             );

@@ -72,45 +72,32 @@ class NewEmployeeModalBody extends Component {
     return (
       <div className="mx-auto container max-w-2xl md:w-3/4 shadow-md mx-4">
         <form>
-          <div className="bg-gray-100 p-4 border-t-2 bg-opacity-5 rounded-t p-4 overflow-scroll">
+          <div className="bg-black-100 p-4 border-t-2 bg-opacity-5 rounded-t p-4 overflow-scroll">
             <div className="max-w-sm mx-auto md:w-full md:mx-0">
               <div className="inline-flex items-center space-x-4">
-                {this.props.user.profileImage != "" ? (
-                  <div>
-                    <img
-                      src={
-                        "https://bearfoot-app-images.s3.us-east-2.amazonaws.com/profile-images/" +
-                        this.props.user.profileImage
-                      }
-                      alt="..."
-                      style={{ height: "50px", width: "50px" }}
-                      className="shadow rounded-full float-left align-middle border-none object-contain"
-                    />
-                  </div>
-                ) : (
-                  <div>
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
-                      alt="..."
-                      style={{ height: "50px", width: "50px" }}
-                      className="shadow rounded-full float-left align-middle border-none object-contain"
-                    />
-                  </div>
-                )}
-                <h1 className="text-gray-600">New Account</h1>
+                <div>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
+                    alt="..."
+                    style={{ height: "50px", width: "50px" }}
+                    className="shadow rounded-full float-left align-middle border-none object-contain"
+                  />
+                </div>
+
+                <h1 className="text-black-600">New Account</h1>
               </div>
             </div>
           </div>
           <div className="bg-white space-y-6">
-            <div className="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-gray-500 items-center">
+            <div className="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-black-500 items-center">
               <h2 className="md:w-1/3 max-w-sm mx-auto">Account</h2>
               <div className="md:w-2/3 max-w-sm mx-auto">
-                <label className="text-sm text-gray-400">Email</label>
+                <label className="text-sm text-black-400">Email</label>
                 <div className="w-full inline-flex border">
-                  <div className="pt-2 w-1/12 bg-gray-100 bg-opacity-50">
+                  <div className="pt-2 w-1/12 bg-black-100 bg-opacity-50">
                     <svg
                       fill="none"
-                      className="w-6 text-gray-400 mx-auto"
+                      className="w-6 text-black-400 mx-auto"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
@@ -124,7 +111,7 @@ class NewEmployeeModalBody extends Component {
                   </div>
                   <input
                     type="email"
-                    className="w-11/12 focus:outline-none focus:text-gray-600 p-2"
+                    className="w-11/12 focus:outline-none focus:text-black-600 p-2"
                     placeholder="email@example.com"
                     name="email"
                     value={this.state.email}
@@ -134,16 +121,16 @@ class NewEmployeeModalBody extends Component {
               </div>
             </div>
             <hr />
-            <div className="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
+            <div className="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-black-500 items-center">
               <h2 className="md:w-1/3 mx-auto max-w-sm">Personal info</h2>
               <div className="md:w-2/3 mx-auto max-w-sm space-y-5">
                 <div>
-                  <label className="text-sm text-gray-400">Full name</label>
+                  <label className="text-sm text-black-400">Full name</label>
                   <div className="w-full inline-flex border">
-                    <div className="w-1/12 pt-2 bg-gray-100">
+                    <div className="w-1/12 pt-2 bg-black-100">
                       <svg
                         fill="none"
-                        className="w-6 text-gray-400 mx-auto"
+                        className="w-6 text-black-400 mx-auto"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                       >
@@ -157,7 +144,7 @@ class NewEmployeeModalBody extends Component {
                     </div>
                     <input
                       type="text"
-                      className="w-11/12 focus:outline-none focus:text-gray-600 p-2"
+                      className="w-11/12 focus:outline-none focus:text-black-600 p-2"
                       placeholder="Employee Name"
                       name="name"
                       value={this.state.name}
@@ -167,16 +154,16 @@ class NewEmployeeModalBody extends Component {
                 </div>
               </div>
             </div>
-            <div className="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-gray-500 items-center">
+            <div className="md:inline-flex  space-y-4 md:space-y-0  w-full p-4 text-black-500 items-center">
               <h2 className="md:w-1/3 mx-auto max-w-sm">Group info</h2>
               <div className="md:w-2/3 mx-auto max-w-sm space-y-5">
                 <div>
-                  <label className="text-sm text-gray-400">Organization</label>
+                  <label className="text-sm text-black-400">Organization</label>
                   <div className="w-full inline-flex border">
-                    <div className="w-1/12 pt-2 bg-gray-100">
+                    <div className="w-1/12 pt-2 bg-black-100">
                       <svg
                         fill="none"
-                        className="w-6 text-gray-400 mx-auto"
+                        className="w-6 text-black-400 mx-auto"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                       >
@@ -205,7 +192,7 @@ class NewEmployeeModalBody extends Component {
               </div>{" "}
               <div className="md:w-2/3 mx-auto max-w-sm space-y-5">
                 <div>
-                  <label className="text-sm text-gray-400">
+                  <label className="text-sm text-black-400">
                     Will this account be an HOA Account?
                   </label>
                 </div>
@@ -221,7 +208,7 @@ class NewEmployeeModalBody extends Component {
             "Request failed with status code 500"
               ? "something went wrong. check to make sure user doesn't already exist, and that your information is entered correctly"
               : ""}
-            <div className="w-full p-4 text-right text-gray-500">
+            <div className="w-full p-4 text-right text-black-500">
               <button
                 className="inline-flex text bg-red-700 p-2 rounded text-white"
                 type="submit"

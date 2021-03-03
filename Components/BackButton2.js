@@ -8,12 +8,12 @@ export default class BackNavigationTestComponent extends Component {
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
   handleBackButtonClick() {
-    this.props.navigation.goBack(null);
+    this.props.handleClick(0);
     return true;
   }
   render() {
     return (
-      <div onClick={this.handleBackButtonClick}>
+      <button onClick={this.handleBackButtonClick}>
         <Icons
           backgroundColor={"red"}
           name={"arrow-back"}
@@ -21,7 +21,7 @@ export default class BackNavigationTestComponent extends Component {
           color="black"
           style={{ marginLeft: "3%" }}
         />
-      </div>
+      </button>
     );
   }
 }

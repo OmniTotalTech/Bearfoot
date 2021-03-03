@@ -22,6 +22,10 @@ function EmployeeList(props) {
       items: 2,
     },
   };
+
+  const handleNavigation = (id) => {
+    props.navigation.navigate("EditUser", { id: id }), props.closeModal();
+  };
   return (
     <Carousel
       swipeable={true}
@@ -42,20 +46,40 @@ function EmployeeList(props) {
       itemClass="carousel-item-padding-40-px"
     >
       {props.employees.map((employee) => (
-        <div className="container mx-auto max-w-3xl">
+        <div
+          className="container mx-auto max-w-3xl "
+          onClick={() => handleNavigation(employee._id)}
+        >
+          {console.log(employee)}
           <div className="bg-gray-100 p-4 border-t-2 bg-opacity-5 rounded-t">
             <div className="max-w-sm mx-auto md:w-full md:mx-0">
               <div className="pace-x-4">
-                <img
-                  className="w-10 h-10 object-cover rounded-full"
-                  alt="User avatar"
-                  src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
-                />
+                {employee.profileImage != "" ? (
+                  <div>
+                    <img
+                      src={
+                        "https://bearfoot-app-images.s3.us-east-2.amazonaws.com/profile-images/" +
+                        employee.profileImage
+                      }
+                      alt="..."
+                      style={{ height: "50px", width: "50px" }}
+                      className="shadow rounded-full float-left align-middle border-none object-contain"
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
+                      alt="..."
+                      style={{ height: "50px", width: "50px" }}
+                      className="shadow rounded-full float-left align-middle border-none object-contain"
+                    />
+                  </div>
+                )}
                 <h1 className="text-gray-600">Name: {employee.name}</h1>
               </div>
             </div>
           </div>
-
           <div className="bg-white space-y-6 text-left">
             <div className="space-y-4 md:space-y-0 w-full  text-gray-500">
               <label className="text-md text-gray-700">

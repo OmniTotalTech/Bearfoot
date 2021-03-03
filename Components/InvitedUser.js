@@ -6,7 +6,7 @@ export default class InvitedUser extends Component {
       <div>
         <div>
           {/* border-red-400 */}
-          <div className="bg-gray-100 p-4 border-t-2 bg-opacity-5  rounded-t -my-4">
+          <div className="bg-black-100 p-4 border-t-2 bg-opacity-5  rounded-t -my-4">
             <div className="max-w-sm mx-auto md:w-full md:mx-0">
               <div className="inline-flex items-center space-x-4">
                 {this.props.pic != "" ? (
@@ -31,15 +31,15 @@ export default class InvitedUser extends Component {
                     />
                   </div>
                 )}
-                <h1 className="text-gray-600">{this.props.name}</h1>
+                <h1 className="text-black-600">{this.props.name}</h1>
               </div>
             </div>
           </div>
         </div>
         <div className="bg-white space-y-6">
-          <div className="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-gray-500 items-center">
+          <div className="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-black-500 items-center">
             <div className="md:w-2/3 max-w-sm mx-auto">
-              <label className="text-sm text-gray-400">Email</label>
+              <label className="text-sm text-black-400">Email</label>
               <div>{this.props.email}</div>
             </div>
           </div>

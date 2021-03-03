@@ -22,7 +22,9 @@ import VerifiedUser from "../../Components/VerifiedUser";
 import NewEmployeeModalBody from "../../Components/Employee/NewEmployeeModalBody";
 import { fetchEmployeesByOrg } from "../../redux/actions/adminEmployeeManagement";
 import { newUser } from "../../redux/actions/auth";
-
+import Modal from "react-modal";
+import EmployeeList from "../../Components/Admin/EmployeeList";
+import api from "../../utils/api";
 class AdminAreaHome extends Component {
   componentDidMount() {
     this.props.fetchArea();
@@ -31,6 +33,10 @@ class AdminAreaHome extends Component {
       ""
     );
     this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleSubmitModal = this.handleSubmitModal.bind(this);
+    this.openModal = this.openModal.bind(this);
   }
 
   state = {
@@ -38,6 +44,8 @@ class AdminAreaHome extends Component {
     addView: false,
     selectedValue: undefined,
     searchTerm: null,
+    isModalOpen: false,
+    employeeList: [],
   };
   setSelectedValue(value) {
     this.setState({ selectedValue: value });
@@ -64,7 +72,55 @@ class AdminAreaHome extends Component {
     console.log(event.target.value);
     this.setState({ searchTerm: event.target.value });
   }
+  async handleSubmitModal(e, props) {
+    e.preventDefault();
+    this.setState({ isModalOpen: true });
 
+    let selectedValue;
+
+    if (this.state.selectedValue != undefined) {
+      selectedValue = this.state.selectedValue;
+    } else {
+      selectedValue = this.props.user.organizations[0].orgName;
+    }
+    if (this.props.title == "managers") {
+      await api
+        .get(
+          "users/orgEmployees/" + selectedValue + "/" + this.state.searchTerm
+        )
+        .then((response) => {
+          console.log(response);
+          this.setState({ employeeList: response.data.data });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+    } else {
+      console.log(this.state);
+      await api
+        .get(
+          "users/orgEmployees/" + selectedValue + "/" + this.state.searchTerm
+        )
+        .then((response) => {
+          console.log(response);
+          this.setState({ employeeList: response.data.data });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+    }
+  }
+  closeModal() {
+    this.setState({ isModalOpen: false });
+    console.log(this.props);
+  }
+  handleChange(e) {
+    console.log(e.target.value);
+    this.setState({ searchTerm: e.target.value });
+  }
+  openModal() {
+    this.setState({ isModalOpen: true });
+  }
   render() {
     const renderItem = ({ item }) => (
       <div
@@ -129,7 +185,12 @@ class AdminAreaHome extends Component {
                 <div className="text text-3xl my-2">
                   Employees You Can Manage:
                 </div>
-                <input onChange={this.handleSearchChange} />
+                <button
+                  onClick={this.handleSubmitModal}
+                  className="bg-red-500 text-white px-4 py-2"
+                >
+                  Search
+                </button>
                 <div className="ml-2 mb-8">
                   <div className="text text-lg">Organization:</div>
                   <Picker
@@ -148,6 +209,49 @@ class AdminAreaHome extends Component {
                 <View style={{ overflow: "scroll", maxHeight: "600px" }}>
                   {userInfoEmployeeMap}
                 </View>
+                <Modal
+                  {...this.props}
+                  isOpen={this.state.isModalOpen}
+                  style={{ width: "100%" }}
+                >
+                  <button
+                    className="text bg-gray-600 p-2 rounded text-white"
+                    onClick={() => {
+                      this.closeModal();
+                    }}
+                  >
+                    close
+                  </button>
+
+                  <form
+                    onSubmit={() => this.handleSubmitModal(event, this.props)}
+                  >
+                    <div className="mx-auto container max-w-2xl shadow-md mx-4">
+                      <div className="bg-white space-y-6 mt-4">
+                        <input
+                          onChange={(e) => this.handleChange(e)}
+                          className="w-full p-2"
+                          placeholder="Search By Name"
+                        />
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      className="bg-red-500 text-white p-2 rounded text-md my-2"
+                    >
+                      Search Name
+                    </button>
+                  </form>
+                  <div className="h-96 overflow-scroll">
+                    <EmployeeList
+                      navigation={this.props.navigation}
+                      assignGroup={this.props.title}
+                      poolId={this.props.poolId}
+                      closeModal={() => this.closeModal()}
+                      employees={this.state.employeeList}
+                    />
+                  </div>
+                </Modal>{" "}
               </div>
             </div>
           ) : (

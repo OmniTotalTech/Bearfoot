@@ -3,6 +3,7 @@ import PoolInventoryCheckList from "../../Components/PoolInventoryCheckList";
 import { connect } from "react-redux";
 import { fetchInventory } from "../../redux/actions/inventory";
 import api from "../../utils/api";
+import moment from "moment";
 
 import AlertPopUp from "../../Components/AlertPopUp";
 
@@ -37,12 +38,15 @@ class InventoryCheck extends Component {
           }
         }
       }
-
+      let date = new Date();
+      const nowDate = moment(date);
+      const formattedDate = nowDate.format("YYYY-MM-DD");
       let body = {
         pool_id: this.props.pool._id,
         recordType: this.props.route.params.type + "Checklist",
         user_id: this.props.auth.user._id,
         data: finalObjectArray,
+        date: formattedDate,
       };
       console.log(finalObjectArray);
       submitInventory(body);

@@ -27,6 +27,7 @@ function App(props) {
       <Menu
         id="simple-menu"
         name="el1"
+        className="inline-flex"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}

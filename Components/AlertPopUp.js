@@ -10,18 +10,18 @@ function AlertPopUp(props) {
     <div className="container mx-auto border-1 shadow-md max-w-2xl">
       <Collapse in={props.open}>
         <Alert
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                props.handleClick();
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
+        // action={
+        //   <IconButton
+        //     aria-label="close"
+        //     color="inherit"
+        //     size="small"
+        //     onClick={() => {
+        //       props.handleClick();
+        //     }}
+        //   >
+        //     <CloseIcon fontSize="inherit" />
+        //   </IconButton>
+        // }
         >
           {props.alertText}
         </Alert>

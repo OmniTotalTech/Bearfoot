@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Modal from "react-modal";
 import TitleAndInput from "./TitleAndInput";
 import api from "../utils/api";
+import moment from "moment";
+
 export default class AddInventoryModal extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,9 @@ export default class AddInventoryModal extends Component {
       desc0: "",
       unitType0: "",
       inStockAmt0: 0,
+      lowAmt0: 0,
       customArray: [],
+      preApprove: false,
     };
   }
 
@@ -30,12 +34,17 @@ export default class AddInventoryModal extends Component {
     console.log(this.props);
   }
   async submitForm(e, props) {
+    let date = new Date();
+    const nowDate = moment(date);
+    const formattedDate = nowDate.format("YYYY-MM-DD");
     const body = {
       assigned_backup: props.pool.assigned_backup,
       starting_list: this.state.customArray,
+      date: formattedDate,
       pool_id: props.pool._id,
       assigned_driver: props.pool.pool_primary_driver._id,
     };
+
     await api
       .post("/adminOrderDetails/", body)
       .then((response) => {
@@ -59,6 +68,8 @@ export default class AddInventoryModal extends Component {
       desc0: "",
       unitType0: "",
       inStockAmt0: 0,
+      lowAmt0: 0,
+      preApprove: false,
     });
   }
   async closeModal2() {
@@ -74,6 +85,8 @@ export default class AddInventoryModal extends Component {
       desc0: "",
       unitType0: "",
       inStockAmt0: 0,
+      lowAmt0: 0,
+      preApprove: false,
     });
   }
   async closeModal3() {
@@ -89,6 +102,9 @@ export default class AddInventoryModal extends Component {
       desc0: "",
       unitType0: "",
       inStockAmt0: 0,
+      lowAmt0: 0,
+      preApprove: false,
+
       customArray: [],
     });
   }
@@ -105,7 +121,10 @@ export default class AddInventoryModal extends Component {
       desc0: "",
       unitType0: "",
       inStockAmt0: 0,
+      lowAmt0: 0,
+
       customArray: [],
+      preApprove: false,
     });
   }
 
@@ -127,18 +146,21 @@ export default class AddInventoryModal extends Component {
   }
   async handleSubmit2(event, props) {
     event.preventDefault();
-    const { name0, desc0, unitType0, inStockAmt0 } = this.state;
+    const { name0, desc0, unitType0, inStockAmt0, lowAmt0 } = this.state;
 
     const body = {
       name: name0,
       desc: desc0,
       unitType: unitType0,
+      lowAmt: lowAmt0,
+
       inStockAmt: inStockAmt0,
     };
 
     this.setState({
       customArray: this.state.customArray.concat(body),
     });
+    console.log(this.state);
   }
   render() {
     const inputs = [
@@ -165,12 +187,12 @@ export default class AddInventoryModal extends Component {
         value: "lowAmt",
         isNumber: true,
       },
-      {
-        placeholder: "Current count of available units",
-        title: "In Stock Amount",
-        value: "inStockAmt",
-        isNumber: true,
-      },
+      // {
+      //   placeholder: "Current count of available units",
+      //   title: "In Stock Amount",
+      //   value: "inStockAmt",
+      //   isNumber: true,
+      // },
     ];
 
     const inputs2 = [
@@ -214,6 +236,10 @@ export default class AddInventoryModal extends Component {
           <br />
         </>
       ));
+    };
+
+    const runPreapprove = () => {
+      this.setState({ preApprove: true });
     };
 
     return (
@@ -309,6 +335,7 @@ export default class AddInventoryModal extends Component {
                 <div className="container">
                   {this.state.customArray.length > 0 ? (
                     <>
+                      {console.log(this.state.customArray)}
                       <div className="p-4">
                         <span className="text-2xl">
                           Items you are asking for:
@@ -327,13 +354,25 @@ export default class AddInventoryModal extends Component {
                             </div>
                           </div>
                         ))}
+                        {this.state.preApprove ? (
+                          <>
+                            <p>please check items before continuing</p>
+                            <button
+                              className="text-white bg-red-500 px-4 py-2"
+                              onClick={() => this.submitForm(event, this.props)}
+                            >
+                              Submit New Order .
+                            </button>
+                          </>
+                        ) : (
+                          <button
+                            className="text-white bg-red-500 px-4 py-2"
+                            onClick={() => runPreapprove()}
+                          >
+                            You are About to Submit. Are You Sure?
+                          </button>
+                        )}
                       </div>
-                      (please check items before continuing)
-                      <button
-                        onClick={() => this.submitForm(event, this.props)}
-                      >
-                        Submit New Order .
-                      </button>
                     </>
                   ) : null}
                 </div>

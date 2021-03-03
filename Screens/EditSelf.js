@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ImageUploader from "react-images-upload";
 import api from "../utils/api";
 import { loadUser } from "../redux/actions/auth";
+import BackButton from "../Components/BackButton";
 class EditSelf extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +39,7 @@ class EditSelf extends Component {
   render() {
     return (
       <>
+        <BackButton navigation={this.props.navigation} />
         <div className="container mx-auto max-w-lg p-4 overflow-scroll">
           <p className="text-2xl"> Hello, {this.props.user.name}</p>
 
