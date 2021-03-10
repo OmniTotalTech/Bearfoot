@@ -1,54 +1,31 @@
 import React, { Component } from "react";
 import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
 import { FlatList, TouchableOpacity } from "react-native";
-import ShiftTab from "./../Components/ShiftTab";
+import ShiftTab from "../../Components/ShiftTab";
+
 const shift = [
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Morning",
-    subtext: "Inventory count",
+    status: "Patient Care",
+    subtext: "",
+    location: "PatientCare",
+  },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Incident report",
+    subtext: "",
     location: "InventoryCheck",
-  },
-  {
-    icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Evening",
-    subtext: "Inventory count",
-    location: "InventoryCheck",
-  },
-  {
-    icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Opening checklist",
-    subtext: "",
-    location: "OpeningChecklist",
-  },
-  {
-    icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Closing checklist",
-    subtext: "",
-    location: "ClosingChecklist",
-  },
-  {
-    icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Daily operations",
-    subtext: "",
-    location: "DailyOperations",
-  },
-  {
-    icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Chemical logs",
-    subtext: "",
-    location: "ChemicalLog",
   },
 ];
 
-export default class ShiftInventoryCount extends Component {
+export default class SpecialForms extends Component {
   render() {
     return (
       <div>
         <div className="mt-8">
           <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
             <div className="text-3xl mx-4 ">
-              <span className="bg-white mb-4 m-0">Employee</span>
+              <span className="bg-white mb-4 m-0">Special Forms</span>
             </div>
             <FlatList
               horizontal

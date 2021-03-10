@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
-
+import ImageUploader from "react-images-upload";
+import BackButton from "../../Components/BackButton";
 class ChemicalLogFormContainer extends Component {
   componentWillReceiveProps(nextProps) {
     for (const index in nextProps) {
@@ -123,6 +124,8 @@ class ChemicalLogFormContainer extends Component {
     };
     return (
       <div className="overflow-scroll">
+        {" "}
+        <BackButton navigation={this.props.navigation} />
         <div>
           <p className="text-lg p-4 my-2 text-black">Chemical Log Page</p>
         </div>
@@ -183,6 +186,56 @@ class ChemicalLogFormContainer extends Component {
             <div></div>
           )}
         </div>
+        <div>
+          <h1 className="text-2xl"> Misc Form Information:</h1>
+        </div>
+        <div>
+          <label>Combined Chlorine:</label> <br />
+          <input
+            onChange={(e) =>
+              this.setState({ combinedChlorine: e.target.value })
+            }
+            className="border-2"
+          />{" "}
+        </div>{" "}
+        <div>
+          <label>Cyanuric Acid:</label> <br />
+          <input
+            onChange={(e) => this.setState({ cyanuricAcid: e.target.value })}
+            className="border-2"
+          />{" "}
+        </div>{" "}
+        <div>
+          <label>Alkalinity:</label> <br />
+          <input
+            onChange={(e) => this.setState({ akalinity: e.target.value })}
+            className="border-2"
+          />{" "}
+        </div>{" "}
+        <div>
+          <label>Calcium Hardness:</label> <br />
+          <input
+            onChange={(e) => this.setState({ calciumHardness: e.target.value })}
+            className="border-2"
+          />{" "}
+        </div>
+        <div>
+          <label>LSI Calculation:</label> <br />
+          <input
+            onChange={(e) => this.setState({ LSICalculation: e.target.value })}
+            className="border-2"
+          />{" "}
+        </div>
+        <ImageUploader
+          singleImage={true}
+          withIcon={true}
+          buttonText="Choose images"
+          // onChange={this.onDrop}
+          imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+          maxFileSize={5242880}
+          withPreview={true}
+          withLabel={true}
+        />
         <button onClick={handleSubmit} className="text-white bg-red-500 p-4">
           Submit
         </button>

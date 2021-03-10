@@ -22,4 +22,5 @@ export default combineReducers({
   inventory: inventory,
   dailyChecklist: dailyChecklist,
   records: records,
+  hoa: byId,
 });

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-
 export default class PoolInventoryCheckList extends Component {
   render() {
     return (
       <div className="container mx-auto overflow-scroll mt-4 max-w-2xl bg-gray-100">
+        {" "}
         <div className="w-full shadow-lg border-b-2 py-4">
           <p className="text-3xl text-center my-4">
             Currently performing a {this.props.type} Checklist count.

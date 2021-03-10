@@ -81,6 +81,7 @@ export const fetchPool = () => {
 };
 
 export const fetchPoolById = (id) => {
+  console.log(id);
   return (dispatch) => {
     dispatch(fetchPoolRequest);
     api

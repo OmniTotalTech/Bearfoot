@@ -4,7 +4,8 @@ import DailyChecklist from "../../Components/DailyChecklist";
 import { fetchDailyChecklist } from "../../redux/actions/dailyChecklist";
 import api from "../../utils/api";
 import moment from "moment";
-
+import ImageUploader from "react-images-upload";
+import BackButton from "../../Components/BackButton";
 class ClosingChecklist extends Component {
   componentDidMount() {
     console.log("id", this.props.route.params.id);
@@ -53,11 +54,23 @@ class ClosingChecklist extends Component {
 
     return (
       <div className="container mx-auto overflow-scroll">
+        {" "}
+        <BackButton navigation={this.props.navigation} />
         <div className="text-2xl p-4">Closing Checklist : </div>
         <DailyChecklist
           data={this.props.dailyChecklist.data}
           handleChange={(data) => handleChange(data)}
           onSubmit={submitChecklist}
+        />
+        <ImageUploader
+          singleImage={true}
+          withIcon={true}
+          buttonText="Choose images"
+          // onChange={this.onDrop}
+          imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+          maxFileSize={5242880}
+          withPreview={true}
+          withLabel={true}
         />
       </div>
     );

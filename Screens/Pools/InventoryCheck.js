@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { fetchInventory } from "../../redux/actions/inventory";
 import api from "../../utils/api";
 import moment from "moment";
-
+import BackButton from "../../Components/BackButton";
 import AlertPopUp from "../../Components/AlertPopUp";
 
 class InventoryCheck extends Component {
@@ -71,6 +71,7 @@ class InventoryCheck extends Component {
 
     return (
       <div className="h-full overflow-scroll">
+        <BackButton navigation={this.props.navigation} />
         <PoolInventoryCheckList
           handleChange={handleChange}
           data={this.props.inventory.data}

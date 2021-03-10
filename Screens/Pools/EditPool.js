@@ -15,7 +15,7 @@ import { fetchDailyChecklist } from "../../redux/actions/dailyChecklist";
 
 import EditPoolDropDown from "./EditPoolDropDown";
 import AddInventoryModal from "../../Components/AddInventoryModal";
-
+import BackButton from "../../Components/BackButton";
 class EditPool extends Component {
   componentDidMount() {
     console.log(this.props.route.params.id);
@@ -59,6 +59,8 @@ class EditPool extends Component {
   render() {
     return (
       <ScrollView>
+        {" "}
+        <BackButton navigation={this.props.navigation} />
         <div className="container mx-auto text-center">
           <EditPoolDropDown
             handleClick={(title) => {
@@ -82,6 +84,7 @@ class EditPool extends Component {
               {this.state.basicInfoView != false ? (
                 <>
                   <BasicInformation
+                    navigation={this.props.navigation}
                     id={this.props.route.params.id}
                     pool={this.props.pool.individualPool}
                     dailyChecklist={this.props.dailyChecklist}

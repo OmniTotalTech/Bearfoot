@@ -20,6 +20,7 @@ import UpdateEmployeeInfoForm from "../Components/Employee/UpdateEmployeeInfoFor
 import { connect } from "react-redux";
 import BackButton from "../Components/BackButton";
 import Navbar from "../Components/Navbar";
+import HoaHomeContainer from "./HOA-Related/hoa-home-container";
 
 const deliveryTypeIcon = [
   {
@@ -86,7 +87,13 @@ class Home extends Component {
       <ScrollView>
         {this.props.user ? (
           this.props.user.isHOA ? (
-            <div>HOA</div>
+            <>
+              <View>
+                <div className="h-screen">
+                  <HoaHomeContainer navigation={this.props.navigation} />
+                </div>
+              </View>
+            </>
           ) : this.props.user.hasSignedInBefore ? (
             <View style={{ backgroundColor: " #718096" }}>
               <div className="h-screen ">

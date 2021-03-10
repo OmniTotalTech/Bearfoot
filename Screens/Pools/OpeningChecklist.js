@@ -4,7 +4,7 @@ import DailyChecklist from "../../Components/DailyChecklist";
 import { fetchDailyChecklist } from "../../redux/actions/dailyChecklist";
 import api from "../../utils/api";
 import moment from "moment";
-
+import BackButton from "../../Components/BackButton";
 class OpeningChecklist extends Component {
   componentDidMount() {
     console.log("id", this.props.route.params.id);
@@ -53,6 +53,8 @@ class OpeningChecklist extends Component {
 
     return (
       <div className="container mx-auto overflow-scroll">
+        {" "}
+        <BackButton navigation={this.props.navigation} />
         <div className="text-2xl p-4">Opening Checklist : </div>
         <DailyChecklist
           data={this.props.dailyChecklist.data}

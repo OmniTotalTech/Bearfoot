@@ -41,6 +41,7 @@ class ChemicalLog extends Component {
     };
     return (
       <ChemicalLogFormContainer
+        navigation={this.props.navigation}
         user={this.props.user}
         onSubmit={onSubmit}
         timeArray={this.state.timeArray}

@@ -9,6 +9,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Modal from "react-modal";
 import RecordModal from "./RecordModal";
+import BackButton from "../../../Components/BackButton";
 class PoolRecordsPage extends Component {
   state = {
     searchArray: [],
@@ -112,6 +113,8 @@ class PoolRecordsPage extends Component {
     return (
       <>
         <div className="overflow-scroll">
+          {" "}
+          <BackButton navigation={this.props.navigation} />
           <div className="container p-2 m-2 max-w-lg mx-auto">
             <div className="grid grid-cols-2 p-1">
               <FormControl component="fieldset">
@@ -133,7 +136,6 @@ class PoolRecordsPage extends Component {
               </FormControl>
             </div>
           </div>
-
           <div className="container max-w-2xl mx-auto">
             <ReactTable
               className="-striped -highlight"

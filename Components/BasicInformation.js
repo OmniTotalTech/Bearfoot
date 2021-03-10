@@ -7,7 +7,21 @@ import RichEditor from "./Admin/RichEditor";
 import Modal from "react-modal";
 import api from "../utils/api";
 import Checkbox from "@material-ui/core/Checkbox";
+import { connect } from "react-redux";
+import { fetchEmployeesByOrg } from "../redux/actions/adminEmployeeManagement";
+import ImageUploader from "react-images-upload";
 
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TouchableHighlight,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+} from "react-native";
 import {
   Accordion,
   AccordionItem,
@@ -15,10 +29,62 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from "react-accessible-accordion";
-export default class BasicInformation extends Component {
+import InvitedUser from "../Components/InvitedUser";
+
+class BasicInformation extends Component {
   constructor(props) {
     super(props);
+
+    this.runHOAFunc = this.runHOAFunc.bind(this);
+    this.runLoadAccordionData = this.runLoadAccordionData.bind(this);
+    this.runHOAFuncHome = this.runHOAFuncHome.bind(this);
   }
+
+  runLoadAccordionData = async () => {
+    await api
+      .get("/poolDetails/" + this.props.id)
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ accordionData: response.data });
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+      });
+  };
+  runHOAFunc = () => {
+    this.props.fetchEmployeesByOrg(
+      this.props.user.organizations[0].orgName,
+      "HOA" + "/" + this.state.hoaSearchString
+    );
+    this.setState({ addView: false, manageView: true });
+  };
+
+  runHOAFuncHome = async () => {
+    await api
+      .get("/hoa/" + this.props.id)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  addUserToHOA = async (id) => {
+    let body = {
+      userId: id,
+      assignedLocation: this.props.id,
+    };
+
+    await api
+      .post("/hoa/", body)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+      });
+  };
 
   state = {
     pool_address: this.props.pool.pool_address,
@@ -126,6 +192,9 @@ export default class BasicInformation extends Component {
         checked: false,
       },
     ],
+    isNewPoolDetailModalOpen: false,
+    pictures: [],
+    accordionData: [],
   };
 
   async componentDidMount() {
@@ -143,9 +212,28 @@ export default class BasicInformation extends Component {
       .catch((error) => {
         const errorMsg = error.message;
       });
+    this.runHOAFuncHome();
+    this.runLoadAccordionData();
   }
 
   render() {
+    const onDrop = (picture) => {
+      this.setState({
+        pictures: this.state.pictures.concat(picture),
+      });
+    };
+    const renderItem = ({ item }) => (
+      <div style={{ margin: "10px" }}>
+        <InvitedUser
+          pic={item.profileImage}
+          name={item.name}
+          email={item.email}
+        />
+        <button onClick={() => this.addUserToHOA(item._id)}>
+          Add HOA to Pool
+        </button>
+      </div>
+    );
     const { text } = this.state;
     const handleSubmit = async () => {
       let body = {
@@ -208,24 +296,53 @@ export default class BasicInformation extends Component {
       },
     ];
 
-    // const forLoopAm = () => {
-    //   let times = [];
-    //   for (var i = 0; i < 12; i++) {
-    //     times.concat({ value: i, aorp: "am" });
-    //   }
-    //   console.log(times);
-    //   return times;
-    // };
-
     const onChange = (e, value) => {
       this.setState({ [value]: e });
     };
     const handleDelete = (id) => {
       console.log(id);
     };
+    const handleNewPoolDetailSubmit = async () => {
+      let body = {
+        poolId: this.props.id,
+        headerText: this.state.headerText,
+        bodyText: this.state.bodyText,
+        images: this.state.pictures,
+      };
+
+      await api
+        .post("/poolDetails/", body)
+        .then((response) => {
+          this.setState({
+            timeArray: response.data.data.chemTimeData,
+            recMsg: "Saved. Thank you.",
+          });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+          this.setState({ recMsg: "There was an error. Try again." });
+        });
+    };
+
+    const handleNewPoolDetail = () => {
+      this.setState({
+        isNewPoolDetailModalOpen: !this.state.isNewPoolDetailModalOpen,
+      });
+    };
+
+    const handlePoolDetailDelete = async (id) => {
+      await api
+        .delete("/poolDetails/" + id)
+        .then((response) => {
+          this.runLoadAccordionData();
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+          this.setState({ recMsg: "There was an error. Try again." });
+        });
+    };
 
     const inputsMap = (array) => {
-      console.log(this.state);
       return array.map((item, i) => (
         <>
           <TitleAndInput
@@ -233,9 +350,31 @@ export default class BasicInformation extends Component {
             item={item}
             onChange={(value, item) => onChange(value, item)}
           />
+
           <br />
         </>
       ));
+    };
+
+    const handleUpdatePoolInfo = async () => {
+      console.log(this.state);
+
+      let body = {
+        pool_address: this.state.pool_address,
+        pool_state: this.state.pool_state,
+        pool_zip: this.state.pool_zip,
+        pool_name: this.state.pool_name,
+      };
+
+      await api
+        .patch("/pool/" + this.props.id, body)
+        .then((response) => {
+          this.props.navigation.navigate("SuccessScreen");
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+          this.setState({ recMsg: "There was an error. Try again." });
+        });
     };
 
     const handleSubmitChecklist = async (type) => {
@@ -272,6 +411,41 @@ export default class BasicInformation extends Component {
       handleSubmitChecklist();
     };
 
+    const handleUpload = async () => {
+      console.log(this.props.navigation);
+      const formData = new FormData();
+      formData.append("image", this.state.pictures);
+
+      let body = {
+        poolId: this.props.id,
+        headerText: this.state.headerText,
+        bodyText: this.state.bodyText,
+        images: formData,
+      };
+
+      await api
+        .post("uploadPoolDetails", body)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.setState({ isNewPoolDetailModalOpen: false });
+      this.props.navigation.navigate("SuccessScreen");
+
+      this.setState({ pictures: [] });
+    };
+    const userInfoEmployeeMap = (
+      <div>
+        <FlatList
+          data={this.props.adminEmployeeManagement.data.data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+      </div>
+    );
+
     return (
       <div>
         <div className="editor">
@@ -285,15 +459,168 @@ export default class BasicInformation extends Component {
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <div className="mx-auto container max-w-2xl shadow-md mx-4">
+                <div className="mx-auto align-left text-left container max-w-2xl shadow-md mx-4">
                   <div className="bg-white space-y-6 mt-4">
                     <div className=" space-y-4 md:space-y-0 w-full p-4 text-black ">
-                      <h2 className=" max-w-sm mx-auto">Basic Info</h2>
+                      <h2 className="">Basic Info</h2>
                       {inputsMap(inputs)}
+                      <button
+                        className="bg-red-500 text-white py-2 px-4"
+                        onClick={handleUpdatePoolInfo}
+                      >
+                        Update Pool
+                      </button>
+
                       {/* <p>{parse(text)}</p> */}
+                      <h1 className="text-lg">Information Sections</h1>
+                      <h2>
+                        This is intended for information regarding operations at
+                        your location.
+                      </h2>
+                      <button
+                        className="bg-red-500 text-white p-4 rounded"
+                        onClick={handleNewPoolDetail}
+                      >
+                        {" "}
+                        + Add a New Section
+                      </button>
+                      {this.state.accordionData.length > 0 ? (
+                        this.state.accordionData.map((item, i) => (
+                          <div>
+                            <p>{i + 1})</p>
+                            <h1>{item.headerText}</h1>
+                            <h1>{item.bodyText}</h1>
+                            <button
+                              className="bg-red-500 text-white px-4 py-2"
+                              onClick={() => handlePoolDetailDelete(item._id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        ))
+                      ) : (
+                        <div></div>
+                      )}
+
+                      <Modal
+                        {...this.props}
+                        ariaHideApp={false}
+                        isOpen={this.state.isNewPoolDetailModalOpen}
+                        style={{ width: "100%" }}
+                      >
+                        <button
+                          className="text bg-gray-600 p-2 rounded text-white"
+                          onClick={() => {
+                            this.setState({ isNewPoolDetailModalOpen: false });
+                          }}
+                        >
+                          close
+                        </button>
+                        <div>
+                          <div>
+                            <label className="text-lg">Header:</label> <br />
+                            <input
+                              className="p-2 border"
+                              onChange={(e) =>
+                                this.setState({ headerText: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div>
+                            <label className="text-lg">Body:</label> <br />
+                            <input
+                              className="p-2 border"
+                              onChange={(e) =>
+                                this.setState({ bodyText: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div>
+                            <label className="text-lg">Images:</label> <br />
+                            <ImageUploader
+                              singleImage={false}
+                              withIcon={true}
+                              buttonText="Choose images"
+                              onChange={onDrop}
+                              imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                              maxFileSize={5242880}
+                              withPreview={true}
+                              withLabel={true}
+                            />
+                            {/* <button
+                              onClick={handleUploadImages}
+                              className="bg-red-500 text-white px-4 py-2 rounded  mx-auto"
+                            >
+                              Upload Image
+                            </button> */}
+                          </div>
+
+                          <button
+                            className="bg-red-500 px-4 py-2 text-white"
+                            onClick={handleUpload}
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </Modal>
                     </div>
                   </div>
                 </div>
+              </AccordionItemPanel>
+            </AccordionItem>{" "}
+            <AccordionItem>
+              <AccordionItemHeading>
+                <AccordionItemButton>
+                  <button className="inline-flex text bg-red-700 p-2 rounded text-white m-2">
+                    HOA Assignment
+                  </button>
+                </AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel>
+                <button
+                  onClick={() => this.setState({ hoaModal: true })}
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Add An HOA account to this Pool
+                </button>
+                <div></div>
+                <Modal
+                  {...this.props}
+                  ariaHideApp={false}
+                  isOpen={this.state.hoaModal}
+                  style={{ width: "100%" }}
+                >
+                  <div className="container mx-auto max-w-2xl">
+                    <div>
+                      <button
+                        className="bg-gray-500 px-4 py-2 text-white"
+                        onClick={() => this.setState({ hoaModal: false })}
+                      >
+                        Close
+                      </button>
+                    </div>
+                    <div>
+                      <input
+                        onChange={(e) =>
+                          this.setState({ hoaSearchString: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <button
+                        className="bg-red-500 px-4 py-2 text-white"
+                        onClick={this.runHOAFunc}
+                      >
+                        Search
+                      </button>
+                    </div>
+                    <div className="mx-auto container max-w-2xl shadow-md mx-4">
+                      <View style={{ overflow: "scroll", maxHeight: "600px" }}>
+                        {userInfoEmployeeMap}
+                      </View>{" "}
+                    </div>
+                  </div>
+                </Modal>
               </AccordionItemPanel>
             </AccordionItem>
             <AccordionItem>
@@ -311,7 +638,7 @@ export default class BasicInformation extends Component {
                       Set the tasks you would like the employees of this pool to
                       complete every morning and evening.
                     </p>
-                    <div className="text-center">
+                    <div className="">
                       <button
                         onClick={() => {
                           console.log(this.props.id),
@@ -554,3 +881,19 @@ class Checkboxes extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+    adminEmployeeManagement: state.adminEmployeeManagement,
+  };
+};
+
+const mapDisptachToProps = (dispatch) => {
+  return {
+    fetchEmployeesByOrg: (orgName, string) =>
+      dispatch(fetchEmployeesByOrg(orgName, string)),
+  };
+};
+
+export default connect(mapStateToProps, mapDisptachToProps)(BasicInformation);
