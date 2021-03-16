@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 import ImageUploader from "react-images-upload";
 import BackButton from "../../Components/BackButton";
+import api from "../../utils/api";
 class ChemicalLogFormContainer extends Component {
   componentWillReceiveProps(nextProps) {
     for (const index in nextProps) {
@@ -41,9 +42,15 @@ class ChemicalLogFormContainer extends Component {
     //   this.setState({ formObjectArray: newArray });
   };
   //   const [formObjectArray, setFormObjectArray] = React.useState([]);
-  state = { stateArray: [] };
+  state = { stateArray: [], pictures: [] };
   render() {
-    const handleSubmit = () => {
+    const onDrop = (picture) => {
+      this.setState({
+        pictures: this.state.pictures.concat(picture),
+      });
+    };
+
+    const handleSubmit = async () => {
       console.log("hit submit");
       const date = new Date();
       const nowDate = moment(date);
@@ -59,6 +66,25 @@ class ChemicalLogFormContainer extends Component {
       };
 
       this.props.onSubmit(body);
+
+      const data = new FormData();
+      let selectedFiles = this.state.pictures;
+
+      if (selectedFiles) {
+        for (let i = 0; i < selectedFiles.length; i++) {
+          data.append("image", selectedFiles[i]);
+        }
+        await api
+          .post("uploadPoolDetails", data)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      this.setState({ pictures: [] });
     };
     const handlePHChange = (e, i) => {
       let stateArray = this.state.stateArray;
@@ -123,7 +149,7 @@ class ChemicalLogFormContainer extends Component {
       console.log(this.state);
     };
     return (
-      <div className="overflow-scroll">
+      <div className="overflow-scroll container mx-auto">
         {" "}
         <BackButton navigation={this.props.navigation} />
         <div>
@@ -186,59 +212,64 @@ class ChemicalLogFormContainer extends Component {
             <div></div>
           )}
         </div>
-        <div>
-          <h1 className="text-2xl"> Misc Form Information:</h1>
+        <div className="container mx-auto my-4">
+          <div>
+            <h1 className="text-2xl"> Misc Form Information:</h1>
+          </div>
+          <div>
+            <label>Combined Chlorine:</label> <br />
+            <input
+              onChange={(e) =>
+                this.setState({ combinedChlorine: e.target.value })
+              }
+              className="border-2"
+            />{" "}
+          </div>{" "}
+          <div>
+            <label>Cyanuric Acid:</label> <br />
+            <input
+              onChange={(e) => this.setState({ cyanuricAcid: e.target.value })}
+              className="border-2"
+            />{" "}
+          </div>{" "}
+          <div>
+            <label>Alkalinity:</label> <br />
+            <input
+              onChange={(e) => this.setState({ akalinity: e.target.value })}
+              className="border-2"
+            />{" "}
+          </div>{" "}
+          <div>
+            <label>Calcium Hardness:</label> <br />
+            <input
+              onChange={(e) =>
+                this.setState({ calciumHardness: e.target.value })
+              }
+              className="border-2"
+            />{" "}
+          </div>
+          <div>
+            <label>LSI Calculation:</label> <br />
+            <input
+              onChange={(e) =>
+                this.setState({ LSICalculation: e.target.value })
+              }
+              className="border-2"
+            />{" "}
+          </div>
+          <ImageUploader
+            withIcon={true}
+            buttonText="Choose images"
+            onChange={onDrop}
+            imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+            maxFileSize={5242880}
+            withPreview={true}
+            withLabel={true}
+          />
+          <button onClick={handleSubmit} className="text-white bg-red-500 p-4">
+            Submit
+          </button>
         </div>
-        <div>
-          <label>Combined Chlorine:</label> <br />
-          <input
-            onChange={(e) =>
-              this.setState({ combinedChlorine: e.target.value })
-            }
-            className="border-2"
-          />{" "}
-        </div>{" "}
-        <div>
-          <label>Cyanuric Acid:</label> <br />
-          <input
-            onChange={(e) => this.setState({ cyanuricAcid: e.target.value })}
-            className="border-2"
-          />{" "}
-        </div>{" "}
-        <div>
-          <label>Alkalinity:</label> <br />
-          <input
-            onChange={(e) => this.setState({ akalinity: e.target.value })}
-            className="border-2"
-          />{" "}
-        </div>{" "}
-        <div>
-          <label>Calcium Hardness:</label> <br />
-          <input
-            onChange={(e) => this.setState({ calciumHardness: e.target.value })}
-            className="border-2"
-          />{" "}
-        </div>
-        <div>
-          <label>LSI Calculation:</label> <br />
-          <input
-            onChange={(e) => this.setState({ LSICalculation: e.target.value })}
-            className="border-2"
-          />{" "}
-        </div>
-        <ImageUploader
-          singleImage={true}
-          withIcon={true}
-          buttonText="Choose images"
-          // onChange={this.onDrop}
-          imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-          maxFileSize={5242880}
-          withPreview={true}
-          withLabel={true}
-        />
-        <button onClick={handleSubmit} className="text-white bg-red-500 p-4">
-          Submit
-        </button>
       </div>
     );
   }

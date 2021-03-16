@@ -7,8 +7,8 @@ export default class FormPart1Container extends Component {
     return (
       <div>
         <div>
-          <DailyOperationsSection />
-          <PoolClosure />
+          <DailyOperationsSection updateState={this.props.updateState} />
+          <PoolClosure updateState={this.props.updateState} />
         </div>
       </div>
     );

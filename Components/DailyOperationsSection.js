@@ -1,49 +1,91 @@
 import React, { Component } from "react";
 
 export default class DailyOperationsSection extends Component {
+  componentDidMount() {
+    const data = [
+      {
+        name: "Facility Manager",
+        formValue: "facilityManager",
+      },
+      {
+        name: "Shift Hours",
+        formValue: "shiftHours",
+      },
+      {
+        name: "Head Guard",
+        formValue: "headGuard",
+      },
+      {
+        name: "Shift Guard Hours",
+        formValue: "shiftGuardHours",
+      },
+      {
+        name: "Weather",
+        formValue: "weather",
+      },
+      {
+        name: "Shift Notes",
+        formValue: "shiftNotes",
+      },
+    ];
+    for (var i = 0; i < data.length; i++) {
+      this.setState({ [data[i].formValue]: "" });
+      console.log(this.state);
+      this.props.updateState("", data[i].formValue);
+    }
+  }
+
   render() {
+    const data = [
+      {
+        name: "Facility Manager",
+        formValue: "facilityManager",
+      },
+      {
+        name: "Shift Hours",
+        formValue: "shiftHours",
+      },
+      {
+        name: "Head Guard",
+        formValue: "headGuard",
+      },
+      {
+        name: "Shift Guard Hours",
+        formValue: "shiftGuardHours",
+      },
+      {
+        name: "Weather",
+        formValue: "weather",
+      },
+      {
+        name: "Shift Notes",
+        formValue: "shiftNotes",
+      },
+    ];
+    const updateStateAndProps = (e, name) => {
+      this.setState({ [name]: e });
+      console.log(this.state);
+      this.props.updateState(e, name);
+    };
     return (
-      <div className="container mx-auto bg-black">
-        <div className="bg-gray-500 text-white text-xl font-bold p-4">
+      <div className="container mx-auto bg-white">
+        <div className="bg-gray-500 text-black text-xl font-bold p-4">
           Daily Operations
         </div>
         <div>
-          <div className="p-2">
-            <label className="text-white">Facility Manager</label>
-            <div className="w-full inline-flex border">
-              <input className="w-full focus:outline-none text-white p-2 bg-black" />
+          {data.map((item) => (
+            <div className="p-2">
+              <label className="text-black">{item.name}</label>
+              <div className="w-full inline-flex border">
+                <input
+                  onChange={(e) =>
+                    updateStateAndProps(e.target.value, item.formValue)
+                  }
+                  className="w-full focus:outline-none text-black p-2 bg-white"
+                />
+              </div>
             </div>
-          </div>
-          <div className="p-2">
-            <label className="text-white">Shift Hours</label>
-            <div className="w-full inline-flex border">
-              <input className="w-full focus:outline-none text-white p-2 bg-black" />
-            </div>
-          </div>
-          <div className="p-2">
-            <label className="text-white">Head Guard</label>
-            <div className="w-full inline-flex border">
-              <input className="w-full focus:outline-none text-white p-2 bg-black" />
-            </div>
-          </div>
-          <div className="p-2">
-            <label className="text-white">Shift Guard Hours</label>
-            <div className="w-full inline-flex border">
-              <input className="w-full focus:outline-none text-white p-2 bg-black" />
-            </div>
-          </div>
-          <div className="p-2">
-            <label className="text-white">Weather</label>
-            <div className="w-full inline-flex border">
-              <input className="w-full focus:outline-none text-white p-2 bg-black" />
-            </div>
-          </div>
-          <div className="p-2">
-            <label className="text-white">Shift Notes</label>
-            <div className="w-full inline-flex border">
-              <input className="w-full focus:outline-none text-white p-2 bg-black" />
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     );

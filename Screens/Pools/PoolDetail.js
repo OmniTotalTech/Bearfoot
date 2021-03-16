@@ -9,13 +9,39 @@ import PoolSupervisorContainer from "../../Components/PoolSupervisorContainer";
 import ShiftInventoryCount from "../../Components/ShiftInventoryCount";
 import SpecialForms from "./SpecialForms";
 import BackButton from "../../Components/BackButton";
+import api from "../../utils/api";
+
 class PoolDetail extends Component {
-  state = { isEmployee: false, isManager: false, didLoad: false };
+  state = {
+    isEmployee: false,
+    isManager: false,
+    didLoad: false,
+    accordionData: [],
+    amtLoaded: 0,
+  };
+  constructor(props) {
+    super(props);
+    this.runLoadAccordionData = this.runLoadAccordionData.bind(this);
+  }
 
   componentDidMount() {
     console.log(this.props.route.params);
     this.props.fetchPoolById(this.props.route.params);
+    this.runLoadAccordionData();
   }
+
+  runLoadAccordionData = async () => {
+    await api
+      .get("/poolDetails/" + this.props.route.params)
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ accordionData: response.data });
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+      });
+    console.log("loaded");
+  };
 
   render() {
     const userId = this.props.auth.user._id;
@@ -28,78 +54,83 @@ class PoolDetail extends Component {
     };
 
     return (
-      <ScrollView>
-        {" "}
-        <BackButton navigation={this.props.navigation} />
-        {this.props.user.role >= 3 ? (
-          <div className="flex justify-center pt-4">
-            <button
-              className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-400 rounded shadow"
-              onClick={() =>
-                this.props.navigation.navigate("EditPool", {
-                  id: this.props.pool.individualPool._id,
-                })
-              }
-            >
-              Edit pool
-            </button>
-            <button
-              className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 mx-1 border border-red-400 rounded shadow"
-              onClick={() =>
-                this.props.navigation.navigate("PoolRecords", {
-                  id: this.props.route.params,
-                })
-              }
-            >
-              Pool Records
-            </button>
-          </div>
-        ) : (
-          <div></div>
-        )}{" "}
-        <div className="w-full">
-          <PoolPublicContainer userId={userId} pool={this.props.pool} />
-        </div>
-        {/* inner div start */}
-        {this.props.user.isHOA ? (
-          <div>
-            {" "}
-            <button
-              className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 mx-1 border border-red-400 rounded shadow"
-              onClick={() =>
-                this.props.navigation.navigate("PoolRecords", {
-                  id: this.props.pool.individualPool._id,
-                })
-              }
-            >
-              View Pool Records
-            </button>
-          </div>
-        ) : (
-          <>
-            <ShiftInventoryCount
-              id={this.props.pool.individualPool._id}
-              navigation={this.props.navigation}
+      <>
+        <ScrollView>
+          <BackButton navigation={this.props.navigation} />
+          {this.props.user.role >= 3 ? (
+            <div className="flex justify-center pt-4">
+              <button
+                className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-400 rounded shadow"
+                onClick={() =>
+                  this.props.navigation.navigate("EditPool", {
+                    id: this.props.pool.individualPool._id,
+                  })
+                }
+              >
+                Edit pool
+              </button>
+              <button
+                className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 mx-1 border border-red-400 rounded shadow"
+                onClick={() =>
+                  this.props.navigation.navigate("PoolRecords", {
+                    id: this.props.route.params,
+                  })
+                }
+              >
+                Pool Records
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}{" "}
+          <div className="w-full">
+            <PoolPublicContainer
+              accordionData={this.state.accordionData}
+              userId={userId}
+              pool={this.props.pool}
             />
-            <SpecialForms
-              id={this.props.pool.individualPool._id}
-              navigation={this.props.navigation}
-            />
-          </>
-        )}
-        {/* inner div end */}
-        {/* inner div start */}
-        {checkArray(userId, poolEmployeeIds) ? (
-          <PoolManagerContainer />
-        ) : (
-          <div></div>
-        )}
-        {checkArray(userId, poolManagerIds) ? (
-          <PoolSupervisorContainer />
-        ) : (
-          <div></div>
-        )}
-      </ScrollView>
+          </div>
+          {/* inner div start */}
+          {this.props.user.isHOA ? (
+            <div>
+              {" "}
+              <button
+                className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 mx-1 border border-red-400 rounded shadow"
+                onClick={() =>
+                  this.props.navigation.navigate("PoolRecords", {
+                    id: this.props.pool.individualPool._id,
+                  })
+                }
+              >
+                View Pool Records
+              </button>
+            </div>
+          ) : (
+            <>
+              <ShiftInventoryCount
+                id={this.props.pool.individualPool._id}
+                navigation={this.props.navigation}
+              />
+              <SpecialForms
+                id={this.props.pool.individualPool._id}
+                navigation={this.props.navigation}
+              />
+            </>
+          )}
+          {/* inner div end */}
+          {/* inner div start */}
+          {checkArray(userId, poolEmployeeIds) ? (
+            <PoolManagerContainer />
+          ) : (
+            <div></div>
+          )}
+          {checkArray(userId, poolManagerIds) ? (
+            <PoolSupervisorContainer />
+          ) : (
+            <div></div>
+          )}
+        </ScrollView>
+      </>
     );
   }
 }

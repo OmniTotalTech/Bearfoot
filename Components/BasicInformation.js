@@ -416,23 +416,39 @@ class BasicInformation extends Component {
       const formData = new FormData();
       formData.append("image", this.state.pictures);
 
-      let body = {
-        poolId: this.props.id,
-        headerText: this.state.headerText,
-        bodyText: this.state.bodyText,
-        images: formData,
-      };
+      const data = new FormData();
+      let selectedFiles = this.state.pictures;
 
-      await api
-        .post("uploadPoolDetails", body)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      this.setState({ isNewPoolDetailModalOpen: false });
-      this.props.navigation.navigate("SuccessScreen");
+      if (selectedFiles) {
+        for (let i = 0; i < selectedFiles.length; i++) {
+          data.append("image", selectedFiles[i]);
+        }
+        await api
+          .post("uploadPoolDetails", data)
+          .then(async (response) => {
+            console.log(response.data);
+            let body = {
+              poolId: this.props.id,
+              headerText: this.state.headerText,
+              bodyText: this.state.bodyText,
+              images: response.data.files,
+            };
+
+            await api
+              .post("uploadPoolDetailsPart2", body)
+              .then((response) => {
+                this.setState({ isNewPoolDetailModalOpen: false });
+                this.props.navigation.navigate("SuccessScreen");
+                console.log(response);
+              })
+              .catch((error) => {
+                console.log(error.message);
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
 
       this.setState({ pictures: [] });
     };
@@ -490,8 +506,24 @@ class BasicInformation extends Component {
                             <p>{i + 1})</p>
                             <h1>{item.headerText}</h1>
                             <h1>{item.bodyText}</h1>
+                            <div>
+                              {this.state.accordionData[i].images != null &&
+                              this.state.accordionData[i].images.length > 0 ? (
+                                this.state.accordionData[
+                                  i
+                                ].images.map((item) => (
+                                  <img
+                                    src={item.image}
+                                    alt="..."
+                                    className="shadow object-contain h-32  align-middle border-none object-contain"
+                                  />
+                                ))
+                              ) : (
+                                <div></div>
+                              )}
+                            </div>
                             <button
-                              className="bg-red-500 text-white px-4 py-2"
+                              className="bg-red-500 text-white px-4 py-2 my-2"
                               onClick={() => handlePoolDetailDelete(item._id)}
                             >
                               Delete
@@ -621,6 +653,27 @@ class BasicInformation extends Component {
                     </div>
                   </div>
                 </Modal>
+              </AccordionItemPanel>
+            </AccordionItem>
+            <AccordionItem>
+              <AccordionItemHeading>
+                <AccordionItemButton>
+                  <button className="inline-flex text bg-red-700 p-2 rounded text-white my-2">
+                    Daily Logs Management
+                  </button>
+                </AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel>
+                <div className="container px-4">
+                  <p>
+                    List of pools for your employees to fill paperwork for
+                    daily.
+                  </p>
+                  <input className="my-4" />
+                  <button className="inline-flex text bg-red-700 px-2 py-1 mx-2 rounded text-white my-2">
+                    Add
+                  </button>
+                </div>
               </AccordionItemPanel>
             </AccordionItem>
             <AccordionItem>
