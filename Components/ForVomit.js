@@ -52,7 +52,7 @@ export default class ForVomit extends Component {
     };
     return (
       <div className="container mx-auto bg-white">
-        <div className="bg-gray-500 text-black text-xl font-bold p-4">
+        <div className="bg-red-500 text-white text-xl font-bold p-4">
           For Vomit / Fecal
         </div>
         {data.map((item) => (

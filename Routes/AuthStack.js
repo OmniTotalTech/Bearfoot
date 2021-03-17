@@ -28,11 +28,16 @@ import ClosingChecklist from "../Screens/Pools/ClosingChecklist";
 import ChemicalLog from "../Screens/Pools/ChemicalLog";
 
 import DailyOperations from "../Screens/DailyOperations";
+import DailyOperationsPick from "../Screens/DailyOperationsPick";
+
 import DeliveryDetail from "../Screens/DeliveryInformation/DeliveryDetail";
 import PoolRecordsPage from "../Screens/AdminPool/PoolRecords/PoolRecordsPage";
 import SuccessScreen from "../Screens/SuccessScreen";
 import ManageHOAs from "../Screens/AdminUser/ManageHOAs";
 import PatientCare from "../Screens/Pools/PatientCare";
+import IncidentReport from "../Screens/Pools/IncidentReport";
+import DailyOperationsEdit from "../Screens/DailyOperationsEdit";
+
 const Stack = createStackNavigator();
 
 export const AuthStack = () => (
@@ -78,10 +83,19 @@ export const AuthStack = () => (
         <Stack.Screen name="ClosingChecklist" component={ClosingChecklist} />
         <Stack.Screen name="ChemicalLog" component={ChemicalLog} />
         <Stack.Screen name="DailyOperations" component={DailyOperations} />
+        <Stack.Screen
+          name="DailyOperationsPick"
+          component={DailyOperationsPick}
+        />
+        <Stack.Screen
+          name="DailyOperationsEdit"
+          component={DailyOperationsEdit}
+        />
         <Stack.Screen name="PoolRecords" component={PoolRecordsPage} />
         <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
         <Stack.Screen name="ManageHOAs" component={ManageHOAs} />
         <Stack.Screen name="PatientCare" component={PatientCare} />
+        <Stack.Screen name="IncidentReport" component={IncidentReport} />
       </Stack.Navigator>
     </NavigationContainer>
 

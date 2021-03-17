@@ -31,7 +31,7 @@ const shift = [
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Daily operations",
     subtext: "",
-    location: "DailyOperations",
+    location: "DailyOperationsPick",
   },
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
