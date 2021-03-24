@@ -53,6 +53,8 @@ export default class DailyOperationsPick extends Component {
             const errorMsg = error.message;
           });
       } else {
+        this.setState({ isAm: false, isPm: true });
+
         await api
           .get(
             "/records/search/" +
@@ -118,6 +120,8 @@ export default class DailyOperationsPick extends Component {
                   this.state.resData.map((item) => (
                     <>
                       <div>{item.date}</div>
+                      <div>{item.recordType}</div>
+
                       <button
                         className="bg-red-500 text-white rounded px-4 p-2"
                         onClick={() => goToSave(item)}

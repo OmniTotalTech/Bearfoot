@@ -13,11 +13,7 @@ class PatientCare extends Component {
         {" "}
         <BackButton navigation={this.props.navigation} />
         <Stepper
-          steps={[
-            { label: "Step 1" },
-            { label: "Step 2" },
-            { label: "Step 3" },
-          ]}
+          steps={[{ label: "1" }, { label: "2" }, { label: "3" }]}
           activeStep={this.state.activeStep}
         />
         <PatientCareForm activeStep={this.state.activeStep} />
@@ -54,7 +50,7 @@ class PatientCare extends Component {
             </button>
           </div>
         ) : (
-          <div className="display-inline mx-auto">
+          <div className="display-inline mx-auto my-4">
             <button
               className="p-4 text-white bg-red-500 rounded mx-2"
               onClick={() =>
@@ -67,7 +63,7 @@ class PatientCare extends Component {
               className="p-4 text-white bg-red-500 rounded mx-2 "
               onClick={() => console.log("Final")}
             >
-              Final
+              Submit
             </button>
           </div>
         )}

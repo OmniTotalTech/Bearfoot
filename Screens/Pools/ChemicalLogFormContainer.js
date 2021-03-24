@@ -55,7 +55,13 @@ class ChemicalLogFormContainer extends Component {
       const date = new Date();
       const nowDate = moment(date);
       const formattedDate = nowDate.format("YYYY-MM-DD");
-
+      let newDataObj = {
+        combinedChlorine: this.state.combinedChlorine,
+        cyanuricAcid: this.state.cyanuricAcid,
+        akalinity: this.state.akalinity,
+        calciumHardness: this.state.calciumHardness,
+        LSICalculation: this.state.LSICalculation,
+      };
       let body = {
         data: this.state.stateArray,
         pool_id: this.props.id,
@@ -63,6 +69,7 @@ class ChemicalLogFormContainer extends Component {
         specificPool: "",
         user_id: this.props.user._id,
         date: formattedDate,
+        dataObject: newDataObj,
       };
 
       this.props.onSubmit(body);
@@ -212,7 +219,7 @@ class ChemicalLogFormContainer extends Component {
             <div></div>
           )}
         </div>
-        <div className="container mx-auto my-4">
+        <div className="container mx-auto my-4 text-center">
           <div>
             <h1 className="text-2xl"> Misc Form Information:</h1>
           </div>

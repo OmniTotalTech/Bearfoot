@@ -10,6 +10,9 @@ import ShiftInventoryCount from "../../Components/ShiftInventoryCount";
 import SpecialForms from "./SpecialForms";
 import BackButton from "../../Components/BackButton";
 import api from "../../utils/api";
+import PoolPrivateContainer from "../../Components/General/PoolPrivateContainer";
+import moment from "moment";
+import Modal from "react-modal";
 
 class PoolDetail extends Component {
   state = {
@@ -18,16 +21,19 @@ class PoolDetail extends Component {
     didLoad: false,
     accordionData: [],
     amtLoaded: 0,
+    isModalOpen: false,
   };
   constructor(props) {
     super(props);
     this.runLoadAccordionData = this.runLoadAccordionData.bind(this);
+    this.runLoadAdminData = this.runLoadAdminData.bind(this);
   }
 
   componentDidMount() {
     console.log(this.props.route.params);
     this.props.fetchPoolById(this.props.route.params);
     this.runLoadAccordionData();
+    this.runLoadAdminData();
   }
 
   runLoadAccordionData = async () => {
@@ -36,6 +42,51 @@ class PoolDetail extends Component {
       .then((response) => {
         console.log(response.data);
         this.setState({ accordionData: response.data });
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+      });
+    console.log("loaded");
+  };
+
+  runLoadAdminData = async () => {
+    var date = new Date();
+    var dateObj = date;
+    var momentObj = moment(dateObj);
+    var momentString = momentObj.format("YYYY-MM-DD"); // 2016-07-15
+    await api
+      .get(
+        "/records/lastSubmitted/" + this.props.route.params + "/" + momentString
+      )
+      .then((response) => {
+        console.log(response);
+        if (response.data.length > 0) {
+          for (var i = 0; i < response.data.length; i++) {
+            switch (response.data[i].recordType) {
+              case "MorningChecklist":
+                this.setState({ foundMorningChecklist: true });
+                break;
+              case "EveningChecklist":
+                this.setState({ foundEveningChecklist: true });
+                break;
+              case "OpeningTaskChecklist":
+                this.setState({ foundOpeningTaskChecklist: true });
+                break;
+              case "ClosingTaskChecklist":
+                this.setState({ foundEveningTaskChecklist: true });
+                break;
+              case "dailyOperationsAM":
+                this.setState({ dailyOperationsAm: true });
+                break;
+              case "dailyOperationsPM":
+                this.setState({ dailyOperationsPm: true });
+                break;
+              case "ChemicalLog":
+                this.setState({ chemLog: true });
+                break;
+            }
+          }
+        }
       })
       .catch((error) => {
         const errorMsg = error.message;
@@ -79,6 +130,12 @@ class PoolDetail extends Component {
               >
                 Pool Records
               </button>
+              <button
+                className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 mx-1 border border-red-400 rounded shadow"
+                onClick={() => this.setState({ isModalOpen: true })}
+              >
+                Today's Forms
+              </button>
             </div>
           ) : (
             <div></div>
@@ -115,6 +172,19 @@ class PoolDetail extends Component {
                 id={this.props.pool.individualPool._id}
                 navigation={this.props.navigation}
               />
+              <Modal
+                {...this.props}
+                isOpen={this.state.isModalOpen}
+                style={{ width: "100%" }}
+              >
+                <button
+                  onClick={() => this.setState({ isModalOpen: false })}
+                  className="bg-red-500 text-white rounded px-4 py-2"
+                >
+                  Close
+                </button>
+                <PoolPrivateContainer {...this.state} />
+              </Modal>
             </>
           )}
           {/* inner div end */}

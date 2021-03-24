@@ -7,68 +7,126 @@ import moment from "moment";
 import api from "../utils/api";
 import BackButton from "../Components/BackButton";
 export default class DailyOperationsEdit extends Component {
-  state = { preloadedData: null };
+  state = { prepopulatedData: null };
 
-  componentWillMount() {
-    this.setState({ preloadedData: [] });
+  componentDidMount() {
     console.log(this.props.route.params.itemd.data[0]);
-    this.setState(this.props.route.params.itemd.data[0]);
+    var updateObj = this.props.route.params.itemd.data[0];
+    console.log(updateObj);
+    this.setState(updateObj);
+    console.log(this.state);
   }
   render() {
     const updateState = (e, name) => {
       this.setState({ [name]: e });
-      console.log(this.props);
+
       console.log(this.state);
     };
-
-    const firstPartMap = () => {
-      <div className="text-red-500 bold">
-        {" "}
-        Server communication error. Please try again later.
-      </div>;
-      this.props.route.params.itemd.data[0] ? (
-        <div>
-          {/* <div className="p-2">
-            <label className="text-black">Facility Manager</label>
-            <div className="w-full inline-flex border">
-              <input
-                defaultValue={
-                  this.props.route.params.itemd.data[0].facilityManager
-                }
-                onChange={(e) =>
-                  updateState(
-                    e.target.value,
-                    this.props.route.params.itemd.data[0].facilityManager
-                  )
-                }
-                className="w-full focus:outline-none text-black p-2 bg-white"
-              />
-            </div>
-          </div>{" "}
-          <div className="p-2">
-            <label className="text-black">Shift Hours</label>
-            <div className="w-full inline-flex border">
-              <input
-                defaultValue={this.state.data.shiftHours}
-                onChange={(e) =>
-                  updateState(e.target.value, this.state.data.shiftHours)
-                }
-                className="w-full focus:outline-none text-black p-2 bg-white"
-              />
-            </div>
-          </div> */}
-        </div>
-      ) : (
-        <div>
-          <div className="text-red-500 bold">
-            {" "}
-            Server communication error. Please try again later.
-          </div>
-          ;
-        </div>
-      );
+    const updateStateAndProps2 = (e, name) => {
+      this.setState({ [name]: e });
     };
 
+    console.log(this.state);
+
+    const data = [
+      {
+        name: "Facility Manager",
+        formValue: "facilityManager",
+      },
+      {
+        name: "Shift Hours",
+        formValue: "shiftHours",
+      },
+      {
+        name: "Head Guard",
+        formValue: "headGuard",
+      },
+      {
+        name: "Shift Guard Hours",
+        formValue: "shiftGuardHours",
+      },
+      {
+        name: "Weather",
+        formValue: "weather",
+      },
+      {
+        name: "Shift Notes",
+        formValue: "shiftNotes",
+      },
+    ];
+    const data3 = [
+      {
+        name: "Pool(s)",
+        formValue: "pools",
+      },
+      {
+        name: "Time Closed",
+        formValue: "timeClosed",
+      },
+      {
+        name: "timeReoped",
+        formValue: "timeReopened",
+      },
+      {
+        name: "reason",
+        formValue: "reason",
+      },
+    ];
+    const data2 = [
+      {
+        name: "Vomit",
+        formValue: "vomit",
+      },
+      {
+        name: "fecal",
+        formValue: "fecal",
+      },
+      {
+        name: "weather",
+        formValue: "weather",
+      },
+      {
+        name: "Pool Clarity",
+        formValue: "poolClarity",
+      },
+    ];
+
+    const data4 = [
+      {
+        name: "Time Noticed",
+        formValue: "timeNoticed",
+      },
+      {
+        name: "Time Cleaned",
+        formValue: "timeCleaned",
+      },
+      {
+        name: "pH",
+        formValue: "ph",
+      },
+      {
+        name: "Chlorine",
+        formValue: "chlorine",
+      },
+    ];
+    const data5 = [
+      {
+        name: "Lightning",
+        formValue: "lightning",
+      },
+      {
+        name: "Heavy Rain",
+        formValue: "heavyRain",
+      },
+      {
+        name: "Thunder",
+        formValue: "thunder",
+      },
+      {
+        name: "Other",
+        formValue: "other",
+      },
+    ];
     const handleSubmit = async () => {
       let type;
       if (this.props.route.params.isAm) {
@@ -108,20 +166,86 @@ export default class DailyOperationsEdit extends Component {
             <div className="bg-red-500 text-white text-xl font-bold p-4">
               Daily Operations
             </div>
-            <div>{firstPartMap()}</div>
+            <div>
+              {data.map((item) => (
+                <div className="p-2">
+                  <label className="text-black">{item.name}</label>
+                  <div className="w-full inline-flex border">
+                    <input
+                      value={this.state[item.formValue]}
+                      onChange={(e) =>
+                        updateState(e.target.value, item.formValue)
+                      }
+                      className="w-full focus:outline-none text-black p-2 bg-white"
+                    />
+                  </div>
+                </div>
+              ))}
+              <div className="bg-red-500 text-white text-xl font-bold p-4">
+                Pool Closure
+              </div>
+              {data3.map((item) => (
+                <div className="grid grid-cols-2 divide-x divide-white w-full border-b-2  py-4">
+                  <div className="text-black px-2">{item.name}:</div>
+                  <div className="p-2">
+                    <div className="w-full inline-flex border">
+                      <input
+                        value={this.state[item.formValue]}
+                        onChange={(e) =>
+                          updateStateAndProps(e.target.value, item.formValue)
+                        }
+                        className="w-full focus:outline-none text-black p-2 bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {data2.map((item) => (
+                <div className="flex justify-between">
+                  <div className="text-black text-lg py-4">{item.name}</div>
+                  <div className="px-2 py-4">
+                    <input
+                      checked={this.state[item.formValue]}
+                      onChange={(e) =>
+                        updateStateAndProps2(e.target.checked, item.formValue)
+                      }
+                      type="checkbox"
+                    ></input>
+                  </div>
+                </div>
+              ))}
+              {data4.map((item) => (
+                <div className="grid grid-cols-2 divide-x divide-white w-full border-b-2  py-4">
+                  <div className="text-black px-2">{item.name}:</div>
+                  <div className="p-2">
+                    <div className="w-full inline-flex border">
+                      <input
+                        value={this.state[item.formValue]}
+                        onChange={(e) =>
+                          updateStateAndProps(e.target.value, item.formValue)
+                        }
+                        className="w-full focus:outline-none text-black p-2 bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {data5.map((item) => (
+                <div className="flex justify-between">
+                  <div className="text-black text-lg py-4">{item.name}</div>
+                  <div className="px-2 py-4">
+                    <input
+                      checked={this.state[item.formValue]}
+                      onChange={(e) =>
+                        updateStateAndProps2(e.target.checked, item.formValue)
+                      }
+                      type="checkbox"
+                    ></input>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-
-          {/* <FormPart1Container updateState={updateState} />
-          <ForVomit updateState={updateState} />
-          <ForWeather updateState={updateState} />
-          <div className="text-center p-4">
-            <button
-              onClick={handleSubmit}
-              className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-400 rounded shadow"
-            >
-              Submit
-            </button>
-          </div> */}
         </div>
       </div>
     );

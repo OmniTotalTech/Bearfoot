@@ -131,10 +131,10 @@ const IncidentReportForm = (props) => {
 
   return (
     <>
-      <div className="overflow-scroll mx-auto container max-w-3xl">
-        <div className="container p-4 text-2xl">Patient Care form</div>
+      <div className=" mx-auto container max-w-3xl">
+        <div className="container p-4 text-2xl mx-auto">Patient Care form</div>
         {props.activeStep == 1 ? (
-          <div className="container p-4">
+          <div className="container p-4 mx-auto">
             <div>
               <label className="text-md">Patron Name</label>
               <br />
@@ -331,7 +331,7 @@ const IncidentReportForm = (props) => {
             <br />
           </div>
         ) : props.activeStep == 3 ? (
-          <div className="container p-4 bg-white">
+          <div className="container p-4 bg-white max-w-2xl">
             <label>Employee Signature</label>
           </div>
         ) : props.activeStep == 4 ? (

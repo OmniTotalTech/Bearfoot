@@ -50,6 +50,15 @@ class BasicInformation extends Component {
       .catch((error) => {
         const errorMsg = error.message;
       });
+    await api
+      .get("/subPools/" + this.props.id)
+      .then((response) => {
+        console.log(response);
+        this.setState({ subPools: response.data });
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+      });
   };
   runHOAFunc = () => {
     this.props.fetchEmployeesByOrg(
@@ -217,6 +226,9 @@ class BasicInformation extends Component {
   }
 
   render() {
+    const handleDeleteSubPool = (id) => {
+      console.log(id);
+    };
     const onDrop = (picture) => {
       this.setState({
         pictures: this.state.pictures.concat(picture),
@@ -462,6 +474,32 @@ class BasicInformation extends Component {
       </div>
     );
 
+    const handleSubmitSubPool = async () => {
+      let body = {
+        poolId: this.props.id,
+        subPoolName: this.state.newSubPoolString,
+      };
+
+      await api
+        .post("/subPools/", body)
+        .then((response) => {
+          console.log(response);
+          api
+            .get("/subPools/" + this.props.id)
+            .then((response) => {
+              console.log(response);
+              this.setState({ subPools: response.data });
+              this.setState({ newSubPoolString: "" });
+            })
+            .catch((error) => {
+              const errorMsg = error.message;
+            });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+    };
+
     return (
       <div>
         <div className="editor">
@@ -664,15 +702,43 @@ class BasicInformation extends Component {
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <div className="container px-4">
+                <div className="container px-4 max-w-2xl mx-auto">
                   <p>
                     List of pools for your employees to fill paperwork for
                     daily.
                   </p>
-                  <input className="my-4" />
-                  <button className="inline-flex text bg-red-700 px-2 py-1 mx-2 rounded text-white my-2">
+                  <input
+                    className="my-4 border-2 shadow-xl"
+                    onChange={(e) =>
+                      this.setState({ newSubPoolString: e.target.value })
+                    }
+                  />
+                  <button
+                    onClick={handleSubmitSubPool}
+                    className="inline-flex text bg-red-700 px-2 py-1 mx-2 rounded text-white my-2"
+                  >
                     Add
-                  </button>
+                  </button>{" "}
+                  <div className="">
+                    {this.state.subPools && this.state.subPools.length > 0 ? (
+                      <div>
+                        <div className="text-lg">SubPools:</div>
+                        {this.state.subPools.map((item, i) => (
+                          <div className="m-2">
+                            {i + 1}){item.subPoolName}{" "}
+                            <button
+                              className="bg-red-500 text-white rounded p-1 mx-4"
+                              onClick={() => handleDeleteSubPool(item._id)}
+                            >
+                              Delete SubPool
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div>No subpools found</div>
+                    )}{" "}
+                  </div>
                 </div>
               </AccordionItemPanel>
             </AccordionItem>

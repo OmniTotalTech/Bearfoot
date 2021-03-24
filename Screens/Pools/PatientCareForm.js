@@ -18,11 +18,13 @@ const PatientCareForm = (props) => {
   return (
     <>
       <div className="overflow-scroll">
-        <div className="container p-4 text-2xl">Patient Care form</div>
+        <div className="container p-4 text-2xl mx-auto text-center">
+          Patient Care form
+        </div>
         {props.activeStep == 1 ? (
-          <div className="container p-4">
+          <div className="container p-4 max-w-2xl mx-auto">
             <div>
-              <label className="text-md">Patron Name</label>
+              <label className="text-2xl">Patron Name</label>
               <br />
               <input
                 type="text"
@@ -53,55 +55,76 @@ const PatientCareForm = (props) => {
             <br />
           </div>
         ) : props.activeStep == 2 ? (
-          <div className="container p-4">
+          <div className="container p-4 mx-auto max-w-2xl">
             <div>
               <label className="text-md">Event Description</label>
               <br />
-              <input
-                type="text"
-                value={eventDescription}
-                onChange={() => setEventDescription(e.target.value)}
-              />
+              <div className="w-11/12">
+                <textarea
+                  type="textarea"
+                  className="w-full"
+                  value={eventDescription}
+                  onChange={() => setEventDescription(e.target.value)}
+                />
+              </div>
             </div>
             <div>
               <label className="text-md">Resolution Description</label>
               <br />
-              <input
-                type="text"
-                value={resDescription}
-                onChange={() => setResDescription(e.target.value)}
-              />
+              <div className="w-11/12">
+                <textarea
+                  type="textarea"
+                  className="w-full"
+                  value={resDescription}
+                  onChange={() => setResDescription(e.target.value)}
+                />
+              </div>
             </div>
           </div>
         ) : (
-          <div className="container p-4 bg-white">
-            <label>Employee Signature</label>
-            <SignaturePad
-              style={{ width: 40 }}
-              canvasProps={{
-                maxWidth: 500,
-                minWidth: 100,
-                width: window.innerWidth,
-                height: 300,
-              }}
-              ref={(ref) => {
-                sigPad = ref;
-              }}
-            />
-            <label>Patron Signature</label>
-            <SignaturePad
-              style={{ width: 40 }}
-              canvasProps={{
-                maxWidth: 500,
-                minWidth: 100,
-                width: window.innerWidth,
-                height: 300,
-              }}
-              ref={(ref) => {
-                sigPad = ref;
-              }}
-            />
-          </div>
+          <>
+            <div className="p-4">
+              <div className="container max-w-md mx-auto">
+                <label className="text-lg">Patron Signature</label>
+              </div>
+              <div className="bg-white max-w-md mx-auto">
+                <SignaturePad
+                  style={{ width: 40 }}
+                  canvasProps={{
+                    maxWidth: 500,
+                    minWidth: 100,
+                    width: window.innerWidth,
+                    height: 200,
+                    backgroundColor: "#fff",
+                  }}
+                  ref={(ref) => {
+                    sigPad = ref;
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="p-4">
+              <div className="container max-w-md mx-auto">
+                <label className="text-lg">Employee Signature</label>
+              </div>
+              <div className="bg-white max-w-md mx-auto">
+                <SignaturePad
+                  style={{ width: 40 }}
+                  canvasProps={{
+                    maxWidth: 500,
+                    minWidth: 100,
+                    width: window.innerWidth,
+                    height: 200,
+                    backgroundColor: "#fff",
+                  }}
+                  ref={(ref) => {
+                    sigPad = ref;
+                  }}
+                />
+              </div>
+            </div>
+          </>
         )}
       </div>
     </>
