@@ -61,68 +61,62 @@ const IncidentReportForm = (props) => {
   // Name of Supervisor
 
   //Injuries List Step 3
-  // Head: {
-  //  Skull
-  //  Right Ear
-  //  Left Ear
-  //  Right Eye
-  //  Left Eye
-  //  Mouth
-  //  Teeth
-  //  Face
-  //  Neck
-  // },
-  // torso{
-  //  Upper Back
-  //  Middle Back
-  //  Lower Back
-  //  Chest
-  //  Abdomen
-  // }
-  // arm {
-  //  Shoulder
-  //  Upper Arm
-  //  Elbow
-  //  Forearm
-  //  Wrist
-  //  Hand
-  //  Finger(s)
-  // }
-  // leg {
-  //  Hip
-  //  Groin
-  //  Thigh
-  //  Knee
-  //  Shin
-  //  Calf
-  //  Ankle
-  //  Foot
-  //  Toes
-  // }
-  // Wounds
-  //  Abrasion
-  //  Laceration
-  //  Puncture
-  //  Avulsion
-  //  Bruise
-  //  Embedded Object
-  // Burns
-  //  Chemical
-  //  Thermal
-  //  Radiation
-  //  Electrical
-  // Sudden Illness
-  //  Diabetic
-  //  Stroke
-  //  Cardiac
-  //  Shock
-  //  Anaphylaxis
-  //  Seizure
-  //  Fainting
-  //  Heat-Related
-  //  Cold-Related
-  //  Vomit
-  // }
+  const injures = {
+    Head: [
+      "Skull",
+      "Right Ear",
+      "Left Ear",
+      "Right Eye",
+      "Left Eye",
+      "Mouth",
+      "Teeth",
+      "Face",
+      "Neck",
+    ],
+    torso: ["Upper Back", "Middle Back", "Lower Back", "Chest", "Abdomen"],
+    arm: [
+      "Shoulder",
+      "Upper Arm",
+      "Elbow",
+      "Forearm",
+      "Wrist",
+      "Hand",
+      "Finger(s)",
+    ],
+    leg: [
+      "Hip",
+      "Groin",
+      "Thigh",
+      "Knee",
+      "Shin",
+      "Calf",
+      "Ankle",
+      "Foot",
+      "Toes",
+    ],
+    wounds: [
+      "Abrasion",
+      "Laceration",
+      "Puncture",
+      "Avulsion",
+      "Bruise",
+      "Embedded Object",
+    ],
+    burns: ["Chemical", "Thermal", "Radiation", "Electrical"],
+    suddenIllness: [
+      "Diabetic",
+      "Stroke",
+      "Cardiac",
+      "Shock",
+      "Anaphylaxis",
+      "Seizure",
+      "Fainting",
+      "Heat-Related",
+      "Cold-Related",
+      "Vomit",
+    ],
+  };
+  let sigPad = {};
 
   let trim = () => {
     setTrimmedDataURL(sigPad.getTrimmedCanvas().toDataURL("image/png"));
@@ -331,8 +325,123 @@ const IncidentReportForm = (props) => {
             <br />
           </div>
         ) : props.activeStep == 3 ? (
-          <div className="container p-4 bg-white max-w-2xl">
-            <label>Employee Signature</label>
+          <div className="container p-4 bg-white max-w-2xl mx-auto">
+            <div>
+              {" "}
+              <label className="text-xl my-2">Injury Type</label>
+            </div>
+            <label className="text-md">Head</label>
+            <div className="grid grid-cols-3">
+              {injures.Head.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      // value={}
+                      // onChange={(e) => setDetailedTreatment(e.target.value)}
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-md">Torso</label>
+            <div className="grid grid-cols-3">
+              {injures.torso.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      // value={}
+                      // onChange={(e) => setDetailedTreatment(e.target.value)}
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>{" "}
+            <label className="text-md">Arm</label>
+            <div className="grid grid-cols-3">
+              {injures.arm.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      // value={}
+                      // onChange={(e) => setDetailedTreatment(e.target.value)}
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-md">Legs</label>
+            <div className="grid grid-cols-3">
+              {injures.leg.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      // value={}
+                      // onChange={(e) => setDetailedTreatment(e.target.value)}
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-md">Wounds</label>
+            <div className="grid grid-cols-3">
+              {injures.wounds.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      // value={}
+                      // onChange={(e) => setDetailedTreatment(e.target.value)}
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-md">Burns</label>
+            <div className="grid grid-cols-3">
+              {injures.burns.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      // value={}
+                      // onChange={(e) => setDetailedTreatment(e.target.value)}
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-md">Sudden Illness</label>
+            <div className="grid grid-cols-3">
+              {injures.suddenIllness.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      // value={}
+                      // onChange={(e) => setDetailedTreatment(e.target.value)}
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
           </div>
         ) : props.activeStep == 4 ? (
           <div>
@@ -500,7 +609,25 @@ const IncidentReportForm = (props) => {
                 type="text"
                 value={reportFilerName}
                 onChange={(e) => setReportFiler(e.target.value)}
-              />
+              />{" "}
+              <br />
+              <label className="text-md">Reporter Signature:</label>
+              <br />
+              <div className="bg-white max-w-md mx-auto">
+                <SignaturePad
+                  style={{ width: 40 }}
+                  canvasProps={{
+                    maxWidth: 500,
+                    minWidth: 100,
+                    width: window.innerWidth,
+                    height: 200,
+                    backgroundColor: "#fff",
+                  }}
+                  ref={(ref) => {
+                    sigPad = ref;
+                  }}
+                />
+              </div>
             </div>{" "}
             <br />
             <div>
@@ -510,17 +637,53 @@ const IncidentReportForm = (props) => {
                 type="text"
                 value={managerName}
                 onChange={(e) => setManagerName(e.target.value)}
-              />
+              />{" "}
+              <br />
+              <label className="text-md">Manager Signature:</label>
+              <br />
+              <div className="bg-white max-w-md mx-auto">
+                <SignaturePad
+                  style={{ width: 40 }}
+                  canvasProps={{
+                    maxWidth: 500,
+                    minWidth: 100,
+                    width: window.innerWidth,
+                    height: 200,
+                    backgroundColor: "#fff",
+                  }}
+                  ref={(ref) => {
+                    sigPad = ref;
+                  }}
+                />
+              </div>
             </div>{" "}
             <br />
             <div>
-              <label className="text-md">Manager Name:</label>
+              <label className="text-md">Supervisor Name:</label>
               <br />
               <input
                 type="text"
                 value={supName}
                 onChange={(e) => setSupName(e.target.value)}
-              />
+              />{" "}
+              <br />
+              <label className="text-md">Supervisor Signature:</label>
+              <br />
+              <div className="bg-white max-w-md mx-auto">
+                <SignaturePad
+                  style={{ width: 40 }}
+                  canvasProps={{
+                    maxWidth: 500,
+                    minWidth: 100,
+                    width: window.innerWidth,
+                    height: 200,
+                    backgroundColor: "#fff",
+                  }}
+                  ref={(ref) => {
+                    sigPad = ref;
+                  }}
+                />
+              </div>
             </div>{" "}
           </div>
         )}
