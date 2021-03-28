@@ -39,14 +39,33 @@ class ChemicalLog extends Component {
           console.log(errorMsg);
         });
     };
+    const loadSubPools = async () => {
+      let body = {
+        poolId: this.props.route.params.id,
+        subPoolName: this.state.newSubPoolString,
+      };
+
+      await api
+        .get("/subPools/" + this.props.id)
+        .then((response) => {
+          console.log(response);
+          this.setState({ subPools: response.data });
+          this.setState({ newSubPoolString: "" });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+    };
     return (
-      <ChemicalLogFormContainer
-        navigation={this.props.navigation}
-        user={this.props.user}
-        onSubmit={onSubmit}
-        timeArray={this.state.timeArray}
-        id={this.props.route.params.id}
-      />
+      <>
+        <ChemicalLogFormContainer
+          navigation={this.props.navigation}
+          user={this.props.user}
+          onSubmit={onSubmit}
+          timeArray={this.state.timeArray}
+          id={this.props.route.params.id}
+        />
+      </>
     );
   }
 }

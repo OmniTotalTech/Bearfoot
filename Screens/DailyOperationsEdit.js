@@ -10,6 +10,7 @@ export default class DailyOperationsEdit extends Component {
   state = { prepopulatedData: null };
 
   componentDidMount() {
+    console.log(this.props.route.params.itemd._id);
     console.log(this.props.route.params.itemd.data[0]);
     var updateObj = this.props.route.params.itemd.data[0];
     console.log(updateObj);
@@ -83,7 +84,7 @@ export default class DailyOperationsEdit extends Component {
       },
       {
         name: "weather",
-        formValue: "weather",
+        formValue: "closedweather",
       },
       {
         name: "Pool Clarity",
@@ -134,20 +135,14 @@ export default class DailyOperationsEdit extends Component {
       } else {
         type = "dailyOperationsPM";
       }
-      var date = new Date();
-      var dateObj = date;
-      var momentObj = moment(dateObj);
-      var momentString = momentObj.format("YYYY-MM-DD"); // 2016-07-15
-
       let body = {
-        pool_id: this.props.route.params.id,
-        recordType: type,
-        date: momentString,
+        _id: this.props.route.params.itemd._id,
         data: this.state,
+        type: type,
       };
       console.log(body);
       await api
-        .post("/records/" + type, body)
+        .post("/records/", body)
         .then((response) => {
           console.log(response);
           this.props.navigation.navigate("SuccessScreen");
@@ -192,7 +187,7 @@ export default class DailyOperationsEdit extends Component {
                       <input
                         value={this.state[item.formValue]}
                         onChange={(e) =>
-                          updateStateAndProps(e.target.value, item.formValue)
+                          updateState(e.target.value, item.formValue)
                         }
                         className="w-full focus:outline-none text-black p-2 bg-white"
                       />
@@ -222,7 +217,7 @@ export default class DailyOperationsEdit extends Component {
                       <input
                         value={this.state[item.formValue]}
                         onChange={(e) =>
-                          updateStateAndProps(e.target.value, item.formValue)
+                          updateState(e.target.value, item.formValue)
                         }
                         className="w-full focus:outline-none text-black p-2 bg-white"
                       />
@@ -244,8 +239,16 @@ export default class DailyOperationsEdit extends Component {
                   </div>
                 </div>
               ))}
-            </div>
+            </div>{" "}
           </div>
+        </div>
+        <div className="text-center p-4">
+          <button
+            onClick={handleSubmit}
+            className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-400 rounded shadow"
+          >
+            Submit
+          </button>
         </div>
       </div>
     );

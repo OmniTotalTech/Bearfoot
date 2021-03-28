@@ -31,7 +31,7 @@ export default class PoolClosure extends Component {
       },
       {
         name: "weather",
-        formValue: "weather",
+        formValue: "closedweather",
       },
       {
         name: "Pool Clarity",
@@ -80,7 +80,7 @@ export default class PoolClosure extends Component {
       },
       {
         name: "weather",
-        formValue: "weather",
+        formValue: "closedweather",
       },
       {
         name: "Pool Clarity",

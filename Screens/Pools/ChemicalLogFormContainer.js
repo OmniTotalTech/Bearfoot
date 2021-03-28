@@ -159,6 +159,17 @@ class ChemicalLogFormContainer extends Component {
       <div className="overflow-scroll container mx-auto">
         {" "}
         <BackButton navigation={this.props.navigation} />
+        {this.state.loadedData ? (
+          <div></div>
+        ) : (
+          <div>
+            <label for="cars">Select a specific pool at this location:</label>
+
+            <select name="cars" id="cars">
+              <option value="audi">Audi</option>
+            </select>
+          </div>
+        )}
         <div>
           <p className="text-lg p-4 my-2 text-black">Chemical Log Page</p>
         </div>

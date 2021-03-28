@@ -26,6 +26,8 @@ import { connect } from "react-redux";
 import { loadUser } from "./redux/actions/auth";
 import ViewController from "./Components/General/ViewController";
 import { LOGOUT } from "./redux/types/auth";
+import MetaTags from "react-meta-tags";
+
 const App = () => {
   useEffect(() => {
     // check for token in LS
@@ -46,6 +48,12 @@ const App = () => {
         href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css"
       />
       {/* <Navbar /> */}
+      <MetaTags>
+        <title>Page 1</title>
+        <meta name="theme_color" content="#ffffff" />
+        {/* <meta property="og:title" content="MyApp" />
+        <meta property="og:image" content="path/to/image.jpg" /> */}
+      </MetaTags>
       <ViewController />
     </Provider>
   );
