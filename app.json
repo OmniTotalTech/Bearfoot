@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "My app",
+    "slug": "my-app",
+    "icon": "./assets/icon.png",
+    "theme-color": "#fff",
+    "web": {
+      "favicon": "./assets/icon.png"
+    }
+  }
+}
