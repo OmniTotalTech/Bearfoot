@@ -9,6 +9,10 @@ class DeliveryTable extends Component {
     this.props.navigation.navigate("DeliveryDetails", { item: id });
   };
 
+  navToEditUser = (id) => {
+    this.props.navigation.navigate("EditUser", { id: id.accepted_by._id });
+  };
+
   render() {
     const switchStatement = (status) => {
       switch (status) {
@@ -46,7 +50,14 @@ class DeliveryTable extends Component {
               {porps.original.accepted_by == null ? (
                 "No one has accepted yet..."
               ) : (
-                <div>{porps.original.accepted_by.name}</div>
+                <div>
+                  <button
+                    className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
+                    onClick={(e) => this.navToEditUser(porps.original)}
+                  >
+                    {porps.original.accepted_by.name}
+                  </button>
+                </div>
               )}
             </div>
           );

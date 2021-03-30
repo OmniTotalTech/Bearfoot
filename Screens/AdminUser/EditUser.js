@@ -15,6 +15,7 @@ class EditUser extends Component {
   }
 
   async loadUser() {
+    console.log(this.props.id);
     await api
       .get("/users/" + this.props.route.params.id)
       .then((response) => {
