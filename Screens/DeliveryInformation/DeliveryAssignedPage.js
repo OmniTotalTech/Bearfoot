@@ -12,6 +12,7 @@ class DeliveryAssignedPage extends Component {
     return (
       <ScrollView>
         <DeliveryListContainer
+          userId={this.props.user._id}
           navigation={this.props.navigation}
           orderDetail={this.props.orderDetail.data}
         />
@@ -23,6 +24,7 @@ class DeliveryAssignedPage extends Component {
 const mapStateToProps = (state) => {
   return {
     orderDetail: state.orderDetail,
+    user: state.auth.user,
   };
 };
 

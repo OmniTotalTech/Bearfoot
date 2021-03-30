@@ -15,7 +15,7 @@ class InventoryCheck extends Component {
 
   render() {
     const handleChange = (e, value, name, desc) => {
-      console.log(e.target.value);
+      console.log("here vato", value, name, desc);
       this.setState({ [name]: parseInt(e.target.value) });
       console.log(this.state);
     };
@@ -66,7 +66,6 @@ class InventoryCheck extends Component {
           const errorMsg = error.message;
           console.log(errorMsg);
         });
-      // await this.props.fetchPoolById(this.props.poolId);
     };
 
     return (

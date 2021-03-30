@@ -24,7 +24,7 @@ export default class EmployeeAssignment extends Component {
 
         <EmployeeList employees={this.props.employees} /> */}
         <SearchAndAssign
-          title={"employees"}
+          title={"Pool Employees"}
           orgName={this.props.orgName}
           poolId={this.props.poolId}
           fetchPoolById={this.props.fetchPoolById}
@@ -70,7 +70,7 @@ export default class EmployeeAssignment extends Component {
           </div>
         )}
         <SearchAndAssign
-          title={"managers"}
+          title={"Pool Managers"}
           orgName={this.props.orgName}
           poolId={this.props.poolId}
           fetchPoolById={this.props.fetchPoolById}
@@ -117,7 +117,7 @@ export default class EmployeeAssignment extends Component {
         )}
 
         <SearchAndAssign
-          title={"primary"}
+          title={"Primary Driver"}
           orgName={this.props.orgName}
           poolId={this.props.poolId}
           fetchPoolById={this.props.fetchPoolById}
@@ -165,7 +165,7 @@ export default class EmployeeAssignment extends Component {
           </div>
         )}
         <SearchAndAssign
-          title={"secondary"}
+          title={"Secondary Driver(s)"}
           orgName={this.props.orgName}
           poolId={this.props.poolId}
           fetchPoolById={this.props.fetchPoolById}

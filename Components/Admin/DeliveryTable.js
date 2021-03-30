@@ -10,22 +10,56 @@ class DeliveryTable extends Component {
   };
 
   render() {
-    console.log(this.props);
+    const switchStatement = (status) => {
+      switch (status) {
+        case 0:
+          return "not accepted";
+        case 1:
+          return "Inventory Stage";
+        case 2:
+          return "En Route to Pool";
+        case 3:
+          return "Dropping off";
+        case 4:
+          return "Waiting on driver finalization";
+        case 5:
+          return "Complete!";
+      }
+    };
     const data = this.props.data.data;
     const columns = [
       {
-        Header: "Accepted By?",
-        accessor: "accepted_by.name",
+        Header: "Pool:",
+        accessor: "pool_id.pool_name",
         style: {
           //textAlign: "right",
         },
         // width: 100,
       },
       {
+        Header: "Accepted By?",
+        accessor: "accepted_by.name",
+        Cell: (porps) => {
+          console.log(porps);
+          return (
+            <div>
+              {porps.original.accepted_by == null ? (
+                "No one has accepted yet..."
+              ) : (
+                <div>{porps.original.accepted_by.name}</div>
+              )}
+            </div>
+          );
+        },
+      },
+      // width: 100,
+
+      {
         Header: "Status",
         accessor: "status",
-        style: {
-          //textAlign: "right",
+        Cell: (porps) => {
+          console.log(porps);
+          return <div>{switchStatement(porps.original.status)}</div>;
         },
 
         // width: 100,

@@ -4,19 +4,38 @@ import { TouchableOpacity } from "react-native";
 export default function DeliveryItem(props) {
   return (
     <TouchableOpacity
+      disabled={
+        props.item.accepted_by == null
+          ? false
+          : props.item.accepted_by != props.userId
+          ? true
+          : false
+      }
       onPress={() =>
         props.navigation.navigate("DeliveryReview", { item: props.item })
       }
     >
       <div className="py-1">
-        <div className="bg-white px-3 py-2 rounded">
+        <div
+          className=" px-3 py-2 rounded"
+          style={{
+            backgroundColor:
+              props.item.accepted_by == null && props.item.status == 0
+                ? "white"
+                : props.item.accepted_by == props.userId
+                ? "white"
+                : "gray",
+          }}
+        >
           <div>
+            <div className="mb-2 text-lg">{props.item.pool_id.pool_name}</div>
+
             <div className="mb-2">{props.item.date}</div>
             <div className="text-gray-700 text-sm">Assigned:</div>
           </div>
           <div className="flex flex-wrap">
             <div className="w-1/2 text-gray-700 text-sm">
-              <div>{props.item.date}</div>
+              <div></div>
             </div>
             <div className="w-1/2 text-right text-sm">
               <button className="bg-red-200 hover:bg-red-300 rounded border-solid border-2 border-red-700 text-red-700 px-1 text-sm">
@@ -28,6 +47,8 @@ export default function DeliveryItem(props) {
                   <div>Accepted, En Route to Pool </div>
                 ) : props.item.status == 3 ? (
                   <div>Dropped off, not complete</div>
+                ) : props.item.status == 4 ? (
+                  <div>Waiting on Driver Finalization</div>
                 ) : (
                   <div>Complete</div>
                 )}

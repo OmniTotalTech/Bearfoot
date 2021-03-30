@@ -66,7 +66,7 @@ class SearchAndAssign extends Component {
     return (
       <>
         <p className="text-3xl text-left bold">
-          Drivers - {this.props.title}
+          {this.props.title}
           <button
             onClick={() => {
               this.openModal();

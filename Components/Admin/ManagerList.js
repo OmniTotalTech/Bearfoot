@@ -3,8 +3,8 @@ import api from "../../utils/api";
 
 function ManagerList(props) {
   async function handleClick(group, id, poolId) {
-    console.log(props);
-    if (props.assignGroup == "managers") {
+    console.log(group);
+    if (group == "managers") {
       await api
         .patch(
           "/pool/" +
@@ -22,7 +22,7 @@ function ManagerList(props) {
           const errorMsg = error.message;
         });
       props.closeModal();
-    } else if (props.assignGroup == "employees") {
+    } else if (group == "Pool Employees") {
       await api
         .patch(
           "/pool/" +

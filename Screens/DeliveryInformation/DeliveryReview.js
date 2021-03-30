@@ -20,6 +20,7 @@ class DeliveryReview extends Component {
 
   setUpdateStatus() {
     const body = { status: 1, accepted_by: this.props.user._id };
+    console.log(body);
     this.props.updateStatus(this.state.item._id, body);
   }
 
