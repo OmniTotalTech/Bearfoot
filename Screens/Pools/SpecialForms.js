@@ -6,13 +6,13 @@ import ShiftTab from "../../Components/ShiftTab";
 const shift = [
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Incident report",
+    status: "Patient Care",
     subtext: "",
     location: "PatientCare",
   },
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Patient Care",
+    status: "Incident Report",
     subtext: "",
     location: "IncidentReport",
   },

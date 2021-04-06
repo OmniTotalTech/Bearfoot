@@ -49,28 +49,26 @@ export default class DeliveryChecklist extends Component {
     };
     return (
       <ScrollView>
-        <div className="px-4 py-2">
-          <div className="bg-white px-5 pt-4">
+        <div className="px-2 py-2">
+          <div className="bg-white px-2 pt-4">
             <div className="divide-y divide-gray-400 mb-4">
               <div>{switchStatus(this.props.status)}</div>
               <div className="text-center py-2">Delivery Checklist</div>
-              <div className="flex flex-row w-full items-center">
-                <div className="p-2  w-2/3 mr-1">Needed Items (Out)</div>
-                <div className="grid grid-cols-1 divide-x divide-gray-400 w-1/3 ">
-                  <div className="text-center px-4 mx-4 text-sm">
-                    Low Amount
-                  </div>
-                  <div className="text-center px-2 text-sm">
-                    In Stock Amount
-                  </div>
+              <div className="grid grid-cols-3 w-full">
+                <div className="p-2">Items</div>
+                <div className="text-center px-2 text-sm">
+                  Acceptable Amount
                 </div>
+                <div className="text-center px-2 text-sm">In Stock Amount</div>
               </div>
               {this.props.pool ? (
                 <>
                   {this.props.pool.starting_list.map((item) => (
                     <>
                       <div className="flex flex-row w-full items-center">
-                        <div className="p-2  w-2/3 mr-1">{item.name}</div>
+                        <div className="p-2  w-2/3 mr-1 truncate">
+                          {item.name}
+                        </div>
                         <div className="grid grid-cols-1 divide-x divide-gray-400 w-1/3 ">
                           <div className="text-center px-4 mx-4 text-red-500 text-sm">
                             {item.lowAmt} - low amount

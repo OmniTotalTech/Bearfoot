@@ -3,14 +3,18 @@ import { connect } from "react-redux";
 import DeliveryItem from "../../Components/DeliveryItem";
 import { ScrollView, TouchableOpacity } from "react-native";
 import DeliveryListContainer from "../../Components/DeliveryListContainer";
-
+import {
+  fetchOrderDetail,
+  fetchIndividualOrderDetail,
+} from "../../redux/actions/orderDetail";
 class DeliveryAssignedPage extends Component {
   componentDidMount() {
     console.log(this.props.orderDetail.data.primary);
+    this.props.fetchOrderDetail();
   }
   render() {
     return (
-      <ScrollView>
+      <ScrollView background="#000000">
         <DeliveryListContainer
           userId={this.props.user._id}
           navigation={this.props.navigation}
@@ -27,5 +31,12 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
   };
 };
-
-export default connect(mapStateToProps)(DeliveryAssignedPage);
+const mapDisptachToProps = (dispatch) => {
+  return {
+    fetchOrderDetail: (id) => dispatch(fetchOrderDetail(id)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDisptachToProps
+)(DeliveryAssignedPage);

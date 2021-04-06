@@ -5,6 +5,7 @@ import Stepper from "../../Components/Stepper";
 import { connect } from "react-redux";
 import { updateStatus } from "../../redux/actions/updateStatus";
 import { fetchIndividualOrderDetail } from "../../redux/actions/orderDetail";
+import Modal from "react-modal";
 
 class DeliveryInProgress extends Component {
   constructor(props) {
@@ -105,28 +106,58 @@ class DeliveryInProgress extends Component {
                   </TouchableOpacity>
                 </div>
               ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    console.log(
-                      this.props.orderDetail.individualOrderDetail.foundOrder
-                        .status++
-                    );
-                    // console.log(
-                    //   this.props.updateStatus(this.state.item._id, body)
-                    // );
-                    const body = {
-                      status: this.props.orderDetail.individualOrderDetail
-                        .foundOrder.status,
-                    };
-                    this.props.updateStatus(this.state.item._id, body);
-                  }}
-                >
-                  <div>
-                    <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
-                      CONTINUE
-                    </button>
-                  </div>
-                </TouchableOpacity>
+                <>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({ isDoubleCheck: true });
+                    }}
+                  >
+                    <div>
+                      <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-4 rounded-full w-full">
+                        CONTINUE
+                      </button>
+                    </div>
+                  </TouchableOpacity>
+                  <Modal
+                    {...this.props}
+                    isOpen={this.state.isDoubleCheck}
+                    style={{ width: "100%" }}
+                  >
+                    <div className="w-full h-full m-auto text-center">
+                      <div className="text-2xl">Confirm Next Step</div>{" "}
+                      <div className="text-lg max-w-md mx-auto">
+                        Only go on to the next stage if you are absolutely sure
+                        about progressing. There is no way to go back.
+                      </div>
+                      <button
+                        onClick={() => this.setState({ isDoubleCheck: false })}
+                        className="bg-red-500 text-white rounded px-4 py-2 mx-2"
+                      >
+                        Close
+                      </button>
+                      <button
+                        onClick={() => {
+                          console.log(
+                            this.props.orderDetail.individualOrderDetail
+                              .foundOrder.status++
+                          );
+                          // console.log(
+                          //   this.props.updateStatus(this.state.item._id, body)
+                          // );
+                          const body = {
+                            status: this.props.orderDetail.individualOrderDetail
+                              .foundOrder.status,
+                          };
+                          this.props.updateStatus(this.state.item._id, body);
+                          this.setState({ isDoubleCheck: false });
+                        }}
+                        className="bg-green-500 text-white rounded px-4 py-2 mx-2"
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  </Modal>
+                </>
               )
             ) : (
               <div>*error</div>

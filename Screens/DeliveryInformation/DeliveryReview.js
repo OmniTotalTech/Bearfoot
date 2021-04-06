@@ -15,7 +15,7 @@ class DeliveryReview extends Component {
     this.state = {
       item: props.route.params.item,
     };
-    this.props.fetchPoolById(props.route.params.item.pool_id);
+    this.props.fetchPoolById(props.route.params.item.pool_id._id);
   }
 
   setUpdateStatus() {
@@ -31,13 +31,9 @@ class DeliveryReview extends Component {
   render() {
     console.log(this.state.item);
     return (
-      <ScrollView>
-        <div
-          style={{
-            backgroundColor: "black",
-            height: "100vh",
-          }}
-        >
+      <ScrollView background="#000000">
+        {console.log(this.props)}
+        <div>
           <div className="max-w-2xl mx-auto">
             <DeliveryAddress pool={this.props.pool} />
             <DeliveryChecklist pool={this.state.item} />

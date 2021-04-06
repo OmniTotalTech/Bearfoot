@@ -86,24 +86,30 @@ class EditUser extends Component {
               <div className="text-lg  p-2">{this.state.user.email}</div>
             </div>
           </div>
-          <p className="text-md pt-4 -pb-1">Assign Role:</p>
-          <br />
-          <select
-            onChange={this.handleChange}
-            value={this.state.value}
-            className=" text-sm"
-          >
-            {this.roles.map((item) => (
-              <option value={item.value}>{item.name}</option>
-            ))}
-          </select>
-          <br />
-          <button
-            onClick={this.submit}
-            className="bg-red-500 p-2 m-2 text-white rounded"
-          >
-            Update
-          </button>
+          {this.state.user.role != 666 ? (
+            <>
+              <p className="text-md pt-4 -pb-1">Assign Role:</p>
+              <br />
+              <select
+                onChange={this.handleChange}
+                value={this.state.value}
+                className=" text-sm"
+              >
+                {this.roles.map((item) => (
+                  <option value={item.value}>{item.name}</option>
+                ))}
+              </select>
+              <br />
+              <button
+                onClick={this.submit}
+                className="bg-red-500 p-2 m-2 text-white rounded"
+              >
+                Update
+              </button>
+            </>
+          ) : (
+            <div></div>
+          )}
         </div>
       </>
     );

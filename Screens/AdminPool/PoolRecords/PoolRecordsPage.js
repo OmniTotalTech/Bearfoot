@@ -53,8 +53,12 @@ class PoolRecordsPage extends Component {
         text: "Evening Checklist",
       },
       {
-        value: "DailyOperation",
-        text: "Daily Operations",
+        value: "dailyOperationsAM",
+        text: "Daily Operations - AM",
+      },
+      {
+        value: "dailyOperationsPM",
+        text: "Daily Operations - PM",
       },
       {
         value: "ChemicalLog",
@@ -161,6 +165,7 @@ class PoolRecordsPage extends Component {
                 handleClose={() => this.setState({ showModal: false })}
                 _id={this.state.recordId}
                 type={this.state.value}
+                navigation={this.props.navigation}
                 data={this.state.modalData}
               />
             </Modal>

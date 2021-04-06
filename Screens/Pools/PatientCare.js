@@ -2,74 +2,40 @@ import React, { Component } from "react";
 import { Stepper } from "react-form-stepper";
 import PatientCareForm from "./PatientCareForm";
 import BackButton from "../../Components/BackButton";
+import { connect } from "react-redux";
+
 class PatientCare extends Component {
   state = {
     activeStep: 1,
   };
   render() {
+    const handleFinalSubmit = (formValues) => {
+      console.log(formValues);
+    };
     console.log(this.state);
     return (
       <>
-        {" "}
         <BackButton navigation={this.props.navigation} />
         <Stepper
           steps={[{ label: "1" }, { label: "2" }, { label: "3" }]}
           activeStep={this.state.activeStep}
         />
-        <PatientCareForm activeStep={this.state.activeStep} />
-        {this.state.activeStep == 1 ? (
-          <>
-            <div className="display-inline mx-auto">
-              <button
-                className="p-4 text-white bg-red-500 rounded"
-                onClick={() =>
-                  this.setState({ activeStep: this.state.activeStep + 1 })
-                }
-              >
-                Next
-              </button>
-            </div>
-          </>
-        ) : this.state.activeStep == 2 ? (
-          <div className="display-inline mx-auto">
-            <button
-              className="p-4 text-white bg-red-500 rounded mx-2 "
-              onClick={() =>
-                this.setState({ activeStep: this.state.activeStep - 1 })
-              }
-            >
-              Previous
-            </button>
-            <button
-              className="p-4 text-white bg-red-500 rounded mx-2 "
-              onClick={() =>
-                this.setState({ activeStep: this.state.activeStep + 1 })
-              }
-            >
-              Next
-            </button>
-          </div>
-        ) : (
-          <div className="display-inline mx-auto my-4">
-            <button
-              className="p-4 text-white bg-red-500 rounded mx-2"
-              onClick={() =>
-                this.setState({ activeStep: this.state.activeStep - 1 })
-              }
-            >
-              Previous
-            </button>
-            <button
-              className="p-4 text-white bg-red-500 rounded mx-2 "
-              onClick={() => console.log("Final")}
-            >
-              Submit
-            </button>
-          </div>
-        )}
+        <PatientCareForm
+          navigation={this.props.navigation}
+          id={this.props.route.params.id}
+          onFinalSubmit={handleFinalSubmit}
+          activeStep={this.state.activeStep}
+          user_id={this.props.user._id}
+          nextStep={(newStep) => this.setState({ activeStep: newStep })}
+        />
       </>
     );
   }
 }
 
-export default PatientCare;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+export default connect(mapStateToProps)(PatientCare);

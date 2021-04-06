@@ -2,69 +2,106 @@ import React, { Component } from "react";
 import api from "../../utils/api";
 import ChemicalLogFormContainer from "./ChemicalLogFormContainer";
 import { connect } from "react-redux";
+import BackButton from "../../Components/BackButton";
 
 class ChemicalLog extends Component {
-  state = { timeArray: [], formObject: {} };
+  state = { timeArray: [], formObject: {}, subPools: [], selectedSubPool: "" };
 
   async componentDidMount() {
     await api
-      .get("/chemTimes/" + this.props.route.params.id)
+      .get("/subPools/" + this.props.route.params.id)
       .then((response) => {
-        console.log(response.data);
-        if (
-          response.data.data.chemTimeData &&
-          response.data.data.chemTimeData.length > 0
-        ) {
-          this.setState({ timeArray: response.data.data.chemTimeData });
-        }
+        this.setState({ subPools: response.data });
+        console.log(this.state);
       })
       .catch((error) => {
         const errorMsg = error.message;
       });
+
+    console.log(this.state);
   }
 
   render() {
     const onSubmit = async (body) => {
-      let url = "/records/checklist";
+      let url = "uploadCLDetailsPart2";
 
       await api
         .post(url, body)
         .then((response) => {
-          const data = response.data;
-          console.log(data);
           this.props.navigation.navigate("SuccessScreen");
         })
         .catch((error) => {
           const errorMsg = error.message;
-          console.log(errorMsg);
         });
     };
-    const loadSubPools = async () => {
-      let body = {
-        poolId: this.props.route.params.id,
-        subPoolName: this.state.newSubPoolString,
-      };
 
-      await api
-        .get("/subPools/" + this.props.id)
-        .then((response) => {
-          console.log(response);
-          this.setState({ subPools: response.data });
-          this.setState({ newSubPoolString: "" });
-        })
-        .catch((error) => {
-          const errorMsg = error.message;
-        });
+    const handleSelectChange = async (value) => {
+      this.setState({ selectedSubPool: value });
+      if (value == 0) {
+        this.setState({ isNull: true });
+      } else {
+        this.setState({ isNull: false });
+        console.log(value);
+        await api
+          .get("/chemTimes/" + this.props.route.params.id + "/" + value)
+          .then((response) => {
+            console.log(response.data);
+            if (
+              response.data.data.chemTimeData &&
+              response.data.data.chemTimeData.length > 0
+            ) {
+              this.setState({ timeArray: response.data.data.chemTimeData });
+            }
+          })
+          .catch((error) => {
+            const errorMsg = error.message;
+          });
+      }
     };
+
     return (
       <>
-        <ChemicalLogFormContainer
-          navigation={this.props.navigation}
-          user={this.props.user}
-          onSubmit={onSubmit}
-          timeArray={this.state.timeArray}
-          id={this.props.route.params.id}
-        />
+        <div className="container mx-auto bg-white">
+          <div className="p-4">
+            <BackButton navigation={this.props.navigation} />
+
+            <label for="subpools">
+              Select a specific pool at this location:
+            </label>
+
+            {this.state.subPools.length > 0 ? (
+              <select
+                value={this.state.value}
+                onChange={(e) => handleSelectChange(e.target.value)}
+              >
+                <option value={0}>Select One</option>
+
+                {this.state.subPools.map((item, i) => (
+                  <option value={item._id} key={i}>
+                    {item.subPoolName}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <div>
+                No SubPools Have been set. You must create at least one subpool
+                in the Admin "Edit Pool" area.
+              </div>
+            )}
+          </div>
+        </div>
+        {this.state.isNull ? (
+          <div className="container p-4">Please Select a valid SubPool.</div>
+        ) : (
+          <ChemicalLogFormContainer
+            subPool={this.state.selectedSubPool}
+            navigation={this.props.navigation}
+            userId={this.props.user._id}
+            onSubmit={onSubmit}
+            timeArray={this.state.timeArray}
+            id={this.props.route.params.id}
+          />
+        )}
       </>
     );
   }

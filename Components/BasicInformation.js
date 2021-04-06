@@ -96,6 +96,7 @@ class BasicInformation extends Component {
   };
 
   state = {
+    isDefault: true,
     pool_address: this.props.pool.pool_address,
     pool_state: this.props.pool.pool_state,
     pool_zip: this.props.pool.pool_zip,
@@ -207,25 +208,47 @@ class BasicInformation extends Component {
   };
 
   async componentDidMount() {
-    await api
-      .get("/chemTimes/" + this.props.id)
-      .then((response) => {
-        console.log(response.data);
-        if (
-          response.data.data.chemTimeData &&
-          response.data.data.chemTimeData.length > 0
-        ) {
-          this.setState({ timeArray: response.data.data.chemTimeData });
-        }
-      })
-      .catch((error) => {
-        const errorMsg = error.message;
-      });
+    // await api
+    //   .get("/chemTimes/" + this.props.id)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     if (
+    //       response.data.data.chemTimeData &&
+    //       response.data.data.chemTimeData.length > 0
+    //     ) {
+    //       this.setState({ timeArray: response.data.data.chemTimeData });
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     const errorMsg = error.message;
+    //   });
     this.runHOAFuncHome();
     this.runLoadAccordionData();
   }
 
   render() {
+    const handleSelectChange = async (value) => {
+      console.log(value);
+
+      this.setState({ searchValue: value });
+
+      if (value == 0) {
+        this.setState({ isDefault: true });
+      } else {
+        this.setState({ isDefault: false });
+        await api
+          .get("/chemTimes/" + this.props.id + "/" + value)
+          .then((response) => {
+            if (response.data.data.chemTimeData) {
+              console.log(response.data);
+              this.setState({ timeArray: response.data.data.chemTimeData });
+            }
+          })
+          .catch((error) => {
+            const errorMsg = error.messages;
+          });
+      }
+    };
     const handleDeleteSubPool = (id) => {
       console.log(id);
     };
@@ -251,6 +274,7 @@ class BasicInformation extends Component {
       let body = {
         poolId: this.props.id,
         chemTimeData: this.state.timeArray,
+        subPoolId: this.state.searchValue,
       };
       console.log(body);
       await api
@@ -267,7 +291,7 @@ class BasicInformation extends Component {
           this.setState({ recMsg: "There was an error. Try again." });
         });
       await api
-        .get("/chemTimes/" + this.props.id)
+        .get("/chemTimes/" + this.props.id + "/" + this.state.searchValue)
         .then((response) => {
           this.setState({
             timeArray: response.data.data.chemTimeData,
@@ -923,26 +947,51 @@ class BasicInformation extends Component {
               </AccordionItemHeading>
               <AccordionItemPanel>
                 <div className="bg-white p-2 m-2">
-                  <h2 className="text-xl p-2">
-                    Please Choose the Hours to Check the chemical logs
-                  </h2>
-                  <div className="text-center grid grid-cols-3">
-                    {/* {checkboxMap(this.state.timeArray)} */}
-                    {this.state.timeArray.map((item, i) => (
-                      <div key={i}>
-                        <label className="inline-flex items-center mt-3">
-                          <Checkboxes
-                            item={item}
-                            index={i}
-                            updateCheck={(index) => onAddingItem(index)}
-                          />
-                          <span className="ml-2 text-gray-700">
-                            {item.time}
-                          </span>
-                        </label>
+                  {this.state.subPools && this.state.subPools.length > 0 ? (
+                    <select
+                      value={this.state.value}
+                      onChange={(e) => handleSelectChange(e.target.value)}
+                    >
+                      <option value={0}>Select One</option>
+                      {this.state.subPools.map((item, i) => (
+                        <option value={item._id} key={i}>
+                          {item.subPoolName}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <div>
+                      No Subpools Created Yet. You have to create at least one
+                      subpool to add chemical log times to.
+                    </div>
+                  )}
+                  {this.state.isDefault ? (
+                    <div>Please select a subpool.</div>
+                  ) : (
+                    <>
+                      <h2 className="text-xl p-2">
+                        Please Choose the Hours to Check the chemical logs
+                      </h2>
+                      <div className="text-center grid grid-cols-3">
+                        {/* {checkboxMap(this.state.timeArray)} */}
+                        {this.state.timeArray.map((item, i) => (
+                          <div key={i}>
+                            <label className="inline-flex items-center mt-3">
+                              <Checkboxes
+                                item={item}
+                                index={i}
+                                updateCheck={(index) => onAddingItem(index)}
+                              />
+                              <span className="ml-2 text-gray-700">
+                                {item.time}
+                              </span>
+                            </label>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    </>
+                  )}
+
                   <div className="w-full">
                     <button
                       onClick={handleSubmit}

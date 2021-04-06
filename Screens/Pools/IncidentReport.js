@@ -4,9 +4,17 @@ import { Stepper } from "react-form-stepper";
 import PatientCareForm from "./PatientCareForm";
 import BackButton from "../../Components/BackButton";
 import IncidentReportForm from "./IncidentReportForm";
+import { connect } from "react-redux";
+
 class IncidentReport extends Component {
   state = {
     activeStep: 1,
+  };
+  increase = () => {
+    this.setState({ activeStep: this.state.activeStep + 1 });
+  };
+  decrease = () => {
+    this.setState({ activeStep: this.state.activeStep - 1 });
   };
   render() {
     console.log(this.state);
@@ -31,61 +39,23 @@ class IncidentReport extends Component {
             ]}
             activeStep={this.state.activeStep}
           />
-          {this.state.activeStep == 1 ? (
-            <>
-              <div className="display-inline mx-auto">
-                <button
-                  className="p-4 text-white bg-red-500 rounded"
-                  onClick={() =>
-                    this.setState({ activeStep: this.state.activeStep + 1 })
-                  }
-                >
-                  Next
-                </button>
-              </div>
-            </>
-          ) : this.state.activeStep > 1 && this.state.activeStep < 6 ? (
-            <div className="display-inline mx-auto">
-              <button
-                className="p-4 text-white bg-red-500 rounded mx-2 "
-                onClick={() =>
-                  this.setState({ activeStep: this.state.activeStep - 1 })
-                }
-              >
-                Previous
-              </button>
-              <button
-                className="p-4 text-white bg-red-500 rounded mx-2 "
-                onClick={() =>
-                  this.setState({ activeStep: this.state.activeStep + 1 })
-                }
-              >
-                Next
-              </button>
-            </div>
-          ) : (
-            <div className="display-inline mx-auto">
-              <button
-                className="p-4 text-white bg-red-500 rounded mx-2"
-                onClick={() =>
-                  this.setState({ activeStep: this.state.activeStep - 1 })
-                }
-              >
-                Previous
-              </button>
-              <button
-                className="p-4 text-white bg-red-500 rounded mx-2 "
-                onClick={() => console.log("Final")}
-              >
-                Final
-              </button>
-            </div>
-          )}
-          <IncidentReportForm activeStep={this.state.activeStep} />
+          <IncidentReportForm
+            increase={this.increase}
+            decrease={this.decrease}
+            activeStep={this.state.activeStep}
+            navigation={this.props.navigation}
+            id={this.props.route.params.id}
+            user_id={this.props.user._id}
+          />
         </ScrollView>
       </>
     );
   }
 }
 
-export default IncidentReport;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+export default connect(mapStateToProps)(IncidentReport);

@@ -11,7 +11,7 @@ class ClosingChecklist extends Component {
     console.log("id", this.props.route.params.id);
     this.props.fetchDailyChecklist(this.props.route.params.id, "closing");
   }
-  state = { stateArray: [] };
+  state = { stateArray: [], pictures: [] };
 
   render() {
     const submitChecklist = async (e) => {
@@ -21,24 +21,56 @@ class ClosingChecklist extends Component {
       const date = new Date();
       const nowDate = moment(date);
       const formattedDate = nowDate.format("YYYY-MM-DD");
-      let body = {
-        data: this.state.stateArray,
-        pool_id: this.props.route.params.id,
-        recordType: "ClosingTaskChecklist",
-        user_id: this.props.user._id,
-        date: formattedDate,
-      };
-      await api
-        .post(url, body)
-        .then((response) => {
-          const data = response.data;
-          console.log(data);
-          this.props.navigation.navigate("SuccessScreen");
-        })
-        .catch((error) => {
-          const errorMsg = error.message;
-          console.log(errorMsg);
-        });
+
+      /*******GONNA SET THE IMAGES******* */
+
+      console.log(this.props.navigation);
+      const formData = new FormData();
+      const data = new FormData();
+
+      formData.append("image", this.state.pictures);
+
+      let selectedFiles = this.state.pictures;
+
+      if (selectedFiles) {
+        for (let i = 0; i < selectedFiles.length; i++) {
+          data.append("image", selectedFiles[i]);
+        }
+        await api
+          .post("uploadClosingImages", data)
+          .then(async (response) => {
+            console.log(response);
+            console.log(response.data);
+            const date = new Date();
+            const nowDate = moment(date);
+            const formattedDate = nowDate.format("YYYY-MM-DD");
+            let body = {
+              data: this.state.stateArray,
+              pool_id: this.props.route.params.id,
+              recordType: "ClosingTaskChecklist",
+              user_id: this.props.user._id,
+              date: formattedDate,
+              images: response.data.files,
+            };
+            console.log(body);
+            await api
+              .post(url, body)
+              .then((response) => {
+                const data = response.data;
+                console.log(data);
+                this.props.navigation.navigate("SuccessScreen");
+              })
+              .catch((error) => {
+                const errorMsg = error.message;
+                console.log(errorMsg);
+              });
+          })
+          .catch((errr) => {
+            console.log(errr);
+          });
+      }
+      /***************THEN SEND THE RESPONSE LINKS***************** */
+
       // await this.props.fetchPoolById(this.props.poolId);
     };
     const handleChange = (data, i) => {
@@ -50,6 +82,11 @@ class ClosingChecklist extends Component {
 
       this.setState({ stateArray: a });
       console.log(this.state);
+    };
+    const onDrop = (picture) => {
+      this.setState({
+        pictures: this.state.pictures.concat(picture),
+      });
     };
 
     return (
@@ -66,7 +103,7 @@ class ClosingChecklist extends Component {
           singleImage={true}
           withIcon={true}
           buttonText="Choose images"
-          // onChange={this.onDrop}
+          onChange={onDrop}
           imgExtension={[".jpg", ".gif", ".png", ".gif"]}
           maxFileSize={5242880}
           withPreview={true}

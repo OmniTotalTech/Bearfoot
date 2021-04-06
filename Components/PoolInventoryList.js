@@ -91,15 +91,7 @@ export default class PoolInventoryList extends Component {
         },
         // width: 100,
       },
-      {
-        Header: "Description",
-        accessor: "desc",
-        style: {
-          //textAlign: "right",
-        },
 
-        // width: 100,
-      },
       {
         Header: "Low Amount",
         accessor: "lowAmt",
@@ -112,6 +104,15 @@ export default class PoolInventoryList extends Component {
       {
         Header: "In Stock Count",
         accessor: "inStockAmt",
+        style: {
+          //textAlign: "right",
+        },
+
+        // width: 100,
+      },
+      {
+        Header: "Description",
+        accessor: "desc",
         style: {
           //textAlign: "right",
         },

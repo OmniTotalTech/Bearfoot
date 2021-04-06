@@ -32,12 +32,14 @@ import DailyOperationsPick from "../Screens/DailyOperationsPick";
 
 import DeliveryDetail from "../Screens/DeliveryInformation/DeliveryDetail";
 import PoolRecordsPage from "../Screens/AdminPool/PoolRecords/PoolRecordsPage";
+import OrganizationManagement from "../Screens/AdminPool/OrganizationManagement";
+
 import SuccessScreen from "../Screens/SuccessScreen";
 import ManageHOAs from "../Screens/AdminUser/ManageHOAs";
 import PatientCare from "../Screens/Pools/PatientCare";
 import IncidentReport from "../Screens/Pools/IncidentReport";
 import DailyOperationsEdit from "../Screens/DailyOperationsEdit";
-
+import AdminSensitiveReports from "../Screens/AdminPool/AdminSensitiveReports";
 const Stack = createStackNavigator();
 
 export const AuthStack = () => (
@@ -96,6 +98,14 @@ export const AuthStack = () => (
         <Stack.Screen name="ManageHOAs" component={ManageHOAs} />
         <Stack.Screen name="PatientCare" component={PatientCare} />
         <Stack.Screen name="IncidentReport" component={IncidentReport} />
+        <Stack.Screen
+          name="AdminSensitiveReports"
+          component={AdminSensitiveReports}
+        />
+        <Stack.Screen
+          name="OrganizationManagement"
+          component={OrganizationManagement}
+        />
       </Stack.Navigator>
     </NavigationContainer>
 

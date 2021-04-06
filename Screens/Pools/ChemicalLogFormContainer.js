@@ -4,12 +4,11 @@ import ImageUploader from "react-images-upload";
 import BackButton from "../../Components/BackButton";
 import api from "../../utils/api";
 class ChemicalLogFormContainer extends Component {
+  componentDidMount() {}
   componentWillReceiveProps(nextProps) {
     for (const index in nextProps) {
       if (nextProps[index] !== this.props[index]) {
-        console.log(index, this.props[index], "==>", nextProps[index]);
         if (nextProps.timeArray.length > 0) {
-          console.log("true");
           this.setState({ stateArray: this.loadProps(nextProps) });
         }
       }
@@ -17,9 +16,7 @@ class ChemicalLogFormContainer extends Component {
   }
 
   loadProps = (props) => {
-    console.log(this.props.timeArray);
     let newArray = [];
-    console.log(props);
     for (let i = 0; i < props.timeArray.length; i++) {
       if (props.timeArray[i].checked) {
         let body = {
@@ -36,7 +33,6 @@ class ChemicalLogFormContainer extends Component {
         newArray.push(body);
       }
     }
-    console.log(newArray);
 
     return newArray;
     //   this.setState({ formObjectArray: newArray });
@@ -44,35 +40,16 @@ class ChemicalLogFormContainer extends Component {
   //   const [formObjectArray, setFormObjectArray] = React.useState([]);
   state = { stateArray: [], pictures: [] };
   render() {
+    console.log(this.props);
     const onDrop = (picture) => {
       this.setState({
         pictures: this.state.pictures.concat(picture),
       });
     };
 
-    const handleSubmit = async () => {
-      console.log("hit submit");
-      const date = new Date();
-      const nowDate = moment(date);
-      const formattedDate = nowDate.format("YYYY-MM-DD");
-      let newDataObj = {
-        combinedChlorine: this.state.combinedChlorine,
-        cyanuricAcid: this.state.cyanuricAcid,
-        akalinity: this.state.akalinity,
-        calciumHardness: this.state.calciumHardness,
-        LSICalculation: this.state.LSICalculation,
-      };
-      let body = {
-        data: this.state.stateArray,
-        pool_id: this.props.id,
-        recordType: "ChemicalLog",
-        specificPool: "",
-        user_id: this.props.user._id,
-        date: formattedDate,
-        dataObject: newDataObj,
-      };
-
-      this.props.onSubmit(body);
+    const handleUpload = async () => {
+      const formData = new FormData();
+      formData.append("image", this.state.pictures);
 
       const data = new FormData();
       let selectedFiles = this.state.pictures;
@@ -82,9 +59,31 @@ class ChemicalLogFormContainer extends Component {
           data.append("image", selectedFiles[i]);
         }
         await api
-          .post("uploadPoolDetails", data)
-          .then((response) => {
+          .post("uploadCLDetails", data)
+          .then(async (response) => {
             console.log(response);
+            console.log(response.data);
+            const date = new Date();
+            const nowDate = moment(date);
+            const formattedDate = nowDate.format("YYYY-MM-DD");
+            let newDataObj = {};
+            let body = {
+              data: this.state.stateArray,
+              pool_id: this.props.id,
+              recordType: "ChemicalLog",
+              specificPool: this.props.subPool,
+              user_id: this.props.userId,
+              date: formattedDate,
+              dataObject: {
+                combinedChlorine: this.state.combinedChlorine,
+                cyanuricAcid: this.state.cyanuricAcid,
+                akalinity: this.state.akalinity,
+                calciumHardness: this.state.calciumHardness,
+                LSICalculation: this.state.LSICalculation,
+              },
+              images: response.data.files,
+            };
+            this.props.onSubmit(body);
           })
           .catch((error) => {
             console.log(error);
@@ -93,6 +92,7 @@ class ChemicalLogFormContainer extends Component {
 
       this.setState({ pictures: [] });
     };
+
     const handlePHChange = (e, i) => {
       let stateArray = this.state.stateArray;
 
@@ -101,7 +101,6 @@ class ChemicalLogFormContainer extends Component {
       stateArray[i].data = newData;
 
       this.setState({ stateArray: stateArray });
-      console.log(this.state);
     };
 
     const handleClChange = (e, i) => {
@@ -112,7 +111,6 @@ class ChemicalLogFormContainer extends Component {
       stateArray[i].data = newData;
 
       this.setState({ stateArray: stateArray });
-      console.log(this.state);
     };
 
     const handlePodChange = (e, i) => {
@@ -123,7 +121,6 @@ class ChemicalLogFormContainer extends Component {
       stateArray[i].data = newData;
 
       this.setState({ stateArray: stateArray });
-      console.log(this.state);
     };
     const handlePipChange = (e, i) => {
       let stateArray = this.state.stateArray;
@@ -133,7 +130,6 @@ class ChemicalLogFormContainer extends Component {
       stateArray[i].data = newData;
 
       this.setState({ stateArray: stateArray });
-      console.log(this.state);
     };
     const handleArChange = (e, i) => {
       let stateArray = this.state.stateArray;
@@ -142,7 +138,6 @@ class ChemicalLogFormContainer extends Component {
       stateArray[i].data = newData;
 
       this.setState({ stateArray: stateArray });
-      console.log(this.state);
     };
 
     const handleFaChange = (e, i) => {
@@ -153,141 +148,138 @@ class ChemicalLogFormContainer extends Component {
       stateArray[i].data = newData;
 
       this.setState({ stateArray: stateArray });
-      console.log(this.state);
     };
     return (
       <div className="overflow-scroll container mx-auto">
-        {" "}
-        <BackButton navigation={this.props.navigation} />
-        {this.state.loadedData ? (
-          <div></div>
-        ) : (
-          <div>
-            <label for="cars">Select a specific pool at this location:</label>
-
-            <select name="cars" id="cars">
-              <option value="audi">Audi</option>
-            </select>
-          </div>
-        )}
+        {this.state.loadedData ? <div></div> : <div></div>}
         <div>
           <p className="text-lg p-4 my-2 text-black">Chemical Log Page</p>
         </div>
-        <div className="grid grid-cols-2 text-center mx-1">
-          {this.state.stateArray.length > 0 ? (
-            this.state.stateArray.map((item, i) => (
-              <div key={i}>
-                <div>
-                  <div className="bg-black text-white my-2 w-full">
-                    {item.time}
+        {this.state.stateArray.length > 0 ? (
+          <>
+            <div className="grid grid-cols-2 text-center mx-1">
+              {this.state.stateArray.map((item, i) => (
+                <div key={i}>
+                  <div>
+                    <div className="bg-black text-white my-2 w-full">
+                      {item.time}
+                    </div>
+                    <label>pH</label> <br />
+                    <input
+                      onChange={(e) => handlePHChange(e, i)}
+                      id={"ph"}
+                      className="border-2"
+                    />{" "}
+                    <br />
+                    <label>Cl</label> <br />
+                    <input
+                      onChange={(e) => handleClChange(e, i)}
+                      id={"cl"}
+                      className="border-2"
+                    />{" "}
+                    <br />
+                    <label>Patrons On Deck</label> <br />
+                    <input
+                      onChange={(e) => handlePodChange(e, i)}
+                      id={"pod"}
+                      className="border-2"
+                    />{" "}
+                    <br />
+                    <label>Patrons in Pool</label> <br />
+                    <input
+                      onChange={(e) => handlePipChange(e, i)}
+                      id={"pip"}
+                      className="border-2"
+                    />{" "}
+                    <br />
+                    <label>Active Rescue</label> <br />
+                    <input
+                      onChange={(e) => handleArChange(e, i)}
+                      id={"ar"}
+                      className="border-2"
+                    />{" "}
+                    <br />
+                    <label>First-Aid</label> <br />
+                    <input
+                      onChange={(e) => handleFaChange(e, i)}
+                      id={"fa"}
+                      className="border-2"
+                    />{" "}
+                    <br />
                   </div>
-                  <label>pH</label> <br />
-                  <input
-                    onChange={(e) => handlePHChange(e, i)}
-                    id={"ph"}
-                    className="border-2"
-                  />{" "}
-                  <br />
-                  <label>Cl</label> <br />
-                  <input
-                    onChange={(e) => handleClChange(e, i)}
-                    id={"cl"}
-                    className="border-2"
-                  />{" "}
-                  <br />
-                  <label>Patrons On Deck</label> <br />
-                  <input
-                    onChange={(e) => handlePodChange(e, i)}
-                    id={"pod"}
-                    className="border-2"
-                  />{" "}
-                  <br />
-                  <label>Patrons in Pool</label> <br />
-                  <input
-                    onChange={(e) => handlePipChange(e, i)}
-                    id={"pip"}
-                    className="border-2"
-                  />{" "}
-                  <br />
-                  <label>Active Rescue</label> <br />
-                  <input
-                    onChange={(e) => handleArChange(e, i)}
-                    id={"ar"}
-                    className="border-2"
-                  />{" "}
-                  <br />
-                  <label>First-Aid</label> <br />
-                  <input
-                    onChange={(e) => handleFaChange(e, i)}
-                    id={"fa"}
-                    className="border-2"
-                  />{" "}
-                  <br />
                 </div>
+              ))}
+            </div>
+            <div className="container mx-auto my-4 text-center">
+              <div>
+                <h1 className="text-2xl"> Misc Form Information:</h1>
               </div>
-            ))
-          ) : (
-            <div></div>
-          )}
-        </div>
-        <div className="container mx-auto my-4 text-center">
+              <div>
+                <label>Combined Chlorine:</label> <br />
+                <input
+                  onChange={(e) =>
+                    this.setState({ combinedChlorine: e.target.value })
+                  }
+                  className="border-2"
+                />{" "}
+              </div>{" "}
+              <div>
+                <label>Cyanuric Acid:</label> <br />
+                <input
+                  onChange={(e) =>
+                    this.setState({ cyanuricAcid: e.target.value })
+                  }
+                  className="border-2"
+                />{" "}
+              </div>{" "}
+              <div>
+                <label>Alkalinity:</label> <br />
+                <input
+                  onChange={(e) => this.setState({ akalinity: e.target.value })}
+                  className="border-2"
+                />{" "}
+              </div>{" "}
+              <div>
+                <label>Calcium Hardness:</label> <br />
+                <input
+                  onChange={(e) =>
+                    this.setState({ calciumHardness: e.target.value })
+                  }
+                  className="border-2"
+                />{" "}
+              </div>
+              <div>
+                <label>LSI Calculation:</label> <br />
+                <input
+                  onChange={(e) =>
+                    this.setState({ LSICalculation: e.target.value })
+                  }
+                  className="border-2"
+                />{" "}
+              </div>
+              <ImageUploader
+                withIcon={true}
+                buttonText="Choose images"
+                onChange={onDrop}
+                imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                maxFileSize={5242880}
+                withPreview={true}
+                withLabel={true}
+              />
+              <button
+                onClick={handleUpload}
+                className="text-white bg-red-500 px-4 py-2 rounded"
+              >
+                Submit
+              </button>
+            </div>
+          </>
+        ) : (
           <div>
-            <h1 className="text-2xl"> Misc Form Information:</h1>
+            No selected times to check the Pool's data have been set by the
+            admin.
           </div>
-          <div>
-            <label>Combined Chlorine:</label> <br />
-            <input
-              onChange={(e) =>
-                this.setState({ combinedChlorine: e.target.value })
-              }
-              className="border-2"
-            />{" "}
-          </div>{" "}
-          <div>
-            <label>Cyanuric Acid:</label> <br />
-            <input
-              onChange={(e) => this.setState({ cyanuricAcid: e.target.value })}
-              className="border-2"
-            />{" "}
-          </div>{" "}
-          <div>
-            <label>Alkalinity:</label> <br />
-            <input
-              onChange={(e) => this.setState({ akalinity: e.target.value })}
-              className="border-2"
-            />{" "}
-          </div>{" "}
-          <div>
-            <label>Calcium Hardness:</label> <br />
-            <input
-              onChange={(e) =>
-                this.setState({ calciumHardness: e.target.value })
-              }
-              className="border-2"
-            />{" "}
-          </div>
-          <div>
-            <label>LSI Calculation:</label> <br />
-            <input
-              onChange={(e) =>
-                this.setState({ LSICalculation: e.target.value })
-              }
-              className="border-2"
-            />{" "}
-          </div>
-          <ImageUploader
-            withIcon={true}
-            buttonText="Choose images"
-            onChange={onDrop}
-            imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-            maxFileSize={5242880}
-            withPreview={true}
-            withLabel={true}
-          />
-          <button onClick={handleSubmit} className="text-white bg-red-500 p-4">
-            Submit
-          </button>
-        </div>
+        )}
       </div>
     );
   }

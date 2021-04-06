@@ -23,6 +23,7 @@ export default class DeliveryListContainer extends Component {
         <DeliveryItem
           item={item}
           type={"secondary"}
+          userId={this.props.userId}
           navigation={this.props.navigation}
         />
       );

@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { ScrollView } from "react-native";
 import FormPart1Container from "../Components/FormPart1Container";
 import ForVomit from "../Components/ForVomit";
+import { connect } from "react-redux";
+
 import ForWeather from "../Components/ForWeather";
 import moment from "moment";
 import api from "../utils/api";
 import BackButton from "../Components/BackButton";
-
-export default class DailyOperations extends Component {
+class DailyOperations extends Component {
   state = {};
   render() {
     const updateState = (e, name) => {
@@ -33,6 +34,7 @@ export default class DailyOperations extends Component {
         recordType: type,
         date: momentString,
         data: this.state,
+        user_id: this.props.user._id,
       };
       console.log(body);
       await api
@@ -74,3 +76,11 @@ export default class DailyOperations extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(DailyOperations);

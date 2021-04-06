@@ -7,7 +7,7 @@ export default function DeliveryItem(props) {
       disabled={
         props.item.accepted_by == null
           ? false
-          : props.item.accepted_by != props.userId
+          : props.item.accepted_by._id != props.userId
           ? true
           : false
       }
@@ -22,16 +22,25 @@ export default function DeliveryItem(props) {
             backgroundColor:
               props.item.accepted_by == null && props.item.status == 0
                 ? "white"
-                : props.item.accepted_by == props.userId
+                : props.item.accepted_by._id == props.userId
                 ? "white"
                 : "gray",
           }}
         >
           <div>
-            <div className="mb-2 text-lg">{props.item.pool_id.pool_name}</div>
-
+            {/* <div className="mb-2 text-lg">{props.item.pool_id.pool_name}</div> */}
+            {console.log(props.item)}
             <div className="mb-2">{props.item.date}</div>
-            <div className="text-gray-700 text-sm">Assigned:</div>
+            {props.item.accepted_by != null ? (
+              <>
+                <div className="text-gray-700 text-sm">
+                  Assigned:{props.item.accepted_by.name}
+                </div>
+                <div className="text-gray-700 text-sm">
+                  Contact:{props.item.accepted_by.phone}
+                </div>
+              </>
+            ) : null}
           </div>
           <div className="flex flex-wrap">
             <div className="w-1/2 text-gray-700 text-sm">
