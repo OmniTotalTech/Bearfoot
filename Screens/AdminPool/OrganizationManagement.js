@@ -13,7 +13,11 @@ class OrganizationManagement extends Component {
       });
   }
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <div className="container"></div>
+      </div>
+    );
   }
 }
 

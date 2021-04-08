@@ -105,6 +105,15 @@ class RecordModal extends Component {
           type = "PM";
 
           url = "/records-email/DO/Record/DailyOperations/PM";
+          data = this.props.data.data;
+
+          break;
+        case "ChemicalLog":
+          type = "Chemical Log";
+
+          url = "/records-email/";
+          data = this.props.data;
+
           break;
         case "incidentReport":
           type = "incidentReport";
@@ -360,14 +369,14 @@ const ChemLogModal = (data) => {
         <div className="shadow-xl p-2 my-6">
           <div className="text-black text-lg p-4">
             Weekly Information Completed:
-            <div>
-              <span className="font-bold">
-                LSI Calculation :{" "}
-                {data.data.dataObject.LSICalculation
-                  ? data.data.dataObject.LSICalculation
-                  : "None"}
-              </span>
-            </div>
+          </div>
+          <div>
+            <span className="font-bold">
+              LSI Calculation :{" "}
+              {data.data.dataObject.LSICalculation
+                ? data.data.dataObject.LSICalculation
+                : "None"}
+            </span>
           </div>
           <div>
             <span className="font-bold">
@@ -411,12 +420,12 @@ const ChemLogModal = (data) => {
           </div>
         </div>
       )}
-      <div className="grid grid-cols-1 md: grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-2">
         {data.data.data.map((item) => (
           <>
             <div className="shadow-xl p-2">
               <div className="text-black text-xl">
-                Time Submitted : <span className="font-bold"> {item.time}</span>
+                Time : <span className="font-bold"> {item.time}</span>
               </div>
               <div className="text-black text-lg">
                 pH : <span className="font-bold"> {item.data.ph}</span>
