@@ -17,6 +17,9 @@ export default class DailyOperationsEdit extends Component {
     this.setState(updateObj);
     console.log(this.state);
   }
+  componentWillUnmount() {
+    let body = {};
+  }
   render() {
     const updateState = (e, name) => {
       this.setState({ [name]: e });
@@ -26,8 +29,6 @@ export default class DailyOperationsEdit extends Component {
     const updateStateAndProps2 = (e, name) => {
       this.setState({ [name]: e });
     };
-
-    console.log(this.state);
 
     const data = [
       {
@@ -135,6 +136,9 @@ export default class DailyOperationsEdit extends Component {
       } else {
         type = "dailyOperationsPM";
       }
+
+      const time = moment().format("LT");
+      console.log(time);
       let body = {
         _id: this.props.route.params.itemd._id,
         data: this.state,

@@ -10,6 +10,7 @@ class RecordModal extends Component {
     isEmailOpen: false,
     emailFormInput: "",
     emails: [],
+    isButtonDisabled: false,
   };
 
   render() {
@@ -39,6 +40,8 @@ class RecordModal extends Component {
     };
 
     const handleCompleteSubmit = async () => {
+      console.log("SUBMITTED");
+      this.setState({ isButtonDisabled: true });
       var type;
       var data;
       var tempArray = [];
@@ -46,7 +49,6 @@ class RecordModal extends Component {
       var url = "";
       var images = [];
       console.log(this.props.type);
-      console.log(this.props.data);
 
       switch (this.props.type) {
         case "OpeningTaskChecklist":
@@ -72,7 +74,7 @@ class RecordModal extends Component {
           console.log(this.props.data);
           for (var i = 0; i < this.props.data.data.length; i++) {
             tempArray.push({
-              item: this.props.data.data[i]._id,
+              item: this.props.data.data[i].name,
               inStockAmt: this.props.data.data[i].inStockAmt,
             });
           }
@@ -82,10 +84,9 @@ class RecordModal extends Component {
           break;
         case "EveningChecklist":
           type = "Evening";
-          console.log(this.props.data.data);
           for (var i = 0; i < this.props.data.data.length; i++) {
             tempArray.push({
-              item: this.props.data.data[i]._id,
+              item: this.props.data.data[i].name,
               inStockAmt: this.props.data.data[i].inStockAmt,
             });
           }
@@ -94,14 +95,16 @@ class RecordModal extends Component {
           url = "/records-email/InventoryChecklist/Evening";
           break;
         case "dailyOperationsAM":
-          type = "Evening";
+          type = "AM";
 
-          url = "/records-email/DailyOperations/AM";
+          url = "/records-email/DO/Record/DailyOperations/AM";
+          console.log(this.props.data.data);
+          data = this.props.data.data;
           break;
         case "dailyOperationsPM":
-          type = "Evening";
+          type = "PM";
 
-          url = "/records-email/DailyOperations/AM";
+          url = "/records-email/DO/Record/DailyOperations/PM";
           break;
         case "incidentReport":
           type = "incidentReport";
@@ -119,7 +122,7 @@ class RecordModal extends Component {
         images: images,
         dataObject: this.props.dataObject,
       };
-
+      console.log(body);
       await api
         .post(url, body)
         .then((response) => {
@@ -186,9 +189,14 @@ class RecordModal extends Component {
             </div>
             <button
               className="text-white bg-red-500 px-4 py-2 my-4 rounded"
+              disabled={this.state.isButtonDisabled}
               onClick={handleCompleteSubmit}
             >
-              Send Emails
+              {this.state.isButtonDisabled ? (
+                <div>Sending...</div>
+              ) : (
+                <div>Send Emails</div>
+              )}
             </button>
           </>
         ) : (
@@ -408,7 +416,7 @@ const ChemLogModal = (data) => {
           <>
             <div className="shadow-xl p-2">
               <div className="text-black text-xl">
-                Time : <span className="font-bold"> {item.time}</span>
+                Time Submitted : <span className="font-bold"> {item.time}</span>
               </div>
               <div className="text-black text-lg">
                 pH : <span className="font-bold"> {item.data.ph}</span>
@@ -608,6 +616,8 @@ const SensitiveModal2 = (data) => {
       <div className="p-4">
         <div className="my-8">
           <div className="text-xl">Date : {data.data.date}</div>
+          <div className="text-xl">Pool : {data.data.time}</div>
+
           {data.data.pool_id != null ? (
             <>
               <div className="text-xl">
@@ -647,6 +657,8 @@ const InventoryModal = (data, props) => {
       <div className="my-8">
         <div className="text-xl">Date : {data.data.date}</div>
         <div className="text-xl">Pool : {data.data.pool_id.pool_name}</div>
+        <div className="text-xl">Time : {data.data.time}</div>
+
         <div className="text-xl">
           Submitted By : {data.data.user_id.name}
           <div className="text-md">Phone : {data.data.user_id.phone}</div>
@@ -658,7 +670,7 @@ const InventoryModal = (data, props) => {
             <div className="my-4">
               <p className="text-lg">
                 <span className="text-xl">Item : </span>
-                {item._id}
+                {item.name}
               </p>
               <p>
                 <span className="text-xl">In Stock : </span>
@@ -686,6 +698,8 @@ const TaskModal = (data) => {
       <div className="my-8">
         <div className="text-xl">Date : {data.data.date}</div>
         <div className="text-xl">Pool : {data.data.pool_id.pool_name}</div>
+        <div className="text-xl">Time : {data.data.time}</div>
+
         <div className="text-xl">
           Submitted By : {data.data.user_id.name}
           <div className="text-md">Phone : {data.data.user_id.phone}</div>

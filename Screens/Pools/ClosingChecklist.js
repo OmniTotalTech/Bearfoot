@@ -44,6 +44,8 @@ class ClosingChecklist extends Component {
             const date = new Date();
             const nowDate = moment(date);
             const formattedDate = nowDate.format("YYYY-MM-DD");
+            const time = moment().format("LT");
+
             let body = {
               data: this.state.stateArray,
               pool_id: this.props.route.params.id,
@@ -51,6 +53,7 @@ class ClosingChecklist extends Component {
               user_id: this.props.user._id,
               date: formattedDate,
               images: response.data.files,
+              time: time,
             };
             console.log(body);
             await api

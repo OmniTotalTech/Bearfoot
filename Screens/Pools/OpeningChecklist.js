@@ -20,12 +20,15 @@ class OpeningChecklist extends Component {
       const date = new Date();
       const nowDate = moment(date);
       const formattedDate = nowDate.format("YYYY-MM-DD");
+      const time = moment().format("LT");
+
       let body = {
         data: this.state.stateArray,
         pool_id: this.props.route.params.id,
         recordType: "OpeningTaskChecklist",
         user_id: this.props.user._id,
         date: formattedDate,
+        time: time,
       };
       await api
         .post(url, body)

@@ -50,7 +50,7 @@ class AdminAreaHome extends Component {
     this.setState({ areaOrganization: value });
   }
   render() {
-    console.log(this.props.area.data);
+    console.log(this.props);
 
     const handleSubmit = async (e) => {
       e.preventDefault();

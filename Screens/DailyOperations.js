@@ -28,13 +28,15 @@ class DailyOperations extends Component {
       var dateObj = date;
       var momentObj = moment(dateObj);
       var momentString = momentObj.format("YYYY-MM-DD"); // 2016-07-15
-
+      const time = moment().format("LT");
       let body = {
         pool_id: this.props.route.params.id,
         recordType: type,
         date: momentString,
         data: this.state,
         user_id: this.props.user._id,
+        time: time,
+        updatedLastTime: null,
       };
       console.log(body);
       await api

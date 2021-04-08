@@ -11,6 +11,11 @@ import Modal from "react-modal";
 import RecordModal from "./RecordModal";
 import BackButton from "../../../Components/BackButton";
 class PoolRecordsPage extends Component {
+  componentWillUnmount() {
+    console.log("id", this.props.route.params.id);
+    this.setState({ value: null });
+    this.props.fetchRecords();
+  }
   state = {
     searchArray: [],
     loading: false,
@@ -33,6 +38,25 @@ class PoolRecordsPage extends Component {
       this.setState({ recordId: data._id });
       this.setState({ modalData: data });
       this.setState({ showModal: true });
+    };
+
+    const formatTitles = (props) => {
+      switch (props.recordType) {
+        case "MorningChecklist":
+          return "Morning Inventory";
+        case "EveningChecklist":
+          return "Evening Inventory";
+        case "ClosingTaskChecklist":
+          return "Closing  Inventory";
+        case "OpeningTaskChecklist":
+          return "Opening Inventory";
+        case "dailyOperationsPM":
+          return "PM - Daily Operations";
+        case "dailyOperationsAM":
+          return "AM - Daily Operations";
+        case "ChemicalLog":
+          return `Chem-Log(${props.specificPool.subPoolName})`;
+      }
     };
 
     let selections = [
@@ -73,11 +97,23 @@ class PoolRecordsPage extends Component {
         style: {
           //textAlign: "right",
         },
+        Cell: (porps) => {
+          return <div className="text-md">{formatTitles(porps.original)}</div>;
+        },
         // width: 100,
       },
       {
         Header: "Date",
         accessor: "date",
+        style: {
+          //textAlign: "right",
+        },
+
+        // width: 100,
+      },
+      {
+        Header: "Time Recorded",
+        accessor: "time",
         style: {
           //textAlign: "right",
         },

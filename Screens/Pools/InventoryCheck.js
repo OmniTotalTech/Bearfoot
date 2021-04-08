@@ -40,20 +40,23 @@ class InventoryCheck extends Component {
       }
       let date = new Date();
       const nowDate = moment(date);
+      console.log(date);
       const formattedDate = nowDate.format("YYYY-MM-DD");
+      const time = moment().format("LT");
       let body = {
         pool_id: this.props.pool._id,
         recordType: this.props.route.params.type + "Checklist",
         user_id: this.props.auth.user._id,
         data: finalObjectArray,
         date: formattedDate,
+        time: time,
       };
       console.log(finalObjectArray);
       submitInventory(body);
     };
 
     const submitInventory = async (body) => {
-      let url = "/records/inventory";
+      let url = "records/inventory";
       console.log(url);
       await api
         .post(url, body)

@@ -14,6 +14,16 @@ export default class DailyOperationsPick extends Component {
         itemd: item,
       });
     };
+    const resetState = () => {
+      let init = {
+        isAm: false,
+        isPm: false,
+        isFound: false,
+        preLoadedData: {},
+        searched: false,
+      };
+      this.setState({ ...init });
+    };
     const handleSetTime = async (text) => {
       var date = new Date();
       var dateObj = date;
@@ -119,12 +129,21 @@ export default class DailyOperationsPick extends Component {
                 {this.state.resData ? (
                   this.state.resData.map((item) => (
                     <>
-                      <div>{item.date}</div>
-                      <div>{item.recordType}</div>
-
+                      <div>{item.time}</div>{" "}
+                      {/* <div>{moment(`${item.date}`, "YYYY-MM-DD")}</div> */}
+                      <div>
+                        {item.recordType == "dailyOperationsPM" ? (
+                          <div>PM - Daily Operations</div>
+                        ) : (
+                          <div>AM - Daily Operations</div>
+                        )}
+                      </div>
                       <button
                         className="bg-red-500 text-white rounded px-4 p-2"
-                        onClick={() => goToSave(item)}
+                        onClick={() => {
+                          goToSave(item);
+                          resetState();
+                        }}
                       >
                         Edit
                       </button>

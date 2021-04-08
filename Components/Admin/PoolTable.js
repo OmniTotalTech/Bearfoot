@@ -55,34 +55,6 @@ class PoolTable extends Component {
         // width: 100,
       },
       {
-        Header: "Address",
-        accessor: "pool_address",
-        style: {
-          textAlign: "right",
-        },
-      },
-      {
-        Header: "State",
-        accessor: "pool_state",
-        style: {
-          textAlign: "right",
-        },
-      },
-      {
-        Header: "Area Id",
-        accessor: "area_id",
-        style: {
-          textAlign: "right",
-        },
-      },
-      {
-        Header: "Area Name",
-        accessor: "area_name",
-        style: {
-          textAlign: "right",
-        },
-      },
-      {
         Header: "Forms Complete",
         accessor: "area_name",
         style: {
@@ -104,6 +76,27 @@ class PoolTable extends Component {
               )}
             </div>
           );
+        },
+      },
+      {
+        Header: "Area Name",
+        accessor: "area_name",
+        style: {
+          textAlign: "right",
+        },
+      },
+      {
+        Header: "Address",
+        accessor: "pool_address",
+        style: {
+          textAlign: "right",
+        },
+      },
+      {
+        Header: "State",
+        accessor: "pool_state",
+        style: {
+          textAlign: "right",
         },
       },
     ];

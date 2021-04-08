@@ -32,6 +32,7 @@ import {
 import InvitedUser from "../Components/InvitedUser";
 
 class BasicInformation extends Component {
+  state = { disableButton: false, newSubPoolString: "" };
   constructor(props) {
     super(props);
 
@@ -249,8 +250,20 @@ class BasicInformation extends Component {
           });
       }
     };
-    const handleDeleteSubPool = (id) => {
-      console.log(id);
+    const handleDeleteSubPool = async (id) => {
+      let url = "/subPools/" + id;
+      await api
+        .delete(url)
+        .then((response) => {
+          api.get("/subPools/" + this.props.id).then((response) => {
+            console.log(response);
+            this.setState({ subPools: response.data });
+            this.setState({ newSubPoolString: "" });
+          });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
     };
     const onDrop = (picture) => {
       this.setState({
@@ -335,7 +348,23 @@ class BasicInformation extends Component {
     const onChange = (e, value) => {
       this.setState({ [value]: e });
     };
-    const handleDelete = (id) => {
+    const handleDelete = async (id, type) => {
+      console.log(this.props.pool);
+      console.log("submitted", this.state.taskText);
+      this.setState({ taskText: "" });
+      this.setState({ taskText: "" });
+      let url =
+        "/dailyChecklist/delete/" + this.props.pool._id + "/" + id + "/" + type;
+      await api
+        .delete(url)
+        .then((response) => {
+          console.log(response);
+          this.props.fetchDailyChecklist(this.props.id, type);
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+
       console.log(id);
     };
     const handleNewPoolDetailSubmit = async () => {
@@ -415,12 +444,13 @@ class BasicInformation extends Component {
 
     const handleSubmitChecklist = async (type) => {
       console.log("submitted", this.state.taskText);
-      console.log(type);
       let body = {
         pool_id: this.props.id,
         checklistType: type,
         text: this.state.taskText,
       };
+
+      this.setState({ taskText: "" });
       this.setState({ taskText: "" });
 
       await api
@@ -432,10 +462,10 @@ class BasicInformation extends Component {
         .catch((error) => {
           const errorMsg = error.message;
         });
-      this.setState({ taskText: "" });
     };
 
     const handleChecklistInput = (e) => {
+      console.log(handleChecklistInput);
       this.setState({ taskText: e.target.value });
     };
     const onAddingItem = async (i) => {
@@ -498,6 +528,10 @@ class BasicInformation extends Component {
       </div>
     );
 
+    const handleSubPoolStateChange = async (value) => {
+      this.setState({ newSubPoolString: value });
+    };
+
     const handleSubmitSubPool = async () => {
       let body = {
         poolId: this.props.id,
@@ -526,14 +560,14 @@ class BasicInformation extends Component {
 
     return (
       <div>
-        <div className="editor">
+        <div className="editor container max-w-md mx-auto">
           <Accordion>
             <AccordionItem>
               <AccordionItemHeading>
                 <AccordionItemButton>
-                  <button className="inline-flex text bg-red-700 p-2 rounded text-white">
+                  <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
                     Basic Information
-                  </button>{" "}
+                  </button>
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
@@ -665,7 +699,7 @@ class BasicInformation extends Component {
             <AccordionItem>
               <AccordionItemHeading>
                 <AccordionItemButton>
-                  <button className="inline-flex text bg-red-700 p-2 rounded text-white m-2">
+                  <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
                     HOA Assignment
                   </button>
                 </AccordionItemButton>
@@ -720,7 +754,7 @@ class BasicInformation extends Component {
             <AccordionItem>
               <AccordionItemHeading>
                 <AccordionItemButton>
-                  <button className="inline-flex text bg-red-700 p-2 rounded text-white my-2">
+                  <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
                     Daily Logs Management
                   </button>
                 </AccordionItemButton>
@@ -731,18 +765,23 @@ class BasicInformation extends Component {
                     List of pools for your employees to fill paperwork for
                     daily.
                   </p>
+
+                  {this.state.newSubPoolString &&
+                  this.state.newSubPoolString.length > 3 ? (
+                    <button
+                      onClick={handleSubmitSubPool}
+                      className="inline-flex text bg-red-700 px-2 py-1 mx-2 rounded text-white my-2"
+                    >
+                      Add
+                    </button>
+                  ) : (
+                    <div>Enter your desired name:</div>
+                  )}
                   <input
                     className="my-4 border-2 shadow-xl"
-                    onChange={(e) =>
-                      this.setState({ newSubPoolString: e.target.value })
-                    }
+                    onChange={(e) => handleSubPoolStateChange(e.target.value)}
                   />
-                  <button
-                    onClick={handleSubmitSubPool}
-                    className="inline-flex text bg-red-700 px-2 py-1 mx-2 rounded text-white my-2"
-                  >
-                    Add
-                  </button>{" "}
+
                   <div className="">
                     {this.state.subPools && this.state.subPools.length > 0 ? (
                       <div>
@@ -769,15 +808,15 @@ class BasicInformation extends Component {
             <AccordionItem>
               <AccordionItemHeading>
                 <AccordionItemButton>
-                  <button className="inline-flex text bg-red-700 p-2 rounded text-white my-2">
+                  <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
                     Checklist Management
                   </button>
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <div className="mx-auto text-left container bg-white max-w-2xl p-4 shadow-md mx-4">
+                <div className="mx-auto  container bg-white max-w-2xl p-4 shadow-md mx-4">
                   <div className=" space-y-6 mt-4 mb-4">
-                    <p className="text-md">
+                    <p className="text-md max-w-md mx-auto">
                       Set the tasks you would like the employees of this pool to
                       complete every morning and evening.
                     </p>
@@ -828,20 +867,30 @@ class BasicInformation extends Component {
 
                   <div className="mx-auto container max-w-2xl mx-4">
                     <div className="bg-white space-y-6 mt-4 w-full">
+                      <div className="text-md">Add a New Task</div>
                       <input
                         className="shadow-md w-full"
                         value={this.state.taskText}
                         onSubmit={() => this.setState({ taskText: "" })}
                         onChange={(e) => handleChecklistInput(e)}
                       />
-                      <button
-                        onClick={() => {
-                          handleSubmitChecklist("opening");
-                        }}
-                        className="bg-red-500 text-white px-4 py-2 rounded"
-                      >
-                        Add
-                      </button>
+
+                      {this.state.taskText && this.state.taskText.length > 4 ? (
+                        <div>
+                          {" "}
+                          <button
+                            onClick={() => {
+                              handleSubmitChecklist("opening");
+                              this.setState({ disableButton: true });
+                            }}
+                            className="bg-red-500 text-white px-4 py-2 rounded"
+                          >
+                            Add{" "}
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="my-4">Enter More Data First... </div>
+                      )}
                     </div>
                     <div>
                       {this.props.dailyChecklist.data &&
@@ -859,7 +908,9 @@ class BasicInformation extends Component {
                                 <div className="w-1/6">
                                   <button
                                     className="bg-red-500 p-1 text-white rounded"
-                                    onClick={() => handleDelete(item._id)}
+                                    onClick={() =>
+                                      handleDelete(item._id, "opening")
+                                    }
                                   >
                                     Delete
                                   </button>
@@ -891,18 +942,29 @@ class BasicInformation extends Component {
 
                   <div className="mx-auto container max-w-2xl mx-4">
                     <div className="bg-white space-y-6 mt-4 w-full">
+                      <div className="text-md">Add a New Task</div>
                       <input
                         className="shadow-md w-full"
+                        value={this.state.taskText}
+                        onSubmit={() => this.setState({ taskText: "" })}
                         onChange={(e) => handleChecklistInput(e)}
                       />
-                      <button
-                        onClick={() => {
-                          handleSubmitChecklist("closing");
-                        }}
-                        className="bg-red-500 text-white px-4 py-2 rounded"
-                      >
-                        Add
-                      </button>
+                      {this.state.taskText && this.state.taskText.length > 4 ? (
+                        <div>
+                          {" "}
+                          <button
+                            onClick={() => {
+                              handleSubmitChecklist("closing");
+                              this.setState({ disableButton: true });
+                            }}
+                            className="bg-red-500 text-white px-4 py-2 rounded"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="my-4">Enter More Data First... </div>
+                      )}
                     </div>
                     <div>
                       {this.props.dailyChecklist.data &&
@@ -920,7 +982,9 @@ class BasicInformation extends Component {
                                 <div className="w-1/6">
                                   <button
                                     className="bg-red-500 p-1 text-white rounded"
-                                    onClick={() => handleDelete(item._id)}
+                                    onClick={() =>
+                                      handleDelete(item._id, "closing")
+                                    }
                                   >
                                     Delete
                                   </button>
@@ -940,13 +1004,54 @@ class BasicInformation extends Component {
             <AccordionItem>
               <AccordionItemHeading>
                 <AccordionItemButton>
-                  <button className="inline-flex text bg-red-700 p-2 rounded text-white">
+                  <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
                     Chemical Log Management
                   </button>
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
                 <div className="bg-white p-2 m-2">
+                  <p>
+                    List of pools for your employees to fill paperwork for
+                    daily.
+                  </p>
+
+                  {this.state.newSubPoolString &&
+                  this.state.newSubPoolString.length > 3 ? (
+                    <button
+                      onClick={handleSubmitSubPool}
+                      className="inline-flex text bg-red-700 px-2 py-1 mx-2 rounded text-white my-2"
+                    >
+                      Add
+                    </button>
+                  ) : (
+                    <div>Enter your desired name:</div>
+                  )}
+                  <input
+                    className="my-4 border-2 shadow-xl"
+                    onChange={(e) => handleSubPoolStateChange(e.target.value)}
+                  />
+
+                  <div className="">
+                    {this.state.subPools && this.state.subPools.length > 0 ? (
+                      <div>
+                        <div className="text-lg">SubPools:</div>
+                        {this.state.subPools.map((item, i) => (
+                          <div className="m-2">
+                            {i + 1}){item.subPoolName}{" "}
+                            <button
+                              className="bg-red-500 text-white rounded p-1 mx-4"
+                              onClick={() => handleDeleteSubPool(item._id)}
+                            >
+                              Delete SubPool
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div>No subpools found</div>
+                    )}{" "}
+                  </div>
                   {this.state.subPools && this.state.subPools.length > 0 ? (
                     <select
                       value={this.state.value}
@@ -989,27 +1094,30 @@ class BasicInformation extends Component {
                           </div>
                         ))}
                       </div>
+                      <div className="w-full my-2">
+                        <button
+                          onClick={handleSubmit}
+                          className="p-2 bg-red-500 text-white rounded m-2 align-right"
+                        >
+                          Save
+                        </button>
+                        {this.state.recMsg ? (
+                          <div>{this.state.recMsg}</div>
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>{" "}
                     </>
                   )}
-
-                  <div className="w-full">
-                    <button
-                      onClick={handleSubmit}
-                      className="p-2 bg-red-500 text-white rounded m-2 align-right"
-                    >
-                      Save
-                    </button>
-                    {this.state.recMsg ? (
-                      <div>{this.state.recMsg}</div>
-                    ) : (
-                      <div></div>
-                    )}
-                  </div>
                 </div>
               </AccordionItemPanel>
             </AccordionItem>
           </Accordion>
-
+          <div className="m-2">
+            <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
+              Delete Pool
+            </button>
+          </div>
           <div className="max-w-2xl pt-4 mx-auto">
             {/* <CKEditor
               editor={ClassicEditor}
