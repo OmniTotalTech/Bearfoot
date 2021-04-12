@@ -62,11 +62,10 @@ class EditSelf extends Component {
             <div>
               You have not set a profile picture... would you like to now?
               <ImageUploader
-                singleImage={true}
                 withIcon={true}
                 buttonText="Choose images"
-                onChange={this.onDrop}
-                imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                onChange={onDrop}
+                imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
                 maxFileSize={262144000}
                 withPreview={true}
                 withLabel={true}

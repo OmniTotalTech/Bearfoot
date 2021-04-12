@@ -8,7 +8,7 @@ class NavbarContainer extends Component {
   render() {
     return (
       <div
-        className=" w-full shadow-xl  mx-auto p-2"
+        className=" w-full shadow-xl  mx-auto pt-4 px-2 pt-4"
         style={{
           backgroundImage: "linear-gradient(to bottom right,#333333,#222222)",
           backgroundColor: "black",
@@ -60,17 +60,18 @@ class NavbarContainer extends Component {
               )}
             </div>
           </div>
-
           <div className="float-right text-right">
-            <a className="text-sm  font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white">
+            <a className="text-sm  font-bold leading-relaxed inline-block mr-4  whitespace-no-wrap uppercase text-white">
               BearFoot Pools
             </a>
-            <p
-              onClick={() => store.dispatch({ type: LOGOUT })}
-              className="text text-white text-lg mr-4"
-            >
-              Logout
-            </p>
+            <div className="pb-4">
+              <p
+                onClick={() => store.dispatch({ type: LOGOUT })}
+                className="text text-white text-lg mr-4"
+              >
+                Logout
+              </p>
+            </div>
           </div>
         </div>
       </div>

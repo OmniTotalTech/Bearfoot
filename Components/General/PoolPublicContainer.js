@@ -24,12 +24,13 @@ class PoolPublicContainer extends Component {
             {this.props.pool.individualPool.pool_desc}
           </p>
         </div>
-        <div className="px-2 py-4 bg-white">
+        <div className="px-2 py-4 mx-auto container max-w-lg ">
           {this.props.accordionData.length > 0 ? (
             this.props.accordionData.map((item, i) => (
               <div>
-                <p>{i + 1})</p>
-                <h1>{item.headerText}</h1>
+                <h1 className="text-xl">
+                  {i + 1} ) {item.headerText}
+                </h1>
                 <h1>{item.bodyText}</h1>
                 <div>
                   {this.props.accordionData[i].images != null &&

@@ -683,12 +683,17 @@ class BasicInformation extends Component {
                           <div>
                             <label className="text-lg">Images:</label> <br />
                             <ImageUploader
-                              singleImage={false}
                               withIcon={true}
                               buttonText="Choose images"
                               onChange={onDrop}
-                              imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                              maxFileSize={5242880}
+                              imgExtension={[
+                                ".jpg",
+                                ".gif",
+                                ".png",
+                                ".gif",
+                                ".jpeg",
+                              ]}
+                              maxFileSize={262144000}
                               withPreview={true}
                               withLabel={true}
                             />

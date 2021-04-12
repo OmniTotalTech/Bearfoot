@@ -18,8 +18,10 @@ class HoaHomeContainer extends Component {
             <div className="my-2">
               {item.assignedLocation ? (
                 <>
-                  <h1>{i + 1})</h1>
-                  <p className="text-xl">{item.assignedLocation.pool_name}</p>
+                  <h1>
+                    {i + 1}){" "}
+                    <p className="text-xl">{item.assignedLocation.pool_name}</p>
+                  </h1>
                   <p className="text-lg">
                     {item.assignedLocation.pool_address}
                   </p>
