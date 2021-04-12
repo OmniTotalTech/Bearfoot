@@ -51,7 +51,7 @@ const owner = [
     status: "Organization Management",
     subtext: "",
     location: "OrganizationManagement",
-    level: 7,
+    level: 6,
   },
 ];
 const admin = [
