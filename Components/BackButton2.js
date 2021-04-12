@@ -18,7 +18,7 @@ export default class BackNavigationTestComponent extends Component {
           backgroundColor={"red"}
           name={"arrow-back"}
           size={30}
-          color="black"
+          color="white"
           style={{ marginLeft: "3%" }}
         />
       </button>

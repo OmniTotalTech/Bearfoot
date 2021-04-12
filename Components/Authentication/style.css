@@ -10,10 +10,10 @@
 .bubble {
   position: absolute;
   bottom: -100px;
-  background: black;
+  background: #ff0000;
   border-radius: 50%;
   opacity: 0.5;
-  z-index: 0;
+  z-index: 30;
 
   animation: flying 10s infinite ease-in;
 }
@@ -103,4 +103,24 @@
     bottom: 1080px;
     transform: translateX(-200px);
   }
+}
+.custom-shape-divider-bottom-1618247041 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1618247041 svg {
+  position: relative;
+  display: block;
+  width: calc(118% + 1.3px);
+  height: 109px;
+}
+
+.custom-shape-divider-bottom-1618247041 .shape-fill {
+  fill: #b91c1c;
 }

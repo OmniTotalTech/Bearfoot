@@ -47,12 +47,16 @@ export const loginError = (error) => {
 export const login = (body) => async (dispatch) => {
   try {
     const res = await api.post("/auth/login", body);
-
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: res.data,
-    });
-    dispatch(loadUser());
+    console.log(res);
+    if (res.status == 204) {
+      dispatch({ type: LOGIN_ERROR, payload: res.data });
+    } else {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+      dispatch(loadUser());
+    }
   } catch (err) {
     const res = await api.post("/auth/login", body);
 
