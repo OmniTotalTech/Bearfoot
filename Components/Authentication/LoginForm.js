@@ -184,7 +184,7 @@ function LoginForm(props) {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className=" border-b-2 font-display focus:outline-none focus:border-primarycolor transition-all duration-500 text-lg p-1"
+                      className=" border-b-2 font-display  transition-all duration-500 text-lg p-1 rounded"
                     />
                   </div>
                   <div className="relative mt-8">
@@ -197,7 +197,7 @@ function LoginForm(props) {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className=" border-b-2 font-display focus:outline-none focus:border-primarycolor transition-all duration-500 text-lg p-1"
+                      className=" border-b-2 font-display focus:outline-none focus:border-primarycolor transition-all duration-500 text-lg p-1  rounded"
                     />
                   </div>
                   <a
