@@ -24,6 +24,33 @@ class PoolPublicContainer extends Component {
             {this.props.pool.individualPool.pool_desc}
           </p>
         </div>
+        <div className="px-2 py-4 bg-white">
+          {this.props.accordionData.length > 0 ? (
+            this.props.accordionData.map((item, i) => (
+              <div>
+                <p>{i + 1})</p>
+                <h1>{item.headerText}</h1>
+                <h1>{item.bodyText}</h1>
+                <div>
+                  {this.props.accordionData[i].images != null &&
+                  this.props.accordionData[i].images.length > 0 ? (
+                    this.props.accordionData[i].images.map((item) => (
+                      <img
+                        src={item.image}
+                        alt="..."
+                        className="shadow object-contain h-32  align-middle border-none object-contain"
+                      />
+                    ))
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div></div>
+          )}
+        </div>
       </>
     );
   }

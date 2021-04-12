@@ -5,8 +5,8 @@ export default class PoolInventoryCheckList extends Component {
       <div className="container mx-auto overflow-scroll mt-4 max-w-2xl bg-gray-100">
         {" "}
         <div className="w-full shadow-lg border-b-2 py-4">
-          <p className="text-3xl text-center my-4">
-            Currently performing a {this.props.type} Checklist count.
+          <p className="text-2xl text-center my-4">
+            Currently performing : <div> {this.props.type} Checklist Count</div>
           </p>
           {/* <p className="text-2xl px-4">Last submitted report:</p> */}
           <p></p>
@@ -28,6 +28,8 @@ export default class PoolInventoryCheckList extends Component {
                 <p className="text-md px-6 m-2"></p>
                 <div className="w-full">
                   <input
+                    type="tel"
+                    min="0"
                     onChange={(e, value) =>
                       this.props.handleChange(e, item._id, item.name, item.desc)
                     }

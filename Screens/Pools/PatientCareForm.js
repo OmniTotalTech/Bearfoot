@@ -56,7 +56,7 @@ const PatientCareForm = (props) => {
     <>
       <div className="overflow-scroll">
         <div className="container p-4 text-2xl mx-auto text-center">
-          Patient Care form
+          Incident Report Form
         </div>
         <div className="container w-full mx-auto">
           <div className="mx-auto text-center">
@@ -146,6 +146,7 @@ const PatientCareForm = (props) => {
                 <textarea
                   type="textarea"
                   className="w-full"
+                  rows={6}
                   value={eventDescription}
                   onChange={(e) => setEventDescription(e.target.value)}
                 />
@@ -158,6 +159,7 @@ const PatientCareForm = (props) => {
                 <textarea
                   type="textarea"
                   className="w-full"
+                  rows={6}
                   value={resDescription}
                   onChange={(e) => setResDescription(e.target.value)}
                 />

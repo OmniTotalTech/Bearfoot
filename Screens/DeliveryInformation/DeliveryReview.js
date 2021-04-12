@@ -9,14 +9,9 @@ import { fetchPoolById } from "../../redux/actions/pool";
 import ListIcon from "@material-ui/icons/List";
 
 class DeliveryReview extends Component {
-  constructor(props) {
-    super(props);
-    var item = props.route.params.item;
-    this.state = {
-      item: props.route.params.item,
-    };
-    this.props.fetchPoolById(props.route.params.item.pool_id._id);
-  }
+  state = {
+    item: this.props.route.params.item,
+  };
 
   setUpdateStatus() {
     const body = { status: 1, accepted_by: this.props.user._id };
@@ -24,8 +19,12 @@ class DeliveryReview extends Component {
     this.props.updateStatus(this.state.item._id, body);
   }
 
-  componentDidUpdate() {
-    // console.log(this.props.navigation.getParam("item"));
+  componentDidMount() {
+    {
+      this.props.route.params.item.pool_id
+        ? this.props.fetchPoolById(this.props.route.params.item.pool_id._id)
+        : null;
+    }
   }
 
   render() {

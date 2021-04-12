@@ -20,6 +20,8 @@ import { fetchMyAdminAreas } from "../../redux/actions/area";
 import TimeZone from "../../Components/TimeZone";
 import { Picker } from "@react-native-picker/picker";
 import api from "../../utils/api";
+import BackButton from "../../Components/BackButton";
+
 class AdminAreaHome extends Component {
   componentDidMount() {
     this.props.fetchArea();
@@ -98,6 +100,8 @@ class AdminAreaHome extends Component {
 
     return (
       <ScrollView>
+        <BackButton navigation={this.props.navigation} />
+
         <div className="container mx-auto">
           <div className="container">
             <div className="flex justify-center p-4">

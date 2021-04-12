@@ -7,6 +7,7 @@ class TitleAndInput extends Component {
     const updateState = (e) => {
       this.props.onChange(e.target.value, item.value);
     };
+    console.log(this.props);
 
     return (
       <div className="md:w-2/3 max-w-sm mx-auto">
@@ -18,6 +19,7 @@ class TitleAndInput extends Component {
               placeholder={item.placeholder}
               type="number"
               pattern="[0-9]*"
+              value={this.props.value}
               defaultValue={item.defaultValue}
               onChange={(e) => updateState(e)}
             />
@@ -25,7 +27,7 @@ class TitleAndInput extends Component {
             <input
               className="w-11/12 focus:outline-none focus:text-gray-700 p-2"
               placeholder={item.placeholder}
-              defaultValue={item.defaultValue}
+              value={this.props.value}
               onChange={(e) => updateState(e)}
             />
           ) : (
@@ -33,6 +35,7 @@ class TitleAndInput extends Component {
               className="w-11/12 focus:outline-none focus:text-gray-700 p-2"
               placeholder={item.placeholder}
               defaultValue={item.defaultValue}
+              value={this.props.value}
               onChange={(e) => updateState(e)}
             />
           )}

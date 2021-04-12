@@ -10,15 +10,18 @@ export default class DailyChecklist extends Component {
               {this.props.data && this.props.data.data.length > 0 ? (
                 this.props.data.data.map((item, i) => (
                   <>
-                    <div>
+                    <div className="px-4">
                       <input
+                        size={16}
                         type="checkbox"
                         onChange={() => this.props.handleChange(item, i)}
                         name="horns"
                       />
-                      <label for="horns" className="mx-2">
-                        {item.text}
-                      </label>
+                      <div className="overflow-scroll">
+                        <label for="horns" className="mx-2 ">
+                          {item.text}
+                        </label>
+                      </div>
                     </div>
                   </>
                 ))

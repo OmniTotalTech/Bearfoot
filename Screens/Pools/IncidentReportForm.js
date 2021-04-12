@@ -260,9 +260,7 @@ const IncidentReportForm = (props) => {
             </button>
           </div>
         )}
-        <div className="container p-4 text-2xl mx-auto">
-          Incident Report Form
-        </div>
+        <div className="container p-4 text-2xl mx-auto">Patient Care Form</div>
         {props.activeStep == 1 ? (
           <div className="container p-4 mx-auto">
             <div>
@@ -439,6 +437,7 @@ const IncidentReportForm = (props) => {
               <label className="text-md">Detailed Description:</label>
               <br />
               <textarea
+                rows={6}
                 type="text"
                 value={detailedDescription}
                 onChange={(e) => setDetailedDescription(e.target.value)}
@@ -449,6 +448,7 @@ const IncidentReportForm = (props) => {
               <label className="text-md">Detailed Treatment:</label>
               <br />
               <textarea
+                rows={6}
                 type="text"
                 value={detailedTreatment}
                 onChange={(e) => setDetailedTreatment(e.target.value)}
@@ -459,6 +459,7 @@ const IncidentReportForm = (props) => {
               <label className="text-md">Detailed Resolution:</label>
               <br />
               <textarea
+                rows={6}
                 type="text"
                 value={detailedResolution}
                 onChange={(e) => setDetailedResolution(e.target.value)}
@@ -604,7 +605,7 @@ const IncidentReportForm = (props) => {
                   <input
                     className="mx-2 border-2 shadow-xl my-2"
                     type="text"
-                    defaultValue={item}
+                    placeholder={item}
                     onChange={(e) => setSample(e.target.value, item)}
                   />
                 </div>

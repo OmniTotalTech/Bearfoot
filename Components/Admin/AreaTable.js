@@ -2,9 +2,16 @@ import React, { Component } from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import Modal from "react-modal";
+import { connect } from "react-redux";
+import api from "../../utils/api";
 
 class AreaTable extends Component {
-  state = { currentBool: false, modalData: {} };
+  state = {
+    currentBool: false,
+    modalData: {},
+    toSecondPart: false,
+    finalizing: false,
+  };
 
   componentDidMount() {}
 
@@ -34,6 +41,19 @@ class AreaTable extends Component {
   };
 
   render() {
+    const handleDeletePool = async () => {
+      this.setState({ toSecondPart: false, finalizing: true });
+      await api
+        .delete("/area/" + this.state.modalData._id)
+        .then((res) => {
+          console.log(res.data);
+          this.setState({ currentBool: false });
+          this.props.navigation.navigate("SuccessScreen");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
     const data = this.props.area.data.foundArea;
     const columns = [
       {
@@ -48,34 +68,40 @@ class AreaTable extends Component {
         Header: "Time Zone",
         accessor: "areaTimeZone",
         maxWidth: 200,
-        minWidth: 100,
+        minWidth: 50,
       },
       {
         Header: "Actions",
         filterable: false,
         sortable: false,
         resizable: false,
+        minWidth: 100,
+
         Cell: (porps) => {
           console.log(porps);
           return (
             <>
               <div className="grid grid-cols-2">
                 <button
-                  className="bg-red-500 text-white rounded text-md mx-auto px-3 py-1 font-bold mx-4 md:w-11/12 w-3/4"
+                  className="bg-red-500 text-white rounded text-md mx-auto mx-0.5 font-bold  md:w-11/12 w-3/4"
                   onClick={(e) => {
                     this.navToArea(porps);
                   }}
                 >
                   View
                 </button>
-                <button
-                  onClick={() => {
-                    this.controlModal(porps.original);
-                  }}
-                  className="bg-red-500 text-white rounded text-md mx-auto px-3 py-1 font-bold mx-4  md:w-11/12 w-3/4"
-                >
-                  Delete
-                </button>
+                {this.props.user.role > 4 ? (
+                  <button
+                    onClick={() => {
+                      this.controlModal(porps.original);
+                    }}
+                    className="bg-red-500 text-white rounded text-md mx-auto mx-0.5 font-bold  md:w-11/12 w-3/4"
+                  >
+                    Delete
+                  </button>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </>
           );
@@ -103,7 +129,10 @@ class AreaTable extends Component {
           <button
             className="text bg-gray-600 p-2 rounded text-white"
             onClick={() => {
-              this.setState({ currentBool: !this.state.currentBool });
+              this.setState({
+                currentBool: !this.state.currentBool,
+                toSecondPart: false,
+              });
             }}
           >
             close
@@ -138,9 +167,40 @@ class AreaTable extends Component {
             </div>
           </div>
           <div>
-            <button className="text-white bg-red-500 rounded py-2 px-4 my-4 text-xl">
-              Proceed
-            </button>
+            {this.state.finalizing ? (
+              <button
+                onClick={() => console.log(this.state.modalData._id)}
+                className="text-white bg-red-500 rounded py-2 px-4 my-4 text-xl"
+              >
+                Deleting...Please wait...
+              </button>
+            ) : this.state.toSecondPart ? (
+              <>
+                <p>
+                  This is the last chance to review before you finalize
+                  deletion. Proceed Accordingly.
+                </p>
+                <button
+                  onClick={() => handleDeletePool()}
+                  className="text-white bg-red-500 rounded py-2 px-4 my-4 text-xl"
+                >
+                  Delete Area
+                </button>
+              </>
+            ) : (
+              <>
+                <p>
+                  If you move to delete this pool, all records and connections
+                  will be broken.{" "}
+                </p>
+                <button
+                  onClick={() => this.setState({ toSecondPart: true })}
+                  className="text-white bg-red-500 rounded py-2 px-4 my-4 text-xl"
+                >
+                  Proceed
+                </button>
+              </>
+            )}
           </div>
         </Modal>
       </div>
@@ -148,4 +208,10 @@ class AreaTable extends Component {
   }
 }
 
-export default AreaTable;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(AreaTable);

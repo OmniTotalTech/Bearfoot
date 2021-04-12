@@ -34,17 +34,18 @@ export default class AddInventoryModal extends Component {
     console.log(this.props);
   }
   async submitForm(e, props) {
+    console.log(props);
     let date = new Date();
     const nowDate = moment(date);
     const formattedDate = nowDate.format("YYYY-MM-DD");
     const body = {
-      assigned_backup: props.pool.assigned_backup,
+      assigned_backup: props.pool.pool_secondary_drivers,
       starting_list: this.state.customArray,
       date: formattedDate,
       pool_id: props.pool._id,
       assigned_driver: props.pool.pool_primary_driver._id,
     };
-
+    console.log(body);
     await api
       .post("/adminOrderDetails/", body)
       .then((response) => {
@@ -140,7 +141,13 @@ export default class AddInventoryModal extends Component {
       inStockAmt: inStockAmt,
     };
     props.addItem(props.inventory.data._id, body);
-
+    this.setState({
+      name: "",
+      desc: "",
+      unitType: "",
+      inStockAmt: 0,
+      lowAmt: 0,
+    });
     this.setState({ isModalOpen: false });
     this.props.fetchPoolById();
   }
@@ -160,6 +167,14 @@ export default class AddInventoryModal extends Component {
     this.setState({
       customArray: this.state.customArray.concat(body),
     });
+    this.setState({
+      name0: "",
+      desc0: "",
+      unitType0: "",
+      inStockAmt0: 0,
+      lowAmt0: 0,
+    });
+
     console.log(this.state);
   }
   render() {
@@ -226,11 +241,15 @@ export default class AddInventoryModal extends Component {
     };
 
     const inputsMap = (array) => {
+      // let localValue = this.state.
       return array.map((item, i) => (
         <>
+          {console.log("value", this.state[item.value])}
+
           <TitleAndInput
             key={i}
             item={item}
+            value={this.state[item.value]}
             onChange={(value, item) => onChange(value, item)}
           />
           <br />
@@ -240,6 +259,16 @@ export default class AddInventoryModal extends Component {
 
     const runPreapprove = () => {
       this.setState({ preApprove: true });
+    };
+
+    const handleStatedDelete = (i) => {
+      console.log(this.state.customArray);
+      let tempArray = this.state.customArray;
+      console.log(tempArray[i]);
+
+      tempArray.splice(i, 1);
+
+      this.setState({ customArray: tempArray });
     };
 
     return (
@@ -280,7 +309,7 @@ export default class AddInventoryModal extends Component {
               <div className="mx-auto container max-w-2xl shadow-md mx-4">
                 <div className="bg-white space-y-6 mt-4">
                   <div className=" space-y-4 md:space-y-0 w-full p-4 text-black items-center">
-                    <h2 className=" max-w-sm mx-auto">Item</h2>
+                    <h2 className=" max-w-sm mx-auto">New Item:</h2>
                     {inputsMap(inputs)}
                     <div className="w-full p-4 text-right text-gray-500">
                       <button
@@ -314,7 +343,7 @@ export default class AddInventoryModal extends Component {
               <div className="mx-auto container max-w-2xl shadow-md mx-4">
                 <div className="bg-white space-y-6 mt-4">
                   <div className=" space-y-4 md:space-y-0 w-full p-4 text-black items-center">
-                    <h2 className=" max-w-sm mx-auto">Item</h2>
+                    <h2 className=" max-w-sm mx-auto">New Special Order:</h2>
                     {inputsMap(inputs2)}
                     <div className="w-full p-4 text-right text-gray-500">
                       <button
@@ -332,52 +361,52 @@ export default class AddInventoryModal extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="container">
-                  {this.state.customArray.length > 0 ? (
-                    <>
-                      {console.log(this.state.customArray)}
-                      <div className="p-4">
-                        <span className="text-2xl">
-                          Items you are asking for:
-                        </span>
-                        {this.state.customArray.map((item, i) => (
-                          <div className="border p-2">
-                            <div className="text-xl">Name: {item.name}</div>
-                            <div className="text-lg">
-                              Description: {item.desc}
-                            </div>
-                            <div className="text-md">
-                              Unit Type:{item.unitType}
-                            </div>
-                            <div className="text-md">
-                              Low Amount:{item.lowAmt}
-                            </div>
-                          </div>
-                        ))}
-                        {this.state.preApprove ? (
-                          <>
-                            <p>please check items before continuing</p>
-                            <button
-                              className="text-white bg-red-500 px-4 py-2"
-                              onClick={() => this.submitForm(event, this.props)}
-                            >
-                              Submit New Order .
-                            </button>
-                          </>
-                        ) : (
-                          <button
-                            className="text-white bg-red-500 px-4 py-2"
-                            onClick={() => runPreapprove()}
-                          >
-                            You are About to Submit. Are You Sure?
-                          </button>
-                        )}
-                      </div>
-                    </>
-                  ) : null}
-                </div>
               </div>
             </form>
+            <div className="container">
+              {this.state.customArray.length > 0 ? (
+                <>
+                  {console.log(this.state.customArray)}
+                  <div className="p-4">
+                    <span className="text-2xl">Items you are asking for:</span>
+                    {this.state.customArray.map((item, i) => (
+                      <div className="border p-2">
+                        <div className="text-xl">Name: {item.name}</div>
+                        <div className="text-lg">Description: {item.desc}</div>
+                        <div className="text-md">Unit Type:{item.unitType}</div>
+                        <div className="text-md">Low Amount:{item.lowAmt}</div>
+                        <div className="text-sm">
+                          <button
+                            onClick={() => handleStatedDelete(i)}
+                            className="bg-red-500 text-white rounded px-2 py-1 my-2"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    {this.state.preApprove ? (
+                      <>
+                        <p>please check items before continuing</p>
+                        <button
+                          className="text-white bg-red-500 px-4 py-2"
+                          onClick={() => this.submitForm(event, this.props)}
+                        >
+                          Submit New Order .
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        className="text-white bg-red-500 px-4 py-2"
+                        onClick={() => runPreapprove()}
+                      >
+                        You are About to Submit. Are You Sure?
+                      </button>
+                    )}
+                  </div>
+                </>
+              ) : null}
+            </div>
           </Modal>
         </div>
       </div>

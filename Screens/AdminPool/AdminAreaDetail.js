@@ -19,7 +19,7 @@ import { connect } from "react-redux";
 import { fetchAreaPools } from "../../redux/actions/area";
 import { addPool } from "../../redux/actions/pool";
 import PoolTable from "../../Components/Admin/PoolTable";
-
+import BackButton from "../../Components/BackButton";
 class AdminAreaDetail extends Component {
   constructor(props) {
     super(props);
@@ -62,6 +62,7 @@ class AdminAreaDetail extends Component {
     };
     props.addPool(body);
     this.setState({ isModalOpen: false });
+    this.props.fetchAreaPools(this.props.route.params.id);
     this.props.fetchAreaPools(this.props.route.params.id);
   }
 
@@ -110,6 +111,8 @@ class AdminAreaDetail extends Component {
 
     return (
       <ScrollView>
+        <BackButton navigation={this.props.navigation} />
+
         <div className="container mx-auto">
           <div className="container">
             <div className="flex justify-center p-4">

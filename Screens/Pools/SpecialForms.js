@@ -8,13 +8,13 @@ const shift = [
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Patient Care",
     subtext: "",
-    location: "PatientCare",
+    location: "IncidentReport",
   },
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Incident Report",
     subtext: "",
-    location: "IncidentReport",
+    location: "PatientCare",
   },
 ];
 

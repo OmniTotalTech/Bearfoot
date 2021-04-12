@@ -262,7 +262,7 @@ class ChemicalLogFormContainer extends Component {
                 buttonText="Choose images"
                 onChange={onDrop}
                 imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                maxFileSize={5242880}
+                maxFileSize={262144000}
                 withPreview={true}
                 withLabel={true}
               />

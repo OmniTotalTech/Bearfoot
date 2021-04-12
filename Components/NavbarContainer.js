@@ -25,28 +25,31 @@ class NavbarContainer extends Component {
                 onClick={() => RootNavigation.navigate("EditSelf")}
                 className="justify-center pr-2 "
               >
-                {this.props.user.profileImage != "" ? (
-                  <div>
-                    <img
-                      src={
-                        "https://bearfoot-app-images.s3.us-east-2.amazonaws.com/profile-images/" +
-                        this.props.user.profileImage
-                      }
-                      alt="..."
-                      style={{ height: "50px", width: "50px" }}
-                      className="shadow rounded-full float-left align-middle border-none object-contain"
-                    />
-                  </div>
-                ) : (
-                  <div>
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
-                      alt="..."
-                      style={{ height: "50px", width: "50px" }}
-                      className="shadow rounded-full float-left align-middle border-none object-contain"
-                    />
-                  </div>
-                )}
+                {this.props.user ? (
+                  this.props.user.profileImage &&
+                  this.props.user.profileImage != "" ? (
+                    <div>
+                      <img
+                        src={
+                          "https://bearfoot-app-images.s3.us-east-2.amazonaws.com/profile-images/" +
+                          this.props.user.profileImage
+                        }
+                        alt="..."
+                        style={{ height: "50px", width: "50px" }}
+                        className="shadow rounded-full float-left align-middle border-none object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
+                        alt="..."
+                        style={{ height: "50px", width: "50px" }}
+                        className="shadow rounded-full float-left align-middle border-none object-contain"
+                      />
+                    </div>
+                  )
+                ) : null}
               </div>
             </button>
             <div className="text-white text-sm truncate">

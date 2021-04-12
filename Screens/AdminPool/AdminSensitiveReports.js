@@ -51,18 +51,18 @@ class AdminSensitiveReports extends Component {
     const switchStatement = (status) => {
       switch (status) {
         case false:
-          return "not accepted";
+          return "not approved";
         case true:
-          return "Inventory Stage";
+          return "Approved";
       }
     };
 
     const anotherSwitchStatement = (status) => {
       switch (status) {
         case "incidentReport":
-          return "Incident Report";
-        case "patientCare":
           return "Patient Care";
+        case "patientCare":
+          return "Incident Report";
       }
     };
 
@@ -120,6 +120,12 @@ class AdminSensitiveReports extends Component {
         Cell: (porps) => {
           return <div>{switchStatement(porps.original.isApproved)}</div>;
         },
+        // width: 100,
+      },
+      {
+        Header: "Approved By",
+        accessor: "approvedBy.name",
+
         // width: 100,
       },
       {
@@ -236,6 +242,9 @@ class AdminSensitiveReports extends Component {
             <RecordModal
               handleClose={() => this.setState({ showModal: false })}
               _id={this.state.recordId}
+              fetchReports={async () =>
+                await this.props.fetchSensitiveRecords()
+              }
               updateState={(arr) => handleUpdateState(arr)}
               type={
                 this.state.modalData.recordType

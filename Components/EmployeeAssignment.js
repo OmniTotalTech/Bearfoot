@@ -145,9 +145,13 @@ export default class EmployeeAssignment extends Component {
                   Email: {this.props.pool_primary_driver.email}
                 </label>
                 <div>
+                  {console.log()}
                   <button
                     onClick={() =>
-                      handleRemove(item._id, "pool_primary_driver")
+                      handleRemove(
+                        this.props.pool_primary_driver._id,
+                        "pool_primary_driver"
+                      )
                     }
                     className="bg-red-500 rounded p-2  text-white m-1"
                   >

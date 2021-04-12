@@ -4,7 +4,7 @@ import api from "../../utils/api";
 function ManagerList(props) {
   async function handleClick(group, id, poolId) {
     console.log(group);
-    if (group == "managers") {
+    if (group == "Pool Managers") {
       await api
         .patch(
           "/pool/" +

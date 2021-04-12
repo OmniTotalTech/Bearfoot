@@ -32,7 +32,12 @@ import {
 import InvitedUser from "../Components/InvitedUser";
 
 class BasicInformation extends Component {
-  state = { disableButton: false, newSubPoolString: "" };
+  state = {
+    disableButton: false,
+    newSubPoolString: "",
+    responseMsg: "",
+    hoasInPool: [{ userId: { organizations: [] } }],
+  };
   constructor(props) {
     super(props);
 
@@ -62,6 +67,7 @@ class BasicInformation extends Component {
       });
   };
   runHOAFunc = () => {
+    this.setState({ hoaSearchString: "" });
     this.props.fetchEmployeesByOrg(
       this.props.user.organizations[0].orgName,
       "HOA" + "/" + this.state.hoaSearchString
@@ -73,6 +79,7 @@ class BasicInformation extends Component {
     await api
       .get("/hoa/" + this.props.id)
       .then((response) => {
+        this.setState({ hoasInPool: response.data });
         console.log(response.data);
       })
       .catch((error) => {
@@ -89,6 +96,7 @@ class BasicInformation extends Component {
     await api
       .post("/hoa/", body)
       .then((response) => {
+        this.setState({ responseMsg: response.data.message });
         console.log(response.data);
       })
       .catch((error) => {
@@ -277,7 +285,10 @@ class BasicInformation extends Component {
           name={item.name}
           email={item.email}
         />
-        <button onClick={() => this.addUserToHOA(item._id)}>
+        <button
+          className="bg-red-500 px-4 py-2 text-white rounded"
+          onClick={() => this.addUserToHOA(item._id)}
+        >
           Add HOA to Pool
         </button>
       </div>
@@ -644,7 +655,7 @@ class BasicInformation extends Component {
                         >
                           close
                         </button>
-                        <div>
+                        <div className="w-full">
                           <div>
                             <label className="text-lg">Header:</label> <br />
                             <input
@@ -655,13 +666,17 @@ class BasicInformation extends Component {
                             />
                           </div>
                           <div>
-                            <label className="text-lg">Body:</label> <br />
-                            <input
-                              className="p-2 border"
-                              onChange={(e) =>
-                                this.setState({ bodyText: e.target.value })
-                              }
-                            />
+                            <label className="text-lg w-full">Body:</label>{" "}
+                            <br />
+                            <div className="w-full">
+                              <textarea
+                                rows={5}
+                                className="p-2 border w-full"
+                                onChange={(e) =>
+                                  this.setState({ bodyText: e.target.value })
+                                }
+                              />
+                            </div>
                           </div>
                           <div>
                             <label className="text-lg">Images:</label> <br />
@@ -671,7 +686,7 @@ class BasicInformation extends Component {
                               buttonText="Choose images"
                               onChange={onDrop}
                               imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                              maxFileSize={5242880}
+                              maxFileSize={262144000}
                               withPreview={true}
                               withLabel={true}
                             />
@@ -707,11 +722,30 @@ class BasicInformation extends Component {
               <AccordionItemPanel>
                 <button
                   onClick={() => this.setState({ hoaModal: true })}
-                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  className="bg-red-500 text-white px-4 py-2 mb-4 rounded"
                 >
                   Add An HOA account to this Pool
                 </button>
-                <div></div>
+                <div>
+                  {this.state.hoasInPool && this.state.hoasInPool.length > 0 ? (
+                    <div className="container bg-white">
+                      {this.state.hoasInPool.map((item, i) => (
+                        <div className="my-2">
+                          {i + 1})
+                          <div className="text-md">{item.userId.name}</div>
+                          <div className="text-md">{item.userId.email}</div>
+                          <div className="text-md">
+                            {item.userId.organizations.map((item) => (
+                              <div>Organization : {item.orgName}</div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
                 <Modal
                   {...this.props}
                   ariaHideApp={false}
@@ -729,6 +763,7 @@ class BasicInformation extends Component {
                     </div>
                     <div>
                       <input
+                        className="border-2 shadow-md my-2"
                         onChange={(e) =>
                           this.setState({ hoaSearchString: e.target.value })
                         }
@@ -736,11 +771,19 @@ class BasicInformation extends Component {
                     </div>
                     <div>
                       <button
-                        className="bg-red-500 px-4 py-2 text-white"
+                        className="bg-red-500 px-4 py-2 text-white rounded"
                         onClick={this.runHOAFunc}
                       >
                         Search
                       </button>
+                      <div>
+                        {" "}
+                        {this.state.responseMsg ? (
+                          this.state.responseMsg
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
                     </div>
                     <div className="mx-auto container max-w-2xl shadow-md mx-4">
                       <View style={{ overflow: "scroll", maxHeight: "600px" }}>
@@ -902,7 +945,7 @@ class BasicInformation extends Component {
                                 key={item._id}
                                 className="w-full shadow-md py-2 border-1 p-2"
                               >
-                                <div className="w-2/3">
+                                <div className="w-11/12 overflow-scroll">
                                   <p className="text-lg">{item.text}</p>
                                 </div>
                                 <div className="w-1/6">
@@ -976,7 +1019,7 @@ class BasicInformation extends Component {
                                 key={item._id}
                                 className="w-full shadow-md py-2 border-1 p-2"
                               >
-                                <div className="w-2/3">
+                                <div className="w-11/12 overflow-scroll">
                                   <p className="text-lg">{item.text}</p>
                                 </div>
                                 <div className="w-1/6">
@@ -1114,9 +1157,29 @@ class BasicInformation extends Component {
             </AccordionItem>
           </Accordion>
           <div className="m-2">
-            <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
+            <button
+              onClick={() => this.setState({ issueDropDown: true })}
+              className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl"
+            >
               Delete Pool
             </button>
+            {this.state.issueDropDown ? (
+              <div>
+                <div>
+                  Deleting this pool will result in a break in continuity
+                  between records and this pool. Please only do this if you are
+                  absolutely sure you want to continue.
+                </div>
+                <button
+                  onClick={() => console.log(this.props.pool._id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Proceed with Deletion
+                </button>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
           <div className="max-w-2xl pt-4 mx-auto">
             {/* <CKEditor

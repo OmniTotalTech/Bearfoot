@@ -19,6 +19,7 @@ export default class DeliveryListContainer extends Component {
     });
 
     const secondaryMap = this.props.orderDetail.secondary.map((item) => {
+      console.log(item);
       return (
         <DeliveryItem
           item={item}

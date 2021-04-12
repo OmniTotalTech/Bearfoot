@@ -223,8 +223,8 @@ class RecordModal extends Component {
   }
 }
 
-const viewControl = (type, data, updateStateFunc) => {
-  console.log(data);
+const viewControl = (type, data, updateStateFunc, props) => {
+  console.log(props);
   switch (type) {
     case "MorningChecklist":
       return <InventoryModal data={data} />;
@@ -241,9 +241,22 @@ const viewControl = (type, data, updateStateFunc) => {
     case "ChemicalLog":
       return <ChemLogModal data={data} />;
     case "patientCare":
-      return <SensitiveModal data={data} />;
+      return (
+        <SensitiveModal
+          data={data}
+          handleClose={props.handleClose}
+          fetchReports={props.fetchReports}
+        />
+      );
     case "incidentReport":
-      return <SensitiveModal2 data={data} usf={updateStateFunc} />;
+      return (
+        <SensitiveModal2
+          data={data}
+          usf={updateStateFunc}
+          handleClose={props.handleClose}
+          fetchReports={props.fetchReports}
+        />
+      );
   }
 };
 
@@ -470,44 +483,76 @@ const SensitiveModal = (data) => {
   console.log(data);
 
   return (
-    <div className="container mx-auto p-1">
-      <div className="text-lg my-4 mx-2">
-        <span className="bg-red-500 shadow-xl text-white px-4 py-2">
-          Patient Information:
-        </span>
-      </div>
-      <div className="text-md  my-4 mx-2">
-        <span className="">Name:</span> {data.data.dataObject.patronName}
-      </div>
-
-      <div className="text-md my-4 mx-2">
-        <span className="">Phone: {data.data.dataObject.patronPhone}</span>
-      </div>
-      <div className="text-md my-4 mx-2">
-        Email: {data.data.dataObject.patronEmail}
-      </div>
-
-      <div className="py-2">
+    <>
+      <div className="container mx-auto p-1">
         <div className="text-lg my-4 mx-2">
           <span className="bg-red-500 shadow-xl text-white px-4 py-2">
-            Event Description:{" "}
-          </span>
-        </div>{" "}
-        <div className="text-sm py-2">
-          {data.data.dataObject.eventDescription}
-        </div>
-        <div className="text-lg my-4 mx-2">
-          <span className="bg-red-500 shadow-xl text-white px-4 py-2">
-            Resolution Description:{" "}
+            Patient Information:
           </span>
         </div>
-        <div className="text-sm">{data.data.dataObject.resDescription}</div>
+        <div className="text-md  my-4 mx-2">
+          <span className="">Name:</span> {data.data.dataObject.patronName}
+        </div>
+
+        <div className="text-md my-4 mx-2">
+          <span className="">Phone: {data.data.dataObject.patronPhone}</span>
+        </div>
+        <div className="text-md my-4 mx-2">
+          Email: {data.data.dataObject.patronEmail}
+        </div>
+
+        <div className="py-2">
+          <div className="text-lg my-4 mx-2">
+            <span className="bg-red-500 shadow-xl text-white px-4 py-2">
+              Event Description:{" "}
+            </span>
+          </div>{" "}
+          <div className="text-sm py-2">
+            {data.data.dataObject.eventDescription}
+          </div>
+          <div className="text-lg my-4 mx-2">
+            <span className="bg-red-500 shadow-xl text-white px-4 py-2">
+              Resolution Description:{" "}
+            </span>
+          </div>
+          <div className="text-sm">{data.data.dataObject.resDescription}</div>
+        </div>
       </div>
-    </div>
+      <div>
+        {data.data.isApproved ? (
+          <div></div>
+        ) : (
+          <button
+            onClick={() => handleApprove(data)}
+            className="bg-red-500 text-white rounded px-4 py-2"
+          >
+            Approve
+          </button>
+        )}
+      </div>
+    </>
   );
 };
 
 const SensitiveModal2 = (data) => {
+  const handleApprove = async (data) => {
+    let body = {
+      _id: data.data._id,
+      type: data.data.recordType,
+    };
+    await api
+      .post("/records", body)
+      .then((response) => {
+        console.log(response.data);
+        data.handleClose();
+        data.fetchReports();
+        this.props.navigation.navigate("SuccessScreen");
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        console.log(errorMsg);
+      });
+  };
   console.log(data);
   let tempValue = Object.keys(data.data.dataObject);
   let tempValue2 = Object.values(data.data.dataObject);
@@ -620,7 +665,7 @@ const SensitiveModal2 = (data) => {
   return (
     <div className="container mx-auto p-1">
       <div className="text-lg my-4 mx-2">
-        <span className="px-4 py-2">Incident Report Information:</span>
+        <span className="px-4 py-2">Patient Care Information:</span>
       </div>
       <div className="p-4">
         <div className="my-8">
@@ -655,6 +700,17 @@ const SensitiveModal2 = (data) => {
           </div>
         </>
       ))}
+      {console.log(data.data)}
+      {data.data.isApproved ? (
+        <div></div>
+      ) : (
+        <button
+          onClick={() => handleApprove(data)}
+          className="bg-red-500 text-white rounded px-4 py-2"
+        >
+          Approve
+        </button>
+      )}
     </div>
   );
 };

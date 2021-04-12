@@ -170,7 +170,8 @@ export default class DailyOperationsEdit extends Component {
                 <div className="p-2">
                   <label className="text-black">{item.name}</label>
                   <div className="w-full inline-flex border">
-                    <input
+                    <textarea
+                      rows={3}
                       value={this.state[item.formValue]}
                       onChange={(e) =>
                         updateState(e.target.value, item.formValue)

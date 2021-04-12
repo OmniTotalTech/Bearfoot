@@ -46,7 +46,8 @@ export default class DailyOperationsSection extends Component {
               <div className="p-2">
                 <label className="text-black">{item.name}</label>
                 <div className="w-full inline-flex border">
-                  <input
+                  <textarea
+                    rows={3}
                     onChange={(e) =>
                       updateStateAndProps(e.target.value, item.formValue)
                     }

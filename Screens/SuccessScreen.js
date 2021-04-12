@@ -16,7 +16,7 @@ const SuccessScreen = (props) => {
         open={true}
         handleClick={handleClick}
         alertText={
-          "Your action has been completed. Click anywhere to go pack to the pool screen."
+          "Your action has been completed. Click anywhere to go back to your previous screen."
         }
       />
     </div>

@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { TouchableOpacity } from "react-native";
+import moment from "moment";
 
 export default function DeliveryItem(props) {
+  const renderDateAndTime = (date) => {
+    let today = moment(date).format("LT");
+
+    return today;
+  };
   return (
     <TouchableOpacity
       disabled={
         props.item.accepted_by == null
           ? false
-          : props.item.accepted_by._id != props.userId
+          : props.item.assigned_driver._id != props.userId
           ? true
           : false
       }
@@ -29,8 +35,35 @@ export default function DeliveryItem(props) {
         >
           <div>
             {/* <div className="mb-2 text-lg">{props.item.pool_id.pool_name}</div> */}
-            {console.log(props.item)}
-            <div className="mb-2">{props.item.date}</div>
+            <div className="mb-2 text-lg">
+              Location : {props.item.pool_id.pool_name}
+            </div>
+            <div>Pool Address:</div>
+            <div className="">{props.item.pool_id.pool_address}</div>
+            <div className="">{props.item.pool_id.pool_state}</div>
+            <div className="">{props.item.pool_id.pool_zip}</div>
+
+            <div className="mb-2">
+              <span className="text-red-500"> Assigned To: </span>
+              {props.item.assigned_driver.name}
+            </div>
+            <div className="mb-2">
+              {" "}
+              <span className="text-red-500">Phone:</span>{" "}
+              {props.item.assigned_driver.phone}
+            </div>
+            <div className="mb-2">Backup Drivers:</div>
+            <div className="mb-2">
+              {props.item.assigned_backup.map((item) => (
+                <>
+                  <div className="border-0.5 m-1 p-1">
+                    <div>{item.name}</div>
+                    <div>{item.phone}</div>
+                  </div>
+                </>
+              ))}
+            </div>
+
             {props.item.accepted_by != null ? (
               <>
                 <div className="text-gray-700 text-sm">
@@ -64,7 +97,9 @@ export default function DeliveryItem(props) {
               </button>
             </div>
           </div>
-          <div className="text-gray-700 text-sm">12:40 PM</div>
+          <div className="text-gray-700 text-sm">
+            {renderDateAndTime(props.item.jsDate)}
+          </div>
         </div>
       </div>
     </TouchableOpacity>

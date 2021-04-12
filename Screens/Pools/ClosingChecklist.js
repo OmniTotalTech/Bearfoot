@@ -97,20 +97,20 @@ class ClosingChecklist extends Component {
         {" "}
         <BackButton navigation={this.props.navigation} />
         <div className="text-2xl p-4">Closing Checklist : </div>
+        <div className="text-lg">Closing Image Upload:</div>
+        <ImageUploader
+          withIcon={true}
+          buttonText="Choose images"
+          onChange={onDrop}
+          imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
+          maxFileSize={262144000}
+          withPreview={true}
+          withLabel={true}
+        />
         <DailyChecklist
           data={this.props.dailyChecklist.data}
           handleChange={(data) => handleChange(data)}
           onSubmit={submitChecklist}
-        />
-        <ImageUploader
-          singleImage={true}
-          withIcon={true}
-          buttonText="Choose images"
-          onChange={onDrop}
-          imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-          maxFileSize={5242880}
-          withPreview={true}
-          withLabel={true}
         />
       </div>
     );

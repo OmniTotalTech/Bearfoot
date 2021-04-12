@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "My app",
-    "slug": "my-app",
+    "name": "Bearfoot Mobile",
+    "slug": "bearfoot-mobile",
     "icon": "./assets/icon.png",
     "theme-color": "#fff",
     "web": {
