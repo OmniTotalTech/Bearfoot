@@ -79,8 +79,10 @@ class BasicInformation extends Component {
     await api
       .get("/hoa/" + this.props.id)
       .then((response) => {
-        this.setState({ hoasInPool: response.data });
-        console.log(response.data);
+        if (response.data.length > 0) {
+          this.setState({ hoasInPool: response.data });
+          console.log(response.data);
+        }
       })
       .catch((error) => {
         console.log(error.message);
@@ -686,7 +688,7 @@ class BasicInformation extends Component {
                               buttonText="Choose images"
                               onChange={onDrop}
                               imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                              maxFileSize={262144000}
+                              maxFileSize={5242880}
                               withPreview={true}
                               withLabel={true}
                             />
@@ -727,7 +729,7 @@ class BasicInformation extends Component {
                   Add An HOA account to this Pool
                 </button>
                 <div>
-                  {this.state.hoasInPool && this.state.hoasInPool.length > 0 ? (
+                  {/* {this.state.hoasInPool && this.state.hoasInPool.length > 0 ? (
                     <div className="container bg-white">
                       {this.state.hoasInPool.map((item, i) => (
                         <div className="my-2">
@@ -744,7 +746,7 @@ class BasicInformation extends Component {
                     </div>
                   ) : (
                     <div></div>
-                  )}
+                  )} */}
                 </div>
                 <Modal
                   {...this.props}
@@ -1165,17 +1167,7 @@ class BasicInformation extends Component {
             </button>
             {this.state.issueDropDown ? (
               <div>
-                <div>
-                  Deleting this pool will result in a break in continuity
-                  between records and this pool. Please only do this if you are
-                  absolutely sure you want to continue.
-                </div>
-                <button
-                  onClick={() => console.log(this.props.pool._id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded"
-                >
-                  Proceed with Deletion
-                </button>
+                <div>Deleting this pool</div>
               </div>
             ) : (
               <div></div>
@@ -1190,9 +1182,6 @@ class BasicInformation extends Component {
                 this.setState({ text: data });
               }}
             /> */}
-            <div className="text-left">
-              <RichEditor />
-            </div>
           </div>
         </div>
       </div>
