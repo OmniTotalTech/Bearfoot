@@ -952,7 +952,7 @@ class BasicInformation extends Component {
                                 key={item._id}
                                 className="w-full shadow-md py-2 border-1 p-2"
                               >
-                                <div className="w-11/12 overflow-scroll">
+                                <div className="w-11/12 break-words">
                                   <p className="text-lg">{item.text}</p>
                                 </div>
                                 <div className="w-1/6">
@@ -1026,7 +1026,7 @@ class BasicInformation extends Component {
                                 key={item._id}
                                 className="w-full shadow-md py-2 border-1 p-2"
                               >
-                                <div className="w-11/12 overflow-scroll">
+                                <div className="w-11/12 break-words">
                                   <p className="text-lg">{item.text}</p>
                                 </div>
                                 <div className="w-1/6">

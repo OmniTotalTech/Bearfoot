@@ -17,7 +17,7 @@ export default class DailyChecklist extends Component {
                         onChange={() => this.props.handleChange(item, i)}
                         name="horns"
                       />
-                      <div className="overflow-scroll">
+                      <div className="break-words">
                         <label for="horns" className="mx-2 ">
                           {item.text}
                         </label>
