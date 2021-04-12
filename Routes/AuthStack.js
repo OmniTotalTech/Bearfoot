@@ -35,6 +35,8 @@ import PoolRecordsPage from "../Screens/AdminPool/PoolRecords/PoolRecordsPage";
 import OrganizationManagement from "../Screens/AdminPool/OrganizationManagement";
 
 import SuccessScreen from "../Screens/SuccessScreen";
+import SuccessScreenAll from "../Screens/SuccessScreenPopAllOut";
+
 import ManageHOAs from "../Screens/AdminUser/ManageHOAs";
 import PatientCare from "../Screens/Pools/PatientCare";
 import IncidentReport from "../Screens/Pools/IncidentReport";
@@ -94,6 +96,7 @@ export const AuthStack = () => (
           component={DailyOperationsEdit}
         />
         <Stack.Screen name="PoolRecords" component={PoolRecordsPage} />
+        <Stack.Screen name="SuccessScreenAll" component={SuccessScreenAll} />
         <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
         <Stack.Screen name="ManageHOAs" component={ManageHOAs} />
         <Stack.Screen name="PatientCare" component={PatientCare} />

@@ -5,7 +5,7 @@
   z-index: 0;
   overflow: hidden;
   top: 0;
-  right: 0;
+  left: 0;
 }
 .bubble {
   position: absolute;
@@ -13,7 +13,7 @@
   background: #ff0000;
   border-radius: 50%;
   opacity: 0.5;
-  z-index: 30;
+  z-index: 0;
 
   animation: flying 10s infinite ease-in;
 }

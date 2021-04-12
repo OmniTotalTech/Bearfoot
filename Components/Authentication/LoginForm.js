@@ -177,10 +177,10 @@ function LoginForm(props) {
             <div className="bubble"></div>
             <div className="bubble"></div>
             <div className="bubble"></div>
-            <div className="w-full mx-auto text-center  py-4 my-2 ">
+            <div className="w-full mx-auto text-center  py-4 my-2  z-40">
               <img className="mx-auto h-48 w-48 z-40" src={PlusImage} />
               <h1 className="my-8 font-display font-bold text-4xl text-white  text-center z-40">
-                <p> Bearfoot Pools</p>
+                <p className=""> Bearfoot Pools</p>
               </h1>
               <div className="container mx-auto  w-3/4 p-2">
                 <ReactCardFlip isFlipped={flipped} flipDirection="horizontal">
@@ -258,7 +258,7 @@ function LoginForm(props) {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required
-                          className=" border-b-2 font-display  transition-all duration-500 text-lg p-1 rounded"
+                          className=" border-b-2 font-display  transition-all duration-500 text-lg p-1 rounded z-40"
                         />
                       </div>
                       <div className="relative mt-8">
@@ -330,7 +330,7 @@ function LoginForm(props) {
                                     onChange={(e) =>
                                       setResetEmail(e.target.value)
                                     }
-                                    className="border w-full my-4"
+                                    className="border w-full my-4 text-black"
                                   />{" "}
                                   {message ? <div>{message}</div> : <div></div>}
                                   <div className="w-full text-gray-500">

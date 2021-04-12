@@ -275,6 +275,18 @@ class BasicInformation extends Component {
           const errorMsg = error.message;
         });
     };
+    const handleDeletePool = async (id) => {
+      let url = "/pool/" + id;
+      await api
+        .delete(url)
+        .then((response) => {
+          console.log(response);
+          this.props.navigation.navigate("SuccessScreenAll");
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+    };
     const onDrop = (picture) => {
       this.setState({
         pictures: this.state.pictures.concat(picture),
@@ -1163,21 +1175,62 @@ class BasicInformation extends Component {
               </AccordionItemPanel>
             </AccordionItem>
           </Accordion>
-          <div className="m-2">
-            <button
-              onClick={() => this.setState({ issueDropDown: true })}
-              className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl"
-            >
-              Delete Pool
-            </button>
-            {this.state.issueDropDown ? (
-              <div>
-                <div>Deleting this pool</div>
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </div>
+          {this.props.user.role > 4 ? (
+            <div className="m-2">
+              <button
+                onClick={() => this.setState({ issueDropDown: true })}
+                className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl"
+              >
+                Delete Pool
+              </button>
+              {this.state.issueDropDown ? (
+                <div>
+                  {this.state.isSure ? (
+                    <>
+                      <div>
+                        Cancel now if you did not intend to proceed, but the
+                        next confirmation will delete this pool.
+                      </div>
+                      <button
+                        onClick={() =>
+                          this.setState({ isSure: false, issueDropDown: false })
+                        }
+                        className="bg-red-500 text-white rounded px-4 py-2 mx-1"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => handleDeletePool(this.props.id)}
+                        className="bg-red-500 text-white rounded px-4 py-2 mx-1"
+                      >
+                        Confirm Delete
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        Deleting this pool will result in breaks from this
+                        moment forward of the data collected, and the data
+                        binded to this pool. It is always better to retire a
+                        pool, and no longer use it, than to break the record.
+                        However, if you wish to proceed, you acknowledge this
+                        risk.
+                      </div>
+                      <button
+                        onClick={() => this.setState({ isSure: true })}
+                        className="bg-red-500 text-white rounded px-4 py-2"
+                      >
+                        Continue.{" "}
+                      </button>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
+          ) : null}
+
           <div className="max-w-2xl pt-4 mx-auto">
             {/* <CKEditor
               editor={ClassicEditor}

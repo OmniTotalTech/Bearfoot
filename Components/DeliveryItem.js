@@ -3,6 +3,7 @@ import { TouchableOpacity } from "react-native";
 import moment from "moment";
 
 export default function DeliveryItem(props) {
+  console.log(props);
   const renderDateAndTime = (date) => {
     let today = moment(date).format("LT");
 
@@ -11,7 +12,7 @@ export default function DeliveryItem(props) {
   return (
     <TouchableOpacity
       disabled={
-        props.item.accepted_by == null
+        props.item.pool_id != null && props.item.accepted_by == null
           ? false
           : props.item.assigned_driver._id != props.userId
           ? true
@@ -34,35 +35,41 @@ export default function DeliveryItem(props) {
           }}
         >
           <div>
+            {props.item.pool_id == null ? (
+              <div>Pool Id is no longer valid</div>
+            ) : (
+              <>
+                {" "}
+                <div className="mb-2 text-lg">
+                  Location : {props.item.pool_id.pool_name}
+                </div>
+                <div>Pool Address:</div>
+                <div className="">{props.item.pool_id.pool_address}</div>
+                <div className="">{props.item.pool_id.pool_state}</div>
+                <div className="">{props.item.pool_id.pool_zip}</div>
+                <div className="mb-2">
+                  <span className="text-red-500"> Assigned To: </span>
+                  {props.item.assigned_driver.name}
+                </div>
+                <div className="mb-2">
+                  {" "}
+                  <span className="text-red-500">Phone:</span>{" "}
+                  {props.item.assigned_driver.phone}
+                </div>
+                <div className="mb-2">Backup Drivers:</div>
+                <div className="mb-2">
+                  {props.item.assigned_backup.map((item) => (
+                    <>
+                      <div className="border-0.5 m-1 p-1">
+                        <div>{item.name}</div>
+                        <div>{item.phone}</div>
+                      </div>
+                    </>
+                  ))}
+                </div>
+              </>
+            )}
             {/* <div className="mb-2 text-lg">{props.item.pool_id.pool_name}</div> */}
-            <div className="mb-2 text-lg">
-              Location : {props.item.pool_id.pool_name}
-            </div>
-            <div>Pool Address:</div>
-            <div className="">{props.item.pool_id.pool_address}</div>
-            <div className="">{props.item.pool_id.pool_state}</div>
-            <div className="">{props.item.pool_id.pool_zip}</div>
-
-            <div className="mb-2">
-              <span className="text-red-500"> Assigned To: </span>
-              {props.item.assigned_driver.name}
-            </div>
-            <div className="mb-2">
-              {" "}
-              <span className="text-red-500">Phone:</span>{" "}
-              {props.item.assigned_driver.phone}
-            </div>
-            <div className="mb-2">Backup Drivers:</div>
-            <div className="mb-2">
-              {props.item.assigned_backup.map((item) => (
-                <>
-                  <div className="border-0.5 m-1 p-1">
-                    <div>{item.name}</div>
-                    <div>{item.phone}</div>
-                  </div>
-                </>
-              ))}
-            </div>
 
             {props.item.accepted_by != null ? (
               <>
