@@ -64,7 +64,7 @@ class EditSelf extends Component {
               <ImageUploader
                 withIcon={true}
                 buttonText="Choose images"
-                onChange={onDrop}
+                onChange={this.onDrop}
                 imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
                 maxFileSize={262144000}
                 withPreview={true}
