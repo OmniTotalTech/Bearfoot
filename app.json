@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Bearfoot Mobile",
+    "version": 1.1,
     "slug": "bearfoot-mobile",
     "icon": "./assets/icon.png",
     "theme-color": "#fff",

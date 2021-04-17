@@ -1,4 +1,7 @@
 {
+  "name": "bearfoot-app",
+  "version": "1.0.1",
+  "description": "Internal Use Employee Application for Bearfoot Pools",
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^24.0.0",
     "@ckeditor/ckeditor5-react": "^3.0.0",
