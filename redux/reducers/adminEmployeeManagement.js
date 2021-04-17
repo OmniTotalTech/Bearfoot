@@ -5,7 +5,8 @@ import {
 } from "../types/adminEmployeeManagement";
 
 const initialState = {
-  data: [],
+  data: { extraData: [] },
+
   loading: false,
   error: null,
 };

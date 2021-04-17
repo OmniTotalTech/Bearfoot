@@ -27,6 +27,7 @@ import { loadUser } from "./redux/actions/auth";
 import ViewController from "./Components/General/ViewController";
 import { LOGOUT } from "./redux/types/auth";
 import MetaTags from "react-meta-tags";
+import * as serviceWorker from "./service-worker";
 
 const App = () => {
   // If you want your app to work offline and load faster, you can change
@@ -62,4 +63,6 @@ const App = () => {
     </Provider>
   );
 };
+serviceWorker.unregister();
+
 export default App;

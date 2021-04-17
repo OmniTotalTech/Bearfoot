@@ -28,10 +28,15 @@ import api from "../../utils/api";
 class AdminAreaHome extends Component {
   componentDidMount() {
     this.props.fetchArea();
-    this.props.fetchEmployeesByOrg(
-      this.props.user.organizations[0].orgName,
-      ""
-    );
+    if (this.props.user.role == 7) {
+      this.props.fetchEmployeesByOrg("all", "");
+    } else {
+      this.props.fetchEmployeesByOrg(
+        this.props.user.organizations[0].orgName,
+        ""
+      );
+    }
+
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -46,10 +51,17 @@ class AdminAreaHome extends Component {
     searchTerm: null,
     isModalOpen: false,
     employeeList: [],
+    extraData: {},
+    arrayForPicking: [],
   };
-  setSelectedValue(value) {
+  setSelectedValue(value, array) {
+    if (array != null && array.length > 0) {
+      this.setState({
+        arrayForPicking: array,
+      });
+    }
     this.setState({ selectedValue: value });
-    this.props.fetchEmployeesByOrg(value);
+    this.props.fetchEmployeesByOrg(value, "");
   }
 
   setAddEmployee() {
@@ -80,9 +92,10 @@ class AdminAreaHome extends Component {
 
     if (this.state.selectedValue != undefined) {
       selectedValue = this.state.selectedValue;
-    } else {
+    } else if (this.props.user.role > 5) {
       selectedValue = this.props.user.organizations[0].orgName;
     }
+
     if (this.props.title == "managers") {
       await api
         .get(
@@ -196,14 +209,44 @@ class AdminAreaHome extends Component {
                   <Picker
                     selectedValue={this.state.selectedValue}
                     style={{ height: 50, width: 150 }}
-                    onValueChange={(v) => this.setSelectedValue(v)}
+                    onValueChange={(v) =>
+                      this.setSelectedValue(
+                        v,
+                        this.props.adminEmployeeManagement.data.extraData
+                      )
+                    }
                   >
-                    {this.props.user.organizations.map((item, i) => (
-                      <Picker.Item
-                        label={this.props.user.organizations[i].orgName}
-                        value={this.props.user.organizations[i].orgName}
-                      />
-                    ))}
+                    {" "}
+                    {this.props.user.role == 7 ? (
+                      <>
+                        <Picker.Item label={"all"} value={"all"} />
+                        {console.log(
+                          this.props.adminEmployeeManagement.data.extraData
+                        )}
+                        {this.props.adminEmployeeManagement.data.extraData
+                          .length > 0 ? (
+                          this.props.adminEmployeeManagement.data.extraData.map(
+                            (item) => (
+                              <Picker.Item
+                                label={item.orgName}
+                                value={item.orgName}
+                              />
+                            )
+                          )
+                        ) : (
+                          <div></div>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {this.props.user.organizations.map((item, i) => (
+                          <Picker.Item
+                            label={this.props.user.organizations[i].orgName}
+                            value={this.props.user.organizations[i].orgName}
+                          />
+                        ))}
+                      </>
+                    )}
                   </Picker>
                 </div>
                 <View style={{ overflow: "scroll", maxHeight: "600px" }}>

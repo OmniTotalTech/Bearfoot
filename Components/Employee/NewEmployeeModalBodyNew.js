@@ -22,6 +22,7 @@ class NewEmployeeModalBody extends Component {
   }
 
   setSelectedValue(value) {
+    console.log(value);
     this.setState({ organization: value });
   }
   setEmail(e) {
@@ -195,12 +196,10 @@ class NewEmployeeModalBody extends Component {
                       style={{ height: 50, width: "100%" }}
                       onValueChange={(v) => this.setSelectedValue(v)}
                     >
-                      {this.props.user.organizations.map((item, i) => (
-                        <Picker.Item
-                          label={this.props.org}
-                          value={this.props.org}
-                        />
-                      ))}
+                      <Picker.Item
+                        label={this.props.selectedValue}
+                        value={this.props.selectedValue}
+                      />
                     </Picker>
                   </div>
                 </div>

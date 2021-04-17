@@ -11,6 +11,7 @@ class RecordModal extends Component {
     emailFormInput: "",
     emails: [],
     isButtonDisabled: false,
+    responseData: {},
   };
 
   render() {
@@ -120,7 +121,14 @@ class RecordModal extends Component {
 
           url = "/records-email/ir/sensitive/admin";
           break;
+        case "patientCare":
+          type = "patientCare";
+          data = this.props.data.dataObject;
+
+          url = "/records-email/ir/sensitive/admin/other";
+          break;
       }
+      console.log(url);
 
       let body = {
         type: type,
@@ -136,12 +144,18 @@ class RecordModal extends Component {
         .post(url, body)
         .then((response) => {
           const data = response.data;
-          this.props.handleClose();
+          console.log(response.data);
+          this.setState({
+            isButtonDisabled: false,
+            responseData: response.data,
+          });
+
           this.props.navigation.navigate("SuccessScreen");
         })
         .catch((error) => {
           const errorMsg = error.message;
           console.log(errorMsg);
+          this.setState({ isButtonDisabled: false });
         });
     };
     return (
@@ -187,15 +201,26 @@ class RecordModal extends Component {
               <div>
                 {this.state.emails.length > 0 ? (
                   this.state.emails.map((item, i) => (
-                    <div className="my-1" onClick={() => handleEmailRemove(i)}>
-                      {i + 1} ) {item}
-                    </div>
+                    <>
+                      <div
+                        className="my-1"
+                        onClick={() => handleEmailRemove(i)}
+                      >
+                        {i + 1} ) {item}
+                      </div>
+                      <div className="my-2 text-lg">
+                        (Click an email entry to remove from list)
+                      </div>
+                    </>
                   ))
                 ) : (
-                  <div className="my-2">Please Enter an email.</div>
+                  <div className="my-2 text-lg">Please Enter an email.</div>
                 )}
               </div>
             </div>
+            {this.state.responseData.success
+              ? this.state.responseData.msg
+              : this.state.responseData.msg}
             <button
               className="text-white bg-red-500 px-4 py-2 my-4 rounded"
               disabled={this.state.isButtonDisabled}

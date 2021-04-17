@@ -70,7 +70,7 @@ class OrganizationManagement extends Component {
         });
     };
     return (
-      <div className="container overflow-scroll">
+      <div className="container overflow-scroll mx-auto">
         <div className="mx-auto w-full text-center">
           <div>
             {this.state.submitting ? (
@@ -190,6 +190,21 @@ class OrganizationManagement extends Component {
                         {" "}
                         + Add Users
                       </button>
+                      <div>
+                        <button
+                          onClick={() =>
+                            this.setState({
+                              showModal: true,
+                              selectedValue: item.orgName,
+                              selectedValue2: item._id,
+                            })
+                          }
+                          className="bg-red-500 px-2 py-1  text-white rounded text-lg"
+                        >
+                          {" "}
+                          - Retire Organization
+                        </button>
+                      </div>
 
                       <div>Organization : {item.orgName}</div>
                       <div>
@@ -198,16 +213,22 @@ class OrganizationManagement extends Component {
                           <div className="text-md">
                             {item.franciseUsers.map((subItem, i) => (
                               <>
-                                {i + 1})
-                                <button
-                                  onClick={() =>
-                                    handleDelete(subItem._id, item._id)
-                                  }
-                                  className="bg-red-500 px-2 py-1 my-4 text-white rounded text-lg mx-2"
-                                >
-                                  {" "}
-                                  Remove
-                                </button>
+                                {i + 1}){console.log(subItem)}
+                                {subItem.role == 7 ? (
+                                  <div>COPORATE ACCOUNT</div>
+                                ) : (
+                                  <>
+                                    <button
+                                      onClick={() =>
+                                        handleDelete(subItem._id, item._id)
+                                      }
+                                      className="bg-red-500 px-2 py-1 my-4 text-white rounded text-lg mx-2"
+                                    >
+                                      {" "}
+                                      Remove
+                                    </button>
+                                  </>
+                                )}
                                 <div>{subItem.name}</div>
                                 <div>{subItem.email}</div>
                                 <div>{subItem.phone}</div>
