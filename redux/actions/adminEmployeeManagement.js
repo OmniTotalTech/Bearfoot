@@ -27,12 +27,14 @@ export const fetchAdminEmployeeByOrgError = (error) => {
 };
 
 export const fetchEmployeesByOrg = (orgName, string) => {
+  console.log(orgName);
   return (dispatch) => {
     dispatch(fetchAdminEmployeeByOrgRequest);
     if (orgName && string == "all") {
       api
         .get("users/orgEmployees/" + orgName + "/" + string)
         .then((response) => {
+          console.log(response);
           const data = response.data;
           dispatch(fetchAdminEmployeeByOrgSuccess(data));
         })

@@ -220,9 +220,7 @@ class AdminAreaHome extends Component {
                     {this.props.user.role == 7 ? (
                       <>
                         <Picker.Item label={"all"} value={"all"} />
-                        {console.log(
-                          this.props.adminEmployeeManagement.data.extraData
-                        )}
+
                         {this.props.adminEmployeeManagement.data.extraData
                           .length > 0 ? (
                           this.props.adminEmployeeManagement.data.extraData.map(

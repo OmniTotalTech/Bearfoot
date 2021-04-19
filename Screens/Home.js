@@ -53,13 +53,6 @@ const owner = [
     location: "OrganizationManagement",
     level: 6,
   },
-  {
-    icon: <QueryBuilderIcon className="text-2xl" />,
-    status: "Organization adsf asdf Management",
-    subtext: "",
-    location: "OrganizationManagement",
-    level: 6,
-  },
 ];
 const admin = [
   {

@@ -49,7 +49,6 @@ class RecordModal extends Component {
       var placeholder = [];
       var url = "";
       var images = [];
-      console.log(this.props.type);
 
       switch (this.props.type) {
         case "OpeningTaskChecklist":
@@ -118,7 +117,7 @@ class RecordModal extends Component {
           break;
         case "incidentReport":
           type = "incidentReport";
-
+          data = this.props.dataArrayState;
           url = "/records-email/ir/sensitive/admin";
           break;
         case "patientCare":
@@ -139,7 +138,6 @@ class RecordModal extends Component {
         images: images,
         dataObject: this.props.dataObject,
       };
-      console.log(body);
       await api
         .post(url, body)
         .then((response) => {
@@ -200,19 +198,21 @@ class RecordModal extends Component {
             <div className="my-2">
               <div>
                 {this.state.emails.length > 0 ? (
-                  this.state.emails.map((item, i) => (
-                    <>
-                      <div
-                        className="my-1"
-                        onClick={() => handleEmailRemove(i)}
-                      >
-                        {i + 1} ) {item}
-                      </div>
-                      <div className="my-2 text-lg">
-                        (Click an email entry to remove from list)
-                      </div>
-                    </>
-                  ))
+                  <>
+                    <div className="my-2 text-lg">
+                      (Click an email entry to remove from list)
+                    </div>
+                    {this.state.emails.map((item, i) => (
+                      <>
+                        <div
+                          className="my-1"
+                          onClick={() => handleEmailRemove(i)}
+                        >
+                          {i + 1} ) {item}
+                        </div>
+                      </>
+                    ))}
+                  </>
                 ) : (
                   <div className="my-2 text-lg">Please Enter an email.</div>
                 )}
