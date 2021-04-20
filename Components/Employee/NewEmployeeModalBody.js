@@ -91,7 +91,7 @@ class NewEmployeeModalBody extends Component {
           <div className="bg-white space-y-6">
             <div className="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-black-500 items-center">
               <h2 className="md:w-1/3 max-w-sm mx-auto">Account</h2>
-              <div className="md:w-2/3 max-w-sm mx-auto">
+              <div className="md:w-2/3 max-w-sm mx-auto p-2">
                 <label className="text-sm text-black-400">Email</label>
                 <div className="w-full inline-flex border">
                   <div className="pt-2 w-1/12 bg-black-100 bg-opacity-50">
@@ -158,7 +158,6 @@ class NewEmployeeModalBody extends Component {
               <h2 className="md:w-1/3 mx-auto max-w-sm">Group info</h2>
               <div className="md:w-2/3 mx-auto max-w-sm space-y-5">
                 <div>
-                  <label className="text-sm text-black-400">Organization</label>
                   <div className="w-full inline-flex border">
                     <div className="w-1/12 pt-2 bg-black-100">
                       <svg
@@ -175,18 +174,50 @@ class NewEmployeeModalBody extends Component {
                         />
                       </svg>
                     </div>
-                    <Picker
-                      selectedValue={this.state.selectedValue}
-                      style={{ height: 50, width: "100%" }}
-                      onValueChange={(v) => this.setSelectedValue(v)}
-                    >
-                      {this.props.user.organizations.map((item, i) => (
-                        <Picker.Item
-                          label={this.props.user.organizations[i].orgName}
-                          value={this.props.user.organizations[i].orgName}
-                        />
-                      ))}
-                    </Picker>
+                    <div className="ml-2 mb-8">
+                      <div className="text text-lg">Organization:</div>
+                      {console.log(this.props)}
+                      <Picker
+                        selectedValue={this.state.selectedValue}
+                        style={{ height: 50, width: 150 }}
+                        onValueChange={(v) =>
+                          this.setSelectedValue(
+                            v,
+                            this.props.adminEmployeeManagement.data.extraData
+                          )
+                        }
+                      >
+                        {" "}
+                        {this.props.user.role == 7 ? (
+                          <>
+                            <Picker.Item label={"all"} value={"all"} />
+
+                            {this.props.adminEmployeeManagement.data.extraData
+                              .length > 0 ? (
+                              this.props.adminEmployeeManagement.data.extraData.map(
+                                (item) => (
+                                  <Picker.Item
+                                    label={item.orgName}
+                                    value={item.orgName}
+                                  />
+                                )
+                              )
+                            ) : (
+                              <div></div>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            {this.props.user.organizations.map((item, i) => (
+                              <Picker.Item
+                                label={this.props.user.organizations[i].orgName}
+                                value={this.props.user.organizations[i].orgName}
+                              />
+                            ))}
+                          </>
+                        )}
+                      </Picker>
+                    </div>
                   </div>
                 </div>
               </div>{" "}

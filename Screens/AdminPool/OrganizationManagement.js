@@ -191,7 +191,7 @@ class OrganizationManagement extends Component {
                         + Add Users
                       </button>
                       <div>
-                        <button
+                        {/* <button
                           onClick={() =>
                             this.setState({
                               showModal: true,
@@ -203,7 +203,7 @@ class OrganizationManagement extends Component {
                         >
                           {" "}
                           - Retire Organization
-                        </button>
+                        </button> */}
                       </div>
 
                       <div>Organization : {item.orgName}</div>
@@ -215,7 +215,7 @@ class OrganizationManagement extends Component {
                               <>
                                 {i + 1}){console.log(subItem)}
                                 {subItem.role == 7 ? (
-                                  <div>COPORATE ACCOUNT</div>
+                                  <div>(CORPORATE ACCOUNT)</div>
                                 ) : (
                                   <>
                                     <button

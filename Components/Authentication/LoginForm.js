@@ -399,7 +399,11 @@ function LoginForm(props) {
                               onChange={(e) => setResetPassword(e.target.value)}
                               className="border w-full"
                             />
-                            {fmessage ? <div>{fmessage}</div> : <div></div>}
+                            {fmessage ? (
+                              <div className="text-white">{fmessage}</div>
+                            ) : (
+                              <div></div>
+                            )}
                             {resetPassword.length > 8 ? (
                               <button
                                 className="inline-flex text bg-red-700 p-2 rounded text-white my-2"

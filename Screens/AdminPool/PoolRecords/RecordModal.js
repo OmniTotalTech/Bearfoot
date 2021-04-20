@@ -695,7 +695,6 @@ const SensitiveModal2 = (data) => {
       <div className="p-4">
         <div className="my-8">
           <div className="text-xl">Date : {data.data.date}</div>
-          <div className="text-xl">Pool : {data.data.time}</div>
 
           {data.data.pool_id != null ? (
             <>

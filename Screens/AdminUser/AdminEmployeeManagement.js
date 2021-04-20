@@ -302,6 +302,7 @@ class AdminAreaHome extends Component {
                 selectedValue={this.state.selectedValue}
                 newUser={this.props.newUser}
                 auth={this.props.auth}
+                adminEmployeeManagement={this.props.adminEmployeeManagement}
               />
             </div>
           )}
