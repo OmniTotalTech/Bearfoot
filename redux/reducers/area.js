@@ -10,7 +10,7 @@ import {
 } from "../types/area";
 
 const initialState = {
-  data: {},
+  data: [],
   loading: false,
   error: null,
   pools: [],

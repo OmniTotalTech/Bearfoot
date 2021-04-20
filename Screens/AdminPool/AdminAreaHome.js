@@ -21,12 +21,20 @@ import TimeZone from "../../Components/TimeZone";
 import { Picker } from "@react-native-picker/picker";
 import api from "../../utils/api";
 import BackButton from "../../Components/BackButton";
+import { fetchEmployeesByOrg } from "../../redux/actions/adminEmployeeManagement";
 
 class AdminAreaHome extends Component {
   componentDidMount() {
     this.props.fetchArea();
+    if (this.props.user.role == 7) {
+      this.props.fetchEmployeesByOrg("all", "");
+    } else {
+      this.props.fetchEmployeesByOrg(
+        this.props.user.organizations[0].orgName,
+        ""
+      );
+    }
   }
-
   state = {
     isModalOpen: false,
     selectedTimeZone: "eastern",
@@ -137,18 +145,51 @@ class AdminAreaHome extends Component {
                               handleChange={(e) => this.handleChange(e)}
                             />
                           </label>
-                          <div className="text text-md mt-2">Organization:</div>
+                          <div className="text text-lg">Organization:</div>
                           <Picker
                             selectedValue={this.state.selectedValue}
                             style={{ height: 50, width: 150 }}
-                            onValueChange={(v) => this.setSelectedValue(v)}
+                            onValueChange={(v) =>
+                              this.setSelectedValue(
+                                v,
+                                this.props.adminEmployeeManagement.data
+                                  .extraData
+                              )
+                            }
                           >
-                            {this.props.user.organizations.map((item, i) => (
-                              <Picker.Item
-                                label={this.props.user.organizations[i].orgName}
-                                value={this.props.user.organizations[i].orgName}
-                              />
-                            ))}
+                            {" "}
+                            {this.props.user.role == 7 ? (
+                              <>
+                                {this.props.adminEmployeeManagement.data
+                                  .extraData.length > 0 ? (
+                                  this.props.adminEmployeeManagement.data.extraData.map(
+                                    (item) => (
+                                      <Picker.Item
+                                        label={item.orgName}
+                                        value={item.orgName}
+                                      />
+                                    )
+                                  )
+                                ) : (
+                                  <div></div>
+                                )}
+                              </>
+                            ) : (
+                              <>
+                                {this.props.user.organizations.map(
+                                  (item, i) => (
+                                    <Picker.Item
+                                      label={
+                                        this.props.user.organizations[i].orgName
+                                      }
+                                      value={
+                                        this.props.user.organizations[i].orgName
+                                      }
+                                    />
+                                  )
+                                )}
+                              </>
+                            )}
                           </Picker>
                         </div>
 
@@ -183,12 +224,15 @@ const mapStateToProps = (state) => {
   return {
     area: state.area,
     user: state.auth.user,
+    adminEmployeeManagement: state.adminEmployeeManagement,
   };
 };
 
 const mapDisptachToProps = (dispatch) => {
   return {
     fetchArea: () => dispatch(fetchMyAdminAreas()),
+    fetchEmployeesByOrg: (orgName, string) =>
+      dispatch(fetchEmployeesByOrg(orgName, string)),
   };
 };
 

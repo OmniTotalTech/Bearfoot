@@ -54,11 +54,19 @@ class AreaTable extends Component {
           console.log(err);
         });
     };
-    const data = this.props.area.data.foundArea;
+
     const columns = [
       {
         Header: "Name",
         accessor: "areaName",
+        style: {
+          //textAlign: "right",
+        },
+        // width: 100,
+      },
+      {
+        Header: "Org. Name",
+        accessor: "areaOrganization",
         style: {
           //textAlign: "right",
         },
@@ -108,12 +116,11 @@ class AreaTable extends Component {
         },
       },
     ];
-
     return (
       <div>
         <ReactTable
           className="-striped -highlight"
-          data={data}
+          data={this.props.area.data.result}
           filterable
           columns={columns}
           defaultPageSize={10}

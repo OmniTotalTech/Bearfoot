@@ -25,7 +25,7 @@ import { newUser } from "../../redux/actions/auth";
 import Modal from "react-modal";
 import EmployeeList from "../../Components/Admin/EmployeeList";
 import api from "../../utils/api";
-class AdminAreaHome extends Component {
+class AdminEmployeeManagement extends Component {
   componentDidMount() {
     this.props.fetchArea();
     if (this.props.user.role == 7) {
@@ -330,4 +330,7 @@ const mapDisptachToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDisptachToProps)(AdminAreaHome);
+export default connect(
+  mapStateToProps,
+  mapDisptachToProps
+)(AdminEmployeeManagement);
