@@ -28,11 +28,9 @@ class AdminSensitiveReports extends Component {
       if (this.state.dataArrayState.length < 1) {
         this.setState({ dataArrayState: body });
       }
-      console.log(this.state);
     };
 
     const handleUpdateState = (dataArray) => {
-      console.log(dataArray);
       let finalStructure = [];
       dataArray.forEach((element) => {
         let body = {
@@ -94,10 +92,11 @@ class AdminSensitiveReports extends Component {
           //textAlign: "right",
         },
         Cell: (porps) => {
+          console.log(porps.original);
           return (
             <div>
               <button className="bg-red-500 px-2 py-1 rounded text-white">
-                {porps.original.user_id.name}
+                {porps.original.user_id ? porps.original.user_id.name : null}
               </button>
             </div>
           );
