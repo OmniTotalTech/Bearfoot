@@ -93,25 +93,29 @@ class ClosingChecklist extends Component {
     };
 
     return (
-      <div className="container mx-auto overflow-scroll">
+      <div className="container mx-auto overflow-scroll mx-auto">
         {" "}
         <BackButton navigation={this.props.navigation} />
-        <div className="text-2xl p-4">Closing Checklist : </div>
-        <div className="text-lg">Closing Image Upload:</div>
-        <ImageUploader
-          withIcon={true}
-          buttonText="Choose images"
-          onChange={onDrop}
-          imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
-          maxFileSize={262144000}
-          withPreview={true}
-          withLabel={true}
-        />
+        <div className="text-2xl p-4 container mx-auto">
+          Closing Checklist :{" "}
+        </div>
         <DailyChecklist
           data={this.props.dailyChecklist.data}
           handleChange={(data) => handleChange(data)}
           onSubmit={submitChecklist}
         />
+        <div className="container max-w-md mx-auto">
+          <div className="text-lg">Closing Image Upload:</div>
+          <ImageUploader
+            withIcon={true}
+            buttonText="Choose images"
+            onChange={onDrop}
+            imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
+            maxFileSize={262144000}
+            withPreview={true}
+            withLabel={true}
+          />
+        </div>
       </div>
     );
   }

@@ -99,6 +99,7 @@ class PoolDetail extends Component {
     const poolEmployeeIds = this.props.pool.individualPool.pool_employees;
     const poolManagerIds = this.props.pool.individualPool.pool_managers;
 
+    console.log(this.props.pool);
     const checkArray = (userId, array) => {
       let result = array.includes(userId);
       return result;

@@ -28,13 +28,11 @@ import api from "../../utils/api";
 class AdminEmployeeManagement extends Component {
   componentDidMount() {
     this.props.fetchArea();
+    console.log(this.props.user);
+    console.log(this.state);
     if (this.props.user.role == 7) {
+      console.log(this.state);
       this.props.fetchEmployeesByOrg("all", "");
-    } else {
-      this.props.fetchEmployeesByOrg(
-        this.props.user.organizations[0].orgName,
-        ""
-      );
     }
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -55,6 +53,7 @@ class AdminEmployeeManagement extends Component {
     arrayForPicking: [],
   };
   setSelectedValue(value, array) {
+    console.log(value, array);
     if (array != null && array.length > 0) {
       this.setState({
         arrayForPicking: array,
@@ -73,10 +72,13 @@ class AdminEmployeeManagement extends Component {
   }
 
   runHOAFunc() {
-    this.props.fetchEmployeesByOrg(
-      this.props.user.organizations[0].orgName,
-      "HOA"
-    );
+    console.log(this.state);
+    if (this.state.selectedValue == undefined && this.props.user.role > 6) {
+      this.props.fetchEmployeesByOrg("any", "HOA");
+    } else {
+      this.props.fetchEmployeesByOrg(this.state.selectedValue, "HOA");
+    }
+
     this.setState({ addView: false, manageView: true });
   }
 
@@ -165,6 +167,47 @@ class AdminEmployeeManagement extends Component {
         {/* bg-gray-100 */}
         <section className="py-4 bg-opacity-50 h-screen">
           <div>
+            <div className="ml-2 mb-8">
+              <div className="text text-lg">Organization:</div>
+              <Picker
+                selectedValue={this.state.selectedValue}
+                style={{ height: 50, width: 150 }}
+                onValueChange={(v) =>
+                  this.setSelectedValue(
+                    v,
+                    this.props.adminEmployeeManagement.data.extraData
+                  )
+                }
+              >
+                {" "}
+                {this.props.user.role == 7 ? (
+                  <>
+                    {this.props.adminEmployeeManagement.data.extraData.length >
+                    0 ? (
+                      this.props.adminEmployeeManagement.data.extraData.map(
+                        (item) => (
+                          <Picker.Item
+                            label={item.orgName}
+                            value={item.orgName}
+                          />
+                        )
+                      )
+                    ) : (
+                      <div></div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {this.props.user.organizations.map((item, i) => (
+                      <Picker.Item
+                        label={this.props.user.organizations[i].orgName}
+                        value={this.props.user.organizations[i].orgName}
+                      />
+                    ))}
+                  </>
+                )}
+              </Picker>
+            </div>
             <div className="flex justify-center mb-4">
               <button
                 className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
@@ -204,49 +247,6 @@ class AdminEmployeeManagement extends Component {
                 >
                   Search
                 </button>
-                <div className="ml-2 mb-8">
-                  <div className="text text-lg">Organization:</div>
-                  <Picker
-                    selectedValue={this.state.selectedValue}
-                    style={{ height: 50, width: 150 }}
-                    onValueChange={(v) =>
-                      this.setSelectedValue(
-                        v,
-                        this.props.adminEmployeeManagement.data.extraData
-                      )
-                    }
-                  >
-                    {" "}
-                    {this.props.user.role == 7 ? (
-                      <>
-                        <Picker.Item label={"all"} value={"all"} />
-
-                        {this.props.adminEmployeeManagement.data.extraData
-                          .length > 0 ? (
-                          this.props.adminEmployeeManagement.data.extraData.map(
-                            (item) => (
-                              <Picker.Item
-                                label={item.orgName}
-                                value={item.orgName}
-                              />
-                            )
-                          )
-                        ) : (
-                          <div></div>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {this.props.user.organizations.map((item, i) => (
-                          <Picker.Item
-                            label={this.props.user.organizations[i].orgName}
-                            value={this.props.user.organizations[i].orgName}
-                          />
-                        ))}
-                      </>
-                    )}
-                  </Picker>
-                </div>
                 <View style={{ overflow: "scroll", maxHeight: "600px" }}>
                   {userInfoEmployeeMap}
                 </View>

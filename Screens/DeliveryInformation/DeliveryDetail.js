@@ -9,7 +9,7 @@ class DeliveryDetail extends Component {
   render() {
     return (
       <>
-        <div className="container bg-white p-4 m-4 overflow-scroll">
+        <div className="container bg-white p-4 m-4 overflow-scroll mx-auto">
           {this.props.route.params.item.accepted_by != null ? (
             <>
               <div className="container mx-auto text-center rounded-br-lg">
@@ -54,7 +54,13 @@ class DeliveryDetail extends Component {
               </>
             ))}
           </div>
+
           <div className="bg-white mt-4 rounded-br-lg rounded-bl-lg rounded-tr-lg ">
+            <div className="text-4xl">Final Comments:</div>
+
+            <div className="text-lg  p-2">
+              {this.props.route.params.item.final_commments}
+            </div>
             <div className="text-4xl">Pool Info:</div>
 
             <div className="text-2xl bold  p-2">

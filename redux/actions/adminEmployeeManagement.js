@@ -42,6 +42,20 @@ export const fetchEmployeesByOrg = (orgName, string) => {
           const errorMsg = error;
           dispatch(fetchAdminEmployeeByOrgError(errorMsg));
         });
+    } else if (string == "HOA") {
+      let url = "users/orgEmployees/" + orgName + "/" + "HOA";
+      console.log(url);
+
+      api
+        .get(url)
+        .then((response) => {
+          const data = response.data;
+          dispatch(fetchAdminEmployeeByOrgSuccess(data));
+        })
+        .catch((error) => {
+          const errorMsg = error;
+          dispatch(fetchAdminEmployeeByOrgError(errorMsg));
+        });
     } else {
       api
         .get("users/orgEmployees/" + orgName + "/" + string)

@@ -76,6 +76,7 @@ class BasicInformation extends Component {
   };
 
   runHOAFuncHome = async () => {
+    console.log(this.props);
     await api
       .get("/hoa/" + this.props.id)
       .then((response) => {
@@ -746,7 +747,7 @@ class BasicInformation extends Component {
                   Add An HOA account to this Pool
                 </button>
                 <div>
-                  {/* {this.state.hoasInPool && this.state.hoasInPool.length > 0 ? (
+                  {this.state.hoasInPool && this.state.hoasInPool.length > 0 ? (
                     <div className="container bg-white">
                       {this.state.hoasInPool.map((item, i) => (
                         <div className="my-2">
@@ -763,7 +764,7 @@ class BasicInformation extends Component {
                     </div>
                   ) : (
                     <div></div>
-                  )} */}
+                  )}
                 </div>
                 <Modal
                   {...this.props}

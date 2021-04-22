@@ -86,7 +86,11 @@ class EditUser extends Component {
               <div className="text-lg  p-2">{this.state.user.email}</div>
             </div>
           </div>
-          {this.state.user.role != 666 ? (
+          {this.state.user.role != 666 ||
+          this.state.user.role != 2 ||
+          this.state.user.role != 5 ||
+          this.state.user.role != 7 ||
+          this.state.user.role != 6 ? (
             <>
               <p className="text-md pt-4 -pb-1">Assign Role:</p>
               <br />

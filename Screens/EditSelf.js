@@ -4,10 +4,15 @@ import ImageUploader from "react-images-upload";
 import api from "../utils/api";
 import { loadUser } from "../redux/actions/auth";
 import BackButton from "../Components/BackButton";
+import { TouchableHighlightBase } from "react-native";
 class EditSelf extends Component {
   constructor(props) {
     super(props);
-    this.state = { pictures: [] };
+    this.state = {
+      pictures: [],
+      isUpdated: false,
+      value: this.props.user.name,
+    };
     this.onDrop = this.onDrop.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
   }
@@ -37,6 +42,24 @@ class EditSelf extends Component {
     this.props.loadUser();
   }
   render() {
+    const handleChange = (value, original) => {
+      if (value != original) {
+        this.setState({ isUpdated: true, value: value });
+      } else {
+        this.setState({ isUpdated: false, value: original });
+      }
+    };
+    const runUpdate = async () => {
+      const body = {
+        name: this.state.value,
+      };
+      await api
+        .patch("/users/" + this.props.user._id, body)
+        .then((response) => {
+          this.props.loadUser();
+        })
+        .catch((err) => console.log(err), this.props.loadUser());
+    };
     return (
       <>
         <BackButton navigation={this.props.navigation} />
@@ -46,7 +69,19 @@ class EditSelf extends Component {
           <div>
             <p className="text-xl bold"> Name:</p>
           </div>
-          <input className="mx-4 p-2" defaultValue={this.props.user.name} />
+          <input
+            className="mx-4 p-2"
+            onChange={(e) => handleChange(e.target.value, this.props.user.name)}
+            defaultValue={this.props.user.name}
+          />
+          {this.state.isUpdated ? (
+            <button
+              className="bg-red-500 text-white px-4 py-2"
+              onClick={runUpdate}
+            >
+              Update
+            </button>
+          ) : null}
           <div className="mt-2">
             <p className="text-xl bold">Phone:</p>
           </div>
