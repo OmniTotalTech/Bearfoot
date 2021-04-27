@@ -747,17 +747,24 @@ class BasicInformation extends Component {
                   Add An HOA account to this Pool
                 </button>
                 <div>
+                  {console.log(this.state.hoasInPool)}
                   {this.state.hoasInPool && this.state.hoasInPool.length > 0 ? (
                     <div className="container bg-white">
                       {this.state.hoasInPool.map((item, i) => (
                         <div className="my-2">
                           {i + 1})
-                          <div className="text-md">{item.userId.name}</div>
-                          <div className="text-md">{item.userId.email}</div>
                           <div className="text-md">
-                            {item.userId.organizations.map((item) => (
-                              <div>Organization : {item.orgName}</div>
-                            ))}
+                            {item.userId ? item.userId.name : null}
+                          </div>
+                          <div className="text-md">
+                            {item.userId ? item.userId.email : null}
+                          </div>
+                          <div className="text-md">
+                            {item.userId
+                              ? item.userId.organizations.map((item) => (
+                                  <div>Organization : {item.orgName}</div>
+                                ))
+                              : null}
                           </div>
                         </div>
                       ))}
@@ -931,8 +938,8 @@ class BasicInformation extends Component {
                   <div className="mx-auto container max-w-2xl mx-4">
                     <div className="bg-white space-y-6 mt-4 w-full">
                       <div className="text-md">Add a New Task</div>
-                      <input
-                        className="shadow-md w-full"
+                      <textarea
+                        rows={6}
                         value={this.state.taskText}
                         onSubmit={() => this.setState({ taskText: "" })}
                         onChange={(e) => handleChecklistInput(e)}
@@ -1006,7 +1013,8 @@ class BasicInformation extends Component {
                   <div className="mx-auto container max-w-2xl mx-4">
                     <div className="bg-white space-y-6 mt-4 w-full">
                       <div className="text-md">Add a New Task</div>
-                      <input
+                      <textarea
+                        rows={6}
                         className="shadow-md w-full"
                         value={this.state.taskText}
                         onSubmit={() => this.setState({ taskText: "" })}
