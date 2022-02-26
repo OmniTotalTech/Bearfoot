@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 export default class PoolInventoryCheckList extends Component {
   render() {
-<<<<<<< HEAD
     const handleEnter = (event) => {
-      if (event.key.toLowerCase() === "enter" || event.key.toLowerCase() === "return" ) {
+      if (event.key.toLowerCase() === "enter" || event.key.toLowerCase() === "return") {
         event.preventDefault();
 
         const form = event.target.form;
         const index = [...form].indexOf(event.target);
-        form.elements[index+1].focus()
+        form.elements[index + 1].focus()
 
       }
     }
 
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     return (
       <div className="container mx-auto overflow-scroll mt-4 max-w-2xl bg-gray-100">
         {" "}
@@ -24,52 +21,43 @@ export default class PoolInventoryCheckList extends Component {
           </p>
           {/* <p className="text-2xl px-4">Last submitted report:</p> */}
           <p></p>
-<<<<<<< HEAD
           <form>
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
-          {this.props.data ? (
-            this.props.data.inventoryList.map((item, i) => (
-              <>
-                <div key={i} className="px-6 w-3/4 text-md">
-                  {i + 1}. {item.name}
-                </div>
-                <div className="px-6 text-sm">{item.desc}</div>
-                <div className="px-6 text-sm">
-                  {item.unitType != "" ? (
-                    "( " + item.unitType + " )"
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
-                <p className="text-sm px-6">Actual Count:</p>
-                <p className="text-md px-6 m-2"></p>
-                <div className="w-full">
-                  <input
-                    type="tel"
-                    min="0"
-<<<<<<< HEAD
-                    onKeyDown={event => handleEnter(event)}
+            {this.props.data ? (
+              this.props.data.inventoryList.map((item, i) => (
+                <>
+                  <div key={i} className="px-6 w-3/4 text-md">
+                    {i + 1}. {item.name}
+                  </div>
+                  <div className="px-6 text-sm">{item.desc}</div>
+                  <div className="px-6 text-sm">
+                    {item.unitType != "" ? (
+                      "( " + item.unitType + " )"
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+                  <p className="text-sm px-6">Actual Count:</p>
+                  <p className="text-md px-6 m-2"></p>
+                  <div className="w-full">
+                    <input
+                      type="tel"
+                      min="0"
+                      onKeyDown={event => handleEnter(event)}
 
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
-                    onChange={(e, value) =>
-                      this.props.handleChange(e, item._id, item.name, item.desc)
-                    }
-                    className="text-right mx-6 mb-4 px-4 py-2 border-solid border-2 "
-                    type="number"
-                  />
-                </div>
-                <hr />
-              </>
-            ))
-          ) : (
-            <div></div>
-          )}
-<<<<<<< HEAD
+                      onChange={(e, value) =>
+                        this.props.handleChange(e, item._id, item.name, item.desc)
+                      }
+                      className="text-right mx-6 mb-4 px-4 py-2 border-solid border-2 "
+                      type="number"
+                    />
+                  </div>
+                  <hr />
+                </>
+              ))
+            ) : (
+              <div></div>
+            )}
           </form>
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           <div className="text-center pt-4">
             <button
               onClick={this.props.onSubmit}

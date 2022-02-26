@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateUser } from "../../redux/actions/auth";
 import api from "../../utils/api";
-<<<<<<< HEAD
 import { Alert, Modal, StyleSheet, Text, Pressable, View, ScrollView, Card } from "react-native";
 import BackButton from "../../Components/BackButton";
 class EditUser extends Component {
@@ -16,15 +15,6 @@ class EditUser extends Component {
     this.handlePoolSearchEnd = this.handlePoolSearchEnd.bind(this);
 
     this.handlePoolSearchText = this.handlePoolSearchText.bind(this);
-=======
-
-class EditUser extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { user: { name: "" }, value: 1 };
-    this.onChange = this.onChange.bind(this);
-    this.handleChange = this.handleChange.bind(this);
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   }
   componentDidMount() {
     this.loadUser();
@@ -53,10 +43,7 @@ class EditUser extends Component {
     const body = {
       role: this.state.value,
     };
-<<<<<<< HEAD
     console.log(body)
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     await api
       .patch("/users/" + this.props.route.params.id, body)
       .then((response) => {
@@ -65,7 +52,6 @@ class EditUser extends Component {
       .catch((err) => console.log(err));
     this.props.navigation.navigate("SuccessScreen");
   };
-<<<<<<< HEAD
 
   handleUserDelete(id) {
     api.patch(`/users/${id}`, { isDisabled: true, isDisabledReason: this.state.isDisabledReason })
@@ -116,11 +102,6 @@ class EditUser extends Component {
         })
       })
   }
-=======
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   roles = [
     {
       name: "Employee",
@@ -135,7 +116,6 @@ class EditUser extends Component {
       value: 4,
     },
   ];
-<<<<<<< HEAD
 
   sortChoices = ["employee", "manager"]
 
@@ -202,41 +182,6 @@ class EditUser extends Component {
 
                 <div className="bg-white mt-4 grid grid-cols-3">
                   {/* <select
-=======
-  render() {
-    console.log(this.props.route.params.id);
-    return (
-      <>
-        <div className="container mx-auto p-4 rounded-br-lg">
-          <p className="text-md">
-            You are now managing
-            <span className="text-red-500 mx-2">{this.state.user.name}</span>
-          </p>
-          <div className="container mx-auto text-center rounded-br-lg">
-            <div className="bg-white mt-4 rounded-br-lg rounded-bl-lg rounded-tr-lg ">
-              <div>
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Placeholder_no_text.svg"
-                  alt="..."
-                  style={{ height: "250px", width: "250px" }}
-                  className="shadow rounded-full w-full mx-auto"
-                />
-              </div>
-              <div className="text-lg  p-2">{this.state.user.name}</div>
-              <div className="text-lg  p-2">{this.state.user.phone}</div>
-              <div className="text-lg  p-2">{this.state.user.email}</div>
-            </div>
-          </div>
-          {this.state.user.role != 666 ||
-          this.state.user.role != 2 ||
-          this.state.user.role != 5 ||
-          this.state.user.role != 7 ||
-          this.state.user.role != 6 ? (
-            <>
-              <p className="text-md pt-4 -pb-1">Assign Role:</p>
-              <br />
-              <select
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                 onChange={this.handleChange}
                 value={this.state.value}
                 className=" text-sm"
@@ -244,7 +189,6 @@ class EditUser extends Component {
                 {this.roles.map((item) => (
                   <option value={item.value}>{item.name}</option>
                 ))}
-<<<<<<< HEAD
               </select> */}
                   <div className="card px-4 my-4 bg-gray-200  mx-2">
                     <div className="card-header text-red-500  ">
@@ -469,24 +413,6 @@ class EditUser extends Component {
       })
 
   }
-=======
-              </select>
-              <br />
-              <button
-                onClick={this.submit}
-                className="bg-red-500 p-2 m-2 text-white rounded"
-              >
-                Update
-              </button>
-            </>
-          ) : (
-            <div></div>
-          )}
-        </div>
-      </>
-    );
-  }
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 }
 
 const mapStateToProps = (state) => {

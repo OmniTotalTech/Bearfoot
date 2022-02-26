@@ -7,10 +7,6 @@ class TitleAndInput extends Component {
     const updateState = (e) => {
       this.props.onChange(e.target.value, item.value);
     };
-<<<<<<< HEAD
-=======
-    console.log(this.props);
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 
     return (
       <div className="md:w-2/3 max-w-sm mx-auto">
@@ -31,10 +27,7 @@ class TitleAndInput extends Component {
               className="w-11/12 focus:outline-none focus:text-gray-700 p-2"
               placeholder={item.placeholder}
               value={this.props.value}
-<<<<<<< HEAD
               defaultValue={item.defaultValue}
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               onChange={(e) => updateState(e)}
             />
           ) : (

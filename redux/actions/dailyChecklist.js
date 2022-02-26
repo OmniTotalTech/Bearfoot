@@ -32,10 +32,7 @@ export const fetchDailyChecklist = (id, type) => {
     api
       .get("/dailyChecklist/" + id + "/" + type)
       .then((response) => {
-<<<<<<< HEAD
         console.log(response.data)
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         const data = response.data;
         dispatch(fetchDailyChecklistSuccess(data));
       })

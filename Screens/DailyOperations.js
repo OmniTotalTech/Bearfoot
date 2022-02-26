@@ -8,20 +8,13 @@ import ForWeather from "../Components/ForWeather";
 import moment from "moment";
 import api from "../utils/api";
 import BackButton from "../Components/BackButton";
-<<<<<<< HEAD
 import DailyOperationsSection from "../Components/DailyOperationsSection";
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 class DailyOperations extends Component {
   state = {};
   render() {
     const updateState = (e, name) => {
       this.setState({ [name]: e });
-<<<<<<< HEAD
-        console.log( "idBeingPassed",this.props.route.params.id);
-=======
-
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
+      console.log("idBeingPassed", this.props.route.params.id);
       console.log(this.state);
     };
 
@@ -66,18 +59,11 @@ class DailyOperations extends Component {
           <div>
             {" "}
             <div className="max-w-2xl m-4 p-4 mx-auto">
-<<<<<<< HEAD
-                <DailyOperationsSection
-                    propsPreLoaded={this.props.propsPreLoaded}
-                    updateState={updateState}
-                />
-                <div className="text-center p-4">
-=======
-              <FormPart1Container updateState={updateState} />
-              <ForVomit updateState={updateState} />
-              <ForWeather updateState={updateState} />
+              <DailyOperationsSection
+                propsPreLoaded={this.props.propsPreLoaded}
+                updateState={updateState}
+              />
               <div className="text-center p-4">
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                 <button
                   onClick={handleSubmit}
                   className="bg-red-700 hover:bg-red-600 text-white font-semibold py-2 px-4 border border-red-400 rounded shadow"

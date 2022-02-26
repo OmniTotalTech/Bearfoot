@@ -5,10 +5,7 @@ import Modal from "react-modal";
 import NewEmployeeModalBodyNew from "../../Components/Employee/NewEmployeeModalBodyNew";
 import { newUser } from "../../redux/actions/auth";
 import { connect } from "react-redux";
-<<<<<<< HEAD
 import ReactTable from "react-table";
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 
 class OrganizationManagement extends Component {
   state = {
@@ -18,14 +15,10 @@ class OrganizationManagement extends Component {
     newUserText: "",
     selectedValue: "",
     selectedValue2: "",
-<<<<<<< HEAD
     selectedOrg: {},
     orgArray: [],
     showEmployeesListModal: false,
     showEditModal: false
-=======
-    orgArray: [],
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   };
   async componentDidMount() {
     await api
@@ -40,25 +33,17 @@ class OrganizationManagement extends Component {
   }
   render() {
     const reLoad = async () => {
-<<<<<<< HEAD
       console.log('LOADINGDAATA')
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
       await api
         .get("organizationManagement/")
         .then((response) => {
           console.log(response);
-<<<<<<< HEAD
           this.setState({ orgArray: response.data, showEmployeesListModal: false });
-=======
-          this.setState({ orgArray: response.data });
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         })
         .catch((error) => {
           const errorMsg = error.message;
         });
     };
-<<<<<<< HEAD
     const handleDisable = async (id) => {
       await api
         .delete("organizationManagement/" + id)
@@ -70,8 +55,6 @@ class OrganizationManagement extends Component {
         });
       reLoad();
     };
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     const handleDelete = async (id, id2) => {
       await api
         .delete("organizationManagement/" + id2 + "/" + id)
@@ -102,7 +85,6 @@ class OrganizationManagement extends Component {
           console.log(error.message);
         });
     };
-<<<<<<< HEAD
     const filterCaseInsensitive = (filter, row) => {
       const id = filter.pivotId || filter.id;
       const content = row[id];
@@ -203,8 +185,6 @@ class OrganizationManagement extends Component {
 
     ];
 
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     return (
       <div className="container overflow-scroll mx-auto">
         <div className="mx-auto w-full text-center">
@@ -240,11 +220,7 @@ class OrganizationManagement extends Component {
                     <button
                       onClick={
                         (() => this.setState({ submitting: true }),
-<<<<<<< HEAD
                           newOrgSubmit)
-=======
-                        newOrgSubmit)
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                       }
                       className="px-4 py-2 text-white bg-red-500 rounded"
                     >
@@ -282,68 +258,30 @@ class OrganizationManagement extends Component {
           <div>
             {this.state.orgArray.length > 0 ? (
               <div className="my-4">
-<<<<<<< HEAD
 
                 <Modal
                   {...this.props}
                   ariaHideApp={false}
                   isOpen={this.state.showEmployeesListModal}
-=======
-                <Modal
-                  {...this.props}
-                  ariaHideApp={false}
-                  isOpen={this.state.showModal}
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                   style={{ width: "100%" }}
                 >
                   <button
                     className="text bg-gray-600 p-2 rounded text-white"
                     onClick={() => {
-<<<<<<< HEAD
                       this.setState({ showEmployeesListModal: false });
-=======
-                      this.setState({ showModal: false });
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                     }}
                   >
                     close
                   </button>
                   <div className="w-full">
                     <div className="container">
-<<<<<<< HEAD
                       <h3>Name : {this.state.selectedOrg.orgName}</h3>
-=======
-                      <NewEmployeeModalBodyNew
-                        user={this.props.user}
-                        selectedValue={this.state.selectedValue}
-                        selectedValue2={this.state.selectedValue2}
-                        newUser={this.props.newUser}
-                        auth={this.props.auth}
-                        org={this.state.selectedValue}
-                        setLocalState={(value) =>
-                          this.setState({ modalMessage: value })
-                        }
-                        reLoad={reLoad}
-                        closeModal={() => this.setState({ showModal: false })}
-                      />
-                    </div>
-                  </div>
-                </Modal>
-                {this.state.orgArray.map((item) => (
-                  <>
-                    <div className="bg-gray-700 text-black-700 text-white  text-lg px-4 py-2 my-4">
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                       <button
                         onClick={() =>
                           this.setState({
                             showModal: true,
-<<<<<<< HEAD
                             selectedValue: this.state.selectedOrg.orgName,
                             selectedValue2: this.state.selectedOrg._id,
-=======
-                            selectedValue: item.orgName,
-                            selectedValue2: item._id,
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                           })
                         }
                         className="bg-red-500 px-2 py-1 my-4 text-white rounded text-lg"
@@ -351,7 +289,6 @@ class OrganizationManagement extends Component {
                         {" "}
                         + Add Users
                       </button>
-<<<<<<< HEAD
                       {this.state.showModal ? (
                         <>
                           <NewEmployeeModalBodyNew
@@ -441,68 +378,10 @@ class OrganizationManagement extends Component {
                   }}
                 </ReactTable>
 
-=======
-                      <div>
-                        {/* <button
-                          onClick={() =>
-                            this.setState({
-                              showModal: true,
-                              selectedValue: item.orgName,
-                              selectedValue2: item._id,
-                            })
-                          }
-                          className="bg-red-500 px-2 py-1  text-white rounded text-lg"
-                        >
-                          {" "}
-                          - Retire Organization
-                        </button> */}
-                      </div>
-
-                      <div>Organization : {item.orgName}</div>
-                      <div>
-                        Organization Users :
-                        {item.franciseUsers.length > 0 ? (
-                          <div className="text-md">
-                            {item.franciseUsers.map((subItem, i) => (
-                              <>
-                                {i + 1}){console.log(subItem)}
-                                {subItem.role == 7 ? (
-                                  <div>(CORPORATE ACCOUNT)</div>
-                                ) : (
-                                  <>
-                                    <button
-                                      onClick={() =>
-                                        handleDelete(subItem._id, item._id)
-                                      }
-                                      className="bg-red-500 px-2 py-1 my-4 text-white rounded text-lg mx-2"
-                                    >
-                                      {" "}
-                                      Remove
-                                    </button>
-                                  </>
-                                )}
-                                <div>{subItem.name}</div>
-                                <div>{subItem.email}</div>
-                                <div>{subItem.phone}</div>
-                              </>
-                            ))}
-                          </div>
-                        ) : (
-                          <div>No Admin Users Added Yet...</div>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                ))}
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               </div>
             ) : (
               <div>No Orgs Created Yet.</div>
             )}
-<<<<<<< HEAD
-
-=======
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           </div>
         </div>
       </div>

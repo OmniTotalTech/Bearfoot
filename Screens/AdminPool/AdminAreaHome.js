@@ -64,10 +64,6 @@ class AdminAreaHome extends Component {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-<<<<<<< HEAD
-=======
-      console.log(this.state);
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 
       const body = {
         areaName: this.state.option,
@@ -91,10 +87,6 @@ class AdminAreaHome extends Component {
       },
     ];
     const onChange = (e, value) => {
-<<<<<<< HEAD
-=======
-      console.log(value, e);
->>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
       this.setState({ option: e });
     };
 
