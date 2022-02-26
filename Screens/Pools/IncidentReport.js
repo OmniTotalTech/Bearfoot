@@ -27,7 +27,22 @@ class IncidentReport extends Component {
         >
           {" "}
           <BackButton navigation={this.props.navigation} />
+<<<<<<< HEAD
 
+=======
+          <Stepper
+            steps={[
+              { label: "1" },
+              { label: "2" },
+              { label: "3" },
+              { label: "4" },
+              { label: "5" },
+              { label: "6" },
+              { label: "7" },
+            ]}
+            activeStep={this.state.activeStep}
+          />
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           <IncidentReportForm
             increase={this.increase}
             decrease={this.decrease}

@@ -32,9 +32,15 @@ class SearchAndAssign extends Component {
       await api
         .get(
           "users/orgEmployees/" +
+<<<<<<< HEAD
           this.props.orgName +
           "/" +
           this.state.searchTerm
+=======
+            this.props.orgName +
+            "/" +
+            this.state.searchTerm
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         )
         .then((response) => {
           console.log(response);
@@ -46,7 +52,16 @@ class SearchAndAssign extends Component {
     } else {
       console.log(this.state);
       await api
+<<<<<<< HEAD
         .get(`users/orgEmployees/${this.props.orgName}/${this.state.searchTerm}/search`)
+=======
+        .get(
+          "users/orgEmployees/" +
+            this.props.orgName +
+            "/" +
+            this.state.searchTerm
+        )
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         .then((response) => {
           console.log(response);
           this.setState({ employeeList: response.data.data });

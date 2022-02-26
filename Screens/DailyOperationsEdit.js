@@ -66,7 +66,11 @@ export default class DailyOperationsEdit extends Component {
         formValue: "timeClosed",
       },
       {
+<<<<<<< HEAD
         name: "Time Reopened",
+=======
+        name: "timeReoped",
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         formValue: "timeReopened",
       },
       {

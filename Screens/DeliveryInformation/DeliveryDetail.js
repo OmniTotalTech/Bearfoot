@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import api from "../../utils/api";
+<<<<<<< HEAD
 import BackButton from "../../Components/BackButton";
 
 
@@ -58,12 +59,23 @@ class DeliveryDetail extends Component {
       .catch((err) => console.log(err))
 
   }
+=======
+
+class DeliveryDetail extends Component {
+  componentDidMount() {
+    console.log(this.props.route.params.item);
+  }
+
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   render() {
     return (
       <>
         <div className="container bg-white p-4 m-4 overflow-scroll mx-auto">
+<<<<<<< HEAD
           <BackButton navigation={this.props.navigation} />
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           {this.props.route.params.item.accepted_by != null ? (
             <>
               <div className="container mx-auto text-center rounded-br-lg">
@@ -85,6 +97,7 @@ class DeliveryDetail extends Component {
                   </div>
                 </div>
               </div>
+<<<<<<< HEAD
               <select>
                 <optgroup label="Choose One">
                   {this.state.driverArray.map((item) => (
@@ -119,6 +132,11 @@ class DeliveryDetail extends Component {
               ) : (<></>)}
 
             </>
+=======
+            </>
+          ) : (
+            <div>None Currently Assigned</div>
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           )}
           <div className="container mx-auto">
             {" "}

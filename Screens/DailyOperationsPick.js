@@ -1,94 +1,94 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import api from "../utils/api";
 
 const DailyOperationsPick = (props) => {
 
-  const [subPools, setSubPools] = React.useState([]);
-  const [selectedSubPool, setSelectedSubPool] = React.useState(undefined);
+    const [subPools, setSubPools] = React.useState([]);
+    const [selectedSubPool, setSelectedSubPool] = React.useState(undefined);
 
 
     useEffect(() => {
         GetSubPools(props.route.params.id)
-    },[])
+    }, [])
 
-  const GetSubPools =  async (id) => {
+    const GetSubPools = async (id) => {
 
-    return await api
-        .get("/subPools/" + id)
-        .then((response) => {
-            console.log(response.data)
-          setSubPools(response.data)
-        })
-        .catch((error) => {
-          const errorMsg = error.message;
-        })
+        return await api
+            .get("/subPools/" + id)
+            .then((response) => {
+                console.log(response.data)
+                setSubPools(response.data)
+            })
+            .catch((error) => {
+                const errorMsg = error.message;
+            })
 
-  }
+    }
 
     function handleChange(e) {
-      console.log(e.target.value)
+        console.log(e.target.value)
         setSelectedSubPool(e.target.value)
     }
 
     const SubPoolSelection = (props) => {
 
-      return (
-          <>
+        return (
+            <>
 
 
-              {/* Begining of div Container */}
-              <div className="container mx-auto bg-white">
+                {/* Begining of div Container */}
+                <div className="container mx-auto bg-white">
 
-              {/* map through, or give default message */}
-              {subPools && subPools.length > 0 ? (
-                  <div className={"w-full"}>
-                      <p className="text-xl">
-                        Selecting a pool will take you to it's <span className="bold">Daily Operation</span> edit page.
-                      </p>
-                      <h1 style={{fontSize: 32}}>
-                          Pool Assignment:
-                      </h1>
-                      {/*Select Statement sets the local state with the entire pool object received from api*/}
-                      <select onChange={handleChange} value={selectedSubPool} className="selectpicker">
-                            <option value={subPools[0]._id}>Select a Sub Pool</option>
-                          {subPools.map((pool,index) => (
-                                      <option  value={pool._id.toString()}>{pool.subPoolName}</option>
-                          ))}
+                    {/* map through, or give default message */}
+                    {subPools && subPools.length > 0 ? (
+                        <div className={"w-full"}>
+                            <p className="text-xl">
+                                Selecting a pool will take you to it's <span className="bold">Daily Operation</span> edit page.
+                            </p>
+                            <h1 style={{ fontSize: 32 }}>
+                                Pool Assignment:
+                            </h1>
+                            {/*Select Statement sets the local state with the entire pool object received from api*/}
+                            <select onChange={handleChange} value={selectedSubPool} className="selectpicker">
+                                <option value={subPools[0]._id}>Select a Sub Pool</option>
+                                {subPools.map((pool, index) => (
+                                    <option value={pool._id.toString()}>{pool.subPoolName}</option>
+                                ))}
 
-                      </select>
-                      {/*  Dont show button unless you have it defined */}
-                      {selectedSubPool == undefined ? (<></>) :(
-                          <button onClick={() =>
-                              props.navigation.navigate("DailyOperations", {
-                                  id: selectedSubPool,
-                                  isNew: true,
-                              })
-                          }
-                                  className="bg-red-500 text-white rounded px-4 py-2">
-                              <p>
-                                  Edit Daily Operations
-                              </p>
-                          </button>
-                      ) }
-                  </div>
-              ) : (
-                  <div>
-                      <p className="text-danger">Sorry, we could not get any pools for this location.</p>
-                  </div>
-              )}
+                            </select>
+                            {/*  Dont show button unless you have it defined */}
+                            {selectedSubPool == undefined ? (<></>) : (
+                                <button onClick={() =>
+                                    props.navigation.navigate("DailyOperations", {
+                                        id: selectedSubPool,
+                                        isNew: true,
+                                    })
+                                }
+                                    className="bg-red-500 text-white rounded px-4 py-2">
+                                    <p>
+                                        Edit Daily Operations
+                                    </p>
+                                </button>
+                            )}
+                        </div>
+                    ) : (
+                        <div>
+                            <p className="text-danger">Sorry, we could not get any pools for this location.</p>
+                        </div>
+                    )}
 
 
-              </div>
-          {/*  End of Div Container  */}
+                </div>
+                {/*  End of Div Container  */}
 
-          </>
-      )
-  }
+            </>
+        )
+    }
 
 
     return (
         <>
-        <SubPoolSelection {...props} />
+            <SubPoolSelection {...props} />
 
         </>
     )

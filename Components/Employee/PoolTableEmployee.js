@@ -68,7 +68,11 @@ class PoolTableEmployee extends Component {
           data={this.props.data.data}
           filterable
           columns={columns}
+<<<<<<< HEAD
           defaultPageSize={ this.props.data.data > 35 ? 50 : 25 }
+=======
+          defaultPageSize={10}
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         >
           {(state, makeTable, instance) => {
             this.reactTable = state.pageRows.map((modem) => {

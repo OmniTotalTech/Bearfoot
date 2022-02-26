@@ -25,7 +25,10 @@ import { newUser } from "../../redux/actions/auth";
 import Modal from "react-modal";
 import EmployeeList from "../../Components/Admin/EmployeeList";
 import api from "../../utils/api";
+<<<<<<< HEAD
 import ReactTable from "react-table";
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 class AdminEmployeeManagement extends Component {
   componentDidMount() {
     this.props.fetchArea();
@@ -153,6 +156,7 @@ class AdminEmployeeManagement extends Component {
       </div>
     );
 
+<<<<<<< HEAD
     const navToEditUser = (id) => {
       this.props.navigation.navigate("EditUser", { id: id });
     };
@@ -201,6 +205,8 @@ class AdminEmployeeManagement extends Component {
       },
 
     ];
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     const userInfoEmployeeMap = (
       <div>
         <FlatList
@@ -286,12 +292,17 @@ class AdminEmployeeManagement extends Component {
           </div>
           {this.state.manageView != false ? (
             <div>
+<<<<<<< HEAD
               <div className="container mx-auto max-w-4xl ">
+=======
+              <div className="container mx-auto max-w-4xl m-4 ">
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                 <div className="text text-3xl my-2">
                   Employees You Can Manage:
                 </div>
                 <button
                   onClick={this.handleSubmitModal}
+<<<<<<< HEAD
                   className="bg-red-500 text-white px-4 py-2 m-2"
                 >
                   Search
@@ -314,6 +325,15 @@ class AdminEmployeeManagement extends Component {
                 {/*<View style={{ overflow: "scroll", maxHeight: "400px" }}>*/}
                 {/*  {userInfoEmployeeMap}*/}
                 {/*</View>*/}
+=======
+                  className="bg-red-500 text-white px-4 py-2"
+                >
+                  Search
+                </button>
+                <View style={{ overflow: "scroll", maxHeight: "600px" }}>
+                  {userInfoEmployeeMap}
+                </View>
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                 <Modal
                   {...this.props}
                   isOpen={this.state.isModalOpen}

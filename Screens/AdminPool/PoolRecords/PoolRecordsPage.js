@@ -89,6 +89,7 @@ class PoolRecordsPage extends Component {
         text: "Chemical Logs",
       },
     ];
+<<<<<<< HEAD
     const filterCaseInsensitive = (filter, row) => {
       const id = filter.pivotId || filter.id;
       const content = row[id];
@@ -103,13 +104,19 @@ class PoolRecordsPage extends Component {
 
       return true;
     };
+=======
+
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     const columns = [
       {
         Header: "Type Of Record",
         accessor: "recordType",
         style: {
           //textAlign: "right",
+<<<<<<< HEAD
           fontSize: 24
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         },
         Cell: (porps) => {
           return <div className="text-md">{formatTitles(porps.original)}</div>;
@@ -121,7 +128,10 @@ class PoolRecordsPage extends Component {
         accessor: "date",
         style: {
           //textAlign: "right",
+<<<<<<< HEAD
           fontSize: 24
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         },
 
         // width: 100,
@@ -131,7 +141,10 @@ class PoolRecordsPage extends Component {
         accessor: "time",
         style: {
           //textAlign: "right",
+<<<<<<< HEAD
           fontSize: 24
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         },
 
         // width: 100,
@@ -140,6 +153,7 @@ class PoolRecordsPage extends Component {
         Header: "Actions",
         filterable: false,
         sortable: false,
+<<<<<<< HEAD
         width: 200,
         style: {
           //textAlign: "right",
@@ -150,6 +164,14 @@ class PoolRecordsPage extends Component {
             <div className="w-100">
               <button
                 className="bg-red-500 w-100 text-white rounded btn btn-block  mx-auto px-4 font-bold "
+=======
+        resizable: false,
+        Cell: (porps) => {
+          return (
+            <div>
+              <button
+                className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                 onClick={(e) => {
                   console.log("here is");
                   console.log(porps.original);
@@ -162,6 +184,10 @@ class PoolRecordsPage extends Component {
             </div>
           );
         },
+<<<<<<< HEAD
+=======
+        width: 100,
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         maxWidth: 100,
         minWidth: 100,
       },
@@ -195,15 +221,24 @@ class PoolRecordsPage extends Component {
               </FormControl>
             </div>
           </div>
+<<<<<<< HEAD
           <div className="container mx-auto">
+=======
+          <div className="container max-w-2xl mx-auto">
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
             <ReactTable
               className="-striped -highlight"
               data={this.props.records.data}
               filterable
+<<<<<<< HEAD
               defaultFilterMethod={filterCaseInsensitive}
               columns={columns}
               pageSize={this.props.records.length}
               defaultPageSize={50}
+=======
+              columns={columns}
+              defaultPageSize={10}
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
             >
               {(state, makeTable, instance) => {
                 this.reactTable = state.pageRows.map((modem) => {

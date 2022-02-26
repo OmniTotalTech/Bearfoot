@@ -75,12 +75,20 @@ class NewEmployeeModalBody extends Component {
         console.log(res.data);
         this.props.setLocalState(res.data.message);
         this.props.reLoad();
+<<<<<<< HEAD
+=======
+
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         this.props.closeModal();
       })
       .catch((error) => {
         console.log(error);
 
+<<<<<<< HEAD
         this.setState({ responseMsg: "Email or name is invalid. Check your submission" });
+=======
+        this.setState({ responseMsg: res.data.message });
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 
         console.log(error);
       });
@@ -215,7 +223,11 @@ class NewEmployeeModalBody extends Component {
             </div>
             <hr /> {this.state.successMessage ? "User has been submitted" : ""}
             {this.props.auth.otherMessage ===
+<<<<<<< HEAD
               "Request failed with status code 500"
+=======
+            "Request failed with status code 500"
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               ? "something went wrong. check to make sure user doesn't already exist, and that your information is entered correctly"
               : ""}
             <div className="w-full p-4 text-right text-black-500">

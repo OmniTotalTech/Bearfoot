@@ -389,18 +389,18 @@ export default class AddInventoryModal extends Component {
                       <>
                         <p>please check items before continuing</p>
                         <button
-                          className="text-white bg-red-500 px-4 py-2 my-4"
+                          className="text-white bg-red-500 px-4 py-2"
                           onClick={() => this.submitForm(event, this.props)}
                         >
-                          <p style={{ fontSize: 28 }} className="bold">Click here to submit your special order request.</p>
+                          Submit New Order .
                         </button>
                       </>
                     ) : (
                       <button
-                        className="text-white bg-red-500 px-4 py-2 my-4"
+                        className="text-white bg-red-500 px-4 py-2"
                         onClick={() => runPreapprove()}
                       >
-                        <p style={{ fontSize: 28 }} className="bold">You are about to submit. Are you sure?</p>
+                        You are About to Submit. Are You Sure?
                       </button>
                     )}
                   </div>

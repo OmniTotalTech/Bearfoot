@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 export default class PoolInventoryCheckList extends Component {
   render() {
+<<<<<<< HEAD
     const handleEnter = (event) => {
       if (event.key.toLowerCase() === "enter" || event.key.toLowerCase() === "return" ) {
         event.preventDefault();
@@ -12,6 +13,8 @@ export default class PoolInventoryCheckList extends Component {
       }
     }
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     return (
       <div className="container mx-auto overflow-scroll mt-4 max-w-2xl bg-gray-100">
         {" "}
@@ -21,7 +24,10 @@ export default class PoolInventoryCheckList extends Component {
           </p>
           {/* <p className="text-2xl px-4">Last submitted report:</p> */}
           <p></p>
+<<<<<<< HEAD
           <form>
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           {this.props.data ? (
             this.props.data.inventoryList.map((item, i) => (
               <>
@@ -42,8 +48,11 @@ export default class PoolInventoryCheckList extends Component {
                   <input
                     type="tel"
                     min="0"
+<<<<<<< HEAD
                     onKeyDown={event => handleEnter(event)}
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                     onChange={(e, value) =>
                       this.props.handleChange(e, item._id, item.name, item.desc)
                     }
@@ -57,7 +66,10 @@ export default class PoolInventoryCheckList extends Component {
           ) : (
             <div></div>
           )}
+<<<<<<< HEAD
           </form>
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           <div className="text-center pt-4">
             <button
               onClick={this.props.onSubmit}

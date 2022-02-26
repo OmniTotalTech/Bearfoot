@@ -3,30 +3,52 @@ import api from "../../utils/api";
 import ChemicalLogFormContainer from "./ChemicalLogFormContainer";
 import { connect } from "react-redux";
 import BackButton from "../../Components/BackButton";
+<<<<<<< HEAD
 import moment from "moment";
 
 class ChemicalLog extends Component {
   state = { timeArray: [], formObject: {}, subPools: [], selectedSubPool: "", foundSubPoolRecord: {data: []} };
+=======
+
+class ChemicalLog extends Component {
+  state = { timeArray: [], formObject: {}, subPools: [], selectedSubPool: "" };
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 
   async componentDidMount() {
     await api
       .get("/subPools/" + this.props.route.params.id)
       .then((response) => {
         this.setState({ subPools: response.data });
+<<<<<<< HEAD
+=======
+        console.log(this.state);
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
       })
       .catch((error) => {
         const errorMsg = error.message;
       });
 
+<<<<<<< HEAD
+=======
+    console.log(this.state);
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   }
 
   render() {
     const onSubmit = async (body) => {
+<<<<<<< HEAD
       let url = "/uploadCLDetailsPart2";
       await api
         .post(url, body)
         .then((response) => {
          console.log(response.data);
+=======
+      let url = "uploadCLDetailsPart2";
+
+      await api
+        .post(url, body)
+        .then((response) => {
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           this.props.navigation.navigate("SuccessScreen");
         })
         .catch((error) => {
@@ -55,6 +77,7 @@ class ChemicalLog extends Component {
           .catch((error) => {
             const errorMsg = error.message;
           });
+<<<<<<< HEAD
         await api
             .get(`/chemLogs/getOldest/oneRecord/${value}/${moment().format("YYYY-MM-DD")}`)
             .then((response) => {
@@ -66,6 +89,8 @@ class ChemicalLog extends Component {
             .catch((error) => {
               const errorMsg = error.message;
             });
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
       }
     };
 
@@ -109,7 +134,10 @@ class ChemicalLog extends Component {
             userId={this.props.user._id}
             onSubmit={onSubmit}
             timeArray={this.state.timeArray}
+<<<<<<< HEAD
             foundSubPoolRecord={this.state.foundSubPoolRecord}
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
             id={this.props.route.params.id}
           />
         )}

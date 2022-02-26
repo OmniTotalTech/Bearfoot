@@ -2,8 +2,11 @@ import React from "react";
 import SignaturePad from "react-signature-canvas";
 import moment from "moment";
 import api from "../../utils/api";
+<<<<<<< HEAD
 import { Stepper } from "react-form-stepper";
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 const IncidentReportForm = (props) => {
   ///Patient information set Step 1
   const [patientName, setPatientName] = React.useState("");
@@ -21,7 +24,11 @@ const IncidentReportForm = (props) => {
   const [ems, setEms] = React.useState(false);
   const [hospital, setHospital] = React.useState(false);
   const [hospitalName, setHospitalName] = React.useState("");
+<<<<<<< HEAD
   const [legalAdult, setLegalAdult] = React.useState('false');
+=======
+  const [legalAdult, setLegalAdult] = React.useState(false);
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   const [location, setlocation] = React.useState("");
   const [injured, setInjured] = React.useState(false);
   const [detailedDescription, setDetailedDescription] = React.useState("");
@@ -47,7 +54,10 @@ const IncidentReportForm = (props) => {
 
   // witness Information Step 5
   const [sampleArray, setSampleArray] = React.useState([]);
+<<<<<<< HEAD
   const [witnessArray, setWitnessArray] = React.useState([])
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   const [witnessName, setWitnessName] = React.useState("");
   const [witnessPhone, setWitnessPhone] = React.useState("");
   const [witnessAddress, setWitnessAddress] = React.useState("");
@@ -62,6 +72,7 @@ const IncidentReportForm = (props) => {
   const [manFilerSignature, setTrimmedDataURL2] = React.useState("");
   const [supName, setSupName] = React.useState("");
   const [supFilerSignature, setTrimmedDataURL3] = React.useState("");
+<<<<<<< HEAD
 
   const [activeStep4Head, setActiveStep4Head] = React.useState(false)
   const [activeStep4Torso, setActiveStep4Torso] = React.useState(false)
@@ -71,14 +82,19 @@ const IncidentReportForm = (props) => {
   const [activeStep4Burns, setActiveStep4Burns] = React.useState(false)
   const [activeStep4SuddenIllness, setActiveStep4SuddenIllness] = React.useState(false)
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   // Name of Facility Manager
   // Signature of Facility Manager
   // Name of Supervisor
 
   //Injuries List Step 3
   const injures = {
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     Head: [
       "Skull",
       "Right Ear",
@@ -161,11 +177,14 @@ const IncidentReportForm = (props) => {
     setTrimmedDataURL3(sigPad3.getTrimmedCanvas().toDataURL("image/png"));
   };
 
+<<<<<<< HEAD
   const handleAdultChange = (e) => {
     console.log(e.target.value)
     setLegalAdult(e.target.value);
     console.log(legalAdult)
   }
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   const submitFormIR = async (e) => {
     e.preventDefault();
     let body1 = {
@@ -234,6 +253,7 @@ const IncidentReportForm = (props) => {
       });
   };
 
+<<<<<<< HEAD
   function LegalAdultChoice(props) {
     console.log(props);
     if (props.legalAdult == 'false') {
@@ -293,6 +313,53 @@ const IncidentReportForm = (props) => {
     <>
       <div className=" mx-auto container">
 
+=======
+  return (
+    <>
+      <div className=" mx-auto container text-center max-w-3xl">
+        {props.activeStep == 1 ? (
+          <>
+            <div className="display-inline mx-auto">
+              <button
+                className="p-4 text-white bg-red-500 rounded"
+                onClick={() => props.increase()}
+              >
+                Next
+              </button>
+            </div>
+          </>
+        ) : props.activeStep > 1 && props.activeStep < 6 ? (
+          <div className="display-inline mx-auto">
+            <button
+              className="p-4 text-white bg-red-500 rounded mx-2 "
+              onClick={() => props.decrease()}
+            >
+              Previous
+            </button>
+            <button
+              className="p-4 text-white bg-red-500 rounded mx-2 "
+              onClick={() => props.increase()}
+            >
+              Next
+            </button>
+          </div>
+        ) : (
+          <div className="display-inline mx-auto">
+            <button
+              className="p-4 text-white bg-red-500 rounded mx-2"
+              onClick={() => props.decrease()}
+            >
+              Previous
+            </button>
+            <button
+              className="p-4 text-white bg-red-500 rounded mx-2 "
+              onClick={submitFormIR}
+            >
+              Final
+            </button>
+          </div>
+        )}
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         <div className="container p-4 text-2xl mx-auto">Patient Care Form</div>
         {props.activeStep == 1 ? (
           <div className="container p-4 mx-auto">
@@ -397,7 +464,11 @@ const IncidentReportForm = (props) => {
         ) : props.activeStep == 2 ? (
           <div className="container p-4">
             <div>
+<<<<<<< HEAD
               <label className="text-md">Was the EMS Contacted</label>
+=======
+              <label className="text-md">Was the EMS Contacted?</label>
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               <br />
               <input
                 type="checkbox"
@@ -407,7 +478,11 @@ const IncidentReportForm = (props) => {
             </div>
             <div>
               <label className="text-md">
+<<<<<<< HEAD
                 Did the patient go to the hospital
+=======
+                Did the patient go to the hospital?
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               </label>
               <br />
               <input
@@ -416,6 +491,7 @@ const IncidentReportForm = (props) => {
                 onChange={(e) => setHospital(e.target.checked)}
               />
             </div>
+<<<<<<< HEAD
             {hospital ? (
               <div>
                 <label className="text-md">Name Of Hospital:</label>
@@ -428,10 +504,22 @@ const IncidentReportForm = (props) => {
               </div>
             ) : (<></>)}
 
+=======
+            <div>
+              <label className="text-md">Name Of Hospital:</label>
+              <br />
+              <input
+                type="text"
+                value={hospitalName}
+                onChange={(e) => setHospitalName(e.target.value)}
+              />
+            </div>
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
             <br />
             <div>
               <label className="text-md">Is the patient a legal adult?</label>
               <br />
+<<<<<<< HEAD
               <select
                 value={legalAdult}
                 onChange={handleAdultChange}>
@@ -444,6 +532,14 @@ const IncidentReportForm = (props) => {
 
             </div>
 
+=======
+              <input
+                type="checkbox"
+                value={legalAdult}
+                onChange={(e) => setLegalAdult(e.target.checked)}
+              />
+            </div>
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
             <br />
             <div>
               <label className="text-md">Was the patient injured?</label>
@@ -515,6 +611,7 @@ const IncidentReportForm = (props) => {
               {" "}
               <label className="text-xl my-8">Injury Type</label>
             </div>
+<<<<<<< HEAD
             <input
               type="checkbox"
               className="border-2 shadow-xl mx-2 "
@@ -727,6 +824,130 @@ const IncidentReportForm = (props) => {
               </div>
             ) : (<></>)}
 
+=======
+            <label className="text-lg my-4  px-4 py-1 my-8">Head</label>
+            <div className="grid grid-cols-2">
+              {injures.Head.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      value={item}
+                      onChange={(e) =>
+                        setInjuryListFunction(e.target.checked, item, "Head")
+                      }
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-lg my-4  px-4 py-1 my-8">Torso</label>
+            <div className="grid grid-cols-2">
+              {injures.torso.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      onChange={(e) =>
+                        setInjuryListFunction(e.target.checked, item, "Torso")
+                      }
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>{" "}
+            <label className="text-lg my-4  px-4 py-1 my-8">Arm</label>
+            <div className="grid grid-cols-2">
+              {injures.arm.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      onChange={(e) =>
+                        setInjuryListFunction(e.target.checked, item, "Arm")
+                      }
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-lg my-4  px-4 py-1 my-8">Legs</label>
+            <div className="grid grid-cols-2">
+              {injures.leg.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      onChange={(e) =>
+                        setInjuryListFunction(e.target.checked, item, "Legs")
+                      }
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-lg my-4  px-4 py-1 my-8">Wounds</label>
+            <div className="grid grid-cols-2">
+              {injures.wounds.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      onChange={(e) =>
+                        setInjuryListFunction(e.target.checked, item, "Wounds")
+                      }
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-lg my-4  px-4 py-1 my-8">Burns</label>
+            <div className="grid grid-cols-2">
+              {injures.burns.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      onChange={(e) =>
+                        setInjuryListFunction(e.target.checked, item, "Burns")
+                      }
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+            <label className="text-lg my-4  px-4 py-1 my-8">
+              Sudden Illness
+            </label>
+            <div className="grid grid-cols-2">
+              {injures.suddenIllness.map((item) => (
+                <>
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="border-2 shadow-xl mx-2 "
+                      onChange={(e) =>
+                        setInjuryListFunction(e.target.checked, item, "Illness")
+                      }
+                    />
+                    <label>{item}</label>
+                  </div>
+                </>
+              ))}
+            </div>
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           </div>
         ) : props.activeStep == 4 ? (
           <div>
@@ -836,6 +1057,7 @@ const IncidentReportForm = (props) => {
         ) : props.activeStep == 5 ? (
           <div className="container ">
             <div className="text-xl">Witness Information</div>
+<<<<<<< HEAD
             {witnessArray.length < 3 ? (
               <button onClick={() => addAWitness(witnessArray)} className="btn btn-lg text-white text-xl px-4 py-2 bg-red-500">
                 Add a Witness
@@ -905,12 +1127,78 @@ const IncidentReportForm = (props) => {
                 </div>
               </>
             ))}
+=======
+            <div className="text-lg my-4">
+              Include information if someone witnessed the incident
+            </div>
+            <div>
+              <label className="text-md">Witness Name:</label>
+              <br />
+              <input
+                type="text"
+                value={witnessName}
+                onChange={(e) => setWitnessName(e.target.value)}
+              />
+            </div>{" "}
+            <div>
+              <label className="text-md">Witness Phone:</label>
+              <br />
+              <input
+                type="tel"
+                placeholder="123-456-7890"
+                value={witnessPhone}
+                onChange={(e) => setWitnessPhone(e.target.value)}
+              />
+            </div>{" "}
+            <div>
+              <label className="text-md">Witness Address:</label>
+              <br />
+              <input
+                type="text"
+                value={witnessAddress}
+                onChange={(e) => setWitnessAddress(e.target.value)}
+              />
+            </div>{" "}
+            <div>
+              <label className="text-md">Witness City:</label>
+              <br />
+              <input
+                type="text"
+                value={witnessCity}
+                onChange={(e) => setWitnessCity(e.target.value)}
+              />
+            </div>{" "}
+            <div>
+              <label className="text-md">Witness State:</label>
+              <br />
+              <input
+                type="text"
+                placeholder="Ex: TX, AL, MD"
+                value={witnessState}
+                onChange={(e) => setWitnessState(e.target.value)}
+              />
+            </div>{" "}
+            <div>
+              <label className="text-md">Zip:</label>
+              <br />
+              <input
+                type="text"
+                placeholder="0000"
+                value={witnessZip}
+                onChange={(e) => setWitnessZip(e.target.value)}
+              />
+            </div>
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           </div>
         ) : (
           <div className="container mx-auto p-4 m-4">
             <br />
             <div>
+<<<<<<< HEAD
               <label className="text-md">Name of the person completing the report:</label>
+=======
+              <label className="text-md">Set Reporter Name:</label>
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               <br />
               <input
                 type="text"
@@ -920,8 +1208,11 @@ const IncidentReportForm = (props) => {
               <br />
               <label className="text-md">Reporter Signature:</label>
               <br />
+<<<<<<< HEAD
               <button onClick={() => sigPad.clear()} className="px-4 py-2 bg-red-500 btn btn-lg text-white">Clear Signature</button>
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               <div className="bg-white max-w-md mx-auto">
                 <SignaturePad
                   style={{ width: 40 }}
@@ -938,7 +1229,10 @@ const IncidentReportForm = (props) => {
                     sigPad = ref;
                   }}
                 />
+<<<<<<< HEAD
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               </div>
             </div>{" "}
             <br />
@@ -953,9 +1247,12 @@ const IncidentReportForm = (props) => {
               <br />
               <label className="text-md">Manager Signature:</label>
               <br />
+<<<<<<< HEAD
 
               <button onClick={() => sigPad2.clear()} className="px-4 py-2 bg-red-500 btn btn-lg text-white">Clear Signature</button>
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               <div className="bg-white max-w-md mx-auto">
                 <SignaturePad
                   style={{ width: 40 }}
@@ -985,8 +1282,11 @@ const IncidentReportForm = (props) => {
               <br />
               <label className="text-md">Supervisor Signature:</label>
               <br />
+<<<<<<< HEAD
               <button onClick={() => sigPad3.clear()} className="px-4 py-2 bg-red-500 btn btn-lg text-white">Clear Signature</button>
 
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
               <div className="bg-white max-w-md mx-auto">
                 <SignaturePad
                   style={{ width: 40 }}
@@ -1006,6 +1306,7 @@ const IncidentReportForm = (props) => {
             </div>{" "}
           </div>
         )}
+<<<<<<< HEAD
         {props.activeStep == 1 ? (
           <>
             <div className="display-inline mx-auto">
@@ -1060,6 +1361,8 @@ const IncidentReportForm = (props) => {
           ]}
           activeStep={props.activeStep}
         />
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
       </div>
     </>
   );

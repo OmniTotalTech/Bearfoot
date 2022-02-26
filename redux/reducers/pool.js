@@ -16,8 +16,11 @@ const initialState = {
   individualPool: {
     pool_employees: [],
     pool_managers: [],
+<<<<<<< HEAD
     lastUpdated: "",
     lastUpdatedBy: ""
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   },
 };
 

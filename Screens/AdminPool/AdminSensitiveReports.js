@@ -223,7 +223,11 @@ class AdminSensitiveReports extends Component {
             }
             filterable
             columns={columns}
+<<<<<<< HEAD
             defaultPageSize={50}
+=======
+            defaultPageSize={10}
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           >
             {(state, makeTable, instance) => {
               this.reactTable = state.pageRows.map((modem) => {

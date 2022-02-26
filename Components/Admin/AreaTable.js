@@ -4,6 +4,7 @@ import "react-table/react-table.css";
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import api from "../../utils/api";
+<<<<<<< HEAD
 import moment from "moment";
 
 class AreaTable extends Component {
@@ -43,6 +44,20 @@ class AreaTable extends Component {
   };
   navToArea = (props) => {
 
+=======
+
+class AreaTable extends Component {
+  state = {
+    currentBool: false,
+    modalData: {},
+    toSecondPart: false,
+    finalizing: false,
+  };
+
+  componentDidMount() {}
+
+  navToArea = (props) => {
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     console.log(props.original);
     const id = props.original._id;
     this.props.navigation.navigate("AdminAreaDetail", {
@@ -51,6 +66,10 @@ class AreaTable extends Component {
       organization: props.original.areaOrganization,
     });
   };
+<<<<<<< HEAD
+=======
+
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   controlModal = async (props) => {
     let currentBool = this.state.currentBool;
 
@@ -65,6 +84,7 @@ class AreaTable extends Component {
     console.log(item._id);
     this.setState({ modalData: item });
   };
+<<<<<<< HEAD
   filterCaseInsensitive = (filter, row) => {
     const id = filter.pivotId || filter.id;
     const content = row[id];
@@ -79,6 +99,9 @@ class AreaTable extends Component {
 
     return true;
   };
+=======
+
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
   render() {
     const handleDeletePool = async () => {
       this.setState({ toSecondPart: false, finalizing: true });
@@ -98,28 +121,44 @@ class AreaTable extends Component {
       {
         Header: "Name",
         accessor: "areaName",
+<<<<<<< HEAD
         filterable: true,
 
         style: this.mystyle()
 
+=======
+        style: {
+          //textAlign: "right",
+        },
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         // width: 100,
       },
       {
         Header: "Org. Name",
         accessor: "areaOrganization",
+<<<<<<< HEAD
         filterable: true,
         style: this.mystyle()
+=======
+        style: {
+          //textAlign: "right",
+        },
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         // width: 100,
       },
       {
         Header: "Time Zone",
         accessor: "areaTimeZone",
+<<<<<<< HEAD
         filterable: true,
         style: this.mystyle(),
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         maxWidth: 200,
         minWidth: 50,
       },
       {
+<<<<<<< HEAD
         Header: "Last Updated",
         accessor: "lastUpdated",
         Cell: (porps) => {
@@ -128,6 +167,8 @@ class AreaTable extends Component {
         }
       },
       {
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         Header: "Actions",
         filterable: false,
         sortable: false,
@@ -135,12 +176,20 @@ class AreaTable extends Component {
         minWidth: 100,
 
         Cell: (porps) => {
+<<<<<<< HEAD
+=======
+          console.log(porps);
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           return (
             <>
               <div className="grid grid-cols-2">
                 <button
+<<<<<<< HEAD
                   style={this.mystyle()}
                   className={`bg-gray-500  text-white md:text-lg mx-1 rounded text-md mx-auto font-bold w-3/4`}
+=======
+                  className="bg-red-500 text-white rounded text-md mx-auto mx-0.5 font-bold  md:w-11/12 w-3/4"
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
                   onClick={(e) => {
                     this.navToArea(porps);
                   }}
@@ -166,6 +215,7 @@ class AreaTable extends Component {
       },
     ];
     return (
+<<<<<<< HEAD
       <div className="mb-8">
         <ReactTable
           className="-striped -highlight"
@@ -173,6 +223,15 @@ class AreaTable extends Component {
           defaultFilterMethod={this.filterCaseInsensitive}
           columns={columns}
           defaultPageSize={this.props.area.data.result?.length > 35 ? 50 : 25}
+=======
+      <div>
+        <ReactTable
+          className="-striped -highlight"
+          data={this.props.area.data.result}
+          filterable
+          columns={columns}
+          defaultPageSize={10}
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         >
           {(state, makeTable, instance) => {
             this.reactTable = state.pageRows.map((modem) => {

@@ -12,6 +12,7 @@ class DeliveryTable extends Component {
   navToEditUser = (id) => {
     this.props.navigation.navigate("EditUser", { id: id.accepted_by._id });
   };
+<<<<<<< HEAD
   filterCaseInsensitive = (filter, row) => {
     const id = filter.pivotId || filter.id;
     const content = row[id];
@@ -24,6 +25,8 @@ class DeliveryTable extends Component {
       }
     }
   }
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
 
   render() {
     const switchStatement = (status) => {
@@ -56,6 +59,10 @@ class DeliveryTable extends Component {
         Header: "Accepted By?",
         accessor: "accepted_by.name",
         Cell: (porps) => {
+<<<<<<< HEAD
+=======
+          console.log(porps);
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           return (
             <div>
               {porps.original.accepted_by == null ? (
@@ -80,6 +87,10 @@ class DeliveryTable extends Component {
         Header: "Status",
         accessor: "status",
         Cell: (porps) => {
+<<<<<<< HEAD
+=======
+          console.log(porps);
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
           return <div>{switchStatement(porps.original.status)}</div>;
         },
 
@@ -116,11 +127,16 @@ class DeliveryTable extends Component {
           className="-striped -highlight"
           data={data}
           filterable
+<<<<<<< HEAD
           defaultFilterMethod={this.filterCaseInsensitive}
           previousText={<button style={{ backgroundColor: "black" }} className="btn p-8"><p className="text-white">Previous Page</p></button>}
           nextText={<button style={{ backgroundColor: "red" }} className="btn p-8"><p className="text-white">Next Page</p></button>}
           columns={columns}
           defaultPageSize={data?.length > 35 ? 50 : 25}
+=======
+          columns={columns}
+          defaultPageSize={10}
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         >
           {(state, makeTable, instance) => {
             this.reactTable = state.pageRows.map((modem) => {

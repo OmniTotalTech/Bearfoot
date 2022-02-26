@@ -99,6 +99,7 @@ class PoolTable extends Component {
           textAlign: "right",
         },
       },
+<<<<<<< HEAD
       {
         Header: "Last Updated",
         accessor: "lastUpdated",
@@ -107,6 +108,8 @@ class PoolTable extends Component {
           return (<>  {moment(porps.original.lastUpdated.toString()).format('lll')} </>)
         }
       }
+=======
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
     ];
 
     return (
@@ -116,7 +119,11 @@ class PoolTable extends Component {
           data={data}
           filterable
           columns={columns}
+<<<<<<< HEAD
           defaultPageSize={data?.length > 35 ? 50 : 25}
+=======
+          defaultPageSize={10}
+>>>>>>> a8ccdac77f8b7a47ef2a0db5e9b084921f0b02be
         >
           {(state, makeTable, instance) => {
             this.reactTable = state.pageRows.map((modem) => {

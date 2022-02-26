@@ -392,7 +392,7 @@ export default class AddInventoryModal extends Component {
                           className="text-white bg-red-500 px-4 py-2 my-4"
                           onClick={() => this.submitForm(event, this.props)}
                         >
-                          <p style={{ fontSize: 28 }} className="bold">Click here to submit your special order request.</p>
+                          <p style={{fontSize: 28}} className="bold">Click here to submit your special order request.</p>
                         </button>
                       </>
                     ) : (
@@ -400,7 +400,7 @@ export default class AddInventoryModal extends Component {
                         className="text-white bg-red-500 px-4 py-2 my-4"
                         onClick={() => runPreapprove()}
                       >
-                        <p style={{ fontSize: 28 }} className="bold">You are about to submit. Are you sure?</p>
+                        <p style={{fontSize: 28}} className="bold">You are about to submit. Are you sure?</p>
                       </button>
                     )}
                   </div>
