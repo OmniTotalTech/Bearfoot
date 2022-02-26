@@ -1,0 +1,26 @@
+export const LOGIN_REQUEST = "LOGIN_REQUESTT";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_ERROR = "LOGIN_ERROR";
+export const LOGOUT = "LOGOUT";
+export const USER_LOADED = "USER_LOADED";
+export const AUTH_ERROR = "AUTH_ERROR";
+
+// update user
+export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_ERROR = "UPDATE_USER_ERROR";
+
+//verify phone
+export const VERIFY_PHONE_REQUEST = "VERIFY_PHONE_REQUEST";
+export const VERIFY_PHONE_SUCCESS = "VERIFY_PHONE_SUCCESS";
+export const VERIFY_PHONE_ERROR = "VERIFY_PHONE_ERROR";
+
+//verify code
+export const VERIFY_CODE_REQUEST = "VERIFY_CODE_REQUEST";
+export const VERIFY_CODE_SUCCESS = "VERIFY_CODE_SUCCESS";
+export const VERIFY_CODE_ERROR = "VERIFY_CODE_ERROR";
+
+//NEW USER code
+export const NEW_USER_REQUEST = "NEW_USER_REQUEST";
+export const NEW_USER_SUCCESS = "NEW_USER_SUCCESS";
+export const NEW_USER_ERROR = "NEW_USER_ERROR";
