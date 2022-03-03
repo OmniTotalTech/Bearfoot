@@ -5,6 +5,7 @@ import { fetchSensitiveRecords } from "../../redux/actions/records";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import RecordModal from "./PoolRecords/RecordModal";
+import {ScrollView} from "react-native";
 
 class AdminSensitiveReports extends Component {
   state = {
@@ -211,6 +212,7 @@ class AdminSensitiveReports extends Component {
     };
 
     return (
+        <ScrollView>
       <div className="container mx-auto">
         Admin Sensitive Records
         <div>
@@ -256,6 +258,7 @@ class AdminSensitiveReports extends Component {
           </Modal>
         </div>
       </div>
+        </ScrollView>
     );
   }
 }

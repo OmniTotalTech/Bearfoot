@@ -959,6 +959,7 @@ class BasicInformation extends Component {
                         <textarea
                           rows={6}
                           value={this.state.taskText}
+                          className={"w-full border border-4"}
                           onSubmit={() => this.setState({ taskText: "" })}
                           onChange={(e) => handleChecklistInput(e)}
                         />
@@ -984,18 +985,41 @@ class BasicInformation extends Component {
                         {this.props.dailyChecklist.data &&
                           this.props.dailyChecklist.data.data ? (
                           <div className="w-full">
-                            {this.props.dailyChecklist.data.data.map((item) => (
+                            {this.props.dailyChecklist.data.data.map((item, i) => (
                               <>
+                                <div className={"bg-red-500"}>
+                                  <h1 className="header-title w-full px-4  w-full text-white ">{i + 1} )</h1>
+                                  <br />
+                                  <p className="px-2 text-2xl text-white">{item.text}</p>
+
+                                </div>
                                 <div
                                   key={item._id}
-                                  className="w-full shadow-md py-2 border-1 p-2"
+                                  className="w-full shadow-md py-2 border-1 p-2 bg-black text-white"
                                 >
-                                  <div className="w-11/12 break-words">
-                                    <p className="text-lg">{item.text}</p>
+
+                                  <div className="grid grid-cols-2 text-center">
+                                    <div>
+                                      <button
+                                        className="bg-gray-500 p-1 mx-2 text-white rounded w-full px-4 py-2 w-full "
+
+                                      >
+                                        Down
+                                      </button>
+                                    </div>
+
+                                    <div>
+                                      <button
+                                        className="bg-blue-500 p-1 text-white rounded w-full px-4 py-2 w-full "
+
+                                      >
+                                        Up
+                                      </button>
+                                    </div>
                                   </div>
                                   <div className="w-1/6">
                                     <button
-                                      className="bg-red-500 p-1 text-white rounded"
+                                      className="bg-red-500 px-4 py-2 mx-4 my-2 text-white rounded"
                                       onClick={() =>
                                         handleDelete(item._id, "opening")
                                       }
