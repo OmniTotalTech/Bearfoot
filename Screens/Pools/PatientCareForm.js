@@ -18,11 +18,11 @@ const PatientCareForm = (props) => {
   }, [patronInfoArray, allSigs])
 
 
-  console.log(props);
   const handleFinalSubmit = async () => {
     console.log(allSigs)
     let body1 = {
-      patronInfo: allSigs,
+      patronInfo: patronInfoArray,
+      signature: allSigs,
       eventDescription: eventDescription,
       resDescription: resDescription,
     };

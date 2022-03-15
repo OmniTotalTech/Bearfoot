@@ -7,7 +7,7 @@ import BackButton from "../../Components/BackButton";
 class EditUser extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: { name: "" }, value: 1, deletePrompt: false, isDisabledReason: "", initSearch: false, searchType: "employee", tableVisible: false, searchData: [], addSearch: false, addNewSearchText: '', searchDataRcvd: [] };
+    this.state = { user: { name: "", role: 0}, value: 1, deletePrompt: false, isDisabledReason: "", initSearch: false, searchType: "employee", tableVisible: false, searchData: [], addSearch: false, addNewSearchText: '', searchDataRcvd: [] };
     this.onChange = this.onChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -21,11 +21,10 @@ class EditUser extends Component {
   }
 
   async loadUser() {
-    console.log(this.props.id);
     await api
       .get("/users/" + this.props.route.params.id)
       .then((response) => {
-        console.log(response.data.data);
+        console.log("userRole", response.data.data.role);
         this.setState({
           user: response.data.data,
           value: response.data.data.role,
@@ -38,7 +37,8 @@ class EditUser extends Component {
     console.log(val);
     this.setState({ value: val });
   }
-  submit = async () => {
+  submit = async (e) => {
+    e.preventDefault();
     console.log(this.state.value);
     const body = {
       role: this.state.value,
@@ -120,7 +120,7 @@ class EditUser extends Component {
   sortChoices = ["employee", "manager"]
 
   SwitchResult(role) {
-
+  console.log("role", role)
     switch (role) {
       case 1:
         return "Employee"
@@ -135,7 +135,7 @@ class EditUser extends Component {
       case 666:
         return "Super Developer"
       default:
-        return "Invalid role"
+        return "Role Not Set."
     }
   }
 
@@ -146,7 +146,6 @@ class EditUser extends Component {
   render() {
     const { tableVisible, initSearch, searchData, addSearch, addNewSearchText, searchDataRcvd } = this.state;
 
-    console.log(this.props.route.params.id);
     return (
       <>
         <ScrollView>
@@ -172,14 +171,11 @@ class EditUser extends Component {
                 <div className="text-lg  p-2">{this.state.user.email}</div>
               </div>
             </div>
-            {this.state.user.role != 666 ||
-              this.state.user.role != 5 ||
-              this.state.user.role != 7 ||
-              this.state.user.role != 6 ? (
+            {this.props.user.role > 3? (
               <>
-                <p className="text-md">Current Role: {this.SwitchResult(this.state.user.role)}</p>
+                <p className="text-md">Current Role: {this.SwitchResult(this.state.value)}</p>
                 <p className="text-md pt-4 -pb-1" style={{ fontSize: 24 }}>Assign Role:</p>
-
+                <form>
                 <div className="bg-white mt-4 grid grid-cols-3">
                   {/* <select
                 onChange={this.handleChange}
@@ -190,35 +186,38 @@ class EditUser extends Component {
                   <option value={item.value}>{item.name}</option>
                 ))}
               </select> */}
+
+
                   <div className="card px-4 my-4 bg-gray-200  mx-2">
                     <div className="card-header text-red-500  ">
-                      <input type="radio" checked={this.whichIsChecked(this.state.user.role, 1)} value={1} />
+                      <input type="radio" onChange={e => this.setState({user: {role : e.target.value}, value: e.target.value})} checked={this.whichIsChecked(this.state.user.role, 1)} value={1} />
                       <h3 className="text-2xl">Employee</h3>
                     </div>
                     <p className="text-md">A general purpose classification for users who need minimal permissions to get started with operations. These users can be assigned to pools as either employees, managers, or either forms of driver.</p>
                   </div>
                   <div className="card px-4 my-4 bg-gray-200 mx-2">
                     <div className="card-header text-red-500">
-                      <input type="radio" value={3} checked={this.whichIsChecked(this.state.user.role, 3)} />
+                      <input type="radio" onChange={e => this.setState({user: {role : e.target.value}, value: e.target.value})}  value={3} checked={this.whichIsChecked(this.state.user.role, 3)}  value={3}/>
                       <h3 className="text-2xl">Manager</h3>
                     </div>
                     <p className="text-md">An elevated permission role intended to extend specific pool operation functions. These users can view records as well as view more privledged information.</p>
                   </div>
                   <div className="card px-4 my-4 bg-gray-200  mx-2">
                     <div className="card-header text-red-500">
-                      <input type="radio" checked={this.whichIsChecked(this.state.user.role, 4)} value={4} />
+                      <input type="radio"  onChange={e => this.setState({user: {role : e.target.value}, value: e.target.value})} checked={this.whichIsChecked(this.state.user.role, 4)} value={4} />
                       <h3 className="text-2xl">Area Manager</h3>
                     </div>
                     <p className="text-md">The highest level of employee access. This permits access to areas within organizations the user is assigned to, as well as records and other higher level management access.</p>
                   </div>
                   <br />
                   <button
-                    onClick={this.submit}
+                    onClick={(e) => this.submit(e)}
                     className="bg-red-500 p-2 m-2 text-white rounded"
                   >
                     Update
                   </button>
                 </div>
+                </form>
               </>
             ) : (
               <div></div>
@@ -356,7 +355,7 @@ class EditUser extends Component {
                 </div>
               </>
             ) : (<div></div>)}
-
+            {this.props.user.role > 5 ? (
             <div className="mt-4">
               <h1 className="font-weight-900" style={{ fontSize: 24 }}>Delete This User</h1>
               <p className="text-sm">Deleting this user will archive their information, and disable their user account.</p>
@@ -391,6 +390,7 @@ class EditUser extends Component {
               )}
 
             </div>
+                ):(<></>)}
 
           </div>
 

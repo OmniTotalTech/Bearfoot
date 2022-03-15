@@ -27,7 +27,7 @@ export const fetchAdminEmployeeByOrgError = (error) => {
 };
 
 export const fetchEmployeesByOrg = (orgName, string) => {
-  console.log(orgName);
+  console.log(orgName,string);
   return (dispatch) => {
     dispatch(fetchAdminEmployeeByOrgRequest);
     if (orgName && string == "all") {

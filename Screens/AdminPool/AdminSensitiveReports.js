@@ -20,16 +20,13 @@ class AdminSensitiveReports extends Component {
 
   render() {
     const handleModalOpen = (data) => {
+      console.log(data)
       this.setState({ recordId: data._id });
       this.setState({ modalData: data });
       this.setState({ showModal: true });
     };
 
-    const pushToLocalState = (body) => {
-      if (this.state.dataArrayState.length < 1) {
-        this.setState({ dataArrayState: body });
-      }
-    };
+
 
     const handleUpdateState = (dataArray) => {
       let finalStructure = [];
@@ -40,7 +37,6 @@ class AdminSensitiveReports extends Component {
         };
         finalStructure.push(body);
       });
-      pushToLocalState(finalStructure);
 
       console.log(this.state);
 
@@ -93,7 +89,6 @@ class AdminSensitiveReports extends Component {
           //textAlign: "right",
         },
         Cell: (porps) => {
-          console.log(porps.original);
           return (
             <div>
               <button className="bg-red-500 px-2 py-1 rounded text-white">
@@ -134,6 +129,7 @@ class AdminSensitiveReports extends Component {
         sortable: false,
         resizable: false,
         Cell: (porps) => {
+          console.log(porps.original)
           return (
             <button
               onClick={() => {
@@ -243,15 +239,16 @@ class AdminSensitiveReports extends Component {
             <RecordModal
               handleClose={() => this.setState({ showModal: false })}
               _id={this.state.recordId}
+              type={
+                this.state.modalData.recordType
+                    ? this.state.modalData.recordType
+                    : null
+                }
               fetchReports={async () =>
                 await this.props.fetchSensitiveRecords()
               }
               updateState={(arr) => handleUpdateState(arr)}
-              type={
-                this.state.modalData.recordType
-                  ? this.state.modalData.recordType
-                  : null
-              }
+
               data={this.state.modalData}
               dataArrayState={this.state.dataArrayState}
             />

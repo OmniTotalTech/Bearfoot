@@ -1,110 +1,125 @@
 import React from 'react';
 
 const StepOnePCR = (props) => {
-    ///Patient information set Step 1
-    const [patientName, setPatientName] = React.useState("");
-    const [patientEmail, setPatientEmail] = React.useState("");
-    const [patientPhone, setPatientPhone] = React.useState("");
-    const [patientAge, setPatientAge] = React.useState("");
-    const [patientSex, setPatientSex] = React.useState("");
-    const [patientAddress, setPatientAddress] = React.useState("");
-    const [patientCity, setPatientCity] = React.useState("");
-    const [patientState, setPatientState] = React.useState("");
-    const [patientZip, setPatientZip] = React.useState("");
+
+    const [localState, setLocalState] = React.useState(
+        {
+            name: "",
+            email: "",
+            age: 0,
+            sex: "",
+            address: "",
+            city: "",
+            state: "",
+            zip: "00000"
+        }
+    )
+
+    const HandleLocalState = (e, key) => {
+        let val = e.target.value;
+        let state = localState;
+
+        state[key] = val;
+        console.log(state);
+        setLocalState(state);
+    }
+
 
     return (
         <>
-            <div className="container p-4 mx-auto">
-                <div>
-                    <label className="text-md">Patron Name</label>
+            <div className="container p-4 mx-auto ">
+                <div className='w-full mx-2'>
+                    <label className="text-md">Name</label>
                     <br />
                     <input
+                        className='p-2 w-11/2 mx-2'
                         type="text"
-                        value={patientName}
-                        onChange={(e) => setPatientName(e.target.value)}
+                        onChange={(e) => HandleLocalState(e, "name")}
                     />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 my-4">
-                    <div>
+                <div className="grid grid-cols-1 md:grid-cols-2 my-4 ">
+                    <div className='w-full mx-2'>
                         <label className="text-md">Phone</label>
                         <br />
                         <input
+                            className='p-2 w-11/2 mx-2'
                             type="tel"
                             placeholder="123-456-7890"
                             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                            value={patientPhone}
-                            onChange={(e) => setPatientPhone(e.target.value)}
+                            onChange={(e) => HandleLocalState(e, "phone")}
                         />
                     </div>
-                    <div>
+                    <div className='w-full mx-2'>
                         <label className="text-md">Email</label>
                         <br />
                         <input
+                            className='p-2 w-11/2 mx-2'
                             type="text"
                             placeholder="example@email.com"
-                            value={patientEmail}
-                            onChange={(e) => setPatientEmail(e.target.value)}
+
+                            onChange={(e) => HandleLocalState(e, "email")}
                         />
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 my-4">
-                <div>
-                    <label className="text-md">Age</label>
-                    <br />
-                    <input
-                        type="text"
-                        value={patientAge}
-                        onChange={(e) => setPatientAge(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label className="text-md">Sex</label>
-                    <br />
-                    <input
-                        type="text"
-                        placeholder="Male, Female, Other"
-                        value={patientSex}
-                        onChange={(e) => setPatientSex(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label className="text-md">Address</label>
-                    <br />
-                    <input
-                        type="text"
-                        value={patientAddress}
-                        onChange={(e) => setPatientAddress(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label className="text-md">City</label>
-                    <br />
-                    <input
-                        type="text"
-                        value={patientCity}
-                        onChange={(e) => setPatientCity(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label className="text-md">State</label>
-                    <br />
-                    <input
-                        type="text"
-                        placeholder="Ex: TX, AL, MD"
-                        value={patientState}
-                        onChange={(e) => setPatientState(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label className="text-md">Zip</label>
-                    <br />
-                    <input
-                        type="text"
-                        placeholder="00000"
-                        value={patientZip}
-                        onChange={(e) => setPatientZip(e.target.value)}
-                    />
-                </div>
+                    <div className='w-full mx-2'>
+                        <label className="text-md">Age</label>
+                        <br />
+                        <input
+                            className='p-2 w-11/2 mx-2'
+                            type="text"
+
+                            onChange={(e) => HandleLocalState(e, "age")}
+                        />
+                    </div>
+                    <div className='w-full mx-2'>
+                        <label className="text-md">Sex</label>
+                        <br />
+                        <input
+                            type="text"
+                            className='p-2 w-11/2 mx-2'
+                            placeholder="Male, Female, Other"
+                            onChange={(e) => HandleLocalState(e, "sex")}
+                        />
+                    </div>
+                    <div className='w-full mx-2'>
+                        <label className="text-md">Address</label>
+                        <br />
+                        <input
+                            className='p-2 w-11/2 mx-2'
+                            type="text"
+                            onChange={(e) => HandleLocalState(e, "address")}
+                        />
+                    </div>
+                    <div className='w-full mx-2'>
+                        <label className="text-md">City</label>
+                        <br />
+                        <input
+                            type="text"
+                            className='p-2 w-11/2 mx-2'
+                            onChange={(e) => HandleLocalState(e, "city")}
+                        />
+                    </div>
+                    <div className='w-full mx-2'>
+                        <label className="text-md">State</label>
+                        <br />
+                        <input
+                            type="text"
+                            className='p-2 w-11/2 mx-2'
+                            placeholder="Ex: TX, AL, MD"
+                            onChange={(e) => HandleLocalState(e, "state")}
+                        />
+                    </div>
+                    <div className='w-full mx-2'>
+                        <label className="text-md">Zip</label>
+                        <br />
+                        <input
+                            type="number"
+                            className='p-2 w-11/2 mx-2'
+                            placeholder="00000"
+                            onChange={(e) => HandleLocalState(e, "zip")}
+                        />
+                    </div>
                 </div>
             </div>
         </>

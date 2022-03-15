@@ -13,7 +13,7 @@ export default class PoolInventoryCheckList extends Component {
     }
 
     return (
-      <div className="container mx-auto overflow-scroll mt-4 max-w-2xl bg-gray-100">
+      <div className="container mx-auto overflow-scroll mt-4  bg-gray-100">
         {" "}
         <div className="w-full shadow-lg border-b-2 py-4">
           <p className="text-2xl text-center my-4">

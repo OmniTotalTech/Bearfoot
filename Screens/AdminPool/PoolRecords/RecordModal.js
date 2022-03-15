@@ -236,7 +236,7 @@ class RecordModal extends Component {
         ) : (
           <div></div>
         )}
-
+        {console.log(this.props)}
         {viewControl(
           this.props.type,
           this.props.data,
@@ -711,19 +711,62 @@ const SensitiveModal2 = (data) => {
           )}
         </div>
       </div>
-      <div></div>
-      {renderArray.map((item) => (
-        <>
-          <div className="p-4">
-            <div className="text-bold text-lg">
-              {renderValues(Object.keys(item).toString())}
-            </div>
-            <hr />
+      <div>
+        <div>
+        <span className="text-2xl text-bold"> Event Description</span>
+        </div>
+        <div>
+          {data.data?.dataObject.eventDescription}
+        </div>
+        </div>
+      <div>
+        <div>
+          <span className="text-2xl text-bold"> Resolution Description</span>
+        </div>
+        <div>
+          {data.data?.dataObject.resDescription}
+        </div>
+      </div>
+      <div>
+        {data.data?.dataObject.patronInfo.map((item, i) => (
+            <>
+              Patron {i+1}):
+              <div>
+                <span style={{fontSize: 20}}>Name</span>: {item.name}
+              </div>
+              <div>
+                <span style={{fontSize: 12}}>Email</span>: {item.email}
+              </div>
+              <div>
+                <span style={{fontSize: 12}}>phone</span>: {item.phone}
+              </div>
 
-            <div>{renderKeys(Object.values(item))}</div>
-          </div>
-        </>
-      ))}
+            </>
+        ))}
+      </div>
+      <div className={"my-4"}>
+        <div className="text-xl">All Signatures Recorded</div>
+        {data.data?.dataObject.signature.map((item, i) => (
+            <>
+              <div>
+                <img src={item.data} width={200} height={50}/>
+              </div>
+
+            </>
+        ))}
+      </div>
+      {/*{renderArray.map((item) => (*/}
+      {/*  <>*/}
+      {/*    <div className="p-4">*/}
+      {/*      <div className="text-bold text-lg">*/}
+      {/*        {renderValues(Object.keys(item).toString())}*/}
+      {/*      </div>*/}
+      {/*      <hr />*/}
+
+      {/*      <div>{renderKeys(Object.values(item))}</div>*/}
+      {/*    </div>*/}
+      {/*  </>*/}
+      {/*))}*/}
       {console.log(data.data)}
       {data.data.isApproved ? (
         <div></div>

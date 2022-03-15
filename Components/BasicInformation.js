@@ -31,6 +31,8 @@ import {
 } from "react-accessible-accordion";
 import InvitedUser from "../Components/InvitedUser";
 import { InformationSections } from "./General/InformationSections";
+import ChecklistAdmin from "./ChecklistAdmin";
+import ChecklistFormatter from "./ChecklistFormatter";
 
 class BasicInformation extends Component {
   state = {
@@ -466,26 +468,41 @@ class BasicInformation extends Component {
         });
     };
 
-    const handleSubmitChecklist = async (type) => {
-      console.log("submitted", this.state.taskText);
+    const handleUpdatePosition = async (data) => {
+
+    }
+
+    const handleSubmitChecklist = async (type,text) => {
+
+
+      console.log(this.props.dailyChecklist.data)
       let body = {
-        pool_id: this.props.id,
+        poolId: this.props.dailyChecklist.data.pool_id,
         checklistType: type,
-        text: this.state.taskText,
-      };
+        data:
+          {
+            position: this.props.dailyChecklist.data.data.length ,
+            text: text
+          }
+      }
 
-      this.setState({ taskText: "" });
-      this.setState({ taskText: "" });
-
+      console.log(body)
+        // text: this.state.taskText,
       await api
-        .post("/dailyChecklist/", body)
-        .then((response) => {
-          console.log(response);
-          this.props.fetchDailyChecklist(this.props.id, type);
-        })
-        .catch((error) => {
-          const errorMsg = error.message;
-        });
+          .patch
+          ("/dailyChecklist/", body)
+          .then((response) => {
+            console.log(response);
+            this.props.fetchDailyChecklist(this.props.id, type);
+          })
+          .catch((error) => {
+            const errorMsg = error.message;
+          });
+      // console.log(body)
+      // this.setState({ taskText: "" });
+      // this.setState({ taskText: "" });
+      //
+
     };
 
     const handleChecklistInput = (e) => {
@@ -747,7 +764,6 @@ class BasicInformation extends Component {
                     Add An HOA account to this Pool
                   </button>
                   <div>
-                    {console.log(this.state.hoasInPool)}
                     {this.state.hoasInPool && this.state.hoasInPool.length > 0 ? (
                       <div className="container bg-white">
                         {this.state.hoasInPool.map((item, i) => (
@@ -945,97 +961,13 @@ class BasicInformation extends Component {
                       close
                     </button>
 
-                    <div className="mx-auto container max-w-2xl mx-4">
-                      <div className="bg-white space-y-6 mt-4 w-full">
-                        <p className="text-lg">
-                          Last updated:
-                          {moment(this.props.dailyChecklist.data.lastUpdated).format('lll')}
-                        </p>
-                        <p className="text-lg">
-                          Last updated by:
-                          {this.props.dailyChecklist.data.lastUpdatedBy}
-                        </p>
-                        <div className="text-md">Add a New Task</div>
-                        <textarea
-                          rows={6}
-                          value={this.state.taskText}
-                          className={"w-full border border-4"}
-                          onSubmit={() => this.setState({ taskText: "" })}
-                          onChange={(e) => handleChecklistInput(e)}
-                        />
-
-                        {this.state.taskText && this.state.taskText.length > 4 ? (
-                          <div>
-                            {" "}
-                            <button
-                              onClick={() => {
-                                handleSubmitChecklist("opening");
-                                this.setState({ disableButton: true });
-                              }}
-                              className="bg-red-500 text-white px-4 py-2 rounded"
-                            >
-                              Add{" "}
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="my-4">Enter More Data First... </div>
-                        )}
-                      </div>
-                      <div>
-                        {this.props.dailyChecklist.data &&
-                          this.props.dailyChecklist.data.data ? (
-                          <div className="w-full">
-                            {this.props.dailyChecklist.data.data.map((item, i) => (
-                              <>
-                                <div className={"bg-red-500"}>
-                                  <h1 className="header-title w-full px-4  w-full text-white ">{i + 1} )</h1>
-                                  <br />
-                                  <p className="px-2 text-2xl text-white">{item.text}</p>
-
-                                </div>
-                                <div
-                                  key={item._id}
-                                  className="w-full shadow-md py-2 border-1 p-2 bg-black text-white"
-                                >
-
-                                  <div className="grid grid-cols-2 text-center">
-                                    <div>
-                                      <button
-                                        className="bg-gray-500 p-1 mx-2 text-white rounded w-full px-4 py-2 w-full "
-
-                                      >
-                                        Down
-                                      </button>
-                                    </div>
-
-                                    <div>
-                                      <button
-                                        className="bg-blue-500 p-1 text-white rounded w-full px-4 py-2 w-full "
-
-                                      >
-                                        Up
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <div className="w-1/6">
-                                    <button
-                                      className="bg-red-500 px-4 py-2 mx-4 my-2 text-white rounded"
-                                      onClick={() =>
-                                        handleDelete(item._id, "opening")
-                                      }
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </div>
-                              </>
-                            ))}
-                          </div>
-                        ) : (
-                          <div>This pool has not set any tasks yet...</div>
-                        )}
-                      </div>
-                    </div>
+                    <ChecklistAdmin
+                        checklistId={this.props.dailyChecklist.data._id}
+                        handleSubmitChecklist={handleSubmitChecklist}
+                        fetchDailyChecklistOpening={() => this.props.fetchDailyChecklist(this.props.id,"opening")}
+                        fetchDailyChecklistClosing={() => this.props.fetchDailyChecklist(this.props.id,"closing")}
+                        dailyChecklist={ChecklistFormatter(this.props.dailyChecklist.data.data)}
+                    />
                   </Modal>
                   <Modal
                     {...this.props}

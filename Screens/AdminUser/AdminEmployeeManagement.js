@@ -28,9 +28,9 @@ import api from "../../utils/api";
 import ReactTable from "react-table";
 class AdminEmployeeManagement extends Component {
   componentDidMount() {
+
     this.props.fetchArea();
-    console.log(this.props.user);
-    console.log(this.state);
+
     if (this.props.user.role == 7) {
       console.log(this.state);
       this.props.fetchEmployeesByOrg("all", "");
@@ -53,6 +53,7 @@ class AdminEmployeeManagement extends Component {
     extraData: {},
     arrayForPicking: [],
   };
+
   setSelectedValue(value, array) {
     console.log(value, array);
     if (array != null && array.length > 0) {
@@ -228,6 +229,9 @@ class AdminEmployeeManagement extends Component {
                   )
                 }
               >
+                <Picker.Item
+                    label="Please Select Org"
+                />
                 {" "}
                 {this.props.user.role == 7 ? (
                   <>
@@ -270,12 +274,17 @@ class AdminEmployeeManagement extends Component {
               >
                 Manage Employee
               </button>
-              <button
-                className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
-                onClick={() => this.setAddEmployee()}
-              >
-                Add Employee
-              </button>{" "}
+              {this.props.user.role > 5 ? (
+                  <button
+                      className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
+                      onClick={() => this.setAddEmployee()}
+                  >
+                    Add Employee
+                  </button>
+              ):(
+                  <></>
+              )}
+
               <button
                 className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
                 onClick={() => this.runHOAFunc()}
@@ -298,7 +307,7 @@ class AdminEmployeeManagement extends Component {
                 </button>
                 <ReactTable
                   className="-striped -highlight"
-                  data={this.props.adminEmployeeManagement.data.data}
+                  data={this.props.adminEmployeeManagement.data ? this.props.adminEmployeeManagement.data.data : []}
                   filterable
                   columns={columns}
                   // pageSize={this.props.records.length}

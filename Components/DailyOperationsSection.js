@@ -5,6 +5,7 @@ function DailyOperationsSection(props) {
     const [facilityManagers, setFacilityManagers] = React.useState([])
     const [headGuards, setHeadGuards] = React.useState([])
     const [poolClosures, setPoolClosures] = React.useState([])
+    const [shiftNotes, setShiftNotes] = React.useState("")
 
     let hours = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
     let minutes = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
@@ -19,21 +20,25 @@ function DailyOperationsSection(props) {
         switch (type) {
             case ("newFacilityManager"):
                 let fm = facilityManagers;
-                fm = [...fm, { name: "", startTime: "", endTime: "" }]
+                fm = [...fm, { name: "", startTimeH: "",startTimeM: "",startTimeAP: "",  endTimeH: "",endTimeM: "",endTimeAP: "",  }]
 
                 setFacilityManagers(fm);
+                break;
             case ("newHeadGuard"):
+                console.log("hit")
                 let hg = headGuards;
-                hg = [...hg, { name: "", startTime: "", endTime: "" }]
+                hg = [...hg, { name: "", startTimeH: "",startTimeM: "",startTimeAP: "",  endTimeH: "",endTimeM: "",endTimeAP: "",  }]
 
                 setHeadGuards(hg);
+                break;
             case ("newPoolClosure"):
                 let pc = poolClosures;
                 pc = [...pc, { reason: "", startTime: "", endTime: "", reasonArray: [], isOpen: "", isClosed: "" }]
 
                 setPoolClosures(pc)
+                break;
             default:
-                null
+                break
         }
     }
     const reasonData = [
@@ -121,7 +126,7 @@ function DailyOperationsSection(props) {
             <div className="mb-4 px-4 w-full">
 
                 <div className="bg-red-600 text-white text-md font-bold p-2">
-                    {reasonData[0].name}
+                    <span style={{fontSize: 32, shadow: "large"}}> {reasonData[0].name}</span>
                     <div className="grid grid-cols-4">
                         {reasonData[0].choices.map((item) => (
                             <>
@@ -135,7 +140,7 @@ function DailyOperationsSection(props) {
                     </div>
                 </div>
                 <div className="bg-red-600 text-white text-md font-bold p-2">
-                    {reasonData[1].name}
+                    <span style={{fontSize: 32, shadow: "large"}}> {reasonData[1].name}</span>
                     <div className="grid grid-cols-4">
                         {reasonData[1].choices.map((item) => (
                             <>
@@ -149,7 +154,7 @@ function DailyOperationsSection(props) {
                     </div>
                 </div>
                 <div className="bg-red-600 text-white text-md font-bold p-2">
-                    {reasonData[2].name}
+                    <span style={{fontSize: 32, shadow: "large"}}> {reasonData[2].name}</span>
                     <div className="grid grid-cols-2 text-black">
                         {reasonData[2].choices.map((item, i) => (
                             <>
@@ -173,7 +178,7 @@ function DailyOperationsSection(props) {
                     </div>
                 </div>
                 <div className="bg-red-600 text-white text-md font-bold p-2">
-                    {reasonData[3].name}
+                    <span style={{fontSize: 32, shadow: "large"}}> {reasonData[3].name}</span>
                     <div className="grid grid-cols-2 text-black">
                         {reasonData[3].choices.map((item, i) => (
                             <>
@@ -217,17 +222,24 @@ function DailyOperationsSection(props) {
 
                     </div>
                 </div>
-                <hr className="border-dark" />
             </>
         )
     }
 
     const HoursInputContainer = (props) => {
+        console.log(props)
+        // const [h, setH] = React.useState({name: "",startTime: "", endTime: ""})
         return (
             <>
                 <div className="mb-4">
                     <p style={{ fontSize: 20 }} className="py-2">Name: </p>
-                    <input className="w-100 input-group-text border-primary border-4  mx-4 " />
+
+                    <input
+                        defaultValue={props.item.name}
+                        onChange={(e) => props.setFunc("facilityManager", "name", e.target.value,props.index)}
+                        className="w-100 input-group-text border-primary border-4  mx-4 "
+                    />
+
                     <div className="grid grid-cols-2 px-4 py-1">
                         <div>
                             <p style={{ fontSize: 18 }} className="text-lg">Start Time:</p>
@@ -236,17 +248,19 @@ function DailyOperationsSection(props) {
 
                                 <div className="w-full">
 
-                                    <select className="selectpicker w-1/2">
-                                        {hours.map((item) => <option>{item}</option>)}
+                                    <select defaultValue={props.item.startTimeH} onChange={(e) => props.setFunc(props.type, "startTimeH", e.target.value,props.index)} className="selectpicker w-1/2">
+                                        <option value={"0"}>Hours</option>
+                                        {hours.map((item) => <option value={item}>{item}</option>)}
                                     </select>
-                                    <select className="selectpicker w-1/2">
-                                        {minutes.map((item) => <option>{item}</option>)}
+                                    <select defaultValue={props.item.startTimeM} onChange={(e) => props.setFunc(props.type, "startTimeM", e.target.value,props.index)} className="selectpicker w-1/2">
+                                        <option value={"00"}>Minutes</option>
+                                        {minutes.map((item) => <option value={item}>{item}</option>)}
                                     </select>
                                 </div>
                                 <div className="w-100">
-                                    <select className="selectpicker">
-                                        <option>AM</option>
-                                        <option>PM</option>
+                                    <select defaultValue={props.item.startTimeAP} onChange={(e) => props.setFunc(props.type, "startTimeAP", e.target.value,props.index)} className="selectpicker w-1/2">
+                                        <option value={"AM"}>AM</option>
+                                        <option value={"PM"}>PM</option>
                                     </select>
                                 </div>
                             </div>
@@ -258,17 +272,19 @@ function DailyOperationsSection(props) {
 
                                 <div className="w-full">
 
-                                    <select className="selectpicker w-1/2">
-                                        {hours.map((item) => <option>{item}</option>)}
+                                    <select defaultValue={props.item.endTimeH} onChange={(e) => props.setFunc(props.type, "endTimeH", e.target.value,props.index)} className="selectpicker w-1/2">
+                                        <option value={"0"}>Hours</option>
+                                        {hours.map((item) => <option value={item}>{item}</option>)}
                                     </select>
-                                    <select className="selectpicker w-1/2">
-                                        {minutes.map((item) => <option>{item}</option>)}
+                                    <select defaultValue={props.item.endTimeM} onChange={(e) => props.setFunc(props.type, "endTimeM", e.target.value,props.index)} className="selectpicker w-1/2">
+                                        <option value={"00"}>Minutes</option>
+                                        {minutes.map((item) => <option value={item}>{item}</option>)}
                                     </select>
                                 </div>
                                 <div className="w-100">
-                                    <select className="selectpicker">
-                                        <option>AM</option>
-                                        <option>PM</option>
+                                    <select defaultValue={props.item.endTimeAP} onChange={(e) => props.setFunc(props.type, "endTimeAP", e.target.value,props.index)} className="selectpicker w-1/2">
+                                        <option value={"AM"}>AM</option>
+                                        <option value={"PM"}>PM</option>
                                     </select>
                                 </div>
                             </div>
@@ -280,7 +296,33 @@ function DailyOperationsSection(props) {
         )
     }
 
+    const HoursFunction = (type, arg, val,index) => {
+        let fm = facilityManagers;
+        let hg = headGuards
+        switch(type){
+            case "facilityManager":
 
+                fm[index][arg] = val;
+
+                console.log(fm)
+
+                setFacilityManagers(fm);
+                break;
+            case "headGuard":
+                hg[index][arg] = val;
+
+                console.log(hg)
+
+                setHeadGuards(hg);
+                break;
+
+
+
+            default:
+                break;
+        }
+        console.log(facilityManagers)
+    }
     return (
         <>
             <div className="container mx-auto bg-white">
@@ -290,7 +332,7 @@ function DailyOperationsSection(props) {
 
                 <label text="2xl">Shift Notes: </label>
                 <br />
-                <textarea rows={3} className="swal2-textarea border-danger border-4 w-full mx-4" />
+                <textarea onChange={(e) => setShiftNotes(e.target.value)} rows={3} className="swal2-textarea border-danger border-4 w-full mx-4 my-2" />
 
 
                 <div>
@@ -303,7 +345,7 @@ function DailyOperationsSection(props) {
                         Add a shift +
                     </button>
 
-                    {facilityManagers.map((item, i) => <HoursInputContainer props={props} />)}
+                    {facilityManagers.map((item, i) => <HoursInputContainer type="facilityManager" setFunc={HoursFunction} index={i} item={item} />)}
 
                     <div className="bg-red-600 text-white text-lg font-bold p-2">
                         Head Guards
@@ -313,7 +355,7 @@ function DailyOperationsSection(props) {
                         Add a shift +
                     </button>
 
-                    {headGuards.map((item, i) => <HoursInputContainer props={props} />)}
+                    {headGuards.map((item, i) => <HoursInputContainer type="headGuard" setFunc={HoursFunction} index={i} item={item}  />)}
 
                     <div className="bg-red-600 text-white text-lg font-bold p-2">
                         Pool Closures
