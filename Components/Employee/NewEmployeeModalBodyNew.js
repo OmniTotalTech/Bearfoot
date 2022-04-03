@@ -60,7 +60,6 @@ class NewEmployeeModalBody extends Component {
     };
 
     this.props.reLoad();
-    body.organizations.push({ orgName: this.props.org });
 
     console.log(body)
 

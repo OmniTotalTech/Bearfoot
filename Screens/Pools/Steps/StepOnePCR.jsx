@@ -22,12 +22,21 @@ const StepOnePCR = (props) => {
         state[key] = val;
         console.log(state);
         setLocalState(state);
+        updateMasterState();
+    }
+
+    const updateMasterState = () => {
+        props.setStepData("step1",localState);
     }
 
 
     return (
         <>
+            <div className={"bg-red-500 w-full"}>
+                <h2 className="text-3xl text-white px-2 bold">Injured Information</h2>
+            </div>
             <div className="container p-4 mx-auto ">
+
                 <div className='w-full mx-2'>
                     <label className="text-md">Name</label>
                     <br />

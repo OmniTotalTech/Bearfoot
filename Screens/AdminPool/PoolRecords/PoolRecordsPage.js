@@ -50,12 +50,12 @@ class PoolRecordsPage extends Component {
           return "Closing  Inventory";
         case "OpeningTaskChecklist":
           return "Opening Inventory";
-        case "dailyOperationsPM":
-          return "PM - Daily Operations";
-        case "dailyOperationsAM":
-          return "AM - Daily Operations";
+        case "dailyOperations":
+          return "Daily Operations";
         case "ChemicalLog":
           return `Chem-Log(${props.specificPool.subPoolName})`;
+        default:
+          return
       }
     };
 
@@ -77,12 +77,8 @@ class PoolRecordsPage extends Component {
         text: "Evening Checklist",
       },
       {
-        value: "dailyOperationsAM",
-        text: "Daily Operations - AM",
-      },
-      {
-        value: "dailyOperationsPM",
-        text: "Daily Operations - PM",
+        value: "dailyOperations",
+        text: "Daily Operations",
       },
       {
         value: "ChemicalLog",

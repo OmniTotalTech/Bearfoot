@@ -94,17 +94,11 @@ class RecordModal extends Component {
           data = tempArray;
           url = "/records-email/InventoryChecklist/Evening";
           break;
-        case "dailyOperationsAM":
-          type = "AM";
+        case "dailyOperations":
+          type = "Daily Operation";
 
-          url = "/records-email/DO/Record/DailyOperations/AM";
+          url = "/records-email/DO/Record/DailyOperations";
           console.log(this.props.data.data);
-          data = this.props.data.data;
-          break;
-        case "dailyOperationsPM":
-          type = "PM";
-
-          url = "/records-email/DO/Record/DailyOperations/PM";
           data = this.props.data.data;
 
           break;
@@ -116,8 +110,9 @@ class RecordModal extends Component {
 
           break;
         case "incidentReport":
+          console.log(this.props.data.dataObject)
           type = "incidentReport";
-          data = this.props.dataArrayState;
+          data = this.props.data.dataObject;
           url = "/records-email/ir/sensitive/admin";
           break;
         case "patientCare":
@@ -128,6 +123,9 @@ class RecordModal extends Component {
           break;
       }
       console.log(url);
+
+
+
 
       let body = {
         type: type,
@@ -156,22 +154,27 @@ class RecordModal extends Component {
           this.setState({ isButtonDisabled: false });
         });
     };
+
+    const emailRegex = (estring) => {
+      var re = /\S+@\S+\.\S+/;
+      return re.test(estring);
+    }
     return (
-      <div>
+      <div className={"bg-black"}>
         <div className="grid grid-cols-3">
-          <div>
+          <div className={"mx-4"}>
             <button
-              className="bg-red-500 text-white px-4 py-2 rounded"
+                className="bg-red-500 text-white px-4 py-2 rounded w-full text-center"
               onClick={handleClose}
             >
               Close
             </button>
           </div>
           <div></div>
-          <div>
+          <div className={"mx-4"}>
             {" "}
             <button
-              className="bg-red-500 text-white px-4 py-2 rounded"
+              className="bg-blue-500 text-white px-4 py-2 rounded w-full text-center"
               onClick={handleEmail}
             >
               Email
@@ -180,6 +183,9 @@ class RecordModal extends Component {
         </div>
         {this.state.isEmailOpen ? (
           <>
+          <div className={"bg-white p-4"}>
+
+
             <h2 className="text-lg my-4">
               Enter an email address to send a copy of this report:
             </h2>
@@ -189,12 +195,14 @@ class RecordModal extends Component {
                 this.setState({ emailFormInput: e.target.value })
               }
             />
-            <button
-              className="text-white bg-red-500 px-4 py-2 my-4 rounded"
-              onClick={handleEmailSubmit}
+            <br/>
+            {emailRegex(this.state.emailFormInput) ?(<button
+                className="text-white bg-red-500 px-4 py-2 my-4 rounded"
+                onClick={handleEmailSubmit}
             >
               Add Email
-            </button>
+            </button>) : (<></>)}
+
             <div className="my-2">
               <div>
                 {this.state.emails.length > 0 ? (
@@ -213,6 +221,7 @@ class RecordModal extends Component {
                       </>
                     ))}
                   </>
+
                 ) : (
                   <div className="my-2 text-lg">Please Enter an email.</div>
                 )}
@@ -232,11 +241,11 @@ class RecordModal extends Component {
                 <div>Send Emails</div>
               )}
             </button>
+          </div>
           </>
         ) : (
           <div></div>
         )}
-        {console.log(this.props)}
         {viewControl(
           this.props.type,
           this.props.data,
@@ -249,7 +258,6 @@ class RecordModal extends Component {
 }
 
 const viewControl = (type, data, updateStateFunc, props) => {
-  console.log(props);
   switch (type) {
     case "MorningChecklist":
       return <InventoryModal data={data} />;
@@ -259,13 +267,11 @@ const viewControl = (type, data, updateStateFunc, props) => {
       return <TaskModal data={data} />;
     case "ClosingTaskChecklist":
       return <TaskModal data={data} />;
-    case "dailyOperationsAM":
-      return <DailyOpModal data={data} />;
-    case "dailyOperationsPM":
+    case "dailyOperations":
       return <DailyOpModal data={data} />;
     case "ChemicalLog":
       return <ChemLogModal data={data} />;
-    case "patientCare":
+    case "incidentReport":
       return (
         <SensitiveModal
           data={data}
@@ -273,7 +279,7 @@ const viewControl = (type, data, updateStateFunc, props) => {
           fetchReports={props.fetchReports}
         />
       );
-    case "incidentReport":
+    case "patientCare":
       return (
         <SensitiveModal2
           data={data}
@@ -286,114 +292,184 @@ const viewControl = (type, data, updateStateFunc, props) => {
 };
 
 const DailyOpModal = (data) => {
+  console.log("datareceived",data.data)
+
+  let doData = data.data;
+// chlorine: ""
+// isClosed: ""
+// isOpen: ""
+// ph: ""
+// reason: ""
+// reasonArray: Array []
+// timeData: Object { timeNoticedH: "", timeNoticedM: "", timeNoticedAP: "", … }
+// isOpenAP: ""
+// isOpenH: ""
+// isOpenM: ""
+// timeCleanedAP: ""
+// timeCleanedH: ""
+// timeCleanedM: ""
+// timeNoticedAP: ""
+// timeNoticedH: ""
+// timeNoticedM: ""
   return (
     <>
-      <div className="p-1 my-8">
-        <div className="text-xl">Date : {data.data.date}</div>
-        <div className="text-xl">Pool : {data.data.pool_id.pool_name}</div>
+      <div className="p-4 my-8 bg-white mx-2">
+        <div className="text-xl">
+          <button className="p-4 bg-red-500 text-white text-xl">
+            Pool : {data.data.pool_id.pool_name}
+          </button>
+        </div>
+
+        <div className="text-sm">Date : {doData?.date}</div>
+
 
         <div className="text-xl">
           Submitted By : {data.data.user_id.name}
           <div className="text-md">Phone : {data.data.user_id.phone}</div>
         </div>
       </div>
-      {data.data.data.map((item) => (
-        <div>
-          <div className="text-xl">
-            Facility Manager : {item.facilityManager}
-          </div>
-          <div className="text-xl">Shift Hours : {item.shiftHours}</div>
-          <div className="text-xl">Head Guard : {item.headGuard}</div>
-          <div className="text-xl">
-            Shift Guard Hours : {item.shiftGuardHours}
-          </div>
-          <div className="text-2xl my-4 ">
-            If any pools were closed for any reason, you will find it here:
-          </div>{" "}
-          <div className="text-2xl my-4 ">
-            <div className="text-xl">
-              Vomit :{" "}
-              {item.vomit ? (
-                <div className="text-red-500">Yes</div>
-              ) : (
-                <div className="text-green-500">No</div>
-              )}{" "}
-            </div>
-            <div className="text-xl">
-              Fecal :{" "}
-              {item.fecal ? (
-                <div className="text-red-500">Yes</div>
-              ) : (
-                <div className="text-green-500">No</div>
-              )}{" "}
-            </div>
-            <div className="text-xl">
-              Weather :{" "}
-              {item.closedweather ? (
-                <div className="text-red-500">Yes</div>
-              ) : (
-                <div className="text-green-500">No</div>
-              )}{" "}
-            </div>
-            <div className="text-xl">
-              Pool Clarity :{" "}
-              {item.poolClarity ? (
-                <div className="text-red-500">Yes</div>
-              ) : (
-                <div className="text-green-500">No</div>
-              )}
-            </div>{" "}
-            <div className="text-xl">
-              Lightning :{" "}
-              {item.lightning ? (
-                <div className="text-red-500">Yes</div>
-              ) : (
-                <div className="text-green-500">No</div>
-              )}{" "}
-            </div>
-            <div className="text-xl">
-              Heavy Rain :{" "}
-              {item.heavyRain ? (
-                <div className="text-red-500">Yes</div>
-              ) : (
-                <div className="text-green-500">No</div>
-              )}{" "}
-            </div>
-            <div className="text-xl">
-              Thunder :{" "}
-              {item.thunder ? (
-                <div className="text-red-500">Yes</div>
-              ) : (
-                <div className="text-green-500">No</div>
-              )}{" "}
-            </div>
-            <div className="text-xl">
-              Other :{" "}
-              {item.other ? (
-                <div className="text-red-500">Yes</div>
-              ) : (
-                <div className="text-green-500">No</div>
-              )}{" "}
-            </div>
-          </div>
-          <div className="text-xl">Weather : {item.weather}</div>
-          <div className="text-xl">Shift Notes : {item.shiftNotes}</div>
-          <div className="text-xl">Pools : {item.pools}</div>
-          <div className="text-xl">Reason : {item.reason}</div>
-          <div className="text-xl">Time Noticed : {item.timeNoticed}</div>
-          <div className="text-xl">Time Closed : {item.timeClosed}</div>
-          <div className="text-xl">Time Cleaned : {item.timeCleaned}</div>
-          <div className="text-xl">Time Closed : {item.ph}</div>
-          <div className="text-xl">Time Cleaned : {item.chlorine}</div>
+
+      {/*FACILITY MANAGER SHIFTS*/}
+      <div className="p-4 my-8 bg-white mx-2">
+
+        <div className={"w-full bg-red-500 text-white"}>
+          <h3 className={"bold text-2xl my-2 p-2"}>Facility Manager Shifts </h3>
         </div>
-      ))}
+
+      <div className={"grid grid-cols-2 p-4"}>
+        {doData.dataObject?.facilityManagers.map((item,i) => (
+            <>
+              <div>
+                <div>
+                  <h1 className={"text-xl"}>{i+1}) Name: {item.name == "" ? "No Name Found" : item.name}</h1>
+                </div>
+                <div className="grid grid-cols-2">
+                  <div className={"my-2"}>
+                    <div className="header bg-gray-400">
+                      <h2 className="header-title">Start</h2>
+                    </div>
+                    <p>{item.timeData.startTimeH == "" ? "?" : item.timeData.startTimeH}
+                      :
+                      {item.timeData.startTimeM == "" ? "?" : item.timeData.startTimeM}
+                      {" "}
+                      {item.timeData.startTimeAP == "" ? "?" : item.timeData.startTimeAP}</p>
+                  </div>
+                  <div className={"my-2"}>
+                    <div className="header bg-gray-400">
+                      <h2 className="header-title">End</h2>
+                    </div>
+                    <p>{item.timeData.endTimeH  == "" ? "?" : item.timeData.endTimeH}
+                      :
+                      {item.timeData.endTimeM  == "" ? "?" : item.timeData.endTimeM}
+                      {" "}
+                      {item.timeData.endTimeAP  == "" ? "?" : item.timeData.endTimeAP }</p>
+                  </div>
+                </div>
+              </div>
+            </>
+        ))}
+        <div>
+        </div>
+        </div>
+      </div>
+      <div className="p-4 my-8 bg-white mx-2">
+
+        <div className={"w-full bg-red-500 text-white"}>
+          <h3 className={"bold text-2xl my-2 p-2"}>Head Guard Shifts </h3>
+        </div>
+
+        <div className={"grid grid-cols-2 p-4"}>
+          {doData.dataObject?.headGuards.map((item,i) => (
+              <>
+                <div>
+                  <div>
+                    <h1 className={"text-xl"}>{i+1}) Name: {item.name == "" ? "No Name Found" : item.name}</h1>
+                  </div>
+                  <div className="grid grid-cols-2">
+                    <div className={"my-2"}>
+                      <div className="header bg-gray-400">
+                        <h2 className="header-title">Start</h2>
+                      </div>
+                      <p>{item.timeData.startTimeH == "" ? "?" : item.timeData.startTimeH}
+                        :
+                        {item.timeData.startTimeM == "" ? "?" : item.timeData.startTimeM}
+                        {" "}
+                        {item.timeData.cstartTimeAP == "" ? "?" : item.timeData.startTimeAP}</p>
+                    </div>
+                    <div className={"my-2"}>
+                      <div className="header bg-gray-400">
+                        <h2 className="header-title">End</h2>
+                      </div>
+                      <p>{item.timeData.endTimeH  == "" ? "?" : item.timeData.endTimeH}
+                        :
+                        {item.timeData.endTimeM  == "" ? "?" : item.timeData.endTimeM}
+                        {" "}
+                        {item.timeData.endTimeAP  == "" ? "?" : item.timeData.endTimeAP }</p>
+                    </div>
+                  </div>
+                </div>
+              </>
+          ))}
+          <div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
+      <div className="p-4 my-8 bg-white mx-2">
+
+        <div className={"w-full bg-red-500 text-white"}>
+          <h3 className={"bold text-2xl my-2 p-2"}>Pool Closures </h3>
+        </div>
+
+          {doData.dataObject?.poolClosures.map((item,i) => (
+              <>
+                <div>
+                  <h2 className={"bold text-xl my-2 p-2"}>Reasons for pool closure: </h2>
+                  {item.reasonArray.map((subitem,j) => (
+                      <>
+                        <div className="text-md px-4 ">
+                          {j+1}) - {subitem}
+                        </div>
+                      </>
+                  ))}
+                </div>
+                <div className={"grid grid-cols-2 p-4 gap-2 my-4"}>
+
+
+
+                  <div>
+                      <h3 className={"bold text-xl my-2 p-2"}>Time Noticed </h3>
+                      {`${item.timeData?.timeNoticedH == "" ? "?" : item.timeData.timeNoticedH} : ${item.timeData?.timeNoticedM == "" ? "?" : item.timeData.timeNoticedM}  ${item.timeData.timeNoticedAP == "" ? "?" : item.timeData.timeNoticedAP}`}
+                  </div>
+                  <div>
+                    <h3 className={"bold text-xl my-2 p-2 mb-4"}>Time Cleaned </h3>
+                    {`${item.timeData?.timeCleanedH == "" ? "?" : item.timeData.timeCleanedH} : ${item.timeData?.timeCleanedM == "" ? "?" : item.timeData.timeCleanedM}  ${item.timeData.timeNoticedAP == "" ? "?" : item.timeData.timeNoticedAP}`}
+                  </div>
+                  <div>
+                    <h3 className={"bold text-xl my-2 p-2"}>Was the pool re-opened? </h3>
+                    {`${item.timeData?.isOpenH == "" ? "?" : item.timeData.isOpenH} : ${item.timeData?.isOpenM == "" ? "?" : item.timeData.isOpenM}  ${item.timeData.isOpenAP == "" ? "?" : item.timeData.isOpenAP}`}
+                  </div>
+                  <div>
+                    <h3 className={"bold text-xl my-2 p-2 mb-4"}> Was the pool cleaned? </h3>
+                    {`${item.timeData?.timeCleanedH == "" ? "?" : item.timeData.timeCleanedH} : ${item.timeData?.timeCleanedM == "" ? "?" : item.timeData.timeCleanedM}  ${item.timeData.timeNoticedAP == "" ? "?" : item.timeData.timeNoticedAP}`}
+                  </div>
+                </div>
+              </>
+          ))}
+
+        </div>
     </>
   );
 };
 
 const ChemLogModal = (data) => {
   return (
-    <div className="md:m-4">
+    <div className="md:m-4 bg-white">
       <div className="text-xl">Date : {data.data.date}</div>
       <div className="text-xl">Pool : {data.data.pool_id.pool_name}</div>
       <div className="text-xl">
@@ -403,6 +479,7 @@ const ChemLogModal = (data) => {
         Submitted By : {data.data.user_id.name}
         <div className="text-md">Phone : {data.data.user_id.phone}</div>
       </div>
+      <div className={"bg-white"}>
       {data.data.dataObject ? (
         <div className="shadow-xl p-2 my-6">
           <div className="text-black text-lg p-4">
@@ -458,7 +535,8 @@ const ChemLogModal = (data) => {
           </div>
         </div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 bg-white">
         {data.data.data.map((item) => (
           <>
             <div className="shadow-xl p-2">
@@ -510,29 +588,39 @@ const SensitiveModal = (data) => {
   return (
     <>
       <div className="container mx-auto p-1">
-        <div className="text-lg my-4 mx-2">
-          <span className="bg-red-500 shadow-xl text-white px-4 py-2">
-            Patient Information:
+        <div className="text-2xl w-full my-8 mx-2">
+          <span className="bg-red-500 shadow-xl w-full text-white px-4 py-2">
+            Incident Report
           </span>
         </div>
-        <div className="text-md  my-4 mx-2">
-          <span className="">Name:</span> {data.data.dataObject.patronName}
+        <div className="text-lg my-4 mx-2">
+          <span className="bg-red-500 shadow-xl text-white px-4 py-2">
+            Patron Information:
+          </span>
         </div>
+        <div className={"text-white"}>
+        {data.data.dataObject.patronInfo.map((item,i) => (
+            <>
+              <div className="text-md  my-4 mx-2">
+                <span className="">Name:</span> {item.name}
+              </div>
 
-        <div className="text-md my-4 mx-2">
-          <span className="">Phone: {data.data.dataObject.patronPhone}</span>
+              <div className="text-md my-4 mx-2">
+                <span className="">Phone: {item.phone}</span>
+              </div>
+              <div className="text-md my-4 mx-2">
+                Email: {item.email}
+              </div>
+            </>
+        ))}
         </div>
-        <div className="text-md my-4 mx-2">
-          Email: {data.data.dataObject.patronEmail}
-        </div>
-
         <div className="py-2">
           <div className="text-lg my-4 mx-2">
             <span className="bg-red-500 shadow-xl text-white px-4 py-2">
               Event Description:{" "}
             </span>
           </div>{" "}
-          <div className="text-sm py-2">
+          <div className="text-md  my-4 mx-2 text-white">
             {data.data.dataObject.eventDescription}
           </div>
           <div className="text-lg my-4 mx-2">
@@ -540,7 +628,7 @@ const SensitiveModal = (data) => {
               Resolution Description:{" "}
             </span>
           </div>
-          <div className="text-sm">{data.data.dataObject.resDescription}</div>
+          <div className="text-md px-4 text-white">{data.data.dataObject.resDescription}</div>
         </div>
       </div>
       <div>
@@ -549,7 +637,7 @@ const SensitiveModal = (data) => {
         ) : (
           <button
             onClick={() => handleApprove(data)}
-            className="bg-red-500 text-white rounded px-4 py-2"
+            className="bg-red-500 text-white rounded px-4 py-2 w-11/12 my-4 mx-auto"
           >
             Approve
           </button>
@@ -559,226 +647,200 @@ const SensitiveModal = (data) => {
   );
 };
 
+const TitleSwitch = (val) => {
+
+  switch(val){
+    case "step1":
+      return "Patron Information"
+      break;
+    case "step2":
+      return "Incident Information"
+      break;
+    case "step3":
+      return "Injury Information"
+      break;
+    case "step4":
+      return "Rescue Information"
+      break;
+    case "step5":
+      return "Witness Information"
+      break;
+    case "step6":
+      return "Finalization"
+      break;
+    default:
+      break;
+  }
+}
+
+const QuestionSwitch = (val) => {
+  switch(val){
+    case "hospital":
+      return "Did the patient go to the hospital?"
+      break;
+    case "hospitalName":
+      return "Hospital Name"
+      break;
+    case "legalAdult":
+      return "Is the patient a legal adult?"
+      break;
+    case "legalAdultName":
+      return "Guardian Name"
+      break;
+    case "guardianPhone":
+      return "Guardian's Phone: "
+      break;
+    case "detailedDescription":
+      return "Description of Event:"
+      break;
+    case "detailedResolution":
+      return "Resolution:"
+      break;
+    case "detailedTreatment":
+      return "Treatment:"
+      break;
+    default:
+      return val
+      break;
+  }
+}
+
 const SensitiveModal2 = (data) => {
+
+
   const handleApprove = async (data) => {
     let body = {
       _id: data.data._id,
       type: data.data.recordType,
     };
     await api
-      .post("/records", body)
-      .then((response) => {
-        console.log(response.data);
-        data.handleClose();
-        data.fetchReports();
-        this.props.navigation.navigate("SuccessScreen");
-      })
-      .catch((error) => {
-        const errorMsg = error.message;
-        console.log(errorMsg);
-      });
+        .post("/records", body)
+        .then((response) => {
+          console.log(response.data);
+          data.handleClose();
+          data.fetchReports();
+          this.props.navigation.navigate("SuccessScreen");
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+          console.log(errorMsg);
+        });
   };
-  console.log(data);
-  let tempValue = Object.keys(data.data.dataObject);
-  let tempValue2 = Object.values(data.data.dataObject);
-  let checkData = (term) => {
-    if (
-      term.includes("patient") ||
-      term.includes("witness") ||
-      term.includes("hospital")
-    ) {
-      return true;
-    }
 
-    switch (term) {
-      case "ems":
-      case "hospital":
-      case "legalAdult":
-      case "location":
-      case "injured":
-      case "detailedDescription":
-      case "detailedTreatment":
-      case "detailedResolution":
-      case "reportFilerName":
-      case "filerSignature":
-      case "managerName":
-      case "manFilerSignature":
-      case "supName":
-      case "supFilerSignature":
-        return true;
-      default:
-        return false;
-    }
-  };
-  //OH BOY WHAT DO YOU KNOW A FOR LOOP IN A FOR LOOP WHAT ARE THE ODDS///
-  let renderArray = [];
-  for (var i = 0; i < tempValue.length; i++) {
-    if (checkData(tempValue[i])) {
-      let body = { [tempValue[i]]: tempValue2[i] };
-      renderArray.push(body);
+  const dataFormatter = (val) => {
+  console.log(val)
+    if(val != null | undefined && val.toString().includes("data:image/")){
+      return (
+          <>
+            <img src={val} height={200} width={200} className={"bg-white"}/>
+          </>
+      )
+    } else {
+      return val
     }
   }
 
-  const realData = data.usf(renderArray);
-  console.log(realData);
+  const arrayFormatter = (key,array) => {
+    console.log(key,array)
 
-  // this.setState({ format: realData });
-
-  // var count = (temp.match(/is/g) || []).length;
-  let renderValues = (item) => {
-    if (item.includes("patient")) {
-      return item.replace("patient", "Patient ");
-    }
-
-    if (item.includes("witness")) {
-      return item.replace("witness", "Witness ");
-    }
-
-    if (item.includes("detailed")) {
-      return item.replace("detailed", "Detailed ");
-    }
-
-    switch (item) {
-      case "ems":
-        return "Was the ems called?";
-      case "hospital":
-        return "Were they take to a hospital?";
-      case "hospitalName":
-        return "Where were they taken?";
-      case "legalAdult":
-        return "Is the patient a legal adult?";
-      case "location":
-        return "Where on the property did this happen?";
-      case "injured":
-        return "Was the patient injured?";
-      case "reportFilerName":
-        return "Report Filer";
-      case "filerSignature":
-        return "Filer Signature";
-      case "managerName":
-        return "Report Filer";
-      case "manFilerSignature":
-        return "Manager Signature";
-      case "supName":
-        return "Report Filer";
-      case "supFilerSignature":
-        return "Supervisor Signature";
-      default:
-        return null;
-    }
-  };
-  let renderKeys = (item) => {
-    switch (typeof item[0]) {
-      case "boolean":
-        if (item[0]) {
-          return "Yes";
-        } else {
-          return "No";
-        }
-      case "string":
-        if (item[0].includes("data:image/png;base64")) {
+        if(key == 2){
           return (
-            <div>
-              <img src={item[0]} />
-            </div>
-          );
+              <>
+
+                {array.map((item, i) => (
+                    <>{item.checked ? (
+                      <>
+                        <div className={"my-4"}>
+                          <h3>
+                            <span className={"bg-red-500"}> Type </span> : {item.type}
+                          </h3>
+                          <h4>
+                            <span className={"bg-red-500"}> Specific Details</span>: {item.value}
+                            </h4>
+                        </div>
+                      </>
+                    ) : (
+                        <>
+                        </>
+                    )}
+                      </>
+                ))}
+              </>
+          )
+        } else if(key == 3) {
+          return (
+              <>
+              <h3>SAMPLE</h3>
+                {array.map((item,i) => (
+              <>
+                <div className={"my-2"}>
+                {item.letter} - {item.value}
+                </div>
+              </>
+          ))}
+              </>
+          )
         }
-      default:
-        return item[0];
-    }
-  };
+         else {
+          return (<>
+            <div className="my-4">
+            <h3>Name - {array.name}</h3>
+            <h4>Phone - {array.phone}</h4>
+            <h4>Address -{array.address}</h4>
+            <h4>{array.city}</h4>
+            <h4>{array.state}</h4>
+            <h4>{array.zip}</h4>
+            </div>
+          </>)
+        }
+  }
   return (
     <div className="container mx-auto p-1">
-      <div className="text-lg my-4 mx-2">
-        <span className="px-4 py-2">Patient Care Information:</span>
+      <div className={"w-full bg-red-500 text-white"}>
+        <h2 className="text-3xl px-4">Patient Care Information</h2>
       </div>
-      <div className="p-4">
-        <div className="my-8">
-          <div className="text-xl">Date : {data.data.date}</div>
 
-          {data.data.pool_id != null ? (
+      <div>
+        {Object.keys(data.data.dataObject).map((item, i) => (
             <>
-              <div className="text-xl">
-                Pool : {data.data.pool_id.pool_name}
-              </div>
-              <div className="text-xl">
-                Submitted By : {data.data.user_id.name}
-                <div className="text-md">Phone : {data.data.user_id.phone}</div>
-              </div>
-            </>
-          ) : (
-            <div></div>
-          )}
-        </div>
-      </div>
-      <div>
-        <div>
-        <span className="text-2xl text-bold"> Event Description</span>
-        </div>
-        <div>
-          {data.data?.dataObject.eventDescription}
-        </div>
-        </div>
-      <div>
-        <div>
-          <span className="text-2xl text-bold"> Resolution Description</span>
-        </div>
-        <div>
-          {data.data?.dataObject.resDescription}
-        </div>
-      </div>
-      <div>
-        {data.data?.dataObject.patronInfo.map((item, i) => (
-            <>
-              Patron {i+1}):
               <div>
-                <span style={{fontSize: 20}}>Name</span>: {item.name}
-              </div>
-              <div>
-                <span style={{fontSize: 12}}>Email</span>: {item.email}
-              </div>
-              <div>
-                <span style={{fontSize: 12}}>phone</span>: {item.phone}
-              </div>
+                <div className={"w-full bg-red-500 text-white"}>
+                  <h2 className="text-2xl px-4 my-4 text-white">
+                    {TitleSwitch(item)}
+                  </h2>
+                </div>
+                <div className={"px-8 py-2"}>
+                {Object.keys(data.data.dataObject[item]).map((subItem,j) => (
 
+                    <div>
+                      <p className="text-xl text-red-400">{QuestionSwitch(subItem)}</p>
+                      <p className="text-xl text-white">{typeof data.data?.dataObject[item][subItem] != "object" ? (<>
+                          {dataFormatter(data.data.dataObject[item][subItem])}
+                      </>
+                      ):(<>
+                      {arrayFormatter(i, data.data.dataObject[item][subItem]) }
+                      </>)}</p>
+
+                      <p className={"text-xl text-white"}>{typeof data.data?.dataObject[item][subItem] == "boolean" ? (
+                          data.data?.dataObject[item][subItem] == true ? "Yes":"No"
+                      ):(<></>)}</p>
+
+                    </div>
+                ))}
+                </div>
+              </div>
             </>
         ))}
-      </div>
-      <div className={"my-4"}>
-        <div className="text-xl">All Signatures Recorded</div>
-        {data.data?.dataObject.signature.map((item, i) => (
-            <>
-              <div>
-                <img src={item.data} width={200} height={50}/>
-              </div>
 
-            </>
-        ))}
       </div>
-      {/*{renderArray.map((item) => (*/}
-      {/*  <>*/}
-      {/*    <div className="p-4">*/}
-      {/*      <div className="text-bold text-lg">*/}
-      {/*        {renderValues(Object.keys(item).toString())}*/}
-      {/*      </div>*/}
-      {/*      <hr />*/}
-
-      {/*      <div>{renderKeys(Object.values(item))}</div>*/}
-      {/*    </div>*/}
-      {/*  </>*/}
-      {/*))}*/}
-      {console.log(data.data)}
-      {data.data.isApproved ? (
-        <div></div>
-      ) : (
-        <button
+      <button
           onClick={() => handleApprove(data)}
           className="bg-red-500 text-white rounded px-4 py-2"
-        >
-          Approve
-        </button>
-      )}
+      >
+        Approve
+      </button>
     </div>
+
   );
 };
 
@@ -786,7 +848,7 @@ const InventoryModal = (data, props) => {
   console.log(data.data);
   return (
     <div>
-      <div className="my-8">
+      <div className="my-8 bg-white">
         <div className="text-xl">Date : {data.data.date}</div>
         <div className="text-xl">Pool : {data.data.pool_id.pool_name}</div>
         <div className="text-xl">Time : {data.data.time}</div>
@@ -796,6 +858,10 @@ const InventoryModal = (data, props) => {
           <div className="text-md">Phone : {data.data.user_id.phone}</div>
         </div>
       </div>
+      <div className={"w-full my-4 bg-red-500 text-white"}>
+        <h2 className="text-3xl px-4">Inventory Checklist Recorded Information</h2>
+      </div>
+      <div className="bg-white">
       {data.data.data.length > 0 ? (
         data.data.data.map((item, i) => (
           <>
@@ -818,6 +884,7 @@ const InventoryModal = (data, props) => {
           later.
         </div>
       )}
+      </div>
     </div>
   );
 };
@@ -826,7 +893,7 @@ const TaskModal = (data) => {
   console.log(data);
 
   return (
-    <div className="container mx-auto overflow-scroll">
+    <div className="container mx-auto overflow-scroll bg-white mx-auto">
       <div className="my-8">
         <div className="text-xl">Date : {data.data.date}</div>
         <div className="text-xl">Pool : {data.data.pool_id.pool_name}</div>

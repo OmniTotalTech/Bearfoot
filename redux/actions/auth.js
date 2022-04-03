@@ -238,6 +238,7 @@ export const verifyCode = (code, phone) => {
         dispatch(loadUser());
       })
       .catch((error) => {
+        console.log(error)
         dispatch(verifyCodeError(error));
       });
   };

@@ -1,121 +1,182 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import HeadFunction from "./HeadFunction";
+
+const injures = {
+
+
+    Head: [
+        "Skull",
+        "Right Ear",
+        "Left Ear",
+        "Right Eye",
+        "Left Eye",
+        "Mouth",
+        "Teeth",
+        "Face",
+        "Neck",
+    ],
+    torso: ["Upper Back", "Middle Back", "Lower Back", "Chest", "Abdomen"],
+    arm: [
+        "Shoulder",
+        "Upper Arm",
+        "Elbow",
+        "Forearm",
+        "Wrist",
+        "Hand",
+        "Finger(s)",
+    ],
+    leg: [
+        "Hip",
+        "Groin",
+        "Thigh",
+        "Knee",
+        "Shin",
+        "Calf",
+        "Ankle",
+        "Foot",
+        "Toes",
+    ],
+    wounds: [
+        "Abrasion",
+        "Laceration",
+        "Puncture",
+        "Avulsion",
+        "Bruise",
+        "Embedded Object",
+    ],
+    burns: ["Chemical", "Thermal", "Radiation", "Electrical"],
+    suddenIllness: [
+        "Diabetic",
+        "Stroke",
+        "Cardiac",
+        "Shock",
+        "Anaphylaxis",
+        "Seizure",
+        "Fainting",
+        "Heat-Related",
+        "Cold-Related",
+        "Vomit",
+    ],
+};
 
 const StepThreePCR = (props) => {
 
-    const [activeHead, setActiveHead] = React.useState(false)
-    const [activeTorso, setActiveTorso] = React.useState(false)
-    const [activeArm, setActiveArm] = React.useState(false)
-    const [activeLegs, setActiveLegs] = React.useState(false)
-    const [activeWounds, setActiveWounds] = React.useState(false)
-    const [activeBurns, setActiveBurns] = React.useState(false)
-    const [activeSuddenIllness, setActiveSuddenIllness] = React.useState(false)
-//Injuries List Step 3
-    const injures = {
+
+    const [localState,setLocalState] = React.useState({
+        activeHead: false,
+        activeTorso: false,
+        activeArm: false,
+        activeLegs: false,
+        activeWounds: false,
+        activeBurns: false,
+        activeSuddenIllness: false,
+        injuryList : []
+    })
+
+    const [,updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState());
+
+    const setInjuryListFunction = (value, item, injuryType) => {
+        let oldArray = localState.injuryList;
+
+        if (oldArray.some(function(o){return o[`${item}` === item]})){
+            console.log("already found");
+        } else {
+            console.log("not found")
+            let newElement = { type: injuryType, checked: value, value: item };
+            oldArray.push(newElement);
+        }
+        setLocalState({...localState, injuryList: oldArray})
+
+        props.setStepData("step3",localState);
+
+        forceUpdate();
+
+        //let newElement = { type: injuryType, checked: value, value: item };
 
 
-        Head: [
-            "Skull",
-            "Right Ear",
-            "Left Ear",
-            "Right Eye",
-            "Left Eye",
-            "Mouth",
-            "Teeth",
-            "Face",
-            "Neck",
-        ],
-        torso: ["Upper Back", "Middle Back", "Lower Back", "Chest", "Abdomen"],
-        arm: [
-            "Shoulder",
-            "Upper Arm",
-            "Elbow",
-            "Forearm",
-            "Wrist",
-            "Hand",
-            "Finger(s)",
-        ],
-        leg: [
-            "Hip",
-            "Groin",
-            "Thigh",
-            "Knee",
-            "Shin",
-            "Calf",
-            "Ankle",
-            "Foot",
-            "Toes",
-        ],
-        wounds: [
-            "Abrasion",
-            "Laceration",
-            "Puncture",
-            "Avulsion",
-            "Bruise",
-            "Embedded Object",
-        ],
-        burns: ["Chemical", "Thermal", "Radiation", "Electrical"],
-        suddenIllness: [
-            "Diabetic",
-            "Stroke",
-            "Cardiac",
-            "Shock",
-            "Anaphylaxis",
-            "Seizure",
-            "Fainting",
-            "Heat-Related",
-            "Cold-Related",
-            "Vomit",
-        ],
-    };
+
+    }
+
+    const handleStateChange = (value, boolReceived) => {
+        let ls = localState;
+
+
+        if(ls[value] == undefined){
+            console.log("couldnt find key");
+            return
+        }
+
+        if(ls[value] != undefined){
+            console.log(ls)
+            ls[value] = boolReceived;
+
+            setLocalState({...ls})
+            props.setStepData("step3",ls);
+
+        }
+
+        //forceUpdate();
+
+
+    }
+
+
     return (
+        <>
+        <div className={"bg-red-500 w-full"}>
+            <h2 className="text-3xl text-white px-2 bold">Injury Information</h2>
+        </div>
         <div className="container p-4 bg-white max-w-2xl mx-auto text-left">
-                    <div>
-                      {" "}
-                      <label className="text-xl my-8">Injury Type</label>
-                    </div>
-                    <input
-                      type="checkbox"
-                      className="border-2 shadow-xl mx-2 "
-                      value={"Head"}
-                      onChange={(e) =>
-                        setActiveHead(!activeHead)
-                      }
-                    />
-                    <label className="text-lg my-4  px-4 py-1 my-8">Head</label>
-                    <br />
-                    {activeHead ? (
-                      <div className="grid grid-cols-2">
-                        {injures.Head.map((item) => (
-                          <>
-                            <div>
-                              <input
-                                type="checkbox"
-                                className="border-2 shadow-xl mx-2 "
-                                value={item}
-                                onChange={(e) =>
-                                  setInjuryListFunction(e.target.checked, item, "Head")
-                                }
-                              />
-                              <label>{item}</label>
-                            </div>
-                          </>
-                        ))}
-                      </div>
-                    ) : (
-                      <></>
-                    )}
+            {/*<HeadFunction handleStateChange={handleStateChange} setInjuryListFunction={setInjuryListFunction}/>*/}
+            <>
+                <br />
 
-                    <input
+                <input
+                    type="checkbox"
+                    className="border-2 shadow-xl mx-2 "
+                    value={"activeHead"}
+                    onChange={(e) =>
+                        handleStateChange(e.target.value, e.target.checked)
+                    }
+                />
+
+                <label className="text-lg  px-4 py-1 ">Head</label>
+                {localState.activeHead ? (
+                    <div className="grid grid-cols-2">
+                        {injures.Head.map((item) => (
+                            <>
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        className="border-2 shadow-xl mx-2 "
+                                        value={item}
+                                        onChange={(e) =>
+                                            setInjuryListFunction(e.target.checked, item, "Head")
+                                        }
+                                    />
+                                    <label>{item}</label>
+                                </div>
+                            </>
+                        ))}
+                    </div>
+                ) : (
+                    <></>
+                )}
+            </>
+            <br />
+
+            <input
                       type="checkbox"
                       className="border-2 shadow-xl mx-2 "
-                      value={"Torso"}
+                      value={"activeTorso"}
                       onChange={(e) =>
-                        setActiveTorso(!activeTorso)
+                          handleStateChange(e.target.value, e.target.checked)
                       }
                     />
-                    <label className="text-lg my-4  px-4 py-1 my-8">Torso</label>
-                    <br />
-                    {activeTorso ? (
+                    <label className="text-lg  px-4 py-1">Torso</label>
+
+            {localState.activeTorso ? (
                       <div className="grid grid-cols-2">
                         {injures.torso.map((item) => (
                           <>
@@ -133,19 +194,19 @@ const StepThreePCR = (props) => {
                         ))}
                       </div>
                     ) : (<></>)}
+            <br />
 
                     <input
                       type="checkbox"
                       className="border-2 shadow-xl mx-2 "
-                      value={"Arm"}
+                      value={"activeArm"}
                       onChange={(e) =>
-                        setActiveArm(!activeArm)
+                          handleStateChange(e.target.value, e.target.checked)
                       }
                     />
-                    <label className="text-lg my-4  px-4 py-1 my-8">Arm</label>
-                    <br />
+                    <label className="text-lg  px-4 py-1 ">Arm</label>
 
-                    {activeArm ? (
+                    {localState.activeArm ? (
 
 
                       <div className="grid grid-cols-2">
@@ -167,18 +228,20 @@ const StepThreePCR = (props) => {
 
 
                     ) : (<></>)}
+            <br />
 
                     <input
                       type="checkbox"
                       className="border-2 shadow-xl mx-2 "
-                      value={"Legs"}
+                      value={"activeLegs"}
                       onChange={(e) =>
-                        setActiveLegs(!activeLegs)
+                          handleStateChange(e.target.value, e.target.checked)
                       }
                     />
-                    <label className="text-lg my-4  px-4 py-1 my-8">Legs</label>
+                    <label className="text-lg px-4 py-1 ">Legs</label>
                     <br />
-                    {activeLegs ? (
+
+            {localState.activeLegs ? (
 
                       <div className="grid grid-cols-2">
                         {injures.leg.map((item) => (
@@ -197,18 +260,16 @@ const StepThreePCR = (props) => {
                         ))}
                       </div>
                     ) : (<></>)}
-
                     <input
                       type="checkbox"
                       className="border-2 shadow-xl mx-2 "
-                      value={"wounds"}
+                      value={"activeWounds"}
                       onChange={(e) =>
-                        setActiveWounds(!activeWounds)
+                          handleStateChange(e.target.value, e.target.checked)
                       }
                     />
-                    <label className="text-lg my-4  px-4 py-1 my-8">Wounds</label>
-                    <br />
-                    {activeWounds ? (
+                    <label className="text-lg my-4  px-4 py-1 ">Wounds</label>
+            {localState.activeWounds ? (
                       <div className="grid grid-cols-2">
                         {injures.wounds.map((item) => (
                           <>
@@ -226,17 +287,19 @@ const StepThreePCR = (props) => {
                         ))}
                       </div>
                     ) : (<></>)}
+            <br />
 
-                    <input
+            <input
                       type="checkbox"
                       className="border-2 shadow-xl mx-2 "
-                      value={"burns"}
+                      value={"activeBurns"}
                       onChange={(e) =>
-                        setActiveBurns(!activeBurns)
+                          handleStateChange(e.target.value, e.target.checked)
                       }
                     />
-                    <label className="text-lg my-4  px-4 py-1 my-8">Burns</label>
-                    {activeBurns ? (
+                    <label className="text-lg my-4  px-4 py-1 ">Burns</label>
+
+            {localState.activeBurns ? (
                       <div className="grid grid-cols-2">
                         {injures.burns.map((item) => (
                           <>
@@ -258,15 +321,16 @@ const StepThreePCR = (props) => {
                     <input
                       type="checkbox"
                       className="border-2 shadow-xl mx-2 "
-                      value={"suddenIllness"}
+                      value={"activeSuddenIllness"}
                       onChange={(e) =>
-                        setActiveSuddenIllness(!activeSuddenIllness)
+                          handleStateChange(e.target.value, e.target.checked)
                       }
                     />
-                    <label className="text-lg my-4  px-4 py-1 my-8">
+                    <label className="text-lg my-4  px-4 py-1 ">
                       Sudden Illness
                     </label>
-                    {activeSuddenIllness ? (
+
+            {localState.activeSuddenIllness ? (
                       <div className="grid grid-cols-2">
                         {injures.suddenIllness.map((item) => (
                           <>
@@ -284,8 +348,14 @@ const StepThreePCR = (props) => {
                         ))}
                       </div>
                     ) : (<></>)}
-                  </div>
+            </div>
+
+            </>
     )
 }
+
+
+
+
 
 export default StepThreePCR

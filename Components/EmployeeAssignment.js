@@ -19,7 +19,7 @@ export default class EmployeeAssignment extends Component {
     };
     // test
     return (
-      <div className="container mx-auto">
+      <div className="container mx-auto max-w-3xl">
         {/* <p className="text-3xl text-left bold">Employees</p>
 
         <EmployeeList employees={this.props.employees} /> */}

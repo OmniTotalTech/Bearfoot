@@ -1,8 +1,18 @@
 import React from 'react';
-import { useEffect } from 'react';
 
-let RenderWitnessArray = (props) => (
+let RenderWitnessArray = (props) => {
 
+    const updateState = (key,value,index) => {
+
+        let wa = props.wa;
+
+        wa[index][`${key}`] = value;
+
+        props.swa(wa);
+    }
+
+
+    return (
     props.wa.map((item, i) => (
         <>
             <div className={"my-2"}>
@@ -15,7 +25,7 @@ let RenderWitnessArray = (props) => (
                     <input
                         type="text"
                     // value={witnessName}
-                    // onChange={(e) => setWitnessName(e.target.value)}
+                    onChange={(e) => updateState("name",e.target.value, i)}
                     />
                 </div>{" "}
                 <div className="my-2">
@@ -25,7 +35,7 @@ let RenderWitnessArray = (props) => (
                         type="tel"
                         placeholder="123-456-7890"
                     // value={witnessPhone}
-                    // onChange={(e) => setWitnessPhone(e.target.value)}
+                        onChange={(e) => updateState("phone",e.target.value, i)}
                     />
                 </div>{" "}
                 <div className="my-2">
@@ -34,7 +44,7 @@ let RenderWitnessArray = (props) => (
                     <input
                         type="text"
                     // value={witnessAddress}
-                    // onChange={(e) => setWitnessAddress(e.target.value)}
+                        onChange={(e) => updateState("address",e.target.value, i)}
                     />
                 </div>{" "}
                 <div className="my-2">
@@ -43,7 +53,7 @@ let RenderWitnessArray = (props) => (
                     <input
                         type="text"
                     // value={witnessCity}
-                    // onChange={(e) => setWitnessCity(e.target.value)}
+                        onChange={(e) => updateState("city",e.target.value, i)}
                     />
                 </div>{" "}
                 <div className="my-2">
@@ -53,7 +63,7 @@ let RenderWitnessArray = (props) => (
                         type="text"
                         placeholder="Ex: TX, AL, MD"
                     // value={witnessState}
-                    // onChange={(e) => setWitnessState(e.target.value)}
+                        onChange={(e) => updateState("state",e.target.value, i)}
                     />
                 </div>{" "}
                 <div className="my-2">
@@ -63,27 +73,33 @@ let RenderWitnessArray = (props) => (
                         type="text"
                         placeholder="0000"
                     // value={witnessZip}
-                    // onChange={(e) => setWitnessZip(e.target.value)}
+                        onChange={(e) => updateState("zip",e.target.value, i)}
                     />
                 </div>
             </div>
         </>
     ))
 
-)
+)}
 
 const StepFivePCR = (props) => {
 
 
     const { witnessArray, setWitnessArray } = props
 
+    const handle = (arr) => {
+        setWitnessArray(arr)
+    }
+
     return (
         <>
 
             <div className="container ">
 
-                <div className="text-xl">Witness Information</div>
-                <button className={"w-full px-4 py-2 text-white bg-red-500"} onClick={(e) => (e.preventDefault(), witnessArray.length < 3 ? props.setWitnessArray(
+                <div className={"w-full bg-red-500 text-white"}>
+                    <h2 className="text-3xl px-4">Witness Information</h2>
+                </div>
+                <button className={"w-full px-4 py-2 text-white bg-blue-300 my-4"} onClick={(e) => (e.preventDefault(), witnessArray.length < 3 ? props.setWitnessArray(
                     [...props.witnessArray, {
                         id: 0,
                         name: "",
@@ -97,11 +113,12 @@ const StepFivePCR = (props) => {
                 )}>
                     Add A Witness
                 </button>
-                <RenderWitnessArray wa={props.witnessArray} />
+                <RenderWitnessArray wa={props.witnessArray} swa={handle} />
 
             </div>
         </>
     )
+
 }
 
 export default StepFivePCR

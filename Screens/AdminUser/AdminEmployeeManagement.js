@@ -26,6 +26,7 @@ import Modal from "react-modal";
 import EmployeeList from "../../Components/Admin/EmployeeList";
 import api from "../../utils/api";
 import ReactTable from "react-table";
+import moment from "moment";
 class AdminEmployeeManagement extends Component {
   componentDidMount() {
 
@@ -200,6 +201,25 @@ class AdminEmployeeManagement extends Component {
 
         // width: 100,
       },
+      {
+        Header: "Last Updated Time",
+        accessor: "lastUpdated",
+        style: {
+          //textAlign: "right",
+        },
+        Cell: porps => {
+          return (<>  {moment(porps.original.lastUpdated.toString()).format('lll')} </>)
+
+        }
+
+      },
+      {
+        Header: "Updated By",
+        accessor: "lastUpdatedBy",
+        style: {
+          //textAlign: "right",
+        },
+      }
 
     ];
     const userInfoEmployeeMap = (
@@ -217,50 +237,6 @@ class AdminEmployeeManagement extends Component {
         {/* bg-gray-100 */}
         <section className="py-4 bg-opacity-50 h-screen">
           <div>
-            <div className="ml-2 mb-8">
-              <div className="text text-lg">Organization:</div>
-              <Picker
-                selectedValue={this.state.selectedValue}
-                style={{ height: 50, width: 150 }}
-                onValueChange={(v) =>
-                  this.setSelectedValue(
-                    v,
-                    this.props.adminEmployeeManagement.data.extraData
-                  )
-                }
-              >
-                <Picker.Item
-                    label="Please Select Org"
-                />
-                {" "}
-                {this.props.user.role == 7 ? (
-                  <>
-                    {this.props.adminEmployeeManagement.data.extraData.length >
-                      0 ? (
-                      this.props.adminEmployeeManagement.data.extraData.map(
-                        (item) => (
-                          <Picker.Item
-                            label={item.orgName}
-                            value={item.orgName}
-                          />
-                        )
-                      )
-                    ) : (
-                      <div></div>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    {this.props.user.organizations.map((item, i) => (
-                      <Picker.Item
-                        label={this.props.user.organizations[i].orgName}
-                        value={this.props.user.organizations[i].orgName}
-                      />
-                    ))}
-                  </>
-                )}
-              </Picker>
-            </div>
             <div className="flex justify-center mb-4">
               <button
                 className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
@@ -299,6 +275,48 @@ class AdminEmployeeManagement extends Component {
                 <div className="text text-3xl my-2">
                   Employees You Can Manage:
                 </div>
+                <div className="text text-lg">Organization:</div>
+                <Picker
+                    selectedValue={this.state.selectedValue}
+                    style={{ height: 50, width: 150 }}
+                    onValueChange={(v) =>
+                        this.setSelectedValue(
+                            v,
+                            this.props.adminEmployeeManagement.data.extraData
+                        )
+                    }
+                >
+                  <Picker.Item
+                      label="Please Select Org"
+                  />
+                  {" "}
+                  {this.props.user.role == 7 ? (
+                      <>
+                        {this.props.adminEmployeeManagement.data.extraData.length >
+                        0 ? (
+                            this.props.adminEmployeeManagement.data.extraData.map(
+                                (item) => (
+                                    <Picker.Item
+                                        label={item.orgName}
+                                        value={item.orgName}
+                                    />
+                                )
+                            )
+                        ) : (
+                            <div></div>
+                        )}
+                      </>
+                  ) : (
+                      <>
+                        {this.props.user.organizations.map((item, i) => (
+                            <Picker.Item
+                                label={this.props.user.organizations[i].orgName}
+                                value={this.props.user.organizations[i].orgName}
+                            />
+                        ))}
+                      </>
+                  )}
+                </Picker>
                 <button
                   onClick={this.handleSubmitModal}
                   className="bg-red-500 text-white px-4 py-2 m-2"

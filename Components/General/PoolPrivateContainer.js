@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 class PoolPrivateContainer extends Component {
   render() {
-    console.log(this.props);
+    console.log("private",this.props);
 
     return (
       <>

@@ -29,10 +29,11 @@ class PoolPublicContainer extends Component {
             {this.props.pool.individualPool.lastUpdatedby ? (this.props.pool.individualPool.lastUpdatedby) : ("Updated automatically by the system.")}
           </p>
         </div>
-        <div className="px-2 py-4 mx-auto container max-w-lg bg-white ">
           {this.props.accordionData.length > 0 ? (
             this.props.accordionData.map((item, i) => (
-              <div>
+                <div className="px-2 py-4 mx-auto container  bg-white ">
+
+                <div>
                 <h1 className="text-xl">
                   {i + 1} ) {item.headerText}
                 </h1>
@@ -48,15 +49,17 @@ class PoolPublicContainer extends Component {
                       />
                     ))
                   ) : (
-                    <div></div>
+                    <div>
+
+                    </div>
                   )}
                 </div>
               </div>
+                </div>
             ))
           ) : (
             <div></div>
           )}
-        </div>
       </>
     );
   }

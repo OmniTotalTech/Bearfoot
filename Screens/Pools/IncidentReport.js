@@ -12,6 +12,7 @@ import StepFourPCR from "./Steps/StepFourPCR";
 import StepFivePCR from "./Steps/StepFivePCR";
 import StepSixPCR from "./Steps/StepSixPCR";
 import StepSevenPCR from "./Steps/StepSevenPCR";
+import {connect} from "react-redux";
 
 const IncidentReport = (props) => {
 
@@ -31,106 +32,44 @@ const IncidentReport = (props) => {
 
   const [witnessArray, setWitnessArray] = React.useState([]);
 
-  // witness Information Step 5
-  const [sampleArray, setSampleArray] = React.useState([]);
 
-  //Signatures Step 6
-  const [filerSignature, setTrimmedDataURL] = React.useState("");
-  const [manFilerSignature, setTrimmedDataURL2] = React.useState("");
-  const [supFilerSignature, setTrimmedDataURL3] = React.useState("");
+  const [stepData,setStepData] = React.useState({
+    step1: {},
+    step2: {},
+    step3: {},
+    step4: {},
+    step5: {},
+    step6: {},
+  });
 
-  let sampleAnnagram = ["S", "A", "M", "P", "L", "E"];
-  let sigPad = {};
-  let sigPad2 = {};
-  let sigPad3 = {};
-
-  let setInjuryListFunction = (value, item, injuryType) => {
-    let oldArray = injuryList;
-    let newElement = { type: injuryType, checked: value, value: item };
-    setSampleArray([...oldArray, newElement]);
-
-    console.log(injuryList);
-  };
-  let setSample = (value, item) => {
-    let oldArray = sampleArray;
-    let newElement = { letter: item, value: value };
-    setInjuryList([...oldArray, newElement]);
-  };
-
-  let trim = () => {
-    setTrimmedDataURL(sigPad.getTrimmedCanvas().toDataURL("image/png"));
-  };
-  let trim2 = () => {
-    setTrimmedDataURL2(sigPad2.getTrimmedCanvas().toDataURL("image/png"));
-  };
-  let trim3 = () => {
-    setTrimmedDataURL3(sigPad3.getTrimmedCanvas().toDataURL("image/png"));
-  };
-
-  const handleAdultChange = (e) => {
-    console.log(e.target.value)
-    setLegalAdult(e.target.value);
-    console.log(legalAdult)
-  }
   const submitFormIR = async (e) => {
     e.preventDefault();
-    let dataBody = {}
-    let dataObject = dataBody;
+
+    let sd = stepData;
+
+    sd.step5 = witnessArray;
+
+    console.log(props)
     let body = {
-      user_id: props.user_id,
-      pool_id: props.id,
-      recordType: "incidentReport",
+      user_id: props.user._id,
+      pool_id: props.route.params.id,
+      recordType: "patientCare",
       date: moment().format("YYYY-MM-DD"),
-      dataObject: dataObject,
+      dataObject: sd,
     };
     console.log(body);
     await api
-      .post("/records/incidentReport", body)
-      .then((response) => {
-        console.log(response);
-        props.navigation.navigate("SuccessScreen");
-      })
-      .catch((error) => {
-        const errorMsg = error.message;
-      });
+        .post("/records/incidentReport", body)
+        .then((response) => {
+          console.log(response);
+          props.navigation.navigate("SuccessScreen");
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+
   };
 
-  function LegalAdultChoice(props) {
-    console.log(props);
-    if (props.legalAdult == 'false') {
-      return (
-        <>
-          <div>
-            <br />
-            <label className="text-md">Guardian name:</label>
-            <br />
-
-            <input
-              type="text"
-            // value={hospitalName}
-            // onChange={(e) => setHospitalName(e.target.value)}
-            />
-            <br />
-
-            <label className="text-md">Contact phone number for guardian:</label>
-            <br />
-
-            <input
-              type="text"
-            // value={hospitalName}
-            // onChange={(e) => setHospitalName(e.target.value)}
-            />
-          </div>
-        </>
-      )
-    } else {
-      return (
-        <></>
-      )
-
-    }
-
-  }
 
 
   let displayStyle = (step) => {
@@ -139,6 +78,16 @@ const IncidentReport = (props) => {
     } else {
       return { display: "none" }
     }
+  }
+
+  const handleStepData = (stepIndex,objectReceived) => {
+
+    let currentData = stepData;
+
+    currentData[stepIndex] = objectReceived
+
+    setStepData(currentData)
+
   }
   return (
 
@@ -149,25 +98,22 @@ const IncidentReport = (props) => {
           <div className="container p-4 text-2xl mx-auto">Patient Care Form</div>
           <form>
             <div style={displayStyle(1)}>
-              <StepOnePCR />
+              <StepOnePCR setStepData={handleStepData} />
             </div>
             <div style={displayStyle(2)}>
-              <StepTwoPCR />
+              <StepTwoPCR  setStepData={handleStepData} />
             </div>
             <div style={displayStyle(3)}>
-              <StepThreePCR />
+              <StepThreePCR setStepData={handleStepData} />
             </div>
             <div style={displayStyle(4)}>
-              <StepFourPCR />
+              <StepFourPCR setStepData={handleStepData} />
             </div>
             <div style={displayStyle(5)}>
-              <StepFivePCR witnessArray={witnessArray} setWitnessArray={setWitnessArray} />
+              <StepFivePCR setStepData={handleStepData} witnessArray={witnessArray} setWitnessArray={setWitnessArray} />
             </div>
             <div style={displayStyle(6)}>
-              <StepSixPCR />
-            </div>
-            <div style={displayStyle(7)}>
-              <StepSevenPCR />
+              <StepSixPCR setStepData={handleStepData}  witnessArray={witnessArray}/>
             </div>
           </form>
 
@@ -227,8 +173,9 @@ const IncidentReport = (props) => {
               { label: "4" },
               { label: "5" },
               { label: "6" },
+
             ]}
-            activeStep={activeStep}
+            activeStep={activeStep-1}
           />
         </div>
       </ScrollView>
@@ -236,4 +183,11 @@ const IncidentReport = (props) => {
   );
 };
 
-export default IncidentReport;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(IncidentReport);

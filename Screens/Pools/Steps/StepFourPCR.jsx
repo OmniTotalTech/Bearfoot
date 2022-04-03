@@ -1,132 +1,185 @@
 import React from 'react';
 
 const StepFourPCR = (props) => {
-    // Rescurer Information Step 4
-    const [injuryList, setInjuryList] = React.useState([]);
-    //Type of victim
-    const [active, setActive] = React.useState(false);
-    const [distressed, setDistressed] = React.useState(false);
-    const [passive, setPassive] = React.useState(false);
-    const [spinal, setSpinal] = React.useState(false);
-    //type of rescue
-    const [activeFront, setActiveFront] = React.useState(false);
-    const [activeRear, setActiveRear] = React.useState(false);
-    const [passiveFront, setPassiveFront] = React.useState(false);
-    const [passiveRear, setPassiveRear] = React.useState(false);
-    const [passiveSubmerged, setPassiveSubmerged] = React.useState(false);
-    const [surfaceSpinal, setSurfaceSpinal] = React.useState(false);
-    const [submergedSpinal, setSubmergedSpinal] = React.useState(false);
-
-    let sampleAnnagram = ["S", "A", "M", "P", "L", "E"];
 
 
+    let [localState, setLocalState] = React.useState({
+        active: false,
+        distressed: false,
+        passive: false,
+        spinal: false,
+        activeFront: false,
+        activeRear: false,
+        passiveFront: false,
+        passiveRear: false,
+        passiveSubmerged: false,
+        surfaceSpinal: false,
+        submergedSpinal: false,
+        sampleArray: []
+    })
+
+    const [sampleArray, setSampleArray] = React.useState([
+        {letter: "S", value: ""},
+        {letter: "A", value: ""},
+        {letter: "M", value: ""},
+        {letter: "P", value: ""},
+        {letter: "L", value: ""},
+        {letter: "E", value: ""},
+    ]);
+
+    const updateMasterState = () => {
+        props.setStepData("step4",localState);
+    }
+    const setSample = (value, item, i) => {
+        let sa = sampleArray;
+
+        sa[i].value = value;
+
+        setSampleArray(sa);
+        setLocalState({...localState,sampleArray: sa})
+        updateMasterState();
+    }
+
+    const setBoolChanges = (key,value) => {
+
+        let ls = localState;
+
+        ls[`${key}`] = value;
+
+        setLocalState({...ls})
+
+        updateMasterState()
+
+    }
     return (
         <div className="container">
-            <label className="text-lg px-2">S.A.M.P.L.E:</label>
-            {sampleAnnagram.map((item) => (
+            <div className={"w-full bg-red-500 text-white"}>
+
+            <label className="text-3xl px-2">S.A.M.P.L.E:</label>
+            </div>
+            {sampleArray.map((item,i) => (
                 <div>
                     <input
                         className="mx-2 border-2 shadow-xl my-2"
                         type="text"
-                        placeholder={item}
-                        onChange={(e) => setSample(e.target.value, item)}
+                        placeholder={item.letter}
+                        onChange={(e) => setSample(e.target.value, item,i)}
                     />
                 </div>
             ))}
 
-            <div className="px-2">
+            <div className={"w-full bg-red-500 text-white"}>
+                <label className="text-3xl my-4 ">Type Of Rescue</label>
+
+            </div>
+            <div className="px-2 my-4">
                 <div>
-                    <label className="text-2xl my-2">Active:</label>
+                    <label className="text-2xl ">Active:</label>
                     <input
                         className="mx-2"
                         type="checkbox"
-                        value={active}
-                        onChange={(e) => setActive(e.target.checked)}
+                        value={localState.active}
+                        onChange={(e) => setBoolChanges("active", e.target.checked)}
                     />
-                    <div className="grid grid-cols-1">
-                        <div>
-                            <label className="text-sm">Front:</label>
-                            <input
-                                className="mx-2"
-                                type="checkbox"
-                                value={activeFront}
-                                onChange={(e) => setActiveFront(e.target.checked)}
-                            />
+                    {localState.active ? (
+                        <div className="grid grid-cols-1">
+                            <div>
+                                <label className="text-sm">Front:</label>
+                                <input
+                                    className="mx-2"
+                                    type="checkbox"
+                                    value={localState.activeFront}
+                                    onChange={(e) => setBoolChanges("activeFront", e.target.checked)}
+                                />
+                            </div>
+                            <div>
+                                <label className="text-sm">Rear:</label>
+                                <input
+                                    className="mx-2"
+                                    type="checkbox"
+                                    value={localState.activeRear}
+                                    onChange={(e) => setBoolChanges("activeRear", e.target.checked)}
+                                />
+                            </div>
                         </div>
-                        <div>
-                            <label className="text-sm">Rear:</label>
-                            <input
-                                className="mx-2"
-                                type="checkbox"
-                                value={activeRear}
-                                onChange={(e) => setActiveRear(e.target.checked)}
-                            />
-                        </div>
-                    </div>
+                    ):(
+                        <>
+                        </>
+                    )}
+
                 </div>
-                <br /> <label className="text-2xl my-2">Distressed:</label>
+                <label className="text-2xl my-2">Distressed:</label>
                 <input
                     className="mx-2"
                     type="checkbox"
-                    value={distressed}
-                    onChange={(e) => setDistressed(e.target.checked)}
+                    value={localState.distressed}
+                    onChange={(e) => setBoolChanges("distressed", e.target.checked)}
                 />{" "}
                 <br /> <label className="text-2xl my-2">Passive:</label>
                 <input
                     className="mx-2"
                     type="checkbox"
-                    value={passive}
-                    onChange={(e) => setPassive(e.target.checked)}
+                    value={localState.passive}
+                    onChange={(e) => setBoolChanges("passive", e.target.checked)}
                 />
-                <div className="grid grid-cols-1">
-                    <div>
-                        <input
-                            className="mx-2"
-                            type="checkbox"
-                            value={passiveFront}
-                            onChange={(e) => setPassiveFront(e.target.checked)}
-                        />
-                        <label className="text-sm">Front</label>
+                {localState.passive ? (
+                    <>
+                        <div className="grid grid-cols-1">
+                            <div>
+                                <input
+                                    className="mx-2"
+                                    type="checkbox"
+                                    value={localState.passiveFront}
+                                    onChange={(e) => setBoolChanges("passiveFront", e.target.checked)}
+                                />
+                                <label className="text-sm">Front</label>
 
-                    </div>
-                    <div>
-                        <input
-                            className="mx-2"
-                            type="checkbox"
-                            value={passiveRear}
-                            onChange={(e) => setPassiveRear(e.target.checked)}
-                        />
-                        <label className="text-sm">Rear</label>
-                    </div>
+                            </div>
+                            <div>
+                                <input
+                                    className="mx-2"
+                                    type="checkbox"
+                                    value={localState.passiveRear}
+                                    onChange={(e) => setBoolChanges("passiveRear", e.target.checked)}
+                                />
+                                <label className="text-sm">Rear</label>
+                            </div>
 
 
-                    <div>
-                        <input
-                            className="mx-2"
-                            type="checkbox"
-                            value={passiveSubmerged}
-                            onChange={(e) => setPassiveSubmerged(e.target.checked)}
-                        />
-                        <label className="text-sm">Submerged</label>
+                            <div>
+                                <input
+                                    className="mx-2"
+                                    type="checkbox"
+                                    value={localState.passiveSubmerged}
+                                    onChange={(e) => setBoolChanges("passiveSubmerged", e.target.checked)}
+                                />
+                                <label className="text-sm">Submerged</label>
 
-                    </div>
-                </div>
+                            </div>
+                        </div>
+                    </>
+                ):(
+                    <></>
+                )}
 
+                <br />
                 <label className="text-2xl my-2">Spinal:</label>
                 <input
                     className="mx-2"
                     type="checkbox"
-                    value={spinal}
-                    onChange={(e) => setSpinal(e.target.checked)}
+                    value={localState.spinal}
+                    onChange={(e) => setBoolChanges("spinal", e.target.checked)}
                 />
-                <div className="grid grid-cols-1">
+                {localState.spinal ? (
+
+                    <div className="grid grid-cols-1">
                     <div>
                         <label className="text-sm">Surface:</label>
                         <input
                             className="mx-2"
                             type="checkbox"
-                            value={surfaceSpinal}
-                            onChange={(e) => setSurfaceSpinal(e.target.checked)}
+                            value={localState.surfaceSpinal}
+                            onChange={(e) => setBoolChanges("surfaceSpinal", e.target.checked)}
                         />
                     </div>
                     <div>
@@ -134,11 +187,14 @@ const StepFourPCR = (props) => {
                         <input
                             className="mx-2"
                             type="checkbox"
-                            value={submergedSpinal}
-                            onChange={(e) => setSubmergedSpinal(e.target.checked)}
+                            value={localState.submergedSpinal}
+                            onChange={(e) => setBoolChanges("submergedSpinal", e.target.checked)}
                         />
                     </div>
                 </div>
+                ):(
+                    <></>
+                )}
             </div>
         </div>
     )

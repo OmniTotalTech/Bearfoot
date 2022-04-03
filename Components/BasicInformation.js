@@ -33,6 +33,7 @@ import InvitedUser from "../Components/InvitedUser";
 import { InformationSections } from "./General/InformationSections";
 import ChecklistAdmin from "./ChecklistAdmin";
 import ChecklistFormatter from "./ChecklistFormatter";
+import * as events from "events";
 
 class BasicInformation extends Component {
   state = {
@@ -460,7 +461,7 @@ class BasicInformation extends Component {
       await api
         .patch("/pool/" + this.props.id, body)
         .then((response) => {
-          this.props.navigation.navigate("SuccessScreen");
+          this.props.navigation.navigate("SuccessScreenSpecial");
         })
         .catch((error) => {
           const errorMsg = error.message;
@@ -475,51 +476,50 @@ class BasicInformation extends Component {
     const handleSubmitChecklist = async (type,text) => {
 
 
+      let len = this.props.dailyChecklist.data.data.length
+      if(len == undefined | null){
+        len = 0
+      }
       console.log(this.props.dailyChecklist.data)
       let body = {
         poolId: this.props.dailyChecklist.data.pool_id,
-        checklistType: type,
+        type: type,
         data:
           {
-            position: this.props.dailyChecklist.data.data.length ,
+            position: len,
             text: text
           }
       }
 
       console.log(body)
         // text: this.state.taskText,
+
       await api
           .patch
           ("/dailyChecklist/", body)
           .then((response) => {
-            console.log(response);
             this.props.fetchDailyChecklist(this.props.id, type);
           })
           .catch((error) => {
             const errorMsg = error.message;
           });
-      // console.log(body)
-      // this.setState({ taskText: "" });
-      // this.setState({ taskText: "" });
-      //
 
     };
+    const onAddingItem = async (val,i) => {
 
-    const handleChecklistInput = (e) => {
-      console.log(handleChecklistInput);
-      this.setState({ taskText: e.target.value });
-    };
-    const onAddingItem = async (i) => {
-      this.setState((state, props) => {
-        state.timeArray[i].checked = !state.timeArray[i].checked;
-      });
+let timeArray = this.state.timeArray;
 
-      console.log(this.state);
-      handleSubmitChecklist();
+timeArray[i].checked = val
+
+        this.setState({
+          ...this.state,
+          timeArray: timeArray
+        })
+
+      // handleSubmitChecklist();
     };
 
     const handleUpload = async () => {
-      console.log(this.props.navigation);
       const formData = new FormData();
       formData.append("image", this.state.pictures);
 
@@ -533,12 +533,12 @@ class BasicInformation extends Component {
         await api
           .post("uploadPoolDetails", data)
           .then(async (response) => {
-            console.log(response.data);
             let body = {
               poolId: this.props.id,
               headerText: this.state.headerText,
               bodyText: this.state.bodyText,
               images: response.data.files,
+              position: this.state.accordionData.length
             };
 
             await api
@@ -546,14 +546,11 @@ class BasicInformation extends Component {
               .then((response) => {
                 this.setState({ isNewPoolDetailModalOpen: false });
                 this.props.navigation.navigate("SuccessScreen");
-                console.log(response);
               })
               .catch((error) => {
-                console.log(error.message);
               });
           })
           .catch((error) => {
-            console.log(error);
           });
       }
 
@@ -590,13 +587,15 @@ class BasicInformation extends Component {
       await api
         .post("/subPools/", body)
         .then((response) => {
-          console.log(response);
+          console.log("hereee")
+          this.setState({ newSubPoolString: "" });
+
           api
             .get("/subPools/" + this.props.id)
             .then((response) => {
               console.log(response);
               this.setState({ subPools: response.data });
-              this.setState({ newSubPoolString: "" });
+
             })
             .catch((error) => {
               const errorMsg = error.message;
@@ -605,19 +604,21 @@ class BasicInformation extends Component {
         .catch((error) => {
           const errorMsg = error.message;
         });
+
     };
 
     const handleDeleteHoa = async (pool, user, state) => {
-      console.log(pool, user);
-      console.log(state._id)
+
       await api.delete(`/HOA/${state._id}`)
         .then((response) => {
-          console.log(response.data);
-          this.runHOAFuncHome()
+          console.log("gonna try to reload")
+          this.props.navigation.navigate("SuccessScreen")
         })
         .catch((error) => {
           console.log(error.message)
         })
+      this.runHOAFuncHome()
+
     }
 
     return (
@@ -628,7 +629,7 @@ class BasicInformation extends Component {
               <AccordionItem>
                 <AccordionItemHeading>
                   <AccordionItemButton>
-                    <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
+                    <button className="text bg-red-700  mb-4 px-4 py-2 w-11/12 rounded text-white text-xl">
                       Basic Information
                     </button>
                   </AccordionItemButton>
@@ -751,7 +752,7 @@ class BasicInformation extends Component {
               < AccordionItem >
                 <AccordionItemHeading>
                   <AccordionItemButton>
-                    <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
+                    <button className="text bg-red-700  mb-4 px-4 py-2 w-11/12 rounded text-white text-xl">
                       HOA Assignment
                     </button>
                   </AccordionItemButton>
@@ -783,7 +784,7 @@ class BasicInformation extends Component {
                                 : null}
                               <button
                                 onClick={() => {
-                                  this.props.pool.pool_managers.includes(this.props.user.userId) | this.props.user.role > 4 ?
+                                  this.props.pool.pool_managers.includes(this.props.user.userId) | this.props.user.role > 2 ?
                                     handleDeleteHoa(this.props.pool, this.props.user, this.state.hoasInPool[i]) :
                                     (console.log(false))
                                 }}
@@ -850,7 +851,7 @@ class BasicInformation extends Component {
               <AccordionItem>
                 <AccordionItemHeading>
                   <AccordionItemButton>
-                    <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
+                    <button className="text bg-red-700  mb-4 px-4 py-2 w-11/12 rounded text-white text-xl">
                       Daily Logs Management
                     </button>
                   </AccordionItemButton>
@@ -875,6 +876,7 @@ class BasicInformation extends Component {
                     )}
                     <input
                       className="my-4 border-2 shadow-xl"
+                      value={this.state.newSubPoolString}
                       onChange={(e) => handleSubPoolStateChange(e.target.value)}
                     />
 
@@ -895,7 +897,7 @@ class BasicInformation extends Component {
                           ))}
                         </div>
                       ) : (
-                        <div>No subpools found</div>
+                        <div className={"text-gray-600 bold mb-2"}>No subpools found</div>
                       )}{" "}
                     </div>
                   </div>
@@ -904,13 +906,13 @@ class BasicInformation extends Component {
               <AccordionItem>
                 <AccordionItemHeading>
                   <AccordionItemButton>
-                    <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
+                    <button className="text bg-red-700  mb-4 px-4 py-2 w-11/12 rounded text-white text-xl">
                       Checklist Management
                     </button>
                   </AccordionItemButton>
                 </AccordionItemHeading>
                 <AccordionItemPanel>
-                  <div className="mx-auto  container bg-white max-w-2xl p-4 shadow-md mx-4">
+                  <div className="mx-auto  container bg-white max-w-2xl p-4 shadow-md mx-4 mb-4">
                     <div className=" space-y-6 mt-4 mb-4">
                       <p className="text-md max-w-md mx-auto">
                         Set the tasks you would like the employees of this pool to
@@ -960,13 +962,14 @@ class BasicInformation extends Component {
                     >
                       close
                     </button>
-
+                    {console.log("dailyChecklist",this.props.dailyChecklist)}
                     <ChecklistAdmin
-                        checklistId={this.props.dailyChecklist.data._id}
+                        checklistId={this.props.dailyChecklist.data?._id}
+                        type={"opening"}
                         handleSubmitChecklist={handleSubmitChecklist}
                         fetchDailyChecklistOpening={() => this.props.fetchDailyChecklist(this.props.id,"opening")}
                         fetchDailyChecklistClosing={() => this.props.fetchDailyChecklist(this.props.id,"closing")}
-                        dailyChecklist={ChecklistFormatter(this.props.dailyChecklist.data.data)}
+                        dailyChecklist={ChecklistFormatter(this.props.dailyChecklist.data?.data)}
                     />
                   </Modal>
                   <Modal
@@ -984,72 +987,21 @@ class BasicInformation extends Component {
                       close
                     </button>
 
-                    <div className="mx-auto container max-w-2xl mx-4">
-                      <div className="bg-white space-y-6 mt-4 w-full">
-                        <div className="text-md">Add a New Task</div>
-                        <textarea
-                          rows={6}
-                          className="shadow-md w-full"
-                          value={this.state.taskText}
-                          onSubmit={() => this.setState({ taskText: "" })}
-                          onChange={(e) => handleChecklistInput(e)}
-                        />
-                        {this.state.taskText && this.state.taskText.length > 4 ? (
-                          <div>
-                            {" "}
-                            <button
-                              onClick={() => {
-                                handleSubmitChecklist("closing");
-                                this.setState({ disableButton: true });
-                              }}
-                              className="bg-red-500 text-white px-4 py-2 rounded"
-                            >
-                              Add
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="my-4">Enter More Data First... </div>
-                        )}
-                      </div>
-                      <div>
-                        {this.props.dailyChecklist.data &&
-                          this.props.dailyChecklist.data.data ? (
-                          <div className="w-full">
-                            {this.props.dailyChecklist.data.data.map((item) => (
-                              <>
-                                <div
-                                  key={item._id}
-                                  className="w-full shadow-md py-2 border-1 p-2"
-                                >
-                                  <div className="w-11/12 break-words">
-                                    <p className="text-lg">{item.text}</p>
-                                  </div>
-                                  <div className="w-1/6">
-                                    <button
-                                      className="bg-red-500 p-1 text-white rounded"
-                                      onClick={() =>
-                                        handleDelete(item._id, "closing")
-                                      }
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </div>
-                              </>
-                            ))}
-                          </div>
-                        ) : (
-                          <div>This pool has not set any tasks yet...</div>
-                        )}
-                      </div>
-                    </div>
+                    <ChecklistAdmin
+                        checklistId={this.props.dailyChecklist.data?._id}
+                        type={"closing"}
+                        handleSubmitChecklist={handleSubmitChecklist}
+                        fetchDailyChecklistOpening={() => this.props.fetchDailyChecklist(this.props.id,"opening")}
+                        fetchDailyChecklistClosing={() => this.props.fetchDailyChecklist(this.props.id,"closing")}
+                        dailyChecklist={ChecklistFormatter(this.props.dailyChecklist.data?.data)}
+                    />
                   </Modal>
                 </AccordionItemPanel>
               </AccordionItem>
               <AccordionItem>
                 <AccordionItemHeading>
                   <AccordionItemButton>
-                    <button className="text bg-red-700 p-2 mb-4 px-2 rounded text-white sm:w-full md:w-full text-xl">
+                    <button className="text bg-red-700  mb-4 px-4 py-2 w-11/12 rounded text-white text-xl">
                       Chemical Log Management
                     </button>
                   </AccordionItemButton>
@@ -1074,6 +1026,7 @@ class BasicInformation extends Component {
                     )}
                     <input
                       className="my-4 border-2 shadow-xl"
+                      value={this.state.newSubPoolString}
                       onChange={(e) => handleSubPoolStateChange(e.target.value)}
                     />
 
@@ -1130,7 +1083,7 @@ class BasicInformation extends Component {
                                 <Checkboxes
                                   item={item}
                                   index={i}
-                                  updateCheck={(index) => onAddingItem(index)}
+                                  updateCheck={(val,index) => onAddingItem(val,index)}
                                 />
                                 <span className="ml-2 text-gray-700">
                                   {item.time}
@@ -1233,23 +1186,23 @@ class BasicInformation extends Component {
   }
 }
 class Checkboxes extends Component {
+
   render() {
-    function setChecked() {
-      return this.props.updateCheck(this.props.index);
-    }
+  console.log("herebi", this.props)
+
 
     const handleChange = async (event) => {
-      await this.props.updateCheck(this.props.index);
+      await this.props.updateCheck(event.target.checked,this.props.index);
     };
 
     return (
-      <div>
-        <Checkbox
-          checked={this.props.item.checked}
-          onChange={handleChange}
-          inputProps={{ "aria-label": "primary checkbox" }}
-        />
-      </div>
+        <div>
+          <Checkbox
+              checked={this.props.item.checked}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "primary checkbox" }}
+          />
+        </div>
     );
   }
 }

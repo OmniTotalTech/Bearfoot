@@ -112,14 +112,6 @@ class AreaTable extends Component {
         // width: 100,
       },
       {
-        Header: "Time Zone",
-        accessor: "areaTimeZone",
-        filterable: true,
-        style: this.mystyle(),
-        maxWidth: 200,
-        minWidth: 50,
-      },
-      {
         Header: "Last Updated",
         accessor: "lastUpdated",
         Cell: (porps) => {
@@ -127,6 +119,15 @@ class AreaTable extends Component {
           return (<>  {moment(porps.original.lastUpdated.toString()).format('lll')} </>)
         }
       },
+      {
+        Header: "Time Zone",
+        accessor: "areaTimeZone",
+        filterable: true,
+        style: this.mystyle(),
+        maxWidth: 200,
+        minWidth: 50,
+      },
+
       {
         Header: "Actions",
         filterable: false,
@@ -137,15 +138,15 @@ class AreaTable extends Component {
         Cell: (porps) => {
           return (
             <>
-              <div className="grid grid-cols-2">
+              <div className="grid grid-cols-1 w-full">
                 <button
                   style={this.mystyle()}
-                  className={`bg-gray-500  text-white md:text-lg mx-1 rounded text-md mx-auto font-bold w-3/4`}
+                  className={`bg-gray-500 my-2 text-white md:text-lg mx-1 rounded text-md mx-auto font-bold w-full p-1`}
                   onClick={(e) => {
                     this.navToArea(porps);
                   }}
                 >
-                  View
+                  View pools in <br/><span className={"text-red-500 text-2xl"}> {porps.original.areaName}</span>
                 </button>
                 {this.props.user.role > 4 ? (
                   <button

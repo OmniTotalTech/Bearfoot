@@ -55,9 +55,9 @@ class AdminSensitiveReports extends Component {
     const anotherSwitchStatement = (status) => {
       switch (status) {
         case "incidentReport":
-          return "Patient Care";
-        case "patientCare":
           return "Incident Report";
+        case "patientCare":
+          return "Patient Report";
       }
     };
 
@@ -234,7 +234,14 @@ class AdminSensitiveReports extends Component {
             {...this.props}
             ariaHideApp={false}
             isOpen={this.state.showModal}
-            style={{ width: "100%" }}
+            style={
+              {
+
+                  width: "100%",
+                  padding: 0
+                }
+
+            }
           >
             <RecordModal
               handleClose={() => this.setState({ showModal: false })}

@@ -37,9 +37,10 @@ export const fetchRecords = (id, type) => {
   return (dispatch) => {
     dispatch(fetchRecordsRequest);
     api
-      .get("/records/search/" + id + "/" + type)
+      .get("/records/search/" + id + "/" + type  + "/individual")
       .then((response) => {
         const data = response.data;
+        console.log(data);
         dispatch(fetchRecordsSuccess(data));
       })
       .catch((error) => {

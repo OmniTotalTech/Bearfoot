@@ -2,18 +2,6 @@ import React from 'react';
 
 const StepTwoPCR = (props) => {
 
-  //incidentInformation Step 2
-  const [date, setDate] = React.useState("");
-  const [ems, setEms] = React.useState(false);
-  const [hospital, setHospital] = React.useState(false);
-  const [hospitalName, setHospitalName] = React.useState("");
-  const [legalAdult, setLegalAdult] = React.useState('false');
-  const [location, setlocation] = React.useState("");
-  const [injured, setInjured] = React.useState(false);
-  const [detailedDescription, setDetailedDescription] = React.useState("");
-  const [detailedTreatment, setDetailedTreatment] = React.useState("");
-  const [detailedResolution, setDetailedResolution] = React.useState("");
-  const [rescuer, setRescuer] = React.useState("");
 
 
   const [localState, setLocalState] = React.useState({
@@ -21,29 +9,34 @@ const StepTwoPCR = (props) => {
     hospital: false,
     hospitalName: "",
     legalAdult: false,
+    legalAdultName: "",
     location: "",
     injured: false,
     detailedDescription: "",
     detailedResolution: "",
     detailedTreatment: "",
-    rescuer: ""
+    rescuer: "",
+    guardianPhone: ""
   })
-  const HandleLocalState = (e, key) => {
-    let val = e.target.value;
+  const HandleLocalState = (value,key) => {
+    console.log("hit",value)
     let state = localState;
 
-    state[key] = val;
-    console.log(state);
-    setLocalState(state);
-  }
+    state[key] = value;
 
+    setLocalState({...state});
+    updateMasterState();
+  }
+  const updateMasterState = () => {
+    props.setStepData("step2",localState);
+  }
 
   const handleAdultChange = (e) => {
     setLegalAdult(e.target.value);
   }
 
   const LegalAdultChoice = (props) => {
-    if (props.legalAdult == 'false') {
+    if (props.legalAdult != "true") {
       return (
         <>
           <div>
@@ -53,8 +46,8 @@ const StepTwoPCR = (props) => {
 
             <input
               type="text"
-              // value={hospitalName}
-              onChange={(e) => HandleLocalState(e, "name")}
+              value={localState.legalAdultName}
+              onChange={(e) => HandleLocalState(e.target.value, "legalAdultName")}
             />
             <br />
 
@@ -63,8 +56,8 @@ const StepTwoPCR = (props) => {
 
             <input
               type="text"
-            // value={hospitalName}
-            // onChange={(e) => setHospitalName(e.target.value)}
+              value={localState.guardianPhone}
+              onChange={(e) => HandleLocalState(e.target.value, "guardianPhone")}
             />
           </div>
         </>
@@ -81,6 +74,10 @@ const StepTwoPCR = (props) => {
 
 
   return (
+      <>
+        <div className={"bg-red-500 w-full"}>
+          <h2 className="text-3xl text-white px-2 bold">Incident Information</h2>
+        </div>
     <div className="container p-4">
       <div>
         <label className="text-md">Was the EMS Contacted</label>
@@ -91,8 +88,9 @@ const StepTwoPCR = (props) => {
                    onChange={(e) => setEms(e.target.checked)}
                       /> */}
         <select
-          value={ems}
-          onChange={(e) => setEms(e.target.value)}>
+          value={localState.ems}
+          onChange={(e) => HandleLocalState(e.target.value, "ems")}>
+
           <option value={false}>No</option>
           <option value={true}>Yes</option>
         </select>
@@ -108,20 +106,20 @@ const StepTwoPCR = (props) => {
                         onChange={(e) => setHospital(e.target.checked)}
                       /> */}
         <select
-          value={hospital}
-          onChange={(e) => setHospital(e.target.value)}>
+          value={localState.hospital}
+          onChange={(e) => HandleLocalState(e.target.value, "hospital")}>
           <option value={false}>No</option>
           <option value={true}>Yes</option>
         </select>
       </div>
-      {hospital ? (
+      {localState.hospital == "true" ? (
         <div>
           <label className="text-md">Name Of Hospital:</label>
           <br />
           <input
             type="text"
-            value={hospitalName}
-            onChange={(e) => setHospitalName(e.target.value)}
+            value={localState.hospitalName}
+            onChange={(e) => HandleLocalState(e.target.value, "hospitalName")}
           />
         </div>
       ) : (<></>)}
@@ -131,12 +129,12 @@ const StepTwoPCR = (props) => {
         <label className="text-md">Is the patient a legal adult?</label>
         <br />
         <select
-          value={legalAdult}
-          onChange={handleAdultChange}>
+          value={localState.legalAdult}
+          onChange={(e) => HandleLocalState(e.target.value, "legalAdult")}>
           <option value={false}>No</option>
           <option value={true}>Yes</option>
         </select>
-        <LegalAdultChoice legalAdult={legalAdult} />
+        <LegalAdultChoice legalAdult={localState.legalAdult} />
 
 
 
@@ -147,22 +145,22 @@ const StepTwoPCR = (props) => {
         <label className="text-md">Was the patient injured?</label>
         <br />
         <select
-          value={injured}
-          onChange={(e) => setInjured(e.target.value)}>
+          value={localState.injured}
+          onChange={(e) => HandleLocalState(e.target.value, "injured")}>
           <option value={false}>No</option>
           <option value={true}>Yes</option>
         </select>
       </div>
       <br />
-      {injured ? (
+      {localState.injured == "true" ? (
         <>
           <div>
             <label className="text-md">Location of Injury:</label>
             <br />
             <input
               type="text"
-              value={location}
-              onChange={(e) => setlocation(e.target.value)}
+              value={localState.location}
+              onChange={(e) => HandleLocalState(e.target.value, "location")}
             />
           </div>
           <br />
@@ -171,8 +169,8 @@ const StepTwoPCR = (props) => {
             <br />
             <input
               type="text"
-              value={rescuer}
-              onChange={(e) => setRescuer(e.target.value)}
+              value={localState.rescuer}
+              onChange={(e) => HandleLocalState(e.target.value, "rescuer")}
             />
           </div>
           <br />
@@ -182,8 +180,8 @@ const StepTwoPCR = (props) => {
             <textarea
               rows={6}
               type="text"
-              value={detailedDescription}
-              onChange={(e) => setDetailedDescription(e.target.value)}
+              value={localState.detailedDescription}
+              onChange={(e) => HandleLocalState(e.target.value, "detailedDescription")}
             />
           </div>
           <br />
@@ -193,8 +191,8 @@ const StepTwoPCR = (props) => {
             <textarea
               rows={6}
               type="text"
-              value={detailedTreatment}
-              onChange={(e) => setDetailedTreatment(e.target.value)}
+              value={localState.detailedTreatment}
+              onChange={(e) => HandleLocalState(e.target.value, "detailedTreatment")}
             />
           </div>
           <br />
@@ -204,8 +202,8 @@ const StepTwoPCR = (props) => {
             <textarea
               rows={6}
               type="text"
-              value={detailedResolution}
-              onChange={(e) => setDetailedResolution(e.target.value)}
+              value={localState.detailedResolution}
+              onChange={(e) => HandleLocalState(e.target.value, "detailedResolution")}
             />
           </div>
           <br />
@@ -215,6 +213,7 @@ const StepTwoPCR = (props) => {
         </>
       )}
     </div>
+        </>
   )
 }
 

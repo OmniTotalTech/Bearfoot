@@ -7,7 +7,14 @@ import BackButton from "../../Components/BackButton";
 import { ScrollView } from "react-native";
 
 class PoolEmployee extends Component {
+
+  state = {}
+
   componentDidMount() {
+    this.props.fetchPool();
+  }
+
+  handleRefresh(){
     this.props.fetchPool();
   }
 
@@ -20,6 +27,7 @@ class PoolEmployee extends Component {
           <PoolTableEmployee
             navigation={this.props.navigation}
             data={this.props.pool}
+            user={this.props.user}
           />
         </div>
       </ScrollView>
@@ -29,6 +37,7 @@ class PoolEmployee extends Component {
 const mapStateToProps = (state) => {
   return {
     pool: state.pool,
+    user: state.auth.user
   };
 };
 

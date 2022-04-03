@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import api from "../utils/api";
+import BackButton from "../Components/BackButton";
 
 const DailyOperationsPick = (props) => {
 
     const [subPools, setSubPools] = React.useState([]);
     const [selectedSubPool, setSelectedSubPool] = React.useState(undefined);
-
+    const [selectedItem, setSelectedItem] = React.useState({});
 
     useEffect(() => {
         GetSubPools(props.route.params.id)
@@ -26,8 +27,14 @@ const DailyOperationsPick = (props) => {
     }
 
     function handleChange(e) {
-        console.log(e.target.value)
-        setSelectedSubPool(e.target.value)
+        console.log(subPools[e.target.value])
+        setSelectedSubPool(subPools[e.target.value]._id)
+        handleSelect(subPools[e.target.value])
+    }
+
+    function handleSelect(item){
+        console.log("selected", item)
+        setSelectedItem(item);
     }
 
     const SubPoolSelection = (props) => {
@@ -37,11 +44,13 @@ const DailyOperationsPick = (props) => {
 
 
                 {/* Begining of div Container */}
-                <div className="container mx-auto bg-white">
+                <BackButton navigation={props.navigation} />
+
+                <div className="container mx-auto bg-white py-4 my-10">
 
                     {/* map through, or give default message */}
                     {subPools && subPools.length > 0 ? (
-                        <div className={"w-full"}>
+                        <div className={"w-full text-center"}>
                             <p className="text-xl">
                                 Selecting a pool will take you to it's <span className="bold">Daily Operation</span> edit page.
                             </p>
@@ -49,25 +58,31 @@ const DailyOperationsPick = (props) => {
                                 Pool Assignment:
                             </h1>
                             {/*Select Statement sets the local state with the entire pool object received from api*/}
-                            <select onChange={handleChange} value={selectedSubPool} className="selectpicker">
+                            <select onChange={handleChange} value={selectedSubPool} className="selectpicker px-4 py-2">
                                 <option value={subPools[0]._id}>Select a Sub Pool</option>
                                 {subPools.map((pool, index) => (
-                                    <option value={pool._id.toString()}>{pool.subPoolName}</option>
+                                    <option value={index}>{pool.subPoolName}</option>
                                 ))}
 
                             </select>
+                            <br/>
                             {/*  Dont show button unless you have it defined */}
                             {selectedSubPool == undefined ? (<></>) : (
                                 <button onClick={() =>
                                     props.navigation.navigate("DailyOperations", {
-                                        id: selectedSubPool,
+                                        id: props.route.params.id,
+                                        sub_pool_id: selectedSubPool,
                                         isNew: true,
                                     })
                                 }
-                                    className="bg-red-500 text-white rounded px-4 py-2">
+                                    className="bg-red-500 text-white rounded px-4 py-2 my-4">
                                     <p>
                                         Edit Daily Operations
                                     </p>
+                                    <br/>
+                                    <h3 className={"text-left my-2"}>Selected: <span className="bg-black py-2 px-2">{selectedItem.subPoolName}</span> </h3>
+
+
                                 </button>
                             )}
                         </div>

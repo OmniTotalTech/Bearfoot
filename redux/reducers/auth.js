@@ -124,6 +124,12 @@ export default (state = initialState, action) => {
         codeVerified: true,
         verification: action.payload,
       };
+      case VERIFY_CODE_ERROR:
+      return {
+        ...state,
+        codeVerified: false,
+        verification: action.payload,
+      };
     case VERIFY_PHONE_ERROR:
       return {
         ...state,

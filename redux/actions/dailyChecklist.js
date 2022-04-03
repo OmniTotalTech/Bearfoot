@@ -27,6 +27,7 @@ export const fetchDailyChecklistError = (error) => {
 };
 
 export const fetchDailyChecklist = (id, type) => {
+  console.log(id,type)
   return (dispatch) => {
     dispatch(fetchDailyChecklistRequest);
     api

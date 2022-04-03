@@ -8,6 +8,9 @@ class PoolTableEmployee extends Component {
       console.log(id);
       this.props.navigation.navigate("PoolDetail", id);
     };
+    const navToArea = (id) => {
+        this.props.navigation.navigate("AdminAreaDetail",id);
+    }
     const columns = [
       {
         Header: "Pool Name",
@@ -38,25 +41,36 @@ class PoolTableEmployee extends Component {
           textAlign: "right",
         },
       },
-      {
-        Header: "State",
-        accessor: "pool_state",
-        style: {
-          textAlign: "right",
-        },
-      },
-      {
-        Header: "Area Id",
-        accessor: "area_id",
-        style: {
-          textAlign: "right",
-        },
-      },
+
       {
         Header: "Area Name",
         accessor: "area_name",
-        style: {
-          textAlign: "right",
+        Cell: (porps) => {
+          return (
+              <>
+                  {this.props.user.role < 4 ? (
+                      <div>
+                        <p
+                            className="rounded text-md mx-auto px-2 font-bold "
+                        >
+                          {porps.original.area_name}
+                        </p>
+                      </div>
+                  ) :  (
+                      <div>
+                        <button
+                            className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
+                            onClick={(e) => {
+                              navToArea(porps.original.area_id);
+                            }}
+                        >
+                          {porps.original.area_name}
+                        </button>
+                      </div>
+                  )}
+              </>
+
+          );
         },
       },
     ];

@@ -19,7 +19,6 @@ const PatientCareForm = (props) => {
 
 
   const handleFinalSubmit = async () => {
-    console.log(allSigs)
     let body1 = {
       patronInfo: patronInfoArray,
       signature: allSigs,

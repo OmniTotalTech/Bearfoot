@@ -60,17 +60,21 @@ class SearchAndAssign extends Component {
     console.log(this.props);
     return (
       <>
-        <p className="text-3xl text-left bold">
+        <div className={"w-full"}>
+          <div className={"mx-auto container bg-red-500"}>
+        <p className="text-3xl text-left bold px-4 text-white">
           {this.props.title}
           <button
             onClick={() => {
               this.openModal();
             }}
-            className="px-2 my-4 mx-2 bg-red-500 text-left text-white rounded"
+            className="px-2 my-4 mx-2 bg-red-700 text-left text-white rounded"
           >
             +
           </button>
         </p>
+          </div>
+        </div>
         <Modal
           {...this.props}
           isOpen={this.state.isModalOpen}
@@ -88,21 +92,30 @@ class SearchAndAssign extends Component {
           <form onSubmit={() => this.handleSubmit(event, this.props)}>
             <div className="mx-auto container max-w-2xl shadow-md mx-4">
               <div className="bg-white space-y-6 mt-4">
+                <div>
+                  <p className={"text-xl"}>Search for employees in the Organization: {this.props.orgName}</p>
+                  <p className={"text-md text-light"}>You can only assign employees that are in this organization.</p>
+                </div>
+
                 <input
                   onChange={(e) => this.handleChange(e)}
                   className="w-full p-2"
                   placeholder="Search By Name"
                 />
               </div>
+              <div >
+                <button
+                    type="submit"
+                    className="bg-red-500 text-white p-2 rounded text-md my-2"
+                >
+                  Search Name
+                </button>
+              </div>
             </div>
-            <button
-              type="submit"
-              className="bg-red-500 text-white p-2 rounded text-md my-2"
-            >
-              Search Name
-            </button>
+
           </form>
-          <div className="h-96 overflow-scroll">
+          <div className="container max-w-3xl ">
+
             <EmployeeList
               assignGroup={this.props.title}
               poolId={this.props.poolId}

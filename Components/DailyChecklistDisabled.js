@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 export default class DailyChecklist extends Component {
   render() {
-    console.log(this.props.data.images);
 
     return (
       <div>

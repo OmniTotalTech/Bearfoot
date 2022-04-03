@@ -112,9 +112,8 @@ class UpdateEmployeeInfoForm extends Component {
             <div className="md:inline-flex space-y-4 md:space-y-0 w-full p-4 text-gray-500 items-center">
               <h2 className="md:w-1/3 max-w-sm mx-auto">Phone Number</h2>
               <div className="md:w-2/3 max-w-sm mx-auto">
-                <div className="w-full inline-flex border">
-                  {this.props.auth.user.isPhoneVerified ||
-                  this.props.auth.verification.statusText == "Accepted" ? (
+                <div className="inline-flex border">
+                  {this.props.auth.user.isPhoneVerified ? (
                     <div>
                       Your phone is verified as: {this.props.auth.user.phone}
                     </div>
@@ -122,17 +121,20 @@ class UpdateEmployeeInfoForm extends Component {
                     <Example setPhone={(e) => this.setPhone(e)} />
                   )}
                 </div>
-                {this.props.auth.user.isPhoneVerified ||
-                this.props.auth.verification.statusText == "Accepted" ? (
+                {this.props.auth.verification.statusText == "Accepted" ? (
                   <div></div>
                 ) : isValidPhoneNumber(this.state.phone) ? (
                   <div>
                     {this.state.isCodeSent ? (
                       <div>
+                        <label className={"label text-lg text-bold text-italic"}>Enter Verification Code Sent to Your Phone:</label>
                         <input
-                          className="border"
+                          className="border my-4"
                           onChange={(e) => this.setCode(e)}
                         />
+                        <br/>
+                        {this.props.auth.verification.name == "Error" ? "Unable to verify code. It is character and case sensitive!" : ""}
+                        <br/>
                         <button
                           onClick={() => this.verifyCode()}
                           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -144,7 +146,7 @@ class UpdateEmployeeInfoForm extends Component {
                       <div>
                         <button
                           onClick={() => this.verificationCodeProcess()}
-                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded my-4"
                         >
                           Send Verification Code
                         </button>

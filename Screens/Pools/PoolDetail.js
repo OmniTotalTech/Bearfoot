@@ -36,6 +36,13 @@ class PoolDetail extends Component {
     this.runLoadAdminData();
   }
 
+  componentWillMount() {
+    console.log("WILLMOUNT");
+    this.props.fetchPoolById(this.props.route.params);
+    this.runLoadAccordionData();
+    this.runLoadAdminData();
+  }
+
   runLoadAccordionData = async () => {
     await api
       .get("/poolDetails/" + this.props.route.params)
