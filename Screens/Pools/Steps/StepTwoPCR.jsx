@@ -27,6 +27,15 @@ const StepTwoPCR = (props) => {
     setLocalState({...state});
     updateMasterState();
   }
+  const handleLocalState2 = (value,key) => {
+    console.log("hit",value)
+    let state = localState;
+
+    state[key] = value;
+
+    setLocalState(state);
+    updateMasterState();
+  }
   const updateMasterState = () => {
     props.setStepData("step2",localState);
   }
@@ -46,8 +55,8 @@ const StepTwoPCR = (props) => {
 
             <input
               type="text"
-              value={localState.legalAdultName}
-              onChange={(e) => HandleLocalState(e.target.value, "legalAdultName")}
+              defaultValue={localState.legalAdultName}
+              onChange={(e) => handleLocalState2(e.target.value, "legalAdultName")}
             />
             <br />
 
@@ -56,8 +65,8 @@ const StepTwoPCR = (props) => {
 
             <input
               type="text"
-              value={localState.guardianPhone}
-              onChange={(e) => HandleLocalState(e.target.value, "guardianPhone")}
+              defaultValue={localState.guardianPhone}
+              onChange={(e) => handleLocalState2(e.target.value, "guardianPhone")}
             />
           </div>
         </>
