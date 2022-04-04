@@ -13,6 +13,7 @@ import StepFivePCR from "./Steps/StepFivePCR";
 import StepSixPCR from "./Steps/StepSixPCR";
 import StepSevenPCR from "./Steps/StepSevenPCR";
 import {connect} from "react-redux";
+import BackButton from "../../Components/BackButton";
 
 const IncidentReport = (props) => {
 
@@ -93,6 +94,8 @@ const IncidentReport = (props) => {
 
     <>
       <ScrollView>
+        <BackButton navigation={props.navigation} />
+
         <div className=" mx-auto container">
 
           <div className="container p-4 text-2xl mx-auto">Patient Care Form</div>
