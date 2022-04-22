@@ -38,7 +38,7 @@ class AdminAreaHome extends Component {
   state = {
     isModalOpen: false,
     selectedTimeZone: "eastern",
-    areaOrganization: this.props.user.organizations[0].orgName,
+    areaOrganization: this.props.user.organizations[0]?.orgName,
     option: null,
   };
 
