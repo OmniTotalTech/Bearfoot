@@ -29,6 +29,8 @@ export const fetchAdminEmployeeByOrgError = (error) => {
 export const fetchEmployeesByOrg = (orgName, string) => {
   console.log(orgName,string);
   return (dispatch) => {
+    console.log("orgname",orgName);
+    console.log("string",string)
     dispatch(fetchAdminEmployeeByOrgRequest);
     if (orgName && string == "all") {
       api
@@ -61,6 +63,7 @@ export const fetchEmployeesByOrg = (orgName, string) => {
         .get("users/orgEmployees/" + orgName + "/" + string)
         .then((response) => {
           const data = response.data;
+          console.log("DATA", data)
           dispatch(fetchAdminEmployeeByOrgSuccess(data));
         })
         .catch((error) => {

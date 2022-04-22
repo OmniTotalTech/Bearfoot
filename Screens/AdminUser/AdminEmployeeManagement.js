@@ -27,14 +27,21 @@ import EmployeeList from "../../Components/Admin/EmployeeList";
 import api from "../../utils/api";
 import ReactTable from "react-table";
 import moment from "moment";
+import BackButton from '../../Components/BackButton'
 class AdminEmployeeManagement extends Component {
   componentDidMount() {
 
-    this.props.fetchArea();
 
     if (this.props.user.role == 7) {
-      console.log(this.state);
-      this.props.fetchEmployeesByOrg("all", "");
+      console.log(this.state.manageView);
+      console.log(this.state.selectedValue);
+      // this.props.fetchEmployeesByOrg("all", "");
+      this.loadAPIData("allOrgs")
+    }
+
+    if(this.props.user.role < 7){
+      console.log(this.props.user.organizations)
+      this.loadAPIData("myOrgs")
     }
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -42,18 +49,48 @@ class AdminEmployeeManagement extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleSubmitModal = this.handleSubmitModal.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.handleMainTableSearch = this.handleMainTableSearch.bind(this)
   }
 
   state = {
     manageView: true,
     addView: false,
-    selectedValue: undefined,
+    selectedValue: 0,
     searchTerm: null,
     isModalOpen: false,
     employeeList: [],
     extraData: {},
     arrayForPicking: [],
+    availableOrgs: [],
+    setOrgOption: "",
+    setTypeOption:"",
+    hasSelectedOrg: false,
+    hasSelectedType: false,
+    hasSearched: false
   };
+
+  async loadAPIData(type){
+
+    switch(type){
+      case "allOrgs":
+        await api.get(`/organizationManagement`)
+            .then((response) => {
+              console.log(response.data)
+              let result = response.data;
+              result.unshift({orgName: "all"})
+              console.log(result)
+              this.setState({availableOrgs: result})
+            })
+            .catch((err) => console.log(err))
+            return;
+      case "myOrgs":
+        console.log(this.props.user.organizations)
+          this.setState({availableOrgs: this.props.user.organizations})
+        return;
+      default:
+        return;
+    }
+  }
 
   setSelectedValue(value, array) {
     console.log(value, array);
@@ -139,6 +176,49 @@ class AdminEmployeeManagement extends Component {
   openModal() {
     this.setState({ isModalOpen: true });
   }
+
+  handleWhichType(type,val){
+    console.log("------------------")
+    console.log("-------HANDELING CHANGE-----------")
+    console.log("TYPE:",type)
+    console.log("VAL:",val)
+    console.log("------------------")
+    switch(type){
+      case "organizations":
+        if(this.state.hasSelectedOrg == false){
+          this.setState({hasSelectedOrg: true})
+        }
+        this.setState({setOrgOption: val})
+        return;
+      case "type":
+        if(this.state.hasSelectedType == false){
+          this.setState({hasSelectedType: true})
+        }
+          this.setState({setTypeOption: val})
+        return;
+      default:
+        return;
+    }
+  }
+
+  handleMainTableSearch(){
+    console.log(this.state)
+
+    this.setState({hasSearched: false})
+
+    if(this.state.setTypeOption == "HOA"){
+      this.props.fetchEmployeesByOrg(this.state.setOrgOption.toString(), "HOA"),
+      this.setState({hasSearched: true})
+
+    }
+
+    if(this.state.setTypeOption == "employees"){
+      this.props.fetchEmployeesByOrg(this.state.setOrgOption.toString(), ""),
+          this.setState({hasSearched: true})
+    }
+
+  }
+
   render() {
     const renderItem = ({ item }) => (
       <div
@@ -215,7 +295,7 @@ class AdminEmployeeManagement extends Component {
       },
       {
         Header: "Updated By",
-        accessor: "lastUpdatedBy",
+        accessor: "lastUpdatedBy.name",
         style: {
           //textAlign: "right",
         },
@@ -236,93 +316,106 @@ class AdminEmployeeManagement extends Component {
       <ScrollView>
         {/* bg-gray-100 */}
         <section className="py-4 bg-opacity-50 h-screen">
+          <BackButton navigation={this.props.navigation}/>
           <div>
             <div className="flex justify-center mb-4">
               <button
-                className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
-                onClick={() =>
-                  this.props.fetchEmployeesByOrg(
-                    this.props.user.organizations[0].orgName,
-                    "",
-                    this.setManageEmployee()
-                  )
-                }
+                  onClick={this.handleSubmitModal}
+                  className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
               >
-                Manage Employee
+                Search Users
               </button>
-              {this.props.user.role > 5 ? (
+              {/*<button*/}
+              {/*  className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"*/}
+              {/*  onClick={() =>*/}
+              {/*    this.props.fetchEmployeesByOrg(*/}
+              {/*      this.props.user.organizations[0].orgName,*/}
+              {/*      "",*/}
+              {/*      this.setManageEmployee()*/}
+              {/*    )*/}
+              {/*  }*/}
+              {/*>*/}
+              {/*  Manage Employee*/}
+              {/*</button>*/}
+              {this.props.user.role > 2 ? (
                   <button
                       className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
                       onClick={() => this.setAddEmployee()}
                   >
                     Add Employee
                   </button>
+
               ):(
                   <></>
               )}
 
-              <button
-                className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
-                onClick={() => this.runHOAFunc()}
-              >
-                Manage HOA Accounts
-              </button>
+              {/*<button*/}
+              {/*  className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"*/}
+              {/*  onClick={() => this.runHOAFunc()}*/}
+              {/*>*/}
+              {/*  Manage HOA Accounts*/}
+              {/*</button>*/}
             </div>
           </div>
           {this.state.manageView != false ? (
-            <div>
+            <div className="p-4">
               <div className="container mx-auto max-w-4xl ">
                 <div className="text text-3xl my-2">
-                  Employees You Can Manage:
+                  Users You Can Manage:
                 </div>
-                <div className="text text-lg">Organization:</div>
-                <Picker
-                    selectedValue={this.state.selectedValue}
-                    style={{ height: 50, width: 150 }}
-                    onValueChange={(v) =>
-                        this.setSelectedValue(
-                            v,
-                            this.props.adminEmployeeManagement.data.extraData
-                        )
-                    }
-                >
-                  <Picker.Item
-                      label="Please Select Org"
-                  />
-                  {" "}
-                  {this.props.user.role == 7 ? (
-                      <>
-                        {this.props.adminEmployeeManagement.data.extraData.length >
-                        0 ? (
-                            this.props.adminEmployeeManagement.data.extraData.map(
-                                (item) => (
-                                    <Picker.Item
-                                        label={item.orgName}
-                                        value={item.orgName}
-                                    />
-                                )
-                            )
-                        ) : (
-                            <div></div>
+                <div className="p-2">
+                  <p>From here, find users that are in your organizations! Note: If you are not at the top level Bearfoot Corporate Permissions, you will be restricted to search the users that currently reside in your assigned organizations!</p>
+                </div>
+                <div className="p-2">
+                <p>If you need to find the information of a user outside of your organizations, please contact a Bearfoot Corporate individual to assist.</p>
+                </div>
+                <div className="grid grid-cols-2 px-4 gap-1">
+                  <div>
+                    <div className="text text-lg"><h2 className="text-2xl">Organization:</h2>
+                      <select  className="w-full p-2" onChange={(e) => this.handleWhichType("organizations",e.target.value)}>
+                        <option selected="true" hidden>Organization</option>
+                        {this.state.availableOrgs?.length > 0 ? (
+                            this.state.availableOrgs.map((item) => (
+                                <option value={item.orgName}>{item.orgName}</option>
+                            ))
+                        ):(
+                            <option disabled>No organizations available!</option>
                         )}
-                      </>
-                  ) : (
-                      <>
-                        {this.props.user.organizations.map((item, i) => (
-                            <Picker.Item
-                                label={this.props.user.organizations[i].orgName}
-                                value={this.props.user.organizations[i].orgName}
-                            />
-                        ))}
-                      </>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+
+                      <div className="text text-lg"><h2 className="text-2xl">User Type:</h2>
+                      <select className="w-full p-2" onChange={(e) => this.handleWhichType("type",e.target.value)}>
+                        <option selected="true" hidden  >Type</option>
+                        <option value={"employees"}>Employees</option>
+                        <option value={"HOA"}>HOAS</option>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+                <div className="w-full mx-auto text-center btn btn-block my-8">
+                  {this.state.hasSelectedOrg & this.state.hasSelectedType  ? (
+                          <button
+                              onClick={this.handleMainTableSearch}
+                              className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
+                          >
+                            Search Users
+                          </button>
+                  ):(
+                      <h4 className="text-xl">Please select your search criteria first.</h4>
+
                   )}
-                </Picker>
-                <button
-                  onClick={this.handleSubmitModal}
-                  className="bg-red-500 text-white px-4 py-2 m-2"
-                >
-                  Search
-                </button>
+
+                </div>
+
+
+                {this.state.hasSelectedOrg & this.state.hasSelectedType & this.state.hasSearched  ? (
+
                 <ReactTable
                   className="-striped -highlight"
                   data={this.props.adminEmployeeManagement.data ? this.props.adminEmployeeManagement.data.data : []}
@@ -338,6 +431,7 @@ class AdminEmployeeManagement extends Component {
                     return <div>{makeTable()}</div>;
                   }}
                 </ReactTable>
+                ):(<></>)}
                 {/*<View style={{ overflow: "scroll", maxHeight: "400px" }}>*/}
                 {/*  {userInfoEmployeeMap}*/}
                 {/*</View>*/}
@@ -397,6 +491,7 @@ class AdminEmployeeManagement extends Component {
               />
             </div>
           )}
+
         </section>
       </ScrollView>
     );
@@ -414,7 +509,6 @@ const mapStateToProps = (state) => {
 
 const mapDisptachToProps = (dispatch) => {
   return {
-    fetchArea: () => dispatch(fetchMyAdminAreas()),
     fetchEmployeesByOrg: (orgName, string) =>
       dispatch(fetchEmployeesByOrg(orgName, string)),
     newUser: (body) => dispatch(newUser(body)),

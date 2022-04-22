@@ -69,8 +69,14 @@ class ChemicalLogFormContainer extends Component {
             const date = new Date();
             const nowDate = moment(date);
             const formattedDate = nowDate.format("YYYY-MM-DD");
+            let _id;
+            if(this.props.foundSubPoolRecord._id == undefined){
+              _id = this.props.subPool._id
+            } else {
+              _id = this.props.foundSubPoolRecord._id
+            }
+            console.log(_id)
             let body = {
-              _id: this.props.foundSubPoolRecord._id,
               data: this.state.stateArray,
               pool_id: this.props.id,
               recordType: "ChemicalLog",
@@ -180,6 +186,15 @@ class ChemicalLogFormContainer extends Component {
           {this.state.loadedData ? <div></div> : <div></div>}
           <div>
             <p className="text-lg p-4 my-2 text-black">Chemical Log Page</p>
+          </div>
+          <div>
+
+            {this.props.lastUpdatedData.lastUpdated != "" ? (
+                <>
+                <p className="text-md p-4 my-4">Last Updated At: {this.props.lastUpdatedData.lastUpdated}</p>
+                <p className="text-md p-4 my-4">Updated By: {this.props.lastUpdatedData.lastUpdatedBy}</p>
+              </>
+              ):(<></>)}
           </div>
           {this.state.stateArray.length > 0 ? (
             <>
@@ -361,13 +376,14 @@ class ChemicalLogFormContainer extends Component {
                   ))}
                 </div>
                 <ImageUploader
-                  withIcon={true}
-                  buttonText="Choose images"
-                  onChange={onDrop}
-                  imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
-                  maxFileSize={262144000}
-                  withPreview={true}
-                  withLabel={true}
+                    withIcon={true}
+                    buttonText="Choose images"
+                    onChange={onDrop}
+                    imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
+                    maxFileSize={1000000}
+                    withPreview={true}
+                    label="max file size: 1GB, Must be: JPG,PBG,GIF"
+                    withLabel={true}
                 />
                 <button
                   onClick={(e) => handleUpload(e)}

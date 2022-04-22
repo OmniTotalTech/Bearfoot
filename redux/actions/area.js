@@ -83,6 +83,7 @@ export const fetchArea = () => {
 
 export const fetchMyAdminAreas = () => {
   return (dispatch) => {
+    console.log("dispatching my areas")
     dispatch(fetchAreaRequest);
     api
       .get("area/myAreas")

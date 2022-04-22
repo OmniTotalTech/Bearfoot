@@ -43,6 +43,7 @@ import PatientCare from "../Screens/Pools/PatientCare";
 import IncidentReport from "../Screens/Pools/IncidentReport";
 import DailyOperationsEdit from "../Screens/DailyOperationsEdit";
 import AdminSensitiveReports from "../Screens/AdminPool/AdminSensitiveReports";
+import AdvancedUserManagement from "../Screens/AdvancedUserManagement";
 const Stack = createStackNavigator();
 
 export const AuthStack = () => (
@@ -112,6 +113,10 @@ export const AuthStack = () => (
         <Stack.Screen
           name="OrganizationManagement"
           component={OrganizationManagement}
+        />
+        <Stack.Screen
+            name="AdvancedUserManagement"
+            component={AdvancedUserManagement}
         />
       </Stack.Navigator>
     </NavigationContainer>

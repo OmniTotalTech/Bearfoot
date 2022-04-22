@@ -53,6 +53,7 @@ const owner = [
     location: "OrganizationManagement",
     level: 6,
   },
+
 ];
 const admin = [
   {
@@ -74,13 +75,20 @@ const admin = [
     status: "Area Management",
     subtext: "",
     location: "AdminAreaHome",
-    level: 4,
+    level: 3,
   },
   {
     icon: <QueryBuilderIcon className="text-2xl" />,
     status: "Sensitive Reports",
     subtext: "",
     location: "AdminSensitiveReports",
+    level: 3,
+  },
+  {
+    icon: <QueryBuilderIcon className="text-2xl" />,
+    status: "Advanced User Management",
+    subtext: "",
+    location: "AdvancedUserManagement",
     level: 4,
   },
 ];
@@ -174,7 +182,7 @@ class Home extends Component {
                   <div></div>
                 )}
 
-                {this.props.user.role >= 7 ? (
+                {this.props.user.role >= 6 ? (
                   <div className="mt-8">
                     <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
                       <div className="text-3xl mx-4 ">

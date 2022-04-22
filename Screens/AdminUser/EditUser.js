@@ -108,11 +108,11 @@ class EditUser extends Component {
       value: 1,
     },
     {
-      name: "Manager",
+      name: "Area Manager",
       value: 3,
     },
     {
-      name: "Area Manager",
+      name: "Supervisor",
       value: 4,
     },
   ];
@@ -171,12 +171,12 @@ class EditUser extends Component {
                 <div className="text-lg  p-2">{this.state.user.email}</div>
               </div>
             </div>
-            {this.props.user.role > 3? (
+            {this.props.user.role > 3 && this.state.user.role < 6 ? (
               <>
                 <p className="text-md">Current Role: {this.SwitchResult(this.state.value)}</p>
                 <p className="text-md pt-4 -pb-1" style={{ fontSize: 24 }}>Assign Role:</p>
                 <form>
-                <div className="bg-white mt-4 grid grid-cols-3">
+                <div className="bg-white mt-4 grid grid-cols-1 md:grid-cols-3">
                   {/* <select
                 onChange={this.handleChange}
                 value={this.state.value}
@@ -198,14 +198,14 @@ class EditUser extends Component {
                   <div className="card px-4 my-4 bg-gray-200 mx-2">
                     <div className="card-header text-red-500">
                       <input type="radio" onChange={e => this.setState({user: {role : e.target.value}, value: e.target.value})}  value={3} checked={this.whichIsChecked(this.state.user.role, 3)}  value={3}/>
-                      <h3 className="text-2xl">Manager</h3>
+                      <h3 className="text-2xl">Area Manager</h3>
                     </div>
                     <p className="text-md">An elevated permission role intended to extend specific pool operation functions. These users can view records as well as view more privledged information.</p>
                   </div>
                   <div className="card px-4 my-4 bg-gray-200  mx-2">
                     <div className="card-header text-red-500">
                       <input type="radio"  onChange={e => this.setState({user: {role : e.target.value}, value: e.target.value})} checked={this.whichIsChecked(this.state.user.role, 4)} value={4} />
-                      <h3 className="text-2xl">Area Manager</h3>
+                      <h3 className="text-2xl">Supervisor</h3>
                     </div>
                     <p className="text-md">The highest level of employee access. This permits access to areas within organizations the user is assigned to, as well as records and other higher level management access.</p>
                   </div>

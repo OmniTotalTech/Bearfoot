@@ -101,8 +101,9 @@ class EditSelf extends Component {
                 buttonText="Choose images"
                 onChange={this.onDrop}
                 imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
-                maxFileSize={262144000}
+                maxFileSize={1000000}
                 withPreview={true}
+                label="max file size: 1GB, Must be: JPG,PBG,GIF"
                 withLabel={true}
               />
               {this.state.pictures == null ? (
@@ -120,7 +121,7 @@ class EditSelf extends Component {
             </div>
           ) : (
             <div>
-              Current Profile Picure:
+              Current Profile Picture:
               <img
                 src={
                   "https://bearfoot-app-images.s3.us-east-2.amazonaws.com/profile-images/" +
@@ -128,14 +129,14 @@ class EditSelf extends Component {
                 }
               />
               <ImageUploader
-                singleImage={true}
-                withIcon={true}
-                buttonText="Choose images"
-                onChange={this.onDrop}
-                imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                maxFileSize={262144000}
-                withPreview={true}
-                withLabel={true}
+                  withIcon={true}
+                  buttonText="Choose images"
+                  onChange={this.onDrop}
+                  imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
+                  maxFileSize={1000000}
+                  withPreview={true}
+                  label="max file size: 1GB, Must be: JPG,PBG,GIF"
+                  withLabel={true}
               />
               {this.state.pictures.length < 1 ? (
                 <div></div>

@@ -6,7 +6,7 @@ import BackButton from "../../Components/BackButton";
 import moment from "moment";
 
 class ChemicalLog extends Component {
-  state = { timeArray: [], formObject: {}, subPools: [], selectedSubPool: "", foundSubPoolRecord: { data: [] } };
+  state = { timeArray: [], formObject: {}, subPools: [], selectedSubPool: "", foundSubPoolRecord: { data: [] }, updatedData: {lastUpdatedBy: "", lastUpdated: ""} };
 
   async componentDidMount() {
     await api
@@ -22,6 +22,8 @@ class ChemicalLog extends Component {
 
   render() {
     const onSubmit = async (body) => {
+        console.log(this.state.selectedSubPool)
+        console.log(body)
       let url = "/uploadCLDetailsPart2";
       await api
         .post(url, body)
@@ -60,7 +62,8 @@ class ChemicalLog extends Component {
           .then((response) => {
             console.log("getNew", response.data);
             this.setState({
-              foundSubPoolRecord: response.data.data == null ? { data: [] } : response.data.data
+              foundSubPoolRecord: response.data.data == null ? { data: [] } : response.data.data,
+                updatedData: {lastUpdated: res.data.lastUpdated, lastUpdatedBy: res.data.lastUpdatedBy}
             })
           })
           .catch((error) => {
@@ -111,6 +114,7 @@ class ChemicalLog extends Component {
             timeArray={this.state.timeArray}
             foundSubPoolRecord={this.state.foundSubPoolRecord}
             id={this.props.route.params.id}
+            lastUpdatedData={this.state.updatedData}
           />
         )}
       </>

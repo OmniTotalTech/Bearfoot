@@ -660,12 +660,14 @@ timeArray[i].checked = val
                           {" "}
                           + Add a New Section
                         </button>
+                        <br/>
+                        <br/>
                         <button
-                          className="bg-red-500 text-white p-4 rounded my-8!"
+                          className="bg-blue-500 my-4 text-white p-4 rounded my-8!"
                           onClick={handleSaveLayout}
                         >
                           {" "}
-                          + Save Settings
+                          + Save Layout Settings
                         </button>
                         <InformationSections state={this.state} updateState={(array) => updateState(array)} handlePoolDetailDelete={handlePoolDetailDelete} />
                         {/*  state = {*/}
@@ -714,19 +716,14 @@ timeArray[i].checked = val
                             <div>
                               <label className="text-lg">Images:</label> <br />
                               <ImageUploader
-                                withIcon={true}
-                                buttonText="Choose images"
-                                onChange={onDrop}
-                                imgExtension={[
-                                  ".jpg",
-                                  ".gif",
-                                  ".png",
-                                  ".gif",
-                                  ".jpeg",
-                                ]}
-                                maxFileSize={262144000}
-                                withPreview={true}
-                                withLabel={true}
+                                  withIcon={true}
+                                  buttonText="Choose images"
+                                  onChange={onDrop}
+                                  imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
+                                  maxFileSize={1000000}
+                                  withPreview={true}
+                                  label="max file size: 1GB, Must be: JPG,PBG,GIF"
+                                  withLabel={true}
                               />
                               {/* <button
                               onClick={handleUploadImages}

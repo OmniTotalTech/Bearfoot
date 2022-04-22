@@ -9,6 +9,7 @@ import Pagination from "../../Components/Pagination";
 import OrderTableList from "../../Components/OrderTableList";
 import DeliveryTable from "../../Components/Admin/DeliveryTable";
 import ReportTypeOneStepper from "../../Components/ReportTypeOneStepper";
+import BackButton from "../../Components/BackButton";
 
 class adminDeliveriesHome extends Component {
   state = {
@@ -23,6 +24,7 @@ class adminDeliveriesHome extends Component {
 
   componentDidMount() {
     this.props.fetchAdminOrderDetail(moment().format("YYYY-MM-DD"));
+
   }
 
   render() {
@@ -63,7 +65,9 @@ class adminDeliveriesHome extends Component {
     };
     return (
       <ScrollView>
-        <div className="container mx-auto px-4">
+        <BackButton navigation={this.props.navigation}/>
+
+        <div className="container mx-auto px-8">
           <div>
             <p className="text-sm">Delivery Date:</p>
             {/* <DatePicker onChange={eventHandler} /> */}
