@@ -115,7 +115,6 @@ class AreaTable extends Component {
         Header: "Last Updated",
         accessor: "lastUpdated",
         Cell: (porps) => {
-          console.log(porps)
           return (<>  {moment(porps.original.lastUpdated.toString()).format('lll')} </>)
         }
       },

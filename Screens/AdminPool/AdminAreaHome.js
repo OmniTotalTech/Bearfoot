@@ -24,22 +24,25 @@ import BackButton from "../../Components/BackButton";
 import { fetchEmployeesByOrg } from "../../redux/actions/adminEmployeeManagement";
 
 class AdminAreaHome extends Component {
-  componentDidMount() {
+  componentWillMount() {
+    console.log("fetching")
     this.props.fetchArea();
     if (this.props.user.role == 7) {
       this.props.fetchEmployeesByOrg("all", "");
     } else {
       this.props.fetchEmployeesByOrg(
-        this.props.user.organizations[0].orgName,
+        this.props.user.organizations[0]?.orgName,
         ""
       );
     }
+    this.loadAllAreas()
   }
   state = {
     isModalOpen: false,
     selectedTimeZone: "eastern",
     areaOrganization: this.props.user.organizations[0]?.orgName,
     option: null,
+    adminOrgs: []
   };
 
   openModal() {
@@ -58,6 +61,10 @@ class AdminAreaHome extends Component {
   }
   setSelectedValue(value) {
     this.setState({ areaOrganization: value });
+  }
+
+  loadAllAreas() {
+    api.get('organizationManagement').then((response) => this.setState({adminOrgs:response.data})).catch((err) => console.log(err?.message))
   }
   render() {
     console.log(this.props);
@@ -156,11 +163,11 @@ class AdminAreaHome extends Component {
                             }
                           >
                             {" "}
-                            {this.props.user.role == 7 ? (
+                            {this.props.user.role > 6 ? (
                               <>
                                 {this.props.adminEmployeeManagement.data
                                   .extraData.length > 0 ? (
-                                  this.props.adminEmployeeManagement.data.extraData.map(
+                                  this.state.adminOrgs.map(
                                     (item) => (
                                       <Picker.Item
                                         label={item.orgName}

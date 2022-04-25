@@ -182,7 +182,7 @@ class Home extends Component {
                   <div></div>
                 )}
 
-                {this.props.user.role >= 6 ? (
+                {this.props.user.role > 6 ? (
                   <div className="mt-8">
                     <div className="container max-w-4xl w-full bg-white  rounded-lg shadow-lg mx-auto px-2">
                       <div className="text-3xl mx-4 ">
