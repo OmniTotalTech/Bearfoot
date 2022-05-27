@@ -6,7 +6,7 @@ import BackButton from "../../Components/BackButton";
 import moment from "moment";
 
 class ChemicalLog extends Component {
-  state = { timeArray: [], formObject: {}, subPools: [], selectedSubPool: "", foundSubPoolRecord: { data: [] }, updatedData: {lastUpdatedBy: "", lastUpdated: ""} };
+  state = { timeArray: [], formObject: {}, subPools: [], selectedSubPool: "", foundSubPoolRecord: { data: [],dataObject: { combinedChlorine: 0, cyanuricAcid: 0, akalinity: 0, calciumHardness: 0, LSICalculation: 0 }}, updatedData: {lastUpdatedBy: "", lastUpdated: ""} };
 
   async componentDidMount() {
     await api
@@ -60,11 +60,22 @@ class ChemicalLog extends Component {
         await api
           .get(`/chemLogs/getOldest/oneRecord/${value}/${moment().format("YYYY-MM-DD")}`)
           .then((response) => {
-            console.log("getNew", response.data);
-            this.setState({
-              foundSubPoolRecord: response.data.data == null ? { data: [] } : response.data.data,
-                updatedData: {lastUpdated: res.data.lastUpdated, lastUpdatedBy: res.data.lastUpdatedBy}
-            })
+              console.log(response.data)
+              if(response.data?.success){
+
+                  this.setState({
+                      foundSubPoolRecord: {data: response.data.data.data, dataObject: response.data.data.dataObject}
+                  })
+              } else {
+                  this.setState({
+                      foundSubPoolRecord: {
+                          data: [], dataObject: {
+                              combinedChlorine: 0, cyanuricAcid: 0, akalinity: 0, calciumHardness: 0, LSICalculation: 0
+                          }
+                      },
+
+                  })
+              }
           })
           .catch((error) => {
             const errorMsg = error.message;

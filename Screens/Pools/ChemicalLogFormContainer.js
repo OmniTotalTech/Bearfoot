@@ -11,11 +11,12 @@ class ChemicalLogFormContainer extends Component {
         if (nextProps.timeArray.length > 0) {
           //   this.setState({ stateArray: this.loadProps(nextProps) });
           // }
-          if (nextProps.foundSubPoolRecord.data.length == 0) {
+          console.log(nextProps.foundSubPoolRecord.dataObject)
+          this.setState({dataObject: nextProps.foundSubPoolRecord.dataObject})
+          if (nextProps.foundSubPoolRecord.data == 0) {
             this.setState({ stateArray: this.loadProps(nextProps) })
           } else {
             this.setState({ stateArray: nextProps.foundSubPoolRecord.data })
-            this.setState({ dataObject: nextProps.foundSubPoolRecord.dataObject })
           }
         }
       }
@@ -277,7 +278,8 @@ class ChemicalLogFormContainer extends Component {
                 <div>
                   <label>Combined Chlorine:</label> <br />
                   <input
-                    onChange={(e) =>
+                      value={this.state.dataObject.combinedChlorine}
+                      onChange={(e) =>
                       this.setState({
                         dataObject: Object.assign(
                           {},
@@ -295,7 +297,9 @@ class ChemicalLogFormContainer extends Component {
                 <div>
                   <label>Cyanuric Acid:</label> <br />
                   <input
-                    onChange={(e) =>
+                      value={this.state.dataObject.cyanuricAcid}
+
+                      onChange={(e) =>
                       this.setState({
                         dataObject: Object.assign(
                           {},
@@ -312,7 +316,9 @@ class ChemicalLogFormContainer extends Component {
                 <div>
                   <label>Alkalinity:</label> <br />
                   <input
-                    onChange={(e) =>
+                      value={this.state.dataObject.akalinity}
+
+                      onChange={(e) =>
                       this.setState({
                         dataObject: Object.assign(
                           {},
@@ -329,7 +335,9 @@ class ChemicalLogFormContainer extends Component {
                 <div>
                   <label>Calcium Hardness:</label> <br />
                   <input
-                    onChange={(e) => this.setState({
+                      value={this.state.dataObject.calciumHardness}
+
+                      onChange={(e) => this.setState({
                       dataObject:
                         Object.assign(
                           {},
@@ -346,6 +354,8 @@ class ChemicalLogFormContainer extends Component {
                 <div>
                   <label>LSI Calculation:</label> <br />
                   <input
+                      value={this.state.dataObject.LSICalculation}
+
                     onChange={(e) =>
                       this.setState({
                         dataObject: Object.assign(

@@ -25,11 +25,8 @@ class AreaTable extends Component {
 
   mystyle = () => {
 
-    var custom = {
-      fontSize: this.state.width > 768 ? '16px' : '24px'
-    }
 
-    return custom
+
   }
 
   componentDidMount() {
@@ -140,13 +137,15 @@ class AreaTable extends Component {
               <div className="grid grid-cols-1 w-full">
                 <button
                   style={this.mystyle()}
-                  className={`bg-gray-500 my-2 text-white md:text-lg mx-1 rounded text-md mx-auto font-bold w-full p-1`}
+                  className={`bg-gray-500 my-2 text-white md:text-sm mx-1 rounded text-sm mx-auto font-bold w-full p-1`}
                   onClick={(e) => {
                     this.navToArea(porps);
                   }}
                 >
-                  View pools in <br/><span className={"text-red-500 text-2xl"}> {porps.original.areaName}</span>
-                </button>
+                  <p>
+                  View pools in <br/><span className={"text-red-500 text-md text-wrap"}> {porps.original.areaName}</span>
+                  </p>
+                  </button>
                 {this.props.user.role > 4 ? (
                   <button
                     onClick={() => {
