@@ -11,6 +11,7 @@ class NewEmployeeModalBody extends Component {
       error: null,
       successMessage: false,
       isHOA: false,
+      availableOrgs: []
     };
     this.setName = this.setName.bind(this);
     this.setEmail = this.setEmail.bind(this);
@@ -53,7 +54,7 @@ class NewEmployeeModalBody extends Component {
       organizations: [],
       isHOA: this.state.isHOA,
     };
-    console.log(this.state.isHOA);
+    console.log(this.props);
 
     if (this.state.organization == undefined) {
       await this.setState({
@@ -69,6 +70,8 @@ class NewEmployeeModalBody extends Component {
     this.resetState();
   }
   render() {
+    console.log(this.props.adminEmployeeManagement.data);
+
     return (
       <div className="mx-auto container max-w-2xl md:w-3/4 shadow-md mx-4">
         <form>
@@ -182,28 +185,31 @@ class NewEmployeeModalBody extends Component {
                         style={{ height: 50, width: 150 }}
                         onValueChange={(v) =>
                           this.setSelectedValue(
-                            v,
-                            this.props.adminEmployeeManagement.data.extraData
+                            v
                           )
                         }
                       >
                         {" "}
                         {this.props.user.role == 7 ? (
                           <>
-                            <Picker.Item label={"all"} value={"all"} />
 
-                            {this.props.adminEmployeeManagement.data.extraData
+                            {this.props.availableOrgs
                               .length > 0 ? (
-                              this.props.adminEmployeeManagement.data.extraData.map(
+                              this.props.availableOrgs.map(
                                 (item) => (
-                                  <Picker.Item
-                                    label={item.orgName}
-                                    value={item.orgName}
-                                  />
+                                    item.orgName == "all" ? (
+                                        <></>
+                                      ):(
+                                          <Picker.Item
+                                              label={item.orgName}
+                                              value={item.orgName}
+                                          />
+                                      )
+
                                 )
                               )
                             ) : (
-                              <div></div>
+                              <></>
                             )}
                           </>
                         ) : (

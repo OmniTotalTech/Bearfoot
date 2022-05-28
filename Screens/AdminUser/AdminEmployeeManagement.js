@@ -32,9 +32,10 @@ class AdminEmployeeManagement extends Component {
   componentDidMount() {
 
 
-    if (this.props.user.role == 7) {
+    if (this.props.user.role > 6) {
       console.log(this.state.manageView);
       console.log(this.state.selectedValue);
+      console.log(this.props.user.role);
       // this.props.fetchEmployeesByOrg("all", "");
       this.loadAPIData("allOrgs")
     }
@@ -404,7 +405,7 @@ class AdminEmployeeManagement extends Component {
                               onClick={this.handleMainTableSearch}
                               className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
                           >
-                            Search Users
+                            Search Users:
                           </button>
                   ):(
                       <h4 className="text-xl">Please select your search criteria first.</h4>
@@ -487,6 +488,7 @@ class AdminEmployeeManagement extends Component {
                 selectedValue={this.state.selectedValue}
                 newUser={this.props.newUser}
                 auth={this.props.auth}
+                availableOrgs={this.state.availableOrgs}
                 adminEmployeeManagement={this.props.adminEmployeeManagement}
               />
             </div>
