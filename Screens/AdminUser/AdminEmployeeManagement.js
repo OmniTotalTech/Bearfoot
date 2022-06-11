@@ -1,0 +1,525 @@
+import React, { Component } from "react";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TouchableHighlight,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+} from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import QueryBuilderIcon from "@material-ui/icons/QueryBuilder";
+import DeliveryStatusIcon from "../../Components/DeliveryStatusIcon";
+import AreaTable from "../../Components/Admin/AreaTable";
+import { connect } from "react-redux";
+import { fetchMyAdminAreas } from "../../redux/actions/area";
+import HeadAndDescription from "../../Components/General/HeadAndDescription";
+import InvitedUser from "../../Components/InvitedUser";
+import VerifiedUser from "../../Components/VerifiedUser";
+import NewEmployeeModalBody from "../../Components/Employee/NewEmployeeModalBody";
+import { fetchEmployeesByOrg } from "../../redux/actions/adminEmployeeManagement";
+import { newUser } from "../../redux/actions/auth";
+import Modal from "react-modal";
+import EmployeeList from "../../Components/Admin/EmployeeList";
+import api from "../../utils/api";
+import ReactTable from "react-table";
+import moment from "moment";
+import BackButton from '../../Components/BackButton'
+class AdminEmployeeManagement extends Component {
+  componentDidMount() {
+
+
+    if (this.props.user.role > 6) {
+      console.log(this.state.manageView);
+      console.log(this.state.selectedValue);
+      console.log(this.props.user.role);
+      // this.props.fetchEmployeesByOrg("all", "");
+      this.loadAPIData("allOrgs")
+    }
+
+    if(this.props.user.role < 7){
+      console.log(this.props.user.organizations)
+      this.loadAPIData("myOrgs")
+    }
+
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleSubmitModal = this.handleSubmitModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.handleMainTableSearch = this.handleMainTableSearch.bind(this)
+  }
+
+  state = {
+    manageView: true,
+    addView: false,
+    selectedValue: 0,
+    searchTerm: null,
+    isModalOpen: false,
+    employeeList: [],
+    extraData: {},
+    arrayForPicking: [],
+    availableOrgs: [],
+    setOrgOption: "",
+    setTypeOption:"",
+    hasSelectedOrg: false,
+    hasSelectedType: false,
+    hasSearched: false
+  };
+
+  async loadAPIData(type){
+
+    switch(type){
+      case "allOrgs":
+        await api.get(`/organizationManagement`)
+            .then((response) => {
+              console.log(response.data)
+              let result = response.data;
+              result.unshift({orgName: "all"})
+              console.log(result)
+              this.setState({availableOrgs: result})
+            })
+            .catch((err) => console.log(err))
+            return;
+      case "myOrgs":
+        console.log(this.props.user.organizations)
+          this.setState({availableOrgs: this.props.user.organizations})
+        return;
+      default:
+        return;
+    }
+  }
+
+  setSelectedValue(value, array) {
+    console.log(value, array);
+    if (array != null && array.length > 0) {
+      this.setState({
+        arrayForPicking: array,
+      });
+    }
+    this.setState({ selectedValue: value });
+    this.props.fetchEmployeesByOrg(value, "");
+  }
+
+  setAddEmployee() {
+    this.setState({ addView: true, manageView: false });
+  }
+
+  setManageEmployee() {
+    this.setState({ addView: false, manageView: true });
+  }
+
+  runHOAFunc() {
+    console.log(this.state);
+    if (this.state.selectedValue == undefined && this.props.user.role > 6) {
+      this.props.fetchEmployeesByOrg("any", "HOA");
+    } else {
+      this.props.fetchEmployeesByOrg(this.state.selectedValue, "HOA");
+    }
+
+    this.setState({ addView: false, manageView: true });
+  }
+
+  handleSearchChange(event) {
+    console.log(event.target.value);
+    this.setState({ searchTerm: event.target.value });
+  }
+  async handleSubmitModal(e, props) {
+    e.preventDefault();
+    this.setState({ isModalOpen: true });
+
+    let selectedValue;
+
+    if (this.state.selectedValue != undefined) {
+      selectedValue = this.state.selectedValue;
+    } else if (this.props.user.role > 5) {
+      selectedValue = this.props.user.organizations[0].orgName;
+    }
+
+    if (this.props.title == "managers") {
+      await api
+        .get(
+          "users/orgEmployees/" + selectedValue + "/" + this.state.searchTerm
+        )
+        .then((response) => {
+          console.log(response);
+          this.setState({ employeeList: response.data.data });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+    } else {
+      console.log(this.state);
+      await api
+        .get(
+          "users/orgEmployees/" + selectedValue + "/" + this.state.searchTerm
+        )
+        .then((response) => {
+          console.log(response);
+          this.setState({ employeeList: response.data.data });
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+        });
+    }
+  }
+  closeModal() {
+    this.setState({ isModalOpen: false });
+    console.log(this.props);
+  }
+  handleChange(e) {
+    console.log(e.target.value);
+    this.setState({ searchTerm: e.target.value });
+  }
+  openModal() {
+    this.setState({ isModalOpen: true });
+  }
+
+  handleWhichType(type,val){
+    console.log("------------------")
+    console.log("-------HANDELING CHANGE-----------")
+    console.log("TYPE:",type)
+    console.log("VAL:",val)
+    console.log("------------------")
+    switch(type){
+      case "organizations":
+        if(this.state.hasSelectedOrg == false){
+          this.setState({hasSelectedOrg: true})
+        }
+        this.setState({setOrgOption: val})
+        return;
+      case "type":
+        if(this.state.hasSelectedType == false){
+          this.setState({hasSelectedType: true})
+        }
+          this.setState({setTypeOption: val})
+        return;
+      default:
+        return;
+    }
+  }
+
+  handleMainTableSearch(){
+    console.log(this.state)
+
+    this.setState({hasSearched: false})
+
+    if(this.state.setTypeOption == "HOA"){
+      this.props.fetchEmployeesByOrg(this.state.setOrgOption.toString(), "HOA"),
+      this.setState({hasSearched: true})
+
+    }
+
+    if(this.state.setTypeOption == "employees"){
+      this.props.fetchEmployeesByOrg(this.state.setOrgOption.toString(), ""),
+          this.setState({hasSearched: true})
+    }
+
+  }
+
+  render() {
+    const renderItem = ({ item }) => (
+      <div
+        onClick={() =>
+          this.props.navigation.navigate("EditUser", { id: item._id })
+        }
+        style={{ margin: "10px" }}
+      >
+        <InvitedUser
+          pic={item.profileImage}
+          name={item.name}
+          email={item.email}
+        />
+      </div>
+    );
+
+    const navToEditUser = (id) => {
+      this.props.navigation.navigate("EditUser", { id: id });
+    };
+
+    const columns = [
+      {
+        Header: "Name",
+        accessor: "name",
+        style: {
+          //textAlign: "right",
+        },
+        Cell: (porps) => {
+          return <div>
+            <button
+              className="bg-red-500 text-white rounded text-md mx-auto px-2 font-bold "
+              onClick={(e) => {
+                console.log("here is");
+                console.log(porps.original);
+                navToEditUser(porps.original._id)
+
+              }}
+            >
+              {porps.original.name}
+            </button>
+          </div>;
+        },
+        // width: 100,
+      },
+      {
+        Header: "Phone",
+        accessor: "phone",
+        style: {
+          //textAlign: "right",
+        },
+
+        // width: 100,
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+        style: {
+          //textAlign: "right",
+        },
+
+        // width: 100,
+      },
+      {
+        Header: "Last Updated Time",
+        accessor: "lastUpdated",
+        style: {
+          //textAlign: "right",
+        },
+        Cell: porps => {
+          return (<>  {moment(porps.original.lastUpdated.toString()).format('lll')} </>)
+
+        }
+
+      },
+      {
+        Header: "Updated By",
+        accessor: "lastUpdatedBy.name",
+        style: {
+          //textAlign: "right",
+        },
+      }
+
+    ];
+    const userInfoEmployeeMap = (
+      <div>
+        <FlatList
+          data={this.props.adminEmployeeManagement.data.data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+      </div>
+    );
+
+    return (
+      <ScrollView>
+        {/* bg-gray-100 */}
+        <section className="py-4 bg-opacity-50 h-screen">
+          <BackButton navigation={this.props.navigation}/>
+          <div>
+            <div className="flex justify-center mb-4">
+              <button
+                  onClick={this.handleSubmitModal}
+                  className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
+              >
+                Search Users
+              </button>
+              {/*<button*/}
+              {/*  className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"*/}
+              {/*  onClick={() =>*/}
+              {/*    this.props.fetchEmployeesByOrg(*/}
+              {/*      this.props.user.organizations[0].orgName,*/}
+              {/*      "",*/}
+              {/*      this.setManageEmployee()*/}
+              {/*    )*/}
+              {/*  }*/}
+              {/*>*/}
+              {/*  Manage Employee*/}
+              {/*</button>*/}
+              {this.props.user.role > 2 ? (
+                  <button
+                      className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
+                      onClick={() => this.setAddEmployee()}
+                  >
+                    Add Employee
+                  </button>
+
+              ):(
+                  <></>
+              )}
+
+              {/*<button*/}
+              {/*  className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"*/}
+              {/*  onClick={() => this.runHOAFunc()}*/}
+              {/*>*/}
+              {/*  Manage HOA Accounts*/}
+              {/*</button>*/}
+            </div>
+          </div>
+          {this.state.manageView != false ? (
+            <div className="p-4">
+              <div className="container mx-auto max-w-4xl ">
+                <div className="text text-3xl my-2">
+                  Users You Can Manage:
+                </div>
+                <div className="p-2">
+                  <p>From here, find users that are in your organizations! Note: If you are not at the top level Bearfoot Corporate Permissions, you will be restricted to search the users that currently reside in your assigned organizations!</p>
+                </div>
+                <div className="p-2">
+                <p>If you need to find the information of a user outside of your organizations, please contact a Bearfoot Corporate individual to assist.</p>
+                </div>
+                <div className="grid grid-cols-2 px-4 gap-1">
+                  <div>
+                    <div className="text text-lg"><h2 className="text-2xl">Organization:</h2>
+                      <select  className="w-full p-2" onChange={(e) => this.handleWhichType("organizations",e.target.value)}>
+                        <option selected="true" hidden>Organization</option>
+                        {this.state.availableOrgs?.length > 0 ? (
+                            this.state.availableOrgs.map((item) => (
+                                <option value={item.orgName}>{item.orgName}</option>
+                            ))
+                        ):(
+                            <option disabled>No organizations available!</option>
+                        )}
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+
+                      <div className="text text-lg"><h2 className="text-2xl">User Type:</h2>
+                      <select className="w-full p-2" onChange={(e) => this.handleWhichType("type",e.target.value)}>
+                        <option selected="true" hidden  >Type</option>
+                        <option value={"employees"}>Employees</option>
+                        <option value={"HOA"}>HOAS</option>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+                <div className="w-full mx-auto text-center btn btn-block my-8">
+                  {this.state.hasSelectedOrg & this.state.hasSelectedType  ? (
+                          <button
+                              onClick={this.handleMainTableSearch}
+                              className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mr-2"
+                          >
+                            Search Users:
+                          </button>
+                  ):(
+                      <h4 className="text-xl">Please select your search criteria first.</h4>
+
+                  )}
+
+                </div>
+
+
+                {this.state.hasSelectedOrg & this.state.hasSelectedType & this.state.hasSearched  ? (
+
+                <ReactTable
+                  className="-striped -highlight"
+                  data={this.props.adminEmployeeManagement.data ? this.props.adminEmployeeManagement.data.data : []}
+                  filterable
+                  columns={columns}
+                  defaultFilterMethod={filterCaseInsensitive}
+
+                    // pageSize={this.props.records.length}
+                  defaultPageSize={50}
+                >
+                  {(state, makeTable, instance) => {
+                    this.reactTable = state.pageRows.map((modem) => {
+                      return modem._original;
+                    });
+                    return <div>{makeTable()}</div>;
+                  }}
+                </ReactTable>
+                ):(<></>)}
+                {/*<View style={{ overflow: "scroll", maxHeight: "400px" }}>*/}
+                {/*  {userInfoEmployeeMap}*/}
+                {/*</View>*/}
+                <Modal
+                  {...this.props}
+                  isOpen={this.state.isModalOpen}
+                  style={{ width: "100%" }}
+                >
+                  <button
+                    className="text bg-gray-600 p-2 rounded text-white"
+                    onClick={() => {
+                      this.closeModal();
+                    }}
+                  >
+                    close
+                  </button>
+
+                  <form
+                    onSubmit={() => this.handleSubmitModal(event, this.props)}
+                  >
+                    <div className="mx-auto container max-w-2xl shadow-md mx-4">
+                      <div className="bg-white space-y-6 mt-4">
+                        <input
+                          onChange={(e) => this.handleChange(e)}
+                          className="w-full p-2"
+                          placeholder="Search By Name"
+                        />
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      className="bg-red-500 text-white p-2 rounded text-md my-2"
+                    >
+                      Search Name
+                    </button>
+                  </form>
+                  <div className="h-96 overflow-scroll">
+                    <EmployeeList
+                      navigation={this.props.navigation}
+                      assignGroup={this.props.title}
+                      poolId={this.props.poolId}
+                      closeModal={() => this.closeModal()}
+                      employees={this.state.employeeList}
+                    />
+                  </div>
+                </Modal>{" "}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <NewEmployeeModalBody
+                user={this.props.user}
+                selectedValue={this.state.selectedValue}
+                newUser={this.props.newUser}
+                auth={this.props.auth}
+                availableOrgs={this.state.availableOrgs}
+                adminEmployeeManagement={this.props.adminEmployeeManagement}
+              />
+            </div>
+          )}
+
+        </section>
+      </ScrollView>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    area: state.area,
+    user: state.auth.user,
+    auth: state.auth,
+    adminEmployeeManagement: state.adminEmployeeManagement,
+  };
+};
+
+const mapDisptachToProps = (dispatch) => {
+  return {
+    fetchEmployeesByOrg: (orgName, string) =>
+      dispatch(fetchEmployeesByOrg(orgName, string)),
+    newUser: (body) => dispatch(newUser(body)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDisptachToProps
+)(AdminEmployeeManagement);

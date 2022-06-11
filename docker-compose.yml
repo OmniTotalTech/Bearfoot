@@ -1,0 +1,20 @@
+version: "2.4"
+
+services:
+  bearfoot:
+    build:
+      context: .
+      args:
+        - NODE_ENV=development
+    environment:
+      - NODE_ENV=development
+    tty: true
+    ports:
+      - "19006:19006"
+      - "19001:19001"
+      - "19002:19002"
+    healthcheck:
+      disable: true
+
+volumes:
+  notused:
