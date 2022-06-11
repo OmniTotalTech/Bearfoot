@@ -3,6 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - npm i @expo/webpack-config
         - npm install use-dynamic-refs --quiet expo-cli
         - npm install --quiet --global expo-cli
     build:
