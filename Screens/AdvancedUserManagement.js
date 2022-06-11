@@ -292,6 +292,8 @@ class AdvancedUserManagement extends Component {
                     className="-striped -highlight"
                     data={this.state.tableData}
                     filterable
+                    defaultFilterMethod={filterCaseInsensitive}
+
                     columns={this.columns}
                     defaultPageSize={50}
                 >

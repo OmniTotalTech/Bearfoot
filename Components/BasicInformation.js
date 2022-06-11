@@ -1009,6 +1009,8 @@ timeArray[i].checked = val
                       List of pools for your employees to fill paperwork for
                       daily.
                     </p>
+                    <p>(Times will not update until the NEXT calendar day, if you have already recorded a log for that day.)</p>
+
 
                     {this.state.newSubPoolString &&
                       this.state.newSubPoolString.length > 3 ? (

@@ -221,6 +221,7 @@ class AdminSensitiveReports extends Component {
             }
             filterable
             columns={columns}
+            defaultFilterMethod={filterCaseInsensitive}
             defaultPageSize={50}
           >
             {(state, makeTable, instance) => {

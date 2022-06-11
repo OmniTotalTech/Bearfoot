@@ -390,7 +390,7 @@ class ChemicalLogFormContainer extends Component {
                     buttonText="Choose images"
                     onChange={onDrop}
                     imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
-                    maxFileSize={1000000}
+                    maxFileSize={1000000000}
                     withPreview={true}
                     label="max file size: 1GB, Must be: JPG,PBG,GIF"
                     withLabel={true}

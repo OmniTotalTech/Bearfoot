@@ -422,7 +422,9 @@ class AdminEmployeeManagement extends Component {
                   data={this.props.adminEmployeeManagement.data ? this.props.adminEmployeeManagement.data.data : []}
                   filterable
                   columns={columns}
-                  // pageSize={this.props.records.length}
+                  defaultFilterMethod={filterCaseInsensitive}
+
+                    // pageSize={this.props.records.length}
                   defaultPageSize={50}
                 >
                   {(state, makeTable, instance) => {
