@@ -1,0 +1,12 @@
+.editorContainer {
+  padding: 1em !important;
+  margin: 1em !important;
+}
+
+.editors {
+  border: 1px blue solid !important;
+  padding: 1em !important;
+  margin: 1em !important;
+  font-family: "Open Sans" !important;
+  font-size: 90% !important;
+}
