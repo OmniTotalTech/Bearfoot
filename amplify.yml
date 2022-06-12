@@ -1,9 +1,9 @@
-version: 1.0.1
+version: 1.0.2
 frontend:
   phases:
     preBuild:
       commands:
-        - npm i @expo/webpack-config
+        - npm install --save-dev
         - npm install use-dynamic-refs --quiet expo-cli
         - npm install --quiet --global expo-cli
     build:
