@@ -69,13 +69,15 @@ class adminDeliveriesHome extends Component {
 
         <div className="container mx-auto px-8">
           <div>
-            <p className="text-sm">Delivery Date:</p>
+            <h3 className="text-sm">Delivery Date:</h3>
             {/* <DatePicker onChange={eventHandler} /> */}
+            <p>Enter a specific date in time you would like to pull records from.</p>
             <div>
               <label>Month </label>
               <label className="text-xs">2 digits </label>
 
               <input
+                  defaultValue={moment().format("MM")}
                 type="tel"
                 onChange={(e) => setStateValue(e.target.value, "month")}
                 className="px-2 mx-2 shadow-xl my-2 w-8"
@@ -86,7 +88,9 @@ class adminDeliveriesHome extends Component {
               <label className="text-xs"> 2 digits </label>
 
               <input
-                type="tel"
+                  defaultValue={moment().format("DD")}
+
+                  type="tel"
                 onChange={(e) => setStateValue(e.target.value, "day")}
                 className="px-2 mx-2 shadow-xl my-2 w-8"
               />
@@ -96,7 +100,9 @@ class adminDeliveriesHome extends Component {
               <label className="text-xs"> 4 digits </label>
 
               <input
-                type="tel"
+                  defaultValue={moment().format("YYYY")}
+
+                  type="tel"
                 onChange={(e) => setStateValue(e.target.value, "year")}
                 className="px-2 mx-2 shadow-xl my-2 w-16"
               />

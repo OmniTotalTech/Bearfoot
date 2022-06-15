@@ -237,6 +237,20 @@ class AdvancedUserManagement extends Component {
 
 
     }
+    filterCaseInsensitive(filter, row){
+        const id = filter.pivotId || filter.id;
+        const content = row[id];
+        if (typeof content !== 'undefined') {
+            // filter by text in the table or if it's a object, filter by key
+            if (typeof content === 'object' && content !== null && content.key) {
+                return String(content.key).toLowerCase().includes(filter.value.toLowerCase());
+            } else {
+                return String(content).toLowerCase().includes(filter.value.toLowerCase());
+            }
+        }
+
+        return true;
+    };
 
     handleColumns() {
 
@@ -267,6 +281,7 @@ class AdvancedUserManagement extends Component {
 
     }
 
+
     render(){
 
 
@@ -274,7 +289,7 @@ class AdvancedUserManagement extends Component {
         return (
         <>
             <ScrollView>
-            <div className="container p-4">
+            <div className="container p-4 mx-auto">
                 <h3 className="text-xl">Select an aspect to manage:</h3>
 
                 <select defaultValue={0} onChange={e => this.dataReturn(e.target.value) }>
@@ -292,7 +307,7 @@ class AdvancedUserManagement extends Component {
                     className="-striped -highlight"
                     data={this.state.tableData}
                     filterable
-                    defaultFilterMethod={filterCaseInsensitive}
+                    defaultFilterMethod={this.filterCaseInsensitive}
 
                     columns={this.columns}
                     defaultPageSize={50}
@@ -313,6 +328,8 @@ class AdvancedUserManagement extends Component {
                     filterable
                     columns={this.columns1}
                     defaultPageSize={50}
+                    defaultFilterMethod={this.filterCaseInsensitive}
+
                 >
                     {(state, makeTable, instance) => {
                         this.reactTable = state.pageRows.map((modem) => {

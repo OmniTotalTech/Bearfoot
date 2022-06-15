@@ -26,7 +26,7 @@ class PoolPublicContainer extends Component {
             {moment(this.props.pool.individualPool.lastUpdated).format('lll')}
           </p>
           <p className="text-xs">
-            {this.props.pool.individualPool.lastUpdatedby ? (this.props.pool.individualPool.lastUpdatedby) : ("Updated automatically by the system.")}
+            {this.props.pool.individualPool.lastUpdatedBy?.name ? (this.props.pool.individualPool.lastUpdatedBy.name) : ("Updated automatically by the system.")}
           </p>
         </div>
           {this.props.accordionData.length > 0 ? (

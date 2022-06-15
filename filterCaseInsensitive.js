@@ -9,6 +9,6 @@ const filterCaseInsensitive = (filter, row) => {
             return String(content).toLowerCase().includes(filter.value.toLowerCase());
         }
     }
-
-    return true;
 };
+
+export default filterCaseInsensitive;

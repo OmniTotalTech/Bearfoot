@@ -132,7 +132,7 @@ class EditSelf extends Component {
                   withIcon={true}
                   buttonText="Choose images"
                   onChange={this.onDrop}
-                  imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
+                  imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg","heic"]}
                   maxFileSize={1000000000}
                   withPreview={true}
                   label="max file size: 1GB, Must be: JPG,PBG,GIF"

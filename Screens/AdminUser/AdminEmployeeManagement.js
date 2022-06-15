@@ -28,6 +28,7 @@ import api from "../../utils/api";
 import ReactTable from "react-table";
 import moment from "moment";
 import BackButton from '../../Components/BackButton'
+
 class AdminEmployeeManagement extends Component {
   componentDidMount() {
 
@@ -239,7 +240,20 @@ class AdminEmployeeManagement extends Component {
     const navToEditUser = (id) => {
       this.props.navigation.navigate("EditUser", { id: id });
     };
+    const filterCaseInsensitive = (filter, row) => {
+      const id = filter.pivotId || filter.id;
+      const content = row[id];
+      if (typeof content !== 'undefined') {
+        // filter by text in the table or if it's a object, filter by key
+        if (typeof content === 'object' && content !== null && content.key) {
+          return String(content.key).toLowerCase().includes(filter.value.toLowerCase());
+        } else {
+          return String(content).toLowerCase().includes(filter.value.toLowerCase());
+        }
+      }
 
+      return true;
+    };
     const columns = [
       {
         Header: "Name",
@@ -312,6 +326,8 @@ class AdminEmployeeManagement extends Component {
         />
       </div>
     );
+
+
 
     return (
       <ScrollView>

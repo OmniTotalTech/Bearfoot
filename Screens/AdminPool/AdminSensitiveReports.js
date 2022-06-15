@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import Modal from "react-modal";
 import RecordModal from "./PoolRecords/RecordModal";
 import {ScrollView} from "react-native";
-
 class AdminSensitiveReports extends Component {
   state = {
     showModal: false,
@@ -51,7 +50,20 @@ class AdminSensitiveReports extends Component {
           return "Approved";
       }
     };
+    const filterCaseInsensitive = (filter, row) => {
+      const id = filter.pivotId || filter.id;
+      const content = row[id];
+      if (typeof content !== 'undefined') {
+        // filter by text in the table or if it's a object, filter by key
+        if (typeof content === 'object' && content !== null && content.key) {
+          return String(content.key).toLowerCase().includes(filter.value.toLowerCase());
+        } else {
+          return String(content).toLowerCase().includes(filter.value.toLowerCase());
+        }
+      }
 
+      return true;
+    };
     const anotherSwitchStatement = (status) => {
       switch (status) {
         case "incidentReport":
@@ -68,6 +80,7 @@ class AdminSensitiveReports extends Component {
         style: {
           //textAlign: "right",
         },
+        filterable: false,
         Cell: (porps) => {
           return <div>{anotherSwitchStatement(porps.original.recordType)}</div>;
         },
